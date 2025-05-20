@@ -1,0 +1,182 @@
+/* student-articles.css */
+
+.articles-main {
+    padding: 20px;
+}
+
+.articles-hero {
+    background-color: #f9f9f9;
+    padding: 40px;
+    border-radius: 8px;
+    margin-bottom: 30px;
+    text-align: center;
+}
+
+.articles-hero h2 {
+    color: #333;
+    margin-bottom: 10px;
+    font-size: 2em;
+}
+
+.articles-hero p {
+    color: #666;
+    font-size: 1.1em;
+}
+
+/* Article Filters Styling */
+.article-filters {
+    background-color: #fff;
+    padding: 15px 20px;
+    border-radius: 8px;
+    box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.1);
+    margin-bottom: 20px;
+}
+
+.article-filters ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    overflow-x: auto; /* Enable horizontal scrolling for many filters */
+}
+
+.article-filters li {
+    margin-right: 15px;
+}
+
+.article-filters li:last-child {
+    margin-right: 0;
+}
+
+.article-filters .filter-link {
+    display: block;
+    text-decoration: none;
+    color: #555;
+    padding: 10px 15px;
+    border-radius: 5px;
+    background-color: #eee;
+    font-weight: bold;
+    transition: background-color 0.3s ease, color 0.3s ease;
+    white-space: nowrap; /* Prevent text wrapping */
+}
+
+.article-filters .filter-link:hover {
+    background-color: #ddd;
+    color: #333;
+}
+
+.article-filters .filter-link.active {
+    background-color: #4f606d;
+    color: #fff;
+}
+
+.article-filters .filter-link.active:hover {
+    background-color: #0056b3;
+}
+
+/* Articles List Styling */
+.articles-list {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 20px;
+}
+
+.article-card {
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.1);
+    display: block; /* Default to block, will be toggled by JS */
+}
+
+.article-thumbnail {
+    width: 100%;
+    height: auto;
+    border-radius: 5px;
+    margin-bottom: 15px;
+    display: block;
+}
+
+.article-card h3 {
+    color: #333;
+    margin-top: 0;
+    margin-bottom: 10px;
+    font-size: 1.3em;
+}
+
+.article-excerpt {
+    color: #666;
+    font-size: 0.95em;
+    line-height: 1.5;
+    margin-bottom: 15px;
+}
+
+.article-meta {
+    color: #777;
+    font-size: 0.85em;
+    margin-bottom: 10px;
+}
+
+.read-more-btn {
+    display: inline-block;
+    text-decoration: none;
+    background-color: #4f606d;
+    color: #fff;
+    padding: 10px 15px;
+    border-radius: 5px;
+    font-weight: bold;
+    transition: background-color 0.3s ease;
+}
+
+.read-more-btn:hover {
+    background-color: #0056b3;
+}
+
+.article-topics {
+    margin-top: 15px;
+}
+
+.article-topics span {
+    display: inline-block;
+    background-color: #f0f0f0;
+    color: #555;
+    padding: 5px 8px;
+    border-radius: 3px;
+    font-size: 0.75em;
+    margin-right: 5px;
+    margin-bottom: 5px;
+}
+
+/* Pagination Styling */
+.pagination {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 30px;
+    padding: 15px;
+    background-color: #f9f9f9;
+    border-radius: 8px;
+    box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.page-btn {
+    text-decoration: none;
+    color: #007bff;
+    padding: 8px 12px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    margin: 0 10px;
+    font-weight: bold;
+    transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
+}
+
+.page-btn:hover {
+    background-color: #007bff;
+    color: #fff;
+    border-color: #007bff;
+}
+
+.page-number {
+    color: #555;
+    font-size: 0.9em;
+}

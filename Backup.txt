@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Law Students Intellectual Forum</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <header>
+        <h1>Law Students Intellectual Forum</h1>
+    </header>
+
+    <nav>
+        <ul>
+            <li><a href="#">All</a></li>
+            <li><a href="#">Space Law</a></li>
+            <li><a href="#">Commercial Law</a></li>
+            <li><a href="#">Intellectual Property Law</a></li>
+            </ul>
+    </nav>
+
+    <main>
+        <article>
+            <h2>Welcome to the Law Students Intellectual Forum</h2>
+            <p>This is a platform for law students to share their thoughts and ideas.</p>
+            <img src="law_students.jpg" alt="Law Students" width="300">
+            <div class="comments-section">
+                <h3>Comments</h3>
+        </article>
+
+        </article>
+        >
+            <h2>Law and AI</h2>
+            <p>This article critically examines the dynamic interplay between law and artificial intelligence, focusing on the legal, ethical, and regulatory implications of integrating AI into contemporary legal frameworks.</p>
+            <img src="Law and AI.webp" alt="Law and AI" width="300">
+            <div class="comments-section">
+                <h3>Comments</h3>
+    <ul class="comment-list">
+        </ul>
+    <h4>Leave a Comment</h4>
+    <form class="comment-form">
+        <div>
+            <label for="name">Name:</label>
+            <input type="text" id="name" name="name" required>
+        </div>
+        <div>
+            <label for="comment">Comment:</label>
+            <textarea id="comment" name="comment" rows="4" required></textarea>
+        </div>
+        <button type="submit">Post Comment</button>
+    </form>
+</div>
+        </article>
+
+        <article>
+            <h2>Gold MAFIAAA</h2>
+            <img src="gold mafia.jpg" alt="Gold Mafia" width="300">
+            <p>AThis article offers a critical commentary on the investigative documentary Gold Mafia, released in 2023, analyzing its revelations about Zimbabwe’s illicit gold networks, the complicity of state actors, and the broader implications for corruption, financial crime, and regional stability in Southern Africa.</p>
+            <div class="comments-section">
+                <h3>Comments</h3>
+    <ul class="comment-list">
+        </ul>
+    <h4>Leave a Comment</h4>
+    <form class="comment-form">
+        <div>
+            <label for="name">Name:</label>
+            <input type="text" id="name" name="name" required>
+        </div>
+        <div>
+            <label for="comment">Comment:</label>
+            <textarea id="comment" name="comment" rows="4" required></textarea>
+        </div>
+        <button type="submit">Post Comment</button>
+    </form>
+</div>
+                </div>
+        </article>
+
+        </main>
+
+    <footer>
+        <p>&copy; 2025 Law Students Intellectual Forum</p>
+    </footer>
+
+    
+</body>
+</html>

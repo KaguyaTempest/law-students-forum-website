@@ -1,0 +1,205 @@
+/* moot-court-guide.css */
+
+.moot-court-guide-main {
+    padding: 20px;
+}
+
+.moot-court-hero {
+    background-color: #f9f9f9;
+    padding: 40px;
+    border-radius: 8px;
+    margin-bottom: 30px;
+    text-align: center;
+}
+
+.moot-court-hero h2 {
+    color: #333;
+    margin-bottom: 10px;
+    font-size: 2em;
+}
+
+.moot-court-hero p {
+    color: #666;
+    font-size: 1.1em;
+}
+
+/* Styles for the Current Moot Section */
+.current-moot-section {
+    background-color: #fff;
+    padding: 25px;
+    margin-bottom: 30px;
+    border-radius: 8px;
+    box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.current-moot-section h2 {
+    color: #333;
+    border-bottom: 2px solid #555;
+    padding-bottom: 10px;
+    margin-bottom: 20px;
+    font-size: 1.8em;
+}
+
+.current-moot-card {
+    background-color: #f9f9f9;
+    padding: 20px;
+    border-radius: 5px;
+    border: 1px solid #eee;
+}
+
+.current-moot-card h3 a {
+    color: #007bff;
+    text-decoration: none;
+    font-size: 1.3em;
+    margin-top: 0;
+    margin-bottom: 10px;
+    display: block;
+}
+
+.current-moot-card h3 a:hover {
+    text-decoration: underline;
+}
+
+.current-moot-card p {
+    color: #555;
+    margin-bottom: 10px;
+    font-size: 0.95em;
+}
+
+.current-moot-card a {
+    display: inline-block;
+    text-decoration: none;
+    background-color: #007bff;
+    color: #fff;
+    padding: 8px 15px;
+    border-radius: 5px;
+    font-weight: bold;
+    transition: background-color 0.3s ease;
+}
+
+.current-moot-card a:hover {
+    background-color: #0056b3;
+}
+
+/* Styles for the Moot Forecast Section */
+.moot-forecast-section {
+    background-color: #fff;
+    padding: 25px;
+    margin-bottom: 30px;
+    border-radius: 8px;
+    box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.moot-forecast-section h2 {
+    color: #333;
+    border-bottom: 2px solid #555;
+    padding-bottom: 10px;
+    margin-bottom: 20px;
+    font-size: 1.8em;
+}
+
+.moot-forecast-section p {
+    color: #666;
+    margin-bottom: 15px;
+}
+
+.moot-forecast-list {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 20px;
+}
+
+.forecast-item {
+    background-color: #f9f9f9;
+    padding: 15px;
+    border-radius: 5px;
+    border: 1px solid #eee;
+}
+
+.forecast-item h4 {
+    color: #008000; /* Green for forecast items */
+    margin-top: 0;
+    margin-bottom: 5px;
+    font-size: 1.1em;
+}
+
+.forecast-item.internal-moot h4 {
+    color: #a78b00; /* Gold/Brown for internal moots */
+}
+
+.forecast-item.external-moot h4 {
+    color: #007bff; /* Blue for external moots */
+}
+
+.forecast-item p {
+    color: #555;
+    margin-bottom: 10px;
+    font-size: 0.95em;
+}
+
+.forecast-item a {
+    display: inline-block;
+    text-decoration: none;
+    color: #007bff;
+    font-weight: bold;
+    transition: color 0.3s ease;
+}
+
+.forecast-item a:hover {
+    color: #0056b3;
+    text-decoration: underline;
+}
+
+/* Guide Content Styles (Remain the same) */
+.guide-content {
+    max-width: 960px;
+    margin: 0 auto;
+}
+
+.guide-section {
+    background-color: #fff;
+    padding: 25px;
+    margin-bottom: 25px;
+    border-radius: 8px;
+    box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.guide-section h3 {
+    color: #333;
+    border-bottom: 2px solid #555;
+    padding-bottom: 10px;
+    margin-bottom: 15px;
+    font-size: 1.5em;
+}
+
+.guide-section p {
+    color: #555;
+    line-height: 1.7;
+    margin-bottom: 15px;
+}
+
+.guide-section ul,
+.guide-section ol {
+    padding-left: 25px;
+    margin-bottom: 15px;
+}
+
+.guide-section li {
+    color: #555;
+    line-height: 1.7;
+    margin-bottom: 8px;
+}
+
+.guide-section li strong {
+    font-weight: bold;
+}
+
+.guide-section a {
+    color: #007bff;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+.guide-section a:hover {
+    text-decoration: underline;
+}

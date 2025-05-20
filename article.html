@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>[Article Title] - LAW STUDENTS INTELLECTUAL FORUM</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="article.css">
+</head>
+<body>
+    <header>
+        <a href="index.html" class="logo-link">
+            <img src="scales of justice.png" alt="LSIF Logo" class="header-logo">
+        </a>
+        <h1>
+            LAW STUDENTS<br>
+            INTELLECTUAL FORUM
+        </h1>
+        <nav>
+            <ul>
+                <li><a href="student-articles.html">Student Articles</a></li>
+                <li><a href="#">Academic Resources</a></li>
+                <li><a href="tutorials.html">Campus Guides</a></li>
+                <li><a href="moot-court-guide.html">Moot Court Guide</a></li>
+                <li><a href="about.html">About</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main class="article-page-main">
+        <article class="article-content">
+            <h1 class="article-title">[Article Title]</h1>
+            <div class="article-meta">
+                <span class="article-date">Published: [Date]</span>
+                <span class="article-author">Author: [Author]</span>
+            </div>
+            <img src="[Article Banner Image]" alt="[Article Title]" class="article-banner">
+            <div class="article-body">
+                [Article Body Content Here]
+            </div>
+            <div class="article-topics">
+                <span>Topics:</span>
+                [Article Topic Tags]
+            </div>
+
+            <section class="comment-section">
+                <h2>Comments</h2>
+                <div class="comments-container">
+                    </div>
+                <h3>Leave a Comment</h3>
+                <form class="comment-form">
+                    <input type="text" placeholder="Your Name" required>
+                    <textarea placeholder="Your Comment" rows="4" required></textarea>
+                    <button type="submit">Post Comment</button>
+                </form>
+            </section>
+        </article>
+
+        <aside class="article-sidebar">
+            <section class="you-may-like">
+                <h2>You May Also Like</h2>
+                <div class="related-articles">
+                    <div class="related-article-card">
+                        <a href="#">
+                            <h3>[Related Article Title 1]</h3>
+                            <span class="read-more">Read More</span>
+                        </a>
+                    </div>
+                    <div class="related-article-card">
+                        <a href="#">
+                            <h3>[Related Article Title 2]</h3>
+                            <span class="read-more">Read More</span>
+                        </a>
+                    </div>
+                    </div>
+            </section>
+
+            <section class="popular-articles">
+                <h2>Popular Articles</h2>
+                <div class="popular-articles-list">
+                    <div class="popular-article-item">
+                        <a href="#">
+                            <span>1.</span> [Popular Article Title 1]
+                        </a>
+                    </div>
+                    <div class="popular-article-item">
+                        <a href="#">
+                            <span>2.</span> [Popular Article Title 2]
+                        </a>
+                    </div>
+                    </div>
+            </section>
+        </aside>
+    </main>
+
+    <footer>
+        <p>&copy; 2025 LAW STUDENTS INTELLECTUAL FORUM</p>
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Function to load article data based on a filename
+            function loadArticle(filename) {
+                fetch(filename)
+                    .then(response => response.json())
+                    .then(data => {
+                        document.querySelector('.article-title').textContent = data.title;
+                        document.querySelector('.article-meta .article-date').textContent = `Published: ${data.date}`;
+                        document.querySelector('.article-meta .article-author').textContent = `Author: [Student Name]`; // Assuming author is always "[Student Name]"
+                        document.querySelector('.article-banner').src = data.image; // Use data.image instead of data.bannerImage
+                        document.querySelector('.article-banner').alt = data.title;
+
+                        const articleBody = document.querySelector('.article-body');
+                        articleBody.innerHTML = ''; // Clear existing content
+                        if (Array.isArray(data.content)) { // Check if content is an array
+                            data.content.forEach(paragraph => {
+                                const p = document.createElement('p');
+                                p.textContent = paragraph;
+                                articleBody.appendChild(p);
+                            });
+                        } else {
+                            articleBody.textContent = data.content; // Or handle as needed if it's a single string
+                        }
+
+                        const topicsContainer = document.querySelector('.article-topics');
+                        const topicsSpan = topicsContainer.querySelector('span'); // The "Topics:" span
+                        // Clear existing topic spans
+                        while (topicsContainer.lastChild !== topicsSpan) {
+                            topicsContainer.removeChild(topicsContainer.lastChild);
+                        }
+                        data.topics.forEach(topic => {
+                            const topicSpan = document.createElement('span');
+                            topicSpan.textContent = topic;
+                            topicsContainer.appendChild(topicSpan);
+                        });
+                    })
+                    .catch(error => {
+                        console.error('Error loading article:', error);
+                        document.querySelector('.article-content').innerHTML = '<p>Error loading article.</p>';
+                    });
+            }
+
+            // Determine which article to load
+            const urlParams = new URLSearchParams(window.location.search);
+            const articleFile = urlParams.get('article');
+
+            if (articleFile === 'law-and-ai') {
+                loadArticle('Law and AI.json');
+            } else if (articleFile === 'gold-mafia') {
+                loadArticle('gold mafia.json');
+            } else {
+                document.querySelector('.article-content').innerHTML = '<p>No article specified.</p>';
+            }
+        });
+    </script>
+</body>
+</html>

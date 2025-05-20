@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student Articles - LAW STUDENTS INTELLECTUAL FORUM</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="student-articles.css">
+</head>
+<body>
+    <header>
+        <a href="index.html" class="logo-link">
+            <img src="scales of justice.png" alt="LSIF Logo" class="header-logo">
+        </a>
+        <h1>
+            LAW STUDENTS<br>
+            INTELLECTUAL FORUM
+        </h1>
+        <nav>
+            <ul>
+                <li><a href="index.html">Home</a></li>
+                <li><a href="student-articles.html">Student Articles</a></li>
+                <li><a href="#">Academic Resources</a></li>
+                <li><a href="tutorials.html">Campus Guides</a></li>
+                <li><a href="moot-court-guide.html">Moot Court Guide</a></li>
+                <li><a href="about.html">About</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main class="articles-main">
+        <section class="articles-hero">
+            <h2>Explore Student Articles</h2>
+            <p>Dive into insightful articles written by law students, covering a wide range of legal topics and analyses.</p>
+        </section>
+
+        <section class="article-filters">
+            <ul>
+                <li><a href="#" class="filter-link active" data-filter="all">All</a></li>
+                <li><a href="#" class="filter-link" data-filter="human-rights-law">Human Rights Law</a></li>
+                <li><a href="#" class="filter-link" data-filter="commercial-law">Commercial Law</a></li>
+                <li><a href="#" class="filter-link" data-filter="intellectual-property-law">Intellectual Property Law</a></li>
+                <li><a href="#" class="filter-link" data-filter="international-law">International Law</a></li>
+                <li><a href="#" class="filter-link" data-filter="constitutional-law">Constitutional Law</a></li>
+            </ul>
+        </section>
+
+        <section class="articles-list">
+            <div class="article-card" data-topics="law intellectual-property-law artificial-intelligence technology">
+                <img src="Law and AI.webp" alt="Law and AI" class="article-thumbnail">
+                <h3>The Intersection of Law and Artificial Intelligence</h3>
+                <p class="article-excerpt">In my submission, I'd argue that the assertion whether or not "AI is here to replace religion" is not a completely inaccurate analogy....</p>
+                <div class="article-meta">
+                    <span class="article-date">Published: May 4, 2025</span>
+                    <span class="article-author">Author: [Student Name]</span>
+                </div>
+                <a href="article.html?article=law-and-ai" class="read-more-btn">Read More</a>
+                <div class="article-topics">
+                    <span>Law</span>
+                    <span>Intellectual Property Law</span>
+                    <span>Artificial Intelligence</span>
+                    <span>Technology</span>
+                </div>
+            </div>
+
+             <div class="article-card" data-topics="money-laundering russia china commercial-law">
+                <img src="gold-mafia.jpg" alt="The Gold Mafia Scandal" class="article-thumbnail">
+                <h3>The Gold Mafia Scandal</h3>
+                <p class="article-excerpt">From new-age pastors to old-school smugglers, and from diplomats to the Zimbabwean president's niece, Al Jazeera's latest investigation, Gold Mafia...</p>
+                <div class="article-meta">
+                    <span class="article-date">Published: May 4, 2025</span>
+                    <span class="article-author">Author: [Student Name]</span>
+                </div>
+                <a href="article.html?article=gold-mafia" class="read-more-btn">Read More</a>
+                 <div class="article-topics">
+                    <span>Money Laundering</span>
+                    <span>Russia</span>
+                    <span>China</span>
+                    <span>Commercial Law</span>
+                </div>
+            </div>
+            </section>
+
+        <section class="pagination">
+            <a href="#" class="page-btn prev-page">Previous</a>
+            <span class="page-number">Page 1 of [Total Pages]</span>
+            <a href="#" class="page-btn next-page">Next</a>
+        </section>
+    </main>
+
+    <footer>
+        <p>&copy; 2025 LAW STUDENTS INTELLECTUAL FORUM</p>
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const filterLinks = document.querySelectorAll('.filter-link');
+            const articleCards = document.querySelectorAll('.article-card');
+
+            filterLinks.forEach(link => {
+                link.addEventListener('click', function(event) {
+                    event.preventDefault();
+                    const filterValue = this.getAttribute('data-filter');
+
+                    // Update active state of filter links
+                    filterLinks.forEach(fl => fl.classList.remove('active'));
+                    this.classList.add('active');
+
+                    // Filter article cards
+                    articleCards.forEach(card => {
+                        const topics = card.getAttribute('data-topics').split(' ');
+                        if (filterValue === 'all' || topics.includes(filterValue)) {
+                            card.style.display = 'block';
+                        } else {
+                            card.style.display = 'none';
+                        }
+                    });
+                });
+            });
+        });
+    </script>
+</body>
+</html>
