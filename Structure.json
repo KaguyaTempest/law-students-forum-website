@@ -1,0 +1,148 @@
+{
+  "users": {
+    "m19U72hkf4JNTQ2WdG6bH0QDPHV2": {
+      "displayName": "Mary Moyo",
+      "email": "mary@uz.ac.zw",
+      "avatarURL": "https://example.com/avatars/mary.jpg",
+      "joinedDate": "2025-05-28",
+      "role": "student",
+      "university": "UZ",
+      "status": "law_student",
+      "color": "#009688",
+      "studentId": "UZ123456",
+      "yearOfStudy": 3,
+      "comments": {
+        "article_001": {
+          "comment_1": {
+            "text": "This really clarified the concept!",
+            "emoji": "❤️",
+            "timestamp": "2025-05-28T10:15:00Z"
+          }
+        }
+      }
+    },
+    "Xj7kUv6Pwo9aTcHGQr2WlmNsvf83": {
+      "displayName": "John Mapfumo",
+      "email": "john@msu.ac.zw",
+      "avatarURL": "https://example.com/avatars/john.jpg",
+      "joinedDate": "2025-05-28",
+      "role": "student",
+      "university": "MSU",
+      "status": "law_student",
+      "color": "#3f51b5",
+      "studentId": "MSU789012",
+      "yearOfStudy": 5,
+      "comments": {
+        "article_001": {
+          "comment_2": {
+            "text": "Good insight into Zimbabwean law.",
+            "emoji": "👍",
+            "timestamp": "2025-05-28T10:16:00Z"
+          }
+        }
+      }
+    },
+    "KjvPZ7EUcWsd4XGpUeRrtYxYxC45": {
+      "displayName": "Sara Nyasha",
+      "email": "sara@zegu.ac.zw",
+      "avatarURL": "https://example.com/avatars/sara.jpg",
+      "joinedDate": "2025-05-28",
+      "role": "student",
+      "university": "ZEGU",
+      "status": "law_student",
+      "color": "purple",
+      "studentId": "ZEGU345678",
+      "yearOfStudy": 1
+    },
+    "HpRt29FkjUePEjNhgyWzM4p8zZhX": {
+      "displayName": "David Gono",
+      "email": "david@gzu.ac.zw",
+      "avatarURL": "https://example.com/avatars/david.jpg",
+      "joinedDate": "2025-05-28",
+      "role": "student",
+      "university": "GZU",
+      "status": "law_student",
+      "color": "green",
+      "studentId": "GZU901234",
+      "yearOfStudy": 7
+    },
+    "LwFrbU8Vik78o5RzPmEcTgQiV7Nk": {
+      "displayName": "Smith Banda",
+      "email": "attorney.smith@example.com",
+      "avatarURL": "https://example.com/avatars/smith.jpg",
+      "joinedDate": "2025-05-28",
+      "role": "lawyer",
+      "university": "N/A",
+      "status": "lawyer",
+      "color": "red",
+      "yearsOfExperience": 2,
+      "lawyerStatus": "junior"
+    },
+    "YuWdEg7RmNl2rRxJvTe8R7uZz0Fm": {
+      "displayName": "Jones Mhlanga",
+      "email": "barrister.jones@example.com",
+      "avatarURL": "https://example.com/avatars/jones.jpg",
+      "joinedDate": "2025-05-28",
+      "role": "lawyer",
+      "university": "N/A",
+      "status": "lawyer",
+      "color": "#CC0000",
+      "yearsOfExperience": 15,
+      "lawyerStatus": "experienced"
+    },
+    "AxYpRz3LfUqPvH9WmDcOsRxBgYuT": {
+      "displayName": "Martha Counsel",
+      "email": "senior.counsel@example.com",
+      "avatarURL": "https://example.com/avatars/martha.jpg",
+      "joinedDate": "2025-05-28",
+      "role": "lawyer",
+      "university": "N/A",
+      "status": "lawyer",
+      "color": "#990000",
+      "yearsOfExperience": 25,
+      "lawyerStatus": "senior counsel"
+    },
+    "UfJeXc7PhNrzWqFpYdT6QuRjMaLv": {
+      "displayName": "Curious Reader",
+      "email": "curious.reader@example.com",
+      "avatarURL": "https://example.com/avatars/reader.jpg",
+      "joinedDate": "2025-05-28",
+      "role": "observer",
+      "university": "N/A",
+      "status": "spectator",
+      "color": "grey"
+    }
+  },
+  "articles": {
+    "article_001": {
+      "title": "Understanding Dignity in Constitutional Law",
+      "likes": 24,
+      "timestamp": "2025-05-27T14:00:00Z",
+      "comments": {
+        "comment_1": {
+          "uid": "m19U72hkf4JNTQ2WdG6bH0QDPHV2",
+          "text": "This really clarified the concept!",
+          "emoji": "❤️",
+          "timestamp": "2025-05-28T10:15:00Z"
+        },
+        "comment_2": {
+          "uid": "Xj7kUv6Pwo9aTcHGQr2WlmNsvf83",
+          "text": "Good insight into Zimbabwean law.",
+          "emoji": "👍",
+          "timestamp": "2025-05-28T10:16:00Z"
+        }
+      }
+    }
+  },
+  "newsletter": {
+    "news_001": {
+      "headline": "New Bill on Land Reform",
+      "emoji_reactions": {
+        "🔥": 3,
+        "🤔": 1,
+        "👏": 2
+      },
+      "timestamp": "2025-05-28T09:00:00Z"
+    }
+  }
+}
