@@ -118,6 +118,21 @@ nav ul li.about-link {
     color: #fff;
 }
 
+.avatar {
+  height: 40px;
+  width: 40px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.role-badge {
+  background-color: #007bff;
+  color: white;
+  padding: 4px 8px;
+  border-radius: 12px;
+  font-size: 0.85em;
+}
+
 /* Utility */
 .hidden {
     display: none !important;
