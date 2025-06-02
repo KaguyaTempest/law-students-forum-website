@@ -11,21 +11,36 @@
     <header>
         <a href="index.html" class="logo-link">
             <img src="scales of justice.png" alt="LSIF Logo" class="header-logo">
-        </a>
-        <h1>
-            LAW STUDENTS<br>
-            INTELLECTUAL FORUM
-        </h1>
-        <nav>
-            <ul>
-                <li><a href="student-articles.html">Student Articles</a></li>
-                <li><a href="#">Academic Resources</a></li>
-                <li><a href="tutorials.html">Campus Guides</a></li>
-                <li><a href="moot-court-guide.html">Moot Court Guide</a></li>
-                <li><a href="about.html">About</a></li>
-            </ul>
-        </nav>
-    </header>
+    <h1>
+      Law Students<br />
+      <span>Intellectual Forum</span>
+    </h1>
+  </a>
+
+  <!-- Navigation -->
+  <nav>
+    <ul>
+      <li><a href="articles.html">Articles</a></li>
+      <li><a href="moots.html">Moots</a></li>
+      <li><a href="guides.html">Campus Guides</a></li>
+      <li><a href="about.html" class="about-link">About</a></li>
+    </ul>
+  </nav>
+
+  <!-- Auth buttons (for guests) -->
+  <div id="auth-buttons" style="display: flex; gap: 10px;">
+    <button id="login-btn">Login</button>
+    <button id="signup-btn">Sign Up</button>
+  </div>
+
+  <!-- User info (shown when logged in) -->
+  <div id="user-info" class="hidden" style="display: flex; align-items: center; margin-left: 20px;">
+    <img id="user-avatar" src="" alt="Avatar" class="avatar" style="height: 40px; border-radius: 50%;">
+    <span id="user-name" style="margin-left: 10px;"></span>
+    <span id="user-role-badge" class="role-badge" style="margin-left: 10px; font-weight: bold;"></span>
+    <button id="logout-btn" style="margin-left: 15px;">Logout</button>
+  </div>
+</header>
 
     <main class="article-page-main">
         <article class="article-content">
