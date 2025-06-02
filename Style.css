@@ -72,6 +72,71 @@ nav ul li.about-link {
     margin-left: auto;
 }
 
+/* LOGIN BUTTONS & USER DISPLAY (NEW) */
+.auth-buttons {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+}
+
+.auth-buttons button,
+.user-panel button {
+    background-color: transparent;
+    border: 2px solid #fff;
+    color: #fff;
+    padding: 6px 14px;
+    border-radius: 5px;
+    font-size: 0.9em;
+    cursor: pointer;
+    transition: background-color 0.3s, color 0.3s;
+}
+
+.auth-buttons button:hover,
+.user-panel button:hover {
+    background-color: #fff;
+    color: #4f606d;
+}
+
+/* User Panel (shows after login) */
+.user-panel {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    color: #fff;
+}
+
+.user-name {
+    font-weight: bold;
+    font-size: 0.95em;
+}
+
+.user-badge {
+    background-color: #007bff;
+    padding: 4px 8px;
+    border-radius: 12px;
+    font-size: 0.75em;
+    color: #fff;
+}
+
+.avatar {
+  height: 40px;
+  width: 40px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.role-badge {
+  background-color: #007bff;
+  color: white;
+  padding: 4px 8px;
+  border-radius: 12px;
+  font-size: 0.85em;
+}
+
+/* Utility */
+.hidden {
+    display: none !important;
+}
 main {
     padding: 20px;
 }
