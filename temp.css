@@ -1,0 +1,251 @@
+/* General Styles */
+body {
+    font-family: sans-serif;
+    margin: 0;
+    line-height: 1.6;
+    background-color: #f0f0f0; /* Light gray background */
+    color: #333;
+}
+
+header {
+    background-color: #4f606d; /* Dark gray header */
+    color: #fff;
+    padding: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    position: static; /* Keep the header's normal scrolling behavior */
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2); /* Add a subtle shadow */
+    height: 90px; /* Set a fixed height for the header */
+}
+
+/* Style the header logo */
+header .logo-link {
+    text-decoration: none;
+    margin-right: 20px;
+    display: flex; /* To vertically align logo and title if needed */
+    align-items: center;
+}
+
+header .header-logo {
+    max-height: 80px; /* Enlarge the logo */
+    width: auto;
+    display: block;
+}
+
+header h1 {
+    margin: 0;
+    font-size: 1.5em; /* Slightly smaller font size */
+    line-height: 1.2; /* Adjust line height for spacing */
+}
+
+header h1 span {
+    display: block;
+    text-align: left; /* Align text to the left within the h1 */
+}
+
+nav ul {
+    list-style: none;
+    padding: 0;
+    margin: 0; /* Remove default margin */
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    height: 100%; /* Make nav ul take full header height */
+    align-items: center; /* Vertically align navigation items */
+}
+
+nav ul li a {
+    text-decoration: none;
+    color: #eee; /* Light gray text */
+    font-weight: bold;
+    display: block; /* Make the entire link clickable */
+    padding: 10px 0; /* Add some vertical padding for better touch targets */
+}
+
+nav ul li a:hover {
+    text-decoration: underline;
+    color: #fff; /* White text on hover */
+}
+
+nav ul li.about-link {
+    margin-left: auto;
+}
+
+main {
+    padding: 20px;
+}
+
+.homepage-main {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+}
+
+.student-articles-section,
+.campus-guides-section,
+.moot-court-section,
+.about-section,
+.contact-section {
+    background-color: #fff;
+    padding: 20px;
+    margin-bottom: 20px;
+    border-radius: 8px;
+    box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.student-articles-section h2,
+.campus-guides-section h2,
+.moot-court-section h2,
+.about-section h2,
+.contact-section h3 {
+    color: #333; /* Dark gray */
+    margin-top: 0;
+    border-bottom: 2px solid #555; /* Medium gray */
+    padding-bottom: 10px;
+    margin-bottom: 15px;
+}
+
+.article-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 15px;
+}
+
+.article-card {
+    padding: 15px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+}
+
+.article-card h3 {
+    color: #333;
+    margin-top: 0;
+    font-size: 1.1em;
+    margin-bottom: 5px;
+}
+
+.article-card p {
+    font-size: 0.95em;
+    color: #555;
+}
+
+.article-card a {
+    display: inline-block;
+    margin-top: 10px;
+    text-decoration: none;
+    color: #007bff; /* Keep blue for emphasis */
+    font-weight: bold;
+}
+
+.guides-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 15px;
+}
+
+.guide-card a {
+    display: block;
+    text-decoration: none;
+    color: #333;
+    text-align: center;
+    padding: 20px;
+    border: 1px solid #eee;
+    border-radius: 5px;
+}
+
+.play-icon {
+    width: 40px;
+    height: 40px;
+    background-color: #ddd;
+    border-radius: 50%;
+    margin: 0 auto 10px;
+    position: relative;
+}
+
+.play-icon::before {
+    content: '';
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%) rotate(90deg);
+    border-left: 15px solid transparent;
+    border-right: 15px solid #555;
+    border-top: 10px solid transparent;
+    border-bottom: 10px solid transparent;
+}
+
+.scales-icon {
+    width: 40px;
+    height: 40px;
+    background-color: #ddd;
+    border-radius: 50%;
+    margin: 0 auto 10px;
+    position: relative;
+}
+
+.scales-icon::before,
+.scales-icon::after {
+    content: '';
+    position: absolute;
+    width: 15px;
+    height: 2px;
+    background-color: #555;
+    top: 50%;
+    transform: translateY(-50%);
+}
+
+.scales-icon::before {
+    left: 10px;
+}
+
+.scales-icon::after {
+    right: 10px;
+}
+
+.moot-court-section p {
+    font-size: 0.95em;
+    color: #555;
+    margin-bottom: 15px;
+}
+
+.moot-court-section a {
+    text-decoration: none;
+    color: #007bff;
+    font-weight: bold;
+}
+
+.top-about {
+    grid-column: 1 / span 1;
+}
+
+.bottom-about {
+    grid-column: 2 / span 1;
+}
+
+.about-section p {
+    font-size: 0.9em;
+    color: #666;
+    line-height: 1.4;
+}
+
+.contact-section {
+    text-align: center;
+    grid-column: 1 / -1; /* Span across both columns */
+}
+
+.contact-section a {
+    color: #007bff;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+footer {
+    text-align: center;
+    padding: 20px 0;
+    margin-top: 30px;
+    background-color: #4f606d;
+    color: #eee;
+    font-size: 0.9em;
+    box-shadow: 0 -2px 5px rgba(0, 0, 0, 0.2);
+}

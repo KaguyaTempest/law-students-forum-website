@@ -1,6 +1,6 @@
 // script.js
 // This script dynamically generates article cards based on the provided data
-document.addEventListener('DOMContentLoaded', function() {
+document.addEventListener('DOMContentLoaded', function () {
     //  Replace this with your actual data fetching/processing
     const articles = [
         { title: "Developing Effective Legal Writing", content: "Strategies for improving precision and clarity in legal documents.", link: "#" },
@@ -22,4 +22,16 @@ document.addEventListener('DOMContentLoaded', function() {
 
         articleContainer.appendChild(articleCard);
     });
+    // Load header.html into the placeholder
+    const headerPlaceholder = document.getElementById("header-placeholder");
+    if (headerPlaceholder) {
+        fetch("header.html")
+            .then(response => response.text())
+            .then(html => {
+                headerPlaceholder.innerHTML = html;
+                // If needed, run Firebase or button scripts here
+            })
+            .catch(err => console.error("Failed to load header:", err));
+    }
 });
+   
