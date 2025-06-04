@@ -84,3 +84,25 @@ function setupAuthUI() {
 
     logoutBtn.addEventListener('click', () => firebase.auth().signOut());
 }
+
+let currentIndex = 0;
+const carousel = document.getElementById('article-carousel');
+const totalCards = carousel.children.length;
+
+document.querySelector('.left-arrow').addEventListener('click', () => {
+  if (currentIndex > 0) {
+    currentIndex--;
+    updateCarousel();
+  }
+});
+
+document.querySelector('.right-arrow').addEventListener('click', () => {
+  if (currentIndex < totalCards - 1) {
+    currentIndex++;
+    updateCarousel();
+  }
+});
+
+function updateCarousel() {
+  carousel.style.transform = `translateX(-${currentIndex * 100}%)`;
+}
