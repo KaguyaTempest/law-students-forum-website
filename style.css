@@ -461,6 +461,12 @@ footer {
   text-decoration: underline;
 }
 
+/* Highlight featured articles */
+.featured {
+  border: 2px solid gold;
+  background-color: #fffbea;
+}
+
 /* Responsive for small screens */
 @media (max-width: 480px) {
   .auth-main {
@@ -473,3 +479,33 @@ footer {
   }
 }
 
+.avatar {
+  height: 40px;
+  width: 40px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+/* Responsive adjustments for the homepage sections */
+
+.auth-modal {
+  position: fixed;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background: rgba(0,0,0,0.45);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 2000;
+}
+
+.auth-modal.hidden {
+  display: none;
+}
+
+.auth-card {
+  background: #fff;
+  border-radius: 10px;
+  box-shadow: 0 4px 24px rgba(0,0,0,0.18);
+  padding: 32px 24px;
+  min-width: 320px;
+  max-width: 95vw;
+}

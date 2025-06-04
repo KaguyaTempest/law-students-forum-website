@@ -47,26 +47,20 @@ function handleRoleChange() {
   if (role === 'student') {
     studentFields.classList.remove('hidden');
     lawyerFields.classList.add('hidden');
-    // Make student fields required
     document.getElementById('student-id').required = true;
     document.getElementById('student-university').required = true;
     document.getElementById('student-year-of-study').required = true;
-    // Remove lawyer required
     document.getElementById('lawyer-years-experience').required = false;
   } else if (role === 'lawyer') {
     lawyerFields.classList.remove('hidden');
     studentFields.classList.add('hidden');
-    // Make lawyer fields required
     document.getElementById('lawyer-years-experience').required = true;
-    // Remove student required
     document.getElementById('student-id').required = false;
     document.getElementById('student-university').required = false;
     document.getElementById('student-year-of-study').required = false;
   } else {
-    // observer or blank role
     studentFields.classList.add('hidden');
     lawyerFields.classList.add('hidden');
-    // Remove all specific required
     document.getElementById('student-id').required = false;
     document.getElementById('student-university').required = false;
     document.getElementById('student-year-of-study').required = false;
@@ -74,20 +68,25 @@ function handleRoleChange() {
   }
 }
 
-// Attach toggle event listeners
 showSignupBtn.addEventListener('click', showSignup);
 showLoginBtn.addEventListener('click', showLogin);
 userRoleSelect.addEventListener('change', handleRoleChange);
 
-// Signup form submission
+// ✅ SIGNUP — with username!
 signupForm.addEventListener('submit', async (e) => {
   e.preventDefault();
   clearMessages();
 
+  const username = document.getElementById('signup-username').value.trim();
   const email = document.getElementById('signup-email').value.trim();
   const password = document.getElementById('signup-password').value;
   const confirmPassword = document.getElementById('signup-confirm-password').value;
   const role = userRoleSelect.value;
+
+  if (!username) {
+    signupErrorMsg.textContent = "Please enter a username.";
+    return;
+  }
 
   if (password !== confirmPassword) {
     signupErrorMsg.textContent = "Passwords do not match.";
@@ -99,7 +98,6 @@ signupForm.addEventListener('submit', async (e) => {
     return;
   }
 
-  // Gather extra info based on role
   let extraData = {};
 
   if (role === 'student') {
@@ -124,15 +122,14 @@ signupForm.addEventListener('submit', async (e) => {
     const userCredential = await auth.createUserWithEmailAndPassword(email, password);
     const user = userCredential.user;
 
-    // Save additional user data to Realtime Database
     await database.ref('users/' + user.uid).set({
+      username: username, // ✅ Save it here
       email: email,
       role: role,
       ...extraData,
       createdAt: Date.now()
     });
 
-    // Optionally redirect or show success message
     alert('Account created successfully! You can now log in.');
     signupForm.reset();
     showLogin();
@@ -141,7 +138,7 @@ signupForm.addEventListener('submit', async (e) => {
   }
 });
 
-// Login form submission
+// LOGIN
 loginForm.addEventListener('submit', async (e) => {
   e.preventDefault();
   clearMessages();
@@ -151,24 +148,20 @@ loginForm.addEventListener('submit', async (e) => {
 
   try {
     await auth.signInWithEmailAndPassword(email, password);
-    // Redirect or update UI after login
     alert('Login successful! Redirecting...');
-    window.location.href = "index.html"; // Redirect to homepage or dashboard
+    window.location.href = "index.html";
   } catch (error) {
     loginErrorMsg.textContent = error.message;
   }
 });
 
-// Forgot Password functionality
+// FORGOT PASSWORD
 forgotPasswordLink.addEventListener('click', async (e) => {
   e.preventDefault();
   clearMessages();
 
   const email = prompt("Please enter your email address to reset your password:");
-
-  if (!email) {
-    return; // user cancelled
-  }
+  if (!email) return;
 
   try {
     await auth.sendPasswordResetEmail(email);
@@ -178,8 +171,20 @@ forgotPasswordLink.addEventListener('click', async (e) => {
   }
 });
 
-// On page load, set default to signup view and hide role-specific fields
+// On page load
 document.addEventListener('DOMContentLoaded', () => {
   showSignup();
   handleRoleChange();
 });
+
+// Modal open/close
+document.addEventListener('click', (e) => {
+  if (e.target.id === 'login-btn' || e.target.id === 'signup-btn') {
+    document.getElementById('auth-modal').classList.remove('hidden');
+    e.target.id === 'login-btn' ? showLogin() : showSignup();
+  }
+
+    if (e.target.id === 'auth-modal') {
+      document.getElementById('auth-modal').classList.add('hidden');
+    }
+  });

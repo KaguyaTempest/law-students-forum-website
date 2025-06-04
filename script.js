@@ -33,5 +33,33 @@ document.addEventListener('DOMContentLoaded', function () {
             })
             .catch(err => console.error("Failed to load header:", err));
     }
+
+    // Show modal
+    document.getElementById('login-btn').onclick = function() {
+        document.getElementById('auth-modal').classList.remove('hidden');
+        document.getElementById('login-form').classList.add('active');
+        document.getElementById('signup-form').classList.remove('active');
+    };
+    document.getElementById('signup-btn').onclick = function() {
+        document.getElementById('auth-modal').classList.remove('hidden');
+        document.getElementById('login-form').classList.remove('active');
+        document.getElementById('signup-form').classList.add('active');
+    };
+    // Toggle forms
+    document.getElementById('show-login').onclick = function() {
+        document.getElementById('login-form').classList.add('active');
+        document.getElementById('signup-form').classList.remove('active');
+        this.classList.add('active');
+        document.getElementById('show-signup').classList.remove('active');
+    };
+    document.getElementById('show-signup').onclick = function() {
+        document.getElementById('login-form').classList.remove('active');
+        document.getElementById('signup-form').classList.add('active');
+        this.classList.add('active');
+        document.getElementById('show-login').classList.remove('active');
+    };
+    // Optional: Hide modal when clicking outside the card
+    document.getElementById('auth-modal').onclick = function(e) {
+        if (e.target === this) this.classList.add('hidden');
+    };
 });
-   
