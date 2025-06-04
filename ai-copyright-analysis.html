@@ -40,6 +40,20 @@
 
       <p><em>Originally submitted during a moot court hosted by WIPO.</em></p>
     </section>
+    <div class="emoji-reactions">
+      <p>React to this article:</p>
+      <button class="emoji-btn" data-emoji="❤️">❤️</button>
+      <button class="emoji-btn" data-emoji="👏">👏</button>
+      <button class="emoji-btn" data-emoji="🤔">🤔</button>
+      <button class="emoji-btn" data-emoji="🔥">🔥</button>
+      <div id="emoji-counts"></div>
+    </div>
+    <section class="comment-section">
+      <h3>Leave a Comment</h3>
+      <textarea id="comment-text" placeholder="Write your thoughts..."></textarea>
+      <button id="submit-comment">Post Comment</button>
+      <div id="comments-list"></div>
+    </section>
   </main>
 
   <footer>
@@ -51,11 +65,59 @@
   <script>
     // Load the header dynamically
     fetch('header.html')
-        .then(response => response.text())
-        .then(html => {
-            document.getElementById('header-placeholder').innerHTML = html;
-        })
-        .catch(err => console.error('Failed to load header:', err));
+      .then(response => response.text())
+      .then(html => {
+        document.getElementById('header-placeholder').innerHTML = html;
+      })
+      .catch(err => console.error('Failed to load header:', err));
+
+    // Emoji reaction logic
+    document.addEventListener("click", function (e) {
+      if (e.target.classList.contains("emoji-btn")) {
+        const emoji = e.target.dataset.emoji;
+        const reactionRef = firebase.database().ref("newsletter/news_001/emoji_reactions/" + emoji);
+        reactionRef.transaction(current => (current || 0) + 1);
+      }
+    });
+
+    // Display counts (optional)
+    const countRef = firebase.database().ref("newsletter/news_001/emoji_reactions");
+    countRef.on("value", snapshot => {
+      const counts = snapshot.val() || {};
+      const countDiv = document.getElementById("emoji-counts");
+      countDiv.innerHTML = "";
+      for (const emoji in counts) {
+        countDiv.innerHTML += `<span style="margin-right:10px">${emoji} ${counts[emoji]}</span>`;
+      }
+    });
+    // Comment submission logic
+    document.getElementById("submit-comment").addEventListener("click", () => {
+      const comment = document.getElementById("comment-text").value.trim();
+      const user = firebase.auth().currentUser;
+      if (user && comment) {
+       const newCommentRef = firebase.database().ref("articles/article_001/comments").push();
+       newCommentRef.set({
+       uid: user.uid,
+       text: comment,
+       timestamp: Date.now()
+    });
+    document.getElementById("comment-text").value = "";
+  }   else {
+    alert("Please log in and enter a comment.");
+  }
+});
+
+// Load comments
+    firebase.database().ref("articles/article_001/comments").on("value", snapshot => {
+      const comments = snapshot.val();
+      const list = document.getElementById("comments-list");
+      list.innerHTML = "";
+      for (const key in comments) {
+        const item = comments[key];
+        list.innerHTML += `<p><strong>${item.uid}:</strong> ${item.text}</p>`;
+  }
+});
+
   </script>
 </body>
 </html>
