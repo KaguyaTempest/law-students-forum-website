@@ -8,24 +8,7 @@
     <link rel="stylesheet" href="moot-court-guide.css">
 </head>
 <body>
-    <header>
-        <a href="index.html" class="logo-link">
-            <img src="scales of justice.png" alt="LSIF Logo" class="header-logo">
-        </a>
-        <h1>
-            LAW STUDENTS<br>
-            INTELLECTUAL FORUM
-        </h1>
-        <nav>
-            <ul>
-                <li><a href="index.html">Home</a></li>
-                <li><a href="student-articles.html">Student Articles</a></li>
-                <li><a href="#">Academic Resources</a></li>
-                <li><a href="tutorials.html">Campus Guides</a></li>
-                <li><a href="about.html">About</a></li>
-            </ul>
-        </nav>
-    </header>
+        <div id="header-placeholder"></div>
 
     <main class="moot-court-guide-main">
         <section class="moot-court-hero">
@@ -129,5 +112,16 @@
     <footer>
         <p>&copy; 2025 LAW STUDENTS INTELLECTUAL FORUM</p>
     </footer>
+     <script src="auth.js"></script>
+     <script src="script.js"></script>
+     <script>
+    // Load the header dynamically
+      fetch('header.html')
+       .then(response => response.text())
+       .then(html => {
+         document.getElementById('header-placeholder').innerHTML = html;
+       })
+       .catch(err => console.error('Failed to load header:', err));
+      </script>
 </body>
 </html>
