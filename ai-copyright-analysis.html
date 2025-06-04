@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>The Evolving Landscape of AI and Copyright</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <div id="header-placeholder"></div>
+
+  <main class="article-content">
+    <section class="student-articles-section">
+      <h2>The Evolving Landscape of AI and Copyright</h2>
+      <p class="author-name">By Kudakwashe Kwitireni</p>
+      <img src="assets/ai-law.jpg" alt="AI and Copyright" class="article-banner" />
+
+      <p>The rapid evolution of generative AI has ignited a fervent debate surrounding its intersection with intellectual property rights...</p>
+
+      <h3>Copyright Law and Originality</h3>
+      <p>Copyright law protects original works of authorship fixed in a tangible medium...</p>
+
+      <h3>The Role of Human Intervention</h3>
+      <p>A key question in determining copyright ownership of AI-generated content...</p>
+
+      <h3>Training Data and Copyright Infringement</h3>
+      <p>One of the primary concerns regarding AI-generated content is...</p>
+
+      <h3>Fair Use and AI-Generated Content</h3>
+      <p>The fair use doctrine, which allows for limited use of copyrighted material...</p>
+
+      <h3>Cultural Heritage and Copyright</h3>
+      <p>Cultural heritage artifacts, such as paintings, sculptures, and documents...</p>
+
+      <h3>Platform Liability and the DMCA</h3>
+      <p>Platforms that host AI content may face copyright liability...</p>
+
+      <h3>Looking Forward</h3>
+      <p>International law, licensing practices, and recognition of AI contributions...</p>
+
+      <p><em>Originally submitted during a moot court hosted by WIPO.</em></p>
+    </section>
+  </main>
+
+  <footer>
+    <p>&copy; 2025 LAW STUDENTS INTELLECTUAL FORUM</p>
+  </footer>
+
+  <script src="auth.js"></script>
+  <script src="script.js"></script>
+  <script>
+    // Load the header dynamically
+    fetch('header.html')
+        .then(response => response.text())
+        .then(html => {
+            document.getElementById('header-placeholder').innerHTML = html;
+        })
+        .catch(err => console.error('Failed to load header:', err));
+  </script>
+</body>
+</html>
