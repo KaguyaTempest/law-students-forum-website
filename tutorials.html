@@ -96,5 +96,14 @@
     <footer>
         <p>&copy; 2025 LAW STUDENTS INTELLECTUAL FORUM</p>
     </footer>
+    <script>
+    // Load the header dynamically
+      fetch('header.html')
+        .then(response => response.text())
+        .then(html => {
+          document.getElementById('header-placeholder').innerHTML = html;
+        })
+        .catch(err => console.error('Failed to load header:', err));
+    </script>
 </body>
 </html>
