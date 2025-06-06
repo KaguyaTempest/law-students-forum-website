@@ -1,172 +1,131 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>[Article Title] - LAW STUDENTS INTELLECTUAL FORUM</title>
-    <link rel="stylesheet" href="style.css">
-    <link rel="stylesheet" href="article.css">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Article - LAW STUDENTS INTELLECTUAL FORUM</title>
+  <link rel="stylesheet" href="style.css" />
+  <link rel="stylesheet" href="article.css" />
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.11.0/firebase-app.js";
+    import { getStorage, ref, getDownloadURL } from "https://www.gstatic.com/firebasejs/10.11.0/firebase-storage.js";
+
+    const firebaseConfig = {
+      // REPLACE THIS WITH YOUR CONFIG
+      apiKey: "YOUR-API-KEY",
+      authDomain: "YOUR-DOMAIN.firebaseapp.com",
+      projectId: "YOUR-PROJECT-ID",
+      storageBucket: "YOUR-STORAGE-BUCKET",
+      messagingSenderId: "YOUR-MESSAGE-SENDER-ID",
+      appId: "YOUR-APP-ID"
+    };
+
+    const app = initializeApp(firebaseConfig);
+    const storage = getStorage(app);
+
+    document.addEventListener("DOMContentLoaded", () => {
+      const params = new URLSearchParams(window.location.search);
+      const articleFile = params.get("article");
+
+      if (!articleFile) {
+        document.querySelector(".article-content").innerHTML = "<p>No article specified.</p>";
+        return;
+      }
+
+      const storageRef = ref(storage, `articles/${articleFile}.json`);
+      getDownloadURL(storageRef)
+        .then((url) => fetch(url))
+        .then((response) => response.json())
+        .then((data) => {
+          document.title = `${data.title} - LAW STUDENTS INTELLECTUAL FORUM`;
+          document.querySelector(".article-title").textContent = data.title;
+          document.querySelector(".article-meta .article-date").textContent = `Published: ${data.date || "Unknown Date"}`;
+          document.querySelector(".article-meta .article-author").textContent = `Author: ${data.author || "Anonymous"}`;
+          document.querySelector(".article-banner").src = data.image || "";
+          document.querySelector(".article-banner").alt = data.title;
+
+          const bodyContainer = document.querySelector(".article-body");
+          bodyContainer.innerHTML = "";
+          if (Array.isArray(data.content)) {
+            data.content.forEach(p => {
+              const para = document.createElement("p");
+              para.textContent = p;
+              bodyContainer.appendChild(para);
+            });
+          } else {
+            bodyContainer.textContent = data.content || "No content available.";
+          }
+
+          const topicsContainer = document.querySelector(".article-topics");
+          const label = topicsContainer.querySelector("span");
+          while (topicsContainer.lastChild !== label) {
+            topicsContainer.removeChild(topicsContainer.lastChild);
+          }
+
+          if (Array.isArray(data.topics)) {
+            data.topics.forEach(topic => {
+              const t = document.createElement("span");
+              t.textContent = topic;
+              topicsContainer.appendChild(t);
+            });
+          }
+        })
+        .catch((err) => {
+          console.error("Error loading article:", err);
+          document.querySelector(".article-content").innerHTML = "<p>Error loading article.</p>";
+        });
+    });
+  </script>
 </head>
 <body>
-    <header>
-        <a href="index.html" class="logo-link">
-            <img src="scales of justice.png" alt="LSIF Logo" class="header-logo">
-    <h1>
-      Law Students<br />
-      <span>Intellectual Forum</span>
-    </h1>
-  </a>
+  <div id="header-placeholder"></div>
 
-  <!-- Navigation -->
-  <nav>
-    <ul>
-      <li><a href="articles.html">Articles</a></li>
-      <li><a href="moots.html">Moots</a></li>
-      <li><a href="guides.html">Campus Guides</a></li>
-      <li><a href="about.html" class="about-link">About</a></li>
-    </ul>
-  </nav>
+  <main class="article-page-main">
+    <article class="article-content">
+      <h1 class="article-title">[Article Title]</h1>
+      <div class="article-meta">
+        <span class="article-date">Published: [Date]</span>
+        <span class="article-author">Author: [Author]</span>
+      </div>
+      <img src="[Article Banner Image]" alt="[Article Title]" class="article-banner" />
+      <div class="article-body">[Article Body Content Here]</div>
+      <div class="article-topics">
+        <span>Topics:</span>
+        [Article Topic Tags]
+      </div>
 
-  <!-- Auth buttons (for guests) -->
-  <div id="auth-buttons" style="display: flex; gap: 10px;">
-    <button id="login-btn">Login</button>
-    <button id="signup-btn">Sign Up</button>
-  </div>
+      <section class="comment-section">
+        <h2>Comments</h2>
+        <div class="comments-container"></div>
+        <h3>Leave a Comment</h3>
+        <form class="comment-form">
+          <input type="text" placeholder="Your Name" required />
+          <textarea placeholder="Your Comment" rows="4" required></textarea>
+          <button type="submit">Post Comment</button>
+        </form>
+      </section>
+    </article>
 
-  <!-- User info (shown when logged in) -->
-  <div id="user-info" class="hidden" style="display: flex; align-items: center; margin-left: 20px;">
-    <img id="user-avatar" src="" alt="Avatar" class="avatar" style="height: 40px; border-radius: 50%;">
-    <span id="user-name" style="margin-left: 10px;"></span>
-    <span id="user-role-badge" class="role-badge" style="margin-left: 10px; font-weight: bold;"></span>
-    <button id="logout-btn" style="margin-left: 15px;">Logout</button>
-  </div>
-</header>
+    <aside class="article-sidebar">
+      <section class="you-may-like">
+        <h2>You May Also Like</h2>
+        <div class="related-articles">
+          <!-- You may dynamically fill this later -->
+        </div>
+      </section>
 
-    <main class="article-page-main">
-        <article class="article-content">
-            <h1 class="article-title">[Article Title]</h1>
-            <div class="article-meta">
-                <span class="article-date">Published: [Date]</span>
-                <span class="article-author">Author: [Author]</span>
-            </div>
-            <img src="[Article Banner Image]" alt="[Article Title]" class="article-banner">
-            <div class="article-body">
-                [Article Body Content Here]
-            </div>
-            <div class="article-topics">
-                <span>Topics:</span>
-                [Article Topic Tags]
-            </div>
+      <section class="popular-articles">
+        <h2>Popular Articles</h2>
+        <div class="popular-articles-list"></div>
+      </section>
+    </aside>
+  </main>
 
-            <section class="comment-section">
-                <h2>Comments</h2>
-                <div class="comments-container">
-                    </div>
-                <h3>Leave a Comment</h3>
-                <form class="comment-form">
-                    <input type="text" placeholder="Your Name" required>
-                    <textarea placeholder="Your Comment" rows="4" required></textarea>
-                    <button type="submit">Post Comment</button>
-                </form>
-            </section>
-        </article>
+  <footer>
+    <p>&copy; 2025 LAW STUDENTS INTELLECTUAL FORUM</p>
+  </footer>
 
-        <aside class="article-sidebar">
-            <section class="you-may-like">
-                <h2>You May Also Like</h2>
-                <div class="related-articles">
-                    <div class="related-article-card">
-                        <a href="#">
-                            <h3>[Related Article Title 1]</h3>
-                            <span class="read-more">Read More</span>
-                        </a>
-                    </div>
-                    <div class="related-article-card">
-                        <a href="#">
-                            <h3>[Related Article Title 2]</h3>
-                            <span class="read-more">Read More</span>
-                        </a>
-                    </div>
-                    </div>
-            </section>
-
-            <section class="popular-articles">
-                <h2>Popular Articles</h2>
-                <div class="popular-articles-list">
-                    <div class="popular-article-item">
-                        <a href="#">
-                            <span>1.</span> [Popular Article Title 1]
-                        </a>
-                    </div>
-                    <div class="popular-article-item">
-                        <a href="#">
-                            <span>2.</span> [Popular Article Title 2]
-                        </a>
-                    </div>
-                    </div>
-            </section>
-        </aside>
-    </main>
-
-    <footer>
-        <p>&copy; 2025 LAW STUDENTS INTELLECTUAL FORUM</p>
-    </footer>
-
-    <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            // Function to load article data based on a filename
-            function loadArticle(filename) {
-                fetch(filename)
-                    .then(response => response.json())
-                    .then(data => {
-                        document.querySelector('.article-title').textContent = data.title;
-                        document.querySelector('.article-meta .article-date').textContent = `Published: ${data.date}`;
-                        document.querySelector('.article-meta .article-author').textContent = `Author: [Student Name]`; // Assuming author is always "[Student Name]"
-                        document.querySelector('.article-banner').src = data.image; // Use data.image instead of data.bannerImage
-                        document.querySelector('.article-banner').alt = data.title;
-
-                        const articleBody = document.querySelector('.article-body');
-                        articleBody.innerHTML = ''; // Clear existing content
-                        if (Array.isArray(data.content)) { // Check if content is an array
-                            data.content.forEach(paragraph => {
-                                const p = document.createElement('p');
-                                p.textContent = paragraph;
-                                articleBody.appendChild(p);
-                            });
-                        } else {
-                            articleBody.textContent = data.content; // Or handle as needed if it's a single string
-                        }
-
-                        const topicsContainer = document.querySelector('.article-topics');
-                        const topicsSpan = topicsContainer.querySelector('span'); // The "Topics:" span
-                        // Clear existing topic spans
-                        while (topicsContainer.lastChild !== topicsSpan) {
-                            topicsContainer.removeChild(topicsContainer.lastChild);
-                        }
-                        data.topics.forEach(topic => {
-                            const topicSpan = document.createElement('span');
-                            topicSpan.textContent = topic;
-                            topicsContainer.appendChild(topicSpan);
-                        });
-                    })
-                    .catch(error => {
-                        console.error('Error loading article:', error);
-                        document.querySelector('.article-content').innerHTML = '<p>Error loading article.</p>';
-                    });
-            }
-
-            // Determine which article to load
-            const urlParams = new URLSearchParams(window.location.search);
-            const articleFile = urlParams.get('article');
-
-            if (articleFile === 'law-and-ai') {
-                loadArticle('Law and AI.json');
-            } else if (articleFile === 'gold-mafia') {
-                loadArticle('gold mafia.json');
-            } else {
-                document.querySelector('.article-content').innerHTML = '<p>No article specified.</p>';
-            }
-        });
-    </script>
+  <script src="auth.js"></script>
+  <script src="script.js"></script>
 </body>
 </html>

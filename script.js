@@ -22,7 +22,6 @@ document.addEventListener('DOMContentLoaded', function() {
     loadHeader(); // Load header first
     
     // Your existing article generation code
-    const articles = [...];
     // ...
 });
 

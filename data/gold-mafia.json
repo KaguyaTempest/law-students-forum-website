@@ -1,0 +1,17 @@
+{
+  "articles": {
+    "gold-mafia": {
+      "author": "Mutemaringa",
+      "title": "The Gold Mafia Scandal",
+      "date": "2025-05-04",
+      "topics": {
+        "Money Laundering": true,
+        "Russia": true,
+        "China": true,
+        "Commercial Law": true
+      },
+      "image": "gold-mafia.jpg",
+      "content": "From new-age pastors to old-school smugglers, and from diplomats to the Zimbabwean president's niece, Al Jazeera's latest investigation, Gold Mafia, has uncovered a band of criminals driving gold smuggling and money laundering worth billions of dollars in Southern Africa."
+    }
+  }
+}

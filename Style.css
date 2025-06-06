@@ -506,8 +506,10 @@ footer {
   z-index: 1;
 }
 
-.left-arrow {
-  left: 0;
+/* Highlight featured articles */
+.featured {
+  border: 2px solid gold;
+  background-color: #fffbea;
 }
 
 .right-arrow {
