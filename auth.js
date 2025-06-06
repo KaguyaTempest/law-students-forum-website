@@ -177,14 +177,110 @@ document.addEventListener('DOMContentLoaded', () => {
   handleRoleChange();
 });
 
-// Modal open/close
-document.addEventListener('click', (e) => {
-  if (e.target.id === 'login-btn' || e.target.id === 'signup-btn') {
-    document.getElementById('auth-modal').classList.remove('hidden');
-    e.target.id === 'login-btn' ? showLogin() : showSignup();
+// auth.js
+
+// Auth form toggling
+document.getElementById("show-signup").addEventListener("click", () => {
+  document.getElementById("signup-form-container").classList.add("active");
+  document.getElementById("login-form-container").classList.remove("active");
+});
+
+document.getElementById("show-login").addEventListener("click", () => {
+  document.getElementById("login-form-container").classList.add("active");
+  document.getElementById("signup-form-container").classList.remove("active");
+});
+
+// Show/hide role-specific fields
+document.getElementById("user-role").addEventListener("change", (e) => {
+  const role = e.target.value;
+  document.getElementById("student-fields").classList.toggle("hidden", role !== "student");
+  document.getElementById("lawyer-fields").classList.toggle("hidden", role !== "lawyer");
+});
+
+// Sign up
+document.getElementById("signup-form").addEventListener("submit", (e) => {
+  e.preventDefault();
+  const email = document.getElementById("signup-email").value;
+  const password = document.getElementById("signup-password").value;
+  const confirmPassword = document.getElementById("signup-confirm-password").value;
+  const role = document.getElementById("user-role").value;
+
+  if (password !== confirmPassword) {
+    document.getElementById("signup-error-message").textContent = "Passwords do not match.";
+    return;
   }
 
-    if (e.target.id === 'auth-modal') {
-      document.getElementById('auth-modal').classList.add('hidden');
-    }
-  });
+  firebase.auth().createUserWithEmailAndPassword(email, password)
+    .then((userCredential) => {
+      const user = userCredential.user;
+      const userId = user.uid;
+
+      let userData = {
+        email,
+        role,
+        status: role === "student" ? "law_student" : role === "lawyer" ? "lawyer" : "spectator"
+      };
+
+      if (role === "student") {
+        userData.studentId = document.getElementById("student-id").value;
+        userData.university = document.getElementById("student-university").value;
+        userData.yearOfStudy = document.getElementById("student-year-of-study").value;
+      }
+
+      if (role === "lawyer") {
+        userData.yearsOfExperience = document.getElementById("lawyer-years-experience").value;
+      }
+
+      return firebase.database().ref('users/' + userId).set(userData);
+    })
+    .then(() => {
+      alert("Account created!");
+    })
+    .catch((error) => {
+      document.getElementById("signup-error-message").textContent = error.message;
+    });
+});
+
+// Login
+document.getElementById("login-form").addEventListener("submit", (e) => {
+  e.preventDefault();
+  const email = document.getElementById("login-email").value;
+  const password = document.getElementById("login-password").value;
+
+  firebase.auth().signInWithEmailAndPassword(email, password)
+    .catch((error) => {
+      document.getElementById("login-error-message").textContent = error.message;
+    });
+});
+
+// Logout
+document.addEventListener("click", (e) => {
+  if (e.target.id === "logout-btn") {
+    firebase.auth().signOut();
+  }
+});
+
+// Auth state change: Update header UI
+firebase.auth().onAuthStateChanged((user) => {
+  const authButtons = document.getElementById("auth-buttons");
+  const userInfo = document.getElementById("user-info");
+
+  if (user) {
+    authButtons.classList.add("hidden");
+    userInfo.classList.remove("hidden");
+
+    firebase.database().ref("users/" + user.uid).once("value").then(snapshot => {
+      const data = snapshot.val();
+      document.getElementById("user-name").textContent = data.email;
+      document.getElementById("user-role-badge").textContent = data.university || data.status;
+
+      // optional avatar
+      const avatar = document.getElementById("user-avatar");
+      avatar.src = "assets/default-avatar.png"; // or pull from user profile if available
+    });
+  } else {
+    authButtons.classList.remove("hidden");
+    userInfo.classList.add("hidden");
+  }
+});
+

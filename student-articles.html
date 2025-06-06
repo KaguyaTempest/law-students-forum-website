@@ -8,8 +8,7 @@
     <link rel="stylesheet" href="student-articles.css">
 </head>
 <body>
-    <div id="header-placeholder"></div>
-
+        <div id="header-placeholder"></div>
     <main class="articles-main">
         <section class="articles-hero">
             <h2>Explore Student Articles</h2>
@@ -75,6 +74,14 @@
     </footer>
 
     <script>
+    // Load the header dynamically
+     fetch('header.html')
+      .then(response => response.text())
+      .then(html => {
+        document.getElementById('header-placeholder').innerHTML = html;
+      })
+      .catch(err => console.error('Failed to load header:', err));
+
         document.addEventListener('DOMContentLoaded', function() {
             const filterLinks = document.querySelectorAll('.filter-link');
             const articleCards = document.querySelectorAll('.article-card');

@@ -8,7 +8,7 @@
     <link rel="stylesheet" href="attachment.css">
 </head>
 <body>
-    <div id="header-placeholder"></div>
+        <div id="header-placeholder"></div>
 
     <main class="attachment-main">
         <section class="attachment-hero">
@@ -114,5 +114,14 @@
     </footer>
     <script src="auth.js"></script>
     <script src="script.js"></script>
+    <script>
+    // Load the header dynamically
+    fetch('header.html')
+      .then(response => response.text())
+      .then(html => {
+        document.getElementById('header-placeholder').innerHTML = html;
+      })
+      .catch(err => console.error('Failed to load header:', err));
+      </script>
 </body>
 </html>

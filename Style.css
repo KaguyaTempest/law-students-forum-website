@@ -476,3 +476,42 @@ footer {
   }
 }
 
+.article-carousel-container {
+  position: relative;
+  overflow: hidden;
+}
+
+.article-carousel {
+  display: flex;
+  transition: transform 0.5s ease-in-out;
+  width: 300%; /* enough width for 3 cards */
+}
+
+.article-card {
+  flex: 0 0 100%;
+  box-sizing: border-box;
+  padding: 20px;
+}
+
+.carousel-arrow {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 2em;
+  background-color: rgba(0,0,0,0.3);
+  color: white;
+  border: none;
+  padding: 0 10px;
+  cursor: pointer;
+  z-index: 1;
+}
+
+/* Highlight featured articles */
+.featured {
+  border: 2px solid gold;
+  background-color: #fffbea;
+}
+
+.right-arrow {
+  right: 0;
+}
