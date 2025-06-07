@@ -229,34 +229,6 @@
     rightArrow.addEventListener('click', () => {
       carousel.scrollBy({ left: scrollStep, behavior: 'smooth' });
     });
-    // Load articles from Firebase Storage JSON files
-    async function loadArticles() {
-      const articleList = ['article1.json', 'article2.json', 'ai-copyright-analysis.json']; // Add or generate dynamically
-      for (const file of articleList) {
-        try {
-          const url = await storage.ref(`articles/${file}`).getDownloadURL();
-          const response = await fetch(url);
-          const data = await response.json();
-
-          const card = document.createElement('div');
-          card.className = 'article-card min-w-[300px] max-w-[300px] bg-white p-4 rounded shadow';
-          card.innerHTML = `
-            ${data.image ? `<img src="${data.image}" alt="${data.title}" class="mb-2 rounded w-full" />` : ''}
-            <h3 class="font-semibold text-lg mb-1">${data.title}</h3>
-            ${data.author ? `<p class="text-sm text-gray-500 mb-1">By ${data.author}</p>` : ''}
-            <p class="text-sm mb-2">${data.description}</p>
-            <a href="${data.url}" class="text-blue-600 font-bold">READ MORE</a>
-          `;
-          carousel.appendChild(card);
-        } catch (err) {
-          console.error(`Error loading ${file}:`, err);
-        }
-      }
-    }
-    loadArticles();
-
-      // Firebase Storage v9 modular import
-      import { getStorage, ref, getDownloadURL } from "https://www.gstatic.com/firebasejs/9.23.0/firebase-storage.js";
 
       // Initialize storage
       window.storage = getStorage(); // Make storage globally accessible
