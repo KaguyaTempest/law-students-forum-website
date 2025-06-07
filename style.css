@@ -151,7 +151,6 @@ main {
 .student-articles-section,
 .campus-guides-section,
 .moot-court-section,
-.about-section,
 .contact-section,
 .newsletter-section { /* All these sections share common card styling */
     background-color: #fff;
@@ -293,7 +292,7 @@ main {
 }
 
 .bottom-about {
-    grid-column: 2 / span 1;
+    grid-column: 1 / span 2;
 }
 
 .about-section p {
