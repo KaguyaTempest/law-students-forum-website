@@ -10,119 +10,117 @@ const firebaseConfig = {
   measurementId: "G-GGNJJSP3DJ"
 };
 
-// Initialize Firebase (only if not already initialized)
+// Initialize Firebase if needed
 if (!firebase.apps.length) {
   firebase.initializeApp(firebaseConfig);
   firebase.analytics();
 }
 
-// Global access
 const auth = firebase.auth();
 const database = firebase.database();
-// Load Header Function
+
+// Main setup
+document.addEventListener('DOMContentLoaded', () => {
+  loadHeader();
+  generateArticleCards();
+  setupCarousel();
+});
+
+// Load reusable header
 function loadHeader() {
-    fetch('header.html')
-        .then(response => {
-            if (!response.ok) throw new Error('Network response was not ok');
-            return response.text();
-        })
-        .then(html => {
-            document.getElementById('header-placeholder').innerHTML = html;
-            // Initialize header-related scripts AFTER load
-            setupAuthUI(); 
-        })
-        .catch(err => {
-            console.error('Failed to load header:', err);
-            // Fallback: Show basic header if fetch fails
-            document.getElementById('header-placeholder').innerHTML = '<header>LAW STUDENTS INTELLECTUAL FORUM</header>';
-        });
+  fetch('header.html')
+    .then(res => {
+      if (!res.ok) throw new Error("Header load failed");
+      return res.text();
+    })
+    .then(html => {
+      document.getElementById('header-placeholder').innerHTML = html;
+      setupAuthUI(); // Must wait for header to exist in DOM
+    })
+    .catch(err => {
+      console.error('Header error:', err);
+      document.getElementById('header-placeholder').innerHTML = '<header>LAW STUDENTS INTELLECTUAL FORUM</header>';
+    });
 }
 
-// Initialize when page loads
-document.addEventListener('DOMContentLoaded', function() {
-    loadHeader(); // Load header first
-    
-    // Your existing article generation code
-    // ...
-});
-
-// This script dynamically generates article cards based on the provided data
-document.addEventListener('DOMContentLoaded', function() {
-    //  Replace this with your actual data fetching/processing
-    const articles = [
-        { title: "Developing Effective Legal Writing", content: "Strategies for improving precision and clarity in legal documents.", link: "#" },
-        { title: "Navigating Legal Research", content: "Tips for efficiently finding and using legal sources.", link: "#" }
-        // ... more articles
-    ];
-
-    const articleContainer = document.getElementById('article-container');
-
-    articles.forEach(article => {
-        const articleCard = document.createElement('div');
-        articleCard.classList.add('article-card');
-
-        articleCard.innerHTML = `
-            <h3>${article.title}</h3>
-            <p>${article.content}</p>
-            <a href="${article.link}">READ MORE</a>
-        `;
-
-        articleContainer.appendChild(articleCard);
-    });
-});
+// Handle Login/Logout UI
 function setupAuthUI() {
-    const loginBtn = document.getElementById('login-btn');
-    const logoutBtn = document.getElementById('logout-btn');
-    const authButtons = document.getElementById('auth-buttons');
-    const userInfo = document.getElementById('user-info');
+  const loginBtn = document.getElementById('login-btn');
+  const logoutBtn = document.getElementById('logout-btn');
+  const authButtons = document.getElementById('auth-buttons');
+  const userInfo = document.getElementById('user-info');
 
-    if (!loginBtn || !logoutBtn) {
-        console.warn('Auth buttons not found in header!');
-        return;
+  if (!loginBtn || !logoutBtn || !authButtons || !userInfo) {
+    console.warn('Auth elements not found.');
+    return;
+  }
+
+  auth.onAuthStateChanged(user => {
+    if (user) {
+      authButtons.style.display = 'none';
+      userInfo.style.display = 'flex';
+      document.getElementById('user-name').textContent = user.displayName || user.email;
+      if (user.photoURL) {
+        document.getElementById('user-avatar').src = user.photoURL;
+      }
+    } else {
+      authButtons.style.display = 'flex';
+      userInfo.style.display = 'none';
     }
+  });
 
-    // Show/hide based on login state
-    firebase.auth().onAuthStateChanged(user => {
-        if (user) {
-            authButtons.style.display = 'none';
-            userInfo.style.display = 'flex';
-            document.getElementById('user-name').textContent = user.displayName || user.email;
-            // Set avatar if available
-            if (user.photoURL) {
-                document.getElementById('user-avatar').src = user.photoURL;
-            }
-        } else {
-            authButtons.style.display = 'flex';
-            userInfo.style.display = 'none';
-        }
-    });
+  loginBtn.addEventListener('click', () => {
+    const loginTab = document.getElementById('show-login');
+    if (loginTab) loginTab.click();
+  });
 
-    // Button event listeners
-    loginBtn.addEventListener('click', () => {
-        document.getElementById('show-login').click(); // Simulate click on your auth modal's login tab
-    });
-
-    logoutBtn.addEventListener('click', () => firebase.auth().signOut());
+  logoutBtn.addEventListener('click', () => auth.signOut());
 }
 
-let currentIndex = 0;
-const carousel = document.getElementById('article-carousel');
-const totalCards = carousel.children.length;
+// Generate article cards
+function generateArticleCards() {
+  const articles = [
+    {
+      title: "Developing Effective Legal Writing",
+      content: "Strategies for improving precision and clarity in legal documents.",
+      link: "#"
+    },
+    {
+      title: "Navigating Legal Research",
+      content: "Tips for efficiently finding and using legal sources.",
+      link: "#"
+    }
+  ];
 
-document.querySelector('.left-arrow').addEventListener('click', () => {
-  if (currentIndex > 0) {
-    currentIndex--;
-    updateCarousel();
+  const articleContainer = document.getElementById('article-container');
+  if (!articleContainer) return;
+
+  articles.forEach(article => {
+    const card = document.createElement('div');
+    card.classList.add('article-card');
+    card.innerHTML = `
+      <h3>${article.title}</h3>
+      <p>${article.content}</p>
+      <a href="${article.link}">READ MORE</a>
+    `;
+    articleContainer.appendChild(card);
+  });
+}
+
+// Carousel logic (safe!)
+function setupCarousel() {
+  const carousel = document.getElementById('article-carousel');
+  const leftArrow = document.getElementById('carousel-left');
+  const rightArrow = document.getElementById('carousel-right');
+  const scrollStep = 400;
+
+  if (carousel && leftArrow && rightArrow) {
+    leftArrow.addEventListener('click', () => {
+      carousel.scrollBy({ left: -scrollStep, behavior: 'smooth' });
+    });
+
+    rightArrow.addEventListener('click', () => {
+      carousel.scrollBy({ left: scrollStep, behavior: 'smooth' });
+    });
   }
-});
-
-document.querySelector('.right-arrow').addEventListener('click', () => {
-  if (currentIndex < totalCards - 1) {
-    currentIndex++;
-    updateCarousel();
-  }
-});
-
-function updateCarousel() {
-  carousel.style.transform = `translateX(-${currentIndex * 100}%)`;
 }
