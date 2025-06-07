@@ -328,7 +328,7 @@ footer {
 }
 
 .newsletter-section a {
-    background-color: #007bff; /* Blue button */
+    background-color: #4f606d; /* Dark gray button */
     color: #fff;
     padding: 10px 20px;
     border-radius: 5px;
@@ -338,7 +338,7 @@ footer {
 }
 
 .newsletter-section a:hover {
-    background-color: #0056b3; /* Darker blue on hover */
+    background-color: #37434c; /* Darker gray on hover */
 }
 
 .auth-main {
