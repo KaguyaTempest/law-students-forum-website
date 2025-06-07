@@ -1,3 +1,24 @@
+// Firebase configuration
+const firebaseConfig = {
+  apiKey: "AIzaSyC0qWjJ8kt5jo1rOwNAd21RZ9QeK6pE7yU",
+  authDomain: "lsif-cedb1.firebaseapp.com",
+  databaseURL: "https://lsif-cedb1-default-rtdb.firebaseio.com",
+  projectId: "lsif-cedb1",
+  storageBucket: "lsif-cedb1.firebasestorage.app",
+  messagingSenderId: "761903090404",
+  appId: "1:761903090404:web:0b7c914fa2c3599faebaf1",
+  measurementId: "G-GGNJJSP3DJ"
+};
+
+// Initialize Firebase (only if not already initialized)
+if (!firebase.apps.length) {
+  firebase.initializeApp(firebaseConfig);
+  firebase.analytics();
+}
+
+// Global access
+const auth = firebase.auth();
+const database = firebase.database();
 // Load Header Function
 function loadHeader() {
     fetch('header.html')
