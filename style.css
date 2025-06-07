@@ -2,6 +2,7 @@
 body {
     font-family: sans-serif;
     margin: 0;
+    pad height 0;
     line-height: 1.6;
     background-color: #f0f0f0; /* Light gray background */
     color: #333;
@@ -14,6 +15,7 @@ header {
     display: flex;
     align-items: center;
     justify-content: space-between;
+    gap: 20px;
     position: static; /* Keep the header's normal scrolling behavior */
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2); /* Add a subtle shadow */
     height: 90px; /* Set a fixed height for the header */
@@ -72,29 +74,27 @@ nav ul li.about-link {
     margin-left: auto;
 }
 
-/* LOGIN BUTTONS & USER DISPLAY (NEW) */
 .auth-buttons {
     display: flex;
     gap: 10px;
     align-items: center;
 }
 
-.auth-buttons button,
-.user-panel button {
-    background-color: transparent;
-    border: 2px solid #fff;
-    color: #fff;
-    padding: 6px 14px;
+.auth-action {
+    background-color: #007bff;
+    color: white;
+    border: none;
+    padding: 8px 16px;
+    font-weight: bold;
     border-radius: 5px;
-    font-size: 0.9em;
     cursor: pointer;
-    transition: background-color 0.3s, color 0.3s;
+    font-size: 0.95em;
+    transition: background-color 0.3s ease, transform 0.2s ease;
 }
 
-.auth-buttons button:hover,
-.user-panel button:hover {
-    background-color: #fff;
-    color: #4f606d;
+.auth-action:hover {
+    background-color: #0056b3;
+    transform: scale(1.05);
 }
 
 /* User Panel (shows after login) */
@@ -139,6 +139,7 @@ nav ul li.about-link {
 }
 main {
     padding: 20px;
+    margin-top: 0;
 }
 
 .homepage-main {
