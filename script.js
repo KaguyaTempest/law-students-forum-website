@@ -27,28 +27,30 @@ document.addEventListener('DOMContentLoaded', function() {
 
 // This script dynamically generates article cards based on the provided data
 document.addEventListener('DOMContentLoaded', function() {
-    //  Replace this with your actual data fetching/processing
-    const articles = [
-        { title: "Developing Effective Legal Writing", content: "Strategies for improving precision and clarity in legal documents.", link: "#" },
-        { title: "Navigating Legal Research", content: "Tips for efficiently finding and using legal sources.", link: "#" }
-        // ... more articles
-    ];
+    const BASE_URL = 'https://KaguyaTempest.github.io/law-students-forum-website\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\/data/';
 
-    const articleContainer = document.getElementById('article-container');
-
-    articles.forEach(article => {
-        const articleCard = document.createElement('div');
-        articleCard.classList.add('article-card');
-
-        articleCard.innerHTML = `
-            <h3>${article.title}</h3>
-            <p>${article.content}</p>
-            <a href="${article.link}">READ MORE</a>
-        `;
-
-        articleContainer.appendChild(articleCard);
-    });
+    fetch(`${BASE_URL}articles.json`)
+      .then(res => res.json())
+      .then(filenames => {
+        filenames.forEach(filename => {
+          fetch(`${BASE_URL}${filename}`)
+            .then(res => res.json())
+            .then(data => {
+              const card = document.createElement('div');
+              card.className = 'article-card min-w-[300px] max-w-[300px] bg-white p-4 rounded shadow';
+              card.innerHTML = `
+                ${data.image ? `<img src="${data.image}" alt="${data.title}" class="mb-2 rounded w-full" />` : ''}
+                <h3 class="font-semibold text-lg mb-1">${data.title}</h3>
+                ${data.author ? `<p class="text-sm text-gray-500 mb-1">By ${data.author}</p>` : ''}
+                <p class="text-sm mb-2">${data.description}</p>
+                <a href="${data.url}" class="text-blue-600 font-bold">READ MORE</a>
+              `;
+              document.getElementById('student-articles-carousel').appendChild(card);
+            });
+        });
+      });
 });
+
 function setupAuthUI() {
     const loginBtn = document.getElementById('login-btn');
     const logoutBtn = document.getElementById('logout-btn');
