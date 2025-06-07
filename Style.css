@@ -179,6 +179,11 @@ main {
     gap: 15px;
 }
 
+.article-card.featured {
+  border: 2px solid gold;
+  background-color: #fffbea;
+}
+
 .article-card {
     padding: 15px;
     border: 1px solid #ddd;
