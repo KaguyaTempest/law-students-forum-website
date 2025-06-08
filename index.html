@@ -6,12 +6,6 @@
     <title>LAW STUDENTS INTELLECTUAL FORUM</title>
     <link rel="icon" href="favicon.ico" type="image/x-icon" />
     <link rel="stylesheet" href="style.css" />
-
-    <!-- Firebase SDK - Use compat versions only once -->
-    <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-auth-compat.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-database-compat.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-analytics-compat.js"></script>
 </head>
 <body>
     <div id="header-placeholder"></div>
@@ -187,61 +181,12 @@
         <p>&copy; 2025 LAW STUDENTS INTELLECTUAL FORUM</p>
     </footer>
 
-    <script>
-        // Your Firebase config
-        const firebaseConfig = {
-            apiKey: "AIzaSyC0qWjJ8kt5jo1rOwNAd21RZ9QeK6pE7yU",
-            authDomain: "lsif-cedb1.firebaseapp.com",
-            databaseURL: "https://lsif-cedb1-default-rtdb.firebaseio.com",
-            projectId: "lsif-cedb1",
-            storageBucket: "lsif-cedb1.firebasestorage.app",
-            messagingSenderId: "761903090404",
-            appId: "1:761903090404:web:0b7c914fa2c3599faebaf1",
-            measurementId: "G-GGNJJSP3DJ",
-        };
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-auth-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-database-compat.js"></script>
 
-        // Initialize Firebase
-        firebase.initializeApp(firebaseConfig);
-        firebase.analytics();
+<script src="auth.js"></script>
+<script src="script.js"></script>
 
-        const auth = firebase.auth();
-        const database = firebase.database();
-
-    // Load the header dynamically
-    fetch('header.html')
-      .then(response => response.text())
-      .then(html => {
-        document.getElementById('header-placeholder').innerHTML = html;
-      })
-      .catch(err => console.error('Failed to load header:', err));
-    // Student Articles Carousel
-    const studentArticlesCarousel = document.getElementById('student-articles-carousel');
-    const leftArrow = document.getElementById('leftArrow');
-    const rightArrow = document.getElementById('rightArrow');
-    const scrollStep = 350;
-
-    leftArrow.addEventListener('click', () => {
-      carousel.scrollBy({ left: -scrollStep, behavior: 'smooth' });
-    });
-
-    rightArrow.addEventListener('click', () => {
-      carousel.scrollBy({ left: scrollStep, behavior: 'smooth' });
-    });
-
-      // Initialize storage
-      window.storage = getStorage(); // Make storage globally accessible
-    </script>
-
-    <script src="auth.js"></script>
-    <script src="script.js"></script>
-      <script>
-    // Load the header dynamically
-    fetch('header.html')
-      .then(response => response.text())
-      .then(html => {
-        document.getElementById('header-placeholder').innerHTML = html;
-      })
-      .catch(err => console.error('Failed to load header:', err));
-      </script>
 </body>
 </html>
