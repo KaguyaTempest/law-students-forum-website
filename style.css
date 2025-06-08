@@ -199,8 +199,10 @@ main {
 }
 
 .article-card p {
-    font-size: 0.95em;
-    color: #555;
+  display: -webkit-box;
+  -webkit-line-clamp: 3; /* number of lines */
+  -webkit-box-orient: vertical;
+  overflow: hidden;
 }
 
 .article-card a {
