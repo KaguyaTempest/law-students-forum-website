@@ -13,11 +13,10 @@ const firebaseConfig = {
 // Initialize Firebase if needed
 if (!firebase.apps.length) {
   firebase.initializeApp(firebaseConfig);
-  firebase.analytics();
 }
-
-const auth = firebase.auth();
-const database = firebase.database();
+  const firebase.analytics();
+  const auth = firebase.auth();
+  const database = firebase.database();
 
 // Main setup
 document.addEventListener('DOMContentLoaded', () => {
