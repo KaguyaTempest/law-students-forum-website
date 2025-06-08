@@ -1,3 +1,9 @@
+// Main setup
+document.addEventListener('DOMContentLoaded', () => {
+  loadHeader();
+  generateArticleCards();
+  setupCarousel();
+});
 // Firebase configuration
 const firebaseConfig = {
   apiKey: "AIzaSyC0qWjJ8kt5jo1rOwNAd21RZ9QeK6pE7yU",
@@ -17,13 +23,6 @@ if (!firebase.apps.length) {
   const firebase.analytics();
   const auth = firebase.auth();
   const database = firebase.database();
-
-// Main setup
-document.addEventListener('DOMContentLoaded', () => {
-  loadHeader();
-  generateArticleCards();
-  setupCarousel();
-});
 
 // Load reusable header
 function loadHeader() {
