@@ -1,9 +1,3 @@
-// Main setup
-document.addEventListener('DOMContentLoaded', () => {
-  loadHeader();
-  generateArticleCards();
-  setupCarousel();
-});
 // Firebase configuration
 const firebaseConfig = {
   apiKey: "AIzaSyC0qWjJ8kt5jo1rOwNAd21RZ9QeK6pE7yU",
@@ -16,15 +10,23 @@ const firebaseConfig = {
   measurementId: "G-GGNJJSP3DJ"
 };
 
-// Initialize Firebase if needed
+// ✅ Initialize Firebase (safely once)
 if (!firebase.apps.length) {
   firebase.initializeApp(firebaseConfig);
 }
-  firebase.analytics();
-  const auth = firebase.auth();
-  const database = firebase.database();
 
-// Load reusable header
+// ✅ Initialize services
+const auth = firebase.auth(); // << MUST come BEFORE setupAuthUI
+const database = firebase.database();
+
+// ✅ Setup DOM after everything is ready
+document.addEventListener('DOMContentLoaded', () => {
+  loadHeader();         // Will call setupAuthUI after header is loaded
+  generateArticleCards();
+  setupCarousel();      // if this is defined elsewhere
+});
+
+// ✅ Load shared header then trigger auth UI setup
 function loadHeader() {
   fetch('header.html')
     .then(res => {
@@ -33,7 +35,7 @@ function loadHeader() {
     })
     .then(html => {
       document.getElementById('header-placeholder').innerHTML = html;
-      setupAuthUI(); // Must wait for header to exist in DOM
+      setupAuthUI(); // ✅ only call this after DOM contains header elements
     })
     .catch(err => {
       console.error('Header error:', err);
