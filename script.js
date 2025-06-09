@@ -140,4 +140,3 @@ const newsletterCarousel = document.querySelector('.newsletter-carousel');
     newsletterCarousel.scrollBy({ left: 300, behavior: 'smooth' });
   }, 7000);
 }
-});
