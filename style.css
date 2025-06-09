@@ -225,7 +225,7 @@ main {
   text-overflow: ellipsis;
   white-space: normal;
   word-wrap: break-word;
-  max-width: 100%;
+  max-width: 300px;
   font-size: 0.95em;
   line-height: 1.4;
   color: #444;
