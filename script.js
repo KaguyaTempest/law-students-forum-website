@@ -20,7 +20,7 @@ const firebaseConfig = {
 if (!firebase.apps.length) {
   firebase.initializeApp(firebaseConfig);
 }
-  const firebase.analytics();
+  firebase.analytics();
   const auth = firebase.auth();
   const database = firebase.database();
 
