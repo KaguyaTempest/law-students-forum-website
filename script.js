@@ -122,3 +122,22 @@ function setupCarousel() {
     });
   }
 }
+const newsletterCarousel = document.querySelector('.newsletter-carousel');
+  const leftArrow = document.querySelector('.newsletter-left-arrow');
+  const rightArrow = document.querySelector('.newsletter-right-arrow');
+
+  if (leftArrow && rightArrow && newsletterCarousel) {
+  leftArrow.addEventListener('click', () => {
+    newsletterCarousel.scrollBy({ left: -300, behavior: 'smooth' });
+  });
+
+  rightArrow.addEventListener('click', () => {
+    newsletterCarousel.scrollBy({ left: 300, behavior: 'smooth' });
+  });
+
+  // Auto-scroll every 7 seconds
+  setInterval(() => {
+    newsletterCarousel.scrollBy({ left: 300, behavior: 'smooth' });
+  }, 7000);
+}
+});
