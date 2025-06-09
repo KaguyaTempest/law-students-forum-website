@@ -13,14 +13,17 @@ document.addEventListener('DOMContentLoaded', () => {
   const studentFields = document.getElementById('student-fields');
   const lawyerFields = document.getElementById('lawyer-fields');
   const forgotPasswordLink = document.getElementById('forgot-password-link');
+  const authModal = document.getElementById("auth-modal");
+  const closeBtn = document.querySelector(".close-auth-modal");
+  const openAuthButtons = document.querySelectorAll(".open-auth-modal");
 
-  // 🧹 Clear messages
+  // Clear any messages
   function clearMessages() {
     signupErrorMsg.textContent = '';
     loginErrorMsg.textContent = '';
   }
 
-  // 🔄 Toggle role-specific fields
+  // Show/hide role-specific fields
   if (userRoleSelect) {
     userRoleSelect.addEventListener('change', () => {
       const role = userRoleSelect.value;
@@ -29,7 +32,7 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 
-  // 📝 Sign up form
+  // Signup form submission
   if (signupForm) {
     signupForm.addEventListener('submit', async (e) => {
       e.preventDefault();
@@ -65,4 +68,128 @@ document.addEventListener('DOMContentLoaded', () => {
       };
 
       if (role === 'student') {
-        userData.s
+        userData.studentId = document.getElementById('student-id').value;
+        userData.university = document.getElementById('student-university').value;
+        userData.yearOfStudy = document.getElementById('student-year-of-study').value;
+      }
+
+      if (role === 'lawyer') {
+        userData.yearsOfExperience = document.getElementById('lawyer-years-experience').value;
+      }
+
+      try {
+        const userCredential = await firebase.auth().createUserWithEmailAndPassword(email, password);
+        const uid = userCredential.user.uid;
+
+        await firebase.database().ref('users/' + uid).set(userData);
+
+        alert("Account created successfully! Please log in.");
+        signupForm.reset();
+        showLoginBtn.click();
+      } catch (error) {
+        signupErrorMsg.textContent = error.message;
+      }
+    });
+  }
+
+  // Login form submission
+  if (loginForm) {
+    loginForm.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      clearMessages();
+
+      const email = document.getElementById('login-email').value;
+      const password = document.getElementById('login-password').value;
+
+      try {
+        await firebase.auth().signInWithEmailAndPassword(email, password);
+        alert('Login successful!');
+        window.location.href = 'index.html';
+      } catch (error) {
+        loginErrorMsg.textContent = error.message;
+      }
+    });
+  }
+
+  // Forgot password
+  if (forgotPasswordLink) {
+    forgotPasswordLink.addEventListener('click', async (e) => {
+      e.preventDefault();
+      clearMessages();
+
+      const email = prompt("Enter your email for password reset:");
+      if (!email) return;
+
+      try {
+        await firebase.auth().sendPasswordResetEmail(email);
+        alert('Password reset link sent.');
+      } catch (error) {
+        loginErrorMsg.textContent = error.message;
+      }
+    });
+  }
+
+  // Auth modal open/close logic
+  openAuthButtons.forEach((btn) => {
+    btn.addEventListener("click", () => {
+      authModal.classList.remove("hidden");
+      loginFormContainer.classList.remove("hidden");
+      signupFormContainer.classList.add("hidden");
+    });
+  });
+
+  if (closeBtn) {
+    closeBtn.addEventListener("click", () => {
+      authModal.classList.add("hidden");
+    });
+  }
+
+  showSignupBtn.addEventListener("click", () => {
+    signupFormContainer.classList.remove("hidden");
+    loginFormContainer.classList.add("hidden");
+    showSignupBtn.classList.add("active");
+    showLoginBtn.classList.remove("active");
+    clearMessages();
+    document.getElementById("signup-username").focus();
+  });
+
+  showLoginBtn.addEventListener("click", () => {
+    loginFormContainer.classList.remove("hidden");
+    signupFormContainer.classList.add("hidden");
+    showLoginBtn.classList.add("active");
+    showSignupBtn.classList.remove("active");
+    clearMessages();
+  });
+
+  // UI update based on login state
+  firebase.auth().onAuthStateChanged((user) => {
+    const authButtons = document.getElementById("auth-buttons");
+    const userInfo = document.getElementById("user-info");
+
+    if (user) {
+      if (authButtons) authButtons.classList.add("hidden");
+      if (userInfo) userInfo.classList.remove("hidden");
+
+      firebase.database().ref("users/" + user.uid).once("value").then(snapshot => {
+        const data = snapshot.val();
+        document.getElementById("user-name").textContent = data.username || data.email;
+        document.getElementById("user-role-badge").textContent = data.university || data.status;
+
+        const avatar = document.getElementById("user-avatar");
+        if (avatar) {
+          avatar.src = "assets/default-avatar.png";
+        }
+      });
+    } else {
+      if (authButtons) authButtons.classList.remove("hidden");
+      if (userInfo) userInfo.classList.add("hidden");
+    }
+  });
+
+  // Logout
+  document.addEventListener("click", (e) => {
+    if (e.target.id === "logout-btn") {
+      firebase.auth().signOut();
+    }
+  });
+});
