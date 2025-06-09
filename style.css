@@ -536,28 +536,49 @@ footer {
   }
 }
 
-.article-carousel-container {
+/* =================== FIXED CAROUSEL STYLING =================== */
+
+/* Shared layout for both carousels */
+.article-carousel-container,
+.newsletter-carousel-container {
   position: relative;
   overflow: hidden;
-  max-width: 600px; /* ✅ controls total width */
-  margin: 0 auto;   /* ✅ centers the carousel */
-  border-radius: 8px; /* optional: rounded edges */
-  box-shadow: 2px 2px 8px rgba(0, 0, 0, 0.1); /* optional: subtle shadow */
+  max-width: 100%;
+  padding: 10px 0;
 }
 
-.article-carousel {
+/* Make carousel track scrollable horizontally */
+.article-carousel,
+.newsletter-carousel {
   display: flex;
-  transition: transform 0.5s ease-in-out;
-  width: 300%; /* enough width for 3 cards */
+  gap: 20px;
+  overflow-x: auto;
+  scroll-behavior: smooth;
+  padding-bottom: 10px;
 }
 
-.article-card {
-  flex: 0 0 100%;
+.article-carousel::-webkit-scrollbar,
+.newsletter-carousel::-webkit-scrollbar {
+  display: none; /* clean look */
+}
+
+/* One visible card at a time for newsletter */
+.article-card,
+.newsletter-article {
+  flex: 0 0 300px;
+  max-width: 300px;
   box-sizing: border-box;
-  padding: 20px;
 }
 
-.carousel-arrow {
+/* Make article card height consistent */
+.article-card,
+.newsletter-article {
+  min-height: 320px;
+}
+
+/* Match arrow styles */
+.carousel-arrow,
+.newsletter-carousel-arrow {
   position: absolute;
   top: 50%;
   transform: translateY(-50%);
@@ -565,17 +586,20 @@ footer {
   background-color: rgba(0,0,0,0.3);
   color: white;
   border: none;
-  padding: 0 10px;
+  padding: 0 12px;
   cursor: pointer;
-  z-index: 1;
+  z-index: 10;
+  border-radius: 4px;
 }
 
-.left-arrow {
-  left: 0;
+.left-arrow,
+.newsletter-left-arrow {
+  left: 5px;
 }
 
-.right-arrow {
-  right: 0;
+.right-arrow,
+.newsletter-right-arrow {
+  right: 5px;
 }
 /* ========== NEWSLETTER ARTICLE TYPES ========== */
 
