@@ -200,7 +200,7 @@ main {
 
 /* Image inside the card */
 .article-card img {
-  width: %;
+  width: 170;
   height: 250px;
   object-fit: cover;
   display: block;
