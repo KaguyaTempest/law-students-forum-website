@@ -11,7 +11,7 @@ body {
 header {
     background-color: #4f606d; /* Dark gray header */
     color: #fff;
-    padding: 20px;
+    padding: 0 20px;
     display: flex;
     align-items: center;
     justify-content: space-between;
@@ -180,45 +180,64 @@ main {
     gap: 15px;
 }
 
+/* Base article card */
+.article-card {
+  flex: 0 0 100%;
+  box-sizing: border-box;
+  padding: 20px;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  background-color: #fff;
+  overflow: hidden;         /* Prevent content from spilling out */
+  max-width: 100%;          /* Keep layout within parent */
+}
+
+/* Featured article card (e.g. Kudakwashe's) */
 .article-card.featured {
   border: 2px solid gold;
   background-color: #fffbea;
 }
 
-.article-card {
-    padding: 15px;
-    border: 1px solid #ddd;
-    border-radius: 5px;
-}
-
-.article-card h3 {
-    color: #333;
-    margin-top: 0;
-    font-size: 1.1em;
-    margin-bottom: 5px;
-}
-
-.article-card p {
-  display: -webkit-box;
-  -webkit-line-clamp: 3; /* number of lines */
-  -webkit-box-orient: vertical;
-  overflow: hidden;
-}
-
-.article-card a {
-    display: inline-block;
-    margin-top: 10px;
-    text-decoration: none;
-    color: #007bff; /* Keep blue for emphasis */
-    font-weight: bold;
-}
-
+/* Image inside the card */
 .article-card img {
   width: 100%;
-  height: auto;
+  height: 180px;
   object-fit: cover;
-  border-radius: 10px;
-  max-height: 200px; /* optional: limit tall images */
+  display: block;
+  border-radius: 5px;
+  margin-bottom: 10px;
+}
+
+/* Title */
+.article-card h3 {
+  color: #333;
+  margin-top: 0;
+  font-size: 1.1em;
+  margin-bottom: 5px;
+}
+
+/* Description text */
+.article-card p {
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 3;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: normal;
+  word-wrap: break-word;
+  max-width: 100%;
+  font-size: 0.95em;
+  line-height: 1.4;
+  color: #444;
+}
+
+/* Read more link */
+.article-card a {
+  display: inline-block;
+  margin-top: 10px;
+  text-decoration: none;
+  color: #007bff;
+  font-weight: bold;
 }
 
 .guides-grid {
@@ -299,7 +318,7 @@ main {
 }
 
 .top-about {
-    grid-column: 1 / span 1;
+    grid-column: 1 / span 2;
 }
 
 .bottom-about {
@@ -495,6 +514,10 @@ footer {
 .article-carousel-container {
   position: relative;
   overflow: hidden;
+  max-width: 600px; /* ✅ controls total width */
+  margin: 0 auto;   /* ✅ centers the carousel */
+  border-radius: 8px; /* optional: rounded edges */
+  box-shadow: 2px 2px 8px rgba(0, 0, 0, 0.1); /* optional: subtle shadow */
 }
 
 .article-carousel {
