@@ -107,38 +107,38 @@ function generateArticleCards() {
   });
 }
 
-// Carousel logic (safe!)
-function setupCarousel() {
-  const carousel = document.getElementById('article-carousel');
-  const leftArrow = document.getElementById('carousel-left');
-  const rightArrow = document.getElementById('carousel-right');
-  const scrollStep = 400;
-
-  if (carousel && leftArrow && rightArrow) {
-    leftArrow.addEventListener('click', () => {
-      carousel.scrollBy({ left: -scrollStep, behavior: 'smooth' });
-    });
-
-    rightArrow.addEventListener('click', () => {
-      carousel.scrollBy({ left: scrollStep, behavior: 'smooth' });
-    });
-  }
-}
 const newsletterCarousel = document.querySelector('.newsletter-carousel');
   const leftArrow = document.querySelector('.newsletter-left-arrow');
   const rightArrow = document.querySelector('.newsletter-right-arrow');
 
   if (leftArrow && rightArrow && newsletterCarousel) {
   leftArrow.addEventListener('click', () => {
-    newsletterCarousel.scrollBy({ left: -300, behavior: 'smooth' });
+    newsletterCarousel.scrollBy({ left: -320, behavior: 'smooth' });
   });
 
   rightArrow.addEventListener('click', () => {
-    newsletterCarousel.scrollBy({ left: 300, behavior: 'smooth' });
+    newsletterCarousel.scrollBy({ left: 320, behavior: 'smooth' });
   });
 
   // Auto-scroll every 7 seconds
   setInterval(() => {
-    newsletterCarousel.scrollBy({ left: 300, behavior: 'smooth' });
+    newsletterCarousel.scrollBy({ left: 320, behavior: 'smooth' });
+  }, 7000);
+}
+const articleCarousel = document.querySelector('.article-carousel');
+  const articleLeftArrow = document.querySelector('.left-arrow');
+  const articleRightArrow = document.querySelector('.right-arrow');
+
+  if (articleCarousel && articleLeftArrow && articleRightArrow) {
+    articleLeftArrow.addEventListener('click', () => {
+      articleCarousel.scrollBy({ left: -320, behavior: 'smooth' });
+    });
+
+    articleRightArrow.addEventListener('click', () => {
+      articleCarousel.scrollBy({ left: 320, behavior: 'smooth' });
+    });
+// Auto-scroll every 7 seconds
+  setInterval(() => {
+    newsletterCarousel.scrollBy({ left: 320, behavior: 'smooth' });
   }, 7000);
 }
