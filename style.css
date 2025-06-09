@@ -200,8 +200,8 @@ main {
 
 /* Image inside the card */
 .article-card img {
-  width: 100%;
-  height: 180px;
+  width: %;
+  height: 250px;
   object-fit: cover;
   display: block;
   border-radius: 5px;
@@ -373,6 +373,31 @@ footer {
 
 .newsletter-section a:hover {
     background-color: #37434c; /* Darker GREY on hover */
+}
+
+.newsletter-preview-card {
+  background-color: #fdf6e3; /* light paper-like tone */
+  border: 1px solid #ddd;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 1px 1px 6px rgba(0,0,0,0.05);
+  margin-top: 15px;
+}
+
+.newsletter-preview-card h3 {
+  margin-top: 0;
+  color: #4f606d;
+  font-size: 1.1em;
+}
+
+.newsletter-preview-card .button {
+  margin-top: 10px;
+  display: inline-block;
+  background-color: #007bff;
+  color: #fff;
+  padding: 8px 16px;
+  border-radius: 5px;
+  text-decoration: none;
 }
 
 .auth-main {
@@ -551,4 +576,46 @@ footer {
 
 .right-arrow {
   right: 0;
+}
+/* ========== NEWSLETTER ARTICLE TYPES ========== */
+
+/* Base styling for newsletter articles */
+.newsletter-article {
+  background-color: #fff;
+  border-left: 6px solid transparent;
+  padding: 20px;
+  margin-bottom: 20px;
+  border-radius: 8px;
+  box-shadow: 1px 1px 5px rgba(0,0,0,0.05);
+}
+
+/* ALERTS (e.g. strike updates, urgent notices) */
+.newsletter-article.alert {
+  border-left-color: #e53935; /* deep red */
+  background-color: #fff5f5;
+}
+
+/* NOTICES (e.g. timetable, administrative info) */
+.newsletter-article.notice {
+  border-left-color: #fb8c00; /* orange */
+  background-color: #fff8e1;
+}
+
+/* UPDATES (e.g. website changes) */
+.newsletter-article.update {
+  border-left-color: #43a047; /* green */
+  background-color: #f1f8f4;
+}
+
+/* COMMENTARY (e.g. legal opinions, analysis) */
+.newsletter-article.commentary {
+  border-left-color: #1e3a8a; /* dark blue */
+  background-color: #f3f6fd;
+}
+
+/* Optional: make headings stand out slightly */
+.newsletter-article h3 {
+  margin-top: 0;
+  font-size: 1.2em;
+  color: #333;
 }
