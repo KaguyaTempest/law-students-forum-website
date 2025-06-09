@@ -213,6 +213,14 @@ main {
     font-weight: bold;
 }
 
+.article-card img {
+  width: 100%;
+  height: auto;
+  object-fit: cover;
+  border-radius: 10px;
+  max-height: 200px; /* optional: limit tall images */
+}
+
 .guides-grid {
     display: grid;
     grid-template-columns: 1fr 1fr;
