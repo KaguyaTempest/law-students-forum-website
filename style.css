@@ -536,18 +536,21 @@ footer {
   }
 }
 
-/* =================== FIXED CAROUSEL STYLING =================== */
+/* ==============================
+   Carousel Styling (Safe Version)
+   ============================== */
 
-/* Shared layout for both carousels */
+/* Constrain carousel containers to fit main layout */
 .article-carousel-container,
 .newsletter-carousel-container {
-  position: relative;
+  max-width: 660px;
+  margin: 0 auto;
   overflow: hidden;
-  max-width: 100%;
+  position: relative;
   padding: 10px 0;
 }
 
-/* Make carousel track scrollable horizontally */
+/* Scrollable inner carousel tracks */
 .article-carousel,
 .newsletter-carousel {
   display: flex;
@@ -559,31 +562,26 @@ footer {
 
 .article-carousel::-webkit-scrollbar,
 .newsletter-carousel::-webkit-scrollbar {
-  display: none; /* clean look */
+  display: none;
 }
 
-/* One visible card at a time for newsletter */
-.article-card,
-.newsletter-article {
+/* Ensure one card shows at a time inside the scroll */
+.article-carousel > .article-card,
+.newsletter-carousel > .newsletter-article {
   flex: 0 0 300px;
   max-width: 300px;
+  min-height: 320px;
   box-sizing: border-box;
 }
 
-/* Make article card height consistent */
-.article-card,
-.newsletter-article {
-  min-height: 320px;
-}
-
-/* Match arrow styles */
+/* Shared styling for carousel arrow buttons */
 .carousel-arrow,
 .newsletter-carousel-arrow {
   position: absolute;
   top: 50%;
   transform: translateY(-50%);
   font-size: 2em;
-  background-color: rgba(0,0,0,0.3);
+  background-color: rgba(0, 0, 0, 0.3);
   color: white;
   border: none;
   padding: 0 12px;
@@ -601,6 +599,7 @@ footer {
 .newsletter-right-arrow {
   right: 5px;
 }
+
 /* ========== NEWSLETTER ARTICLE TYPES ========== */
 
 /* Base styling for newsletter articles */
