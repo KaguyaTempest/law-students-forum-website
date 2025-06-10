@@ -136,11 +136,10 @@ nav ul li.about-link {
 /* Utility */
 .hidden {
     display: none !important;
-    
-.main {
-  max-width: 640px;
-  margin: 0 auto;
-  padding: 20px;
+}
+main {
+    padding: 20px;
+    margin-top: 0;
 }
 
 .homepage-main {
@@ -544,8 +543,7 @@ footer {
 .newsletter-carousel-container {
   position: relative;
   overflow: hidden;
-  max-width: 640px;
-  margin: 0 auto;
+  max-width: 100%;
   padding: 10px 0;
 }
 
@@ -557,7 +555,6 @@ footer {
   overflow-x: auto;
   scroll-behavior: smooth;
   padding-bottom: 10px;
-  width: 100%;
 }
 
 .article-carousel::-webkit-scrollbar,
@@ -570,9 +567,9 @@ footer {
 .newsletter-article {
   flex: 0 0 300px;
   max-width: 300px;
-  min-height: 320px;
   box-sizing: border-box;
 }
+
 /* Make article card height consistent */
 .article-card,
 .newsletter-article {
