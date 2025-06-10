@@ -23,7 +23,6 @@ const database = firebase.database();
 document.addEventListener('DOMContentLoaded', () => {
   loadHeader();         // Will call setupAuthUI after header is loaded
   generateArticleCards();
-  setupCarousel();      // if this is defined elsewhere
 });
 
 // ✅ Load shared header then trigger auth UI setup
