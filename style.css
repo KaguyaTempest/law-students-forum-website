@@ -144,7 +144,7 @@ main {
 
 .homepage-main {
     display: grid;
-    grid-template-columns: 1fr 1fr;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
     gap: 20px;
 }
 
@@ -543,11 +543,11 @@ footer {
 /* Constrain carousel containers to fit main layout */
 .article-carousel-container,
 .newsletter-carousel-container {
-  max-width: 660px;
-  margin: 0 auto;
-  overflow: hidden;
-  position: relative;
-  padding: 10px 0;
+    width: 100%;
+    max-width: 100%;
+    overflow: hidden;
+    position: relative;
+    padding: 10px 0;
 }
 
 /* Scrollable inner carousel tracks */
@@ -642,3 +642,8 @@ footer {
   font-size: 1.2em;
   color: #333;
 }
+/* On smaller screens, stack vertically */
+@media (max-width: 900px) {
+  .homepage-main {
+    grid-template-columns: 1fr;
+  }
