@@ -89,10 +89,91 @@
 }
 
 /* Comment Section */
+/* Forum Aesthetic: Comment Section */
 .comment-section {
-    margin-top: 40px;
-    padding-top: 20px;
-    border-top: 1px solid #eee;
+  margin-top: 40px;
+  background: #fff;
+  border-radius: 8px;
+  padding: 20px;
+  box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.05);
+}
+
+.section-heading {
+  font-size: 1.3em;
+  margin-bottom: 15px;
+  color: #4f606d;
+  border-bottom: 2px solid #ccc;
+  padding-bottom: 5px;
+}
+
+.comment-form textarea {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  resize: vertical;
+  font-family: inherit;
+  margin-bottom: 10px;
+}
+
+.comment-form button {
+  background-color: #007bff;
+  color: white;
+  padding: 10px 16px;
+  font-weight: bold;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.comment-form button:hover {
+  background-color: #0056b3;
+}
+
+.comment-login-prompt {
+  font-style: italic;
+  font-size: 0.95em;
+  color: #555;
+}
+
+.comment-login-prompt a {
+  color: #007bff;
+  font-weight: bold;
+  text-decoration: none;
+}
+
+.forum-comment {
+  margin-bottom: 15px;
+  padding: 12px;
+  background-color: #f9f9f9;
+  border-left: 4px solid #4f606d;
+  border-radius: 6px;
+}
+
+.comment-header {
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.9em;
+  color: #555;
+  margin-bottom: 6px;
+}
+
+.comment-user {
+  font-weight: bold;
+  color: #333;
+}
+
+.comment-text {
+  font-size: 1em;
+  color: #444;
+  line-height: 1.5;
+}
+
+.no-comments {
+  font-style: italic;
+  color: #777;
+  margin-bottom: 10px;
 }
 
 .comment-section h2,
@@ -136,4 +217,87 @@
     margin-bottom: 10px;
     border: 1px solid #ccc;
     border-radius: 5px;
+}
+
+/* Forum Aesthetic: Reaction Section */
+.reaction-section {
+  margin-top: 30px;
+  background: #fff;
+  border-radius: 8px;
+  padding: 20px;
+  box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.05);
+}
+
+.reaction-bar {
+  display: flex;
+  justify-content: space-around;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-top: 10px;
+}
+
+.reaction-button {
+  font-size: 1.5em;
+  padding: 8px 16px;
+  border: none;
+  border-radius: 10px;
+  background: #f0f0f0;
+  cursor: pointer;
+  box-shadow: 0 1px 4px rgba(0,0,0,0.1);
+  transition: transform 0.1s ease;
+  position: relative;
+}
+
+.reaction-button:hover {
+  transform: scale(1.15);
+  background: #e6e6e6;
+}
+
+.reaction-button .count {
+  font-size: 0.8em;
+  position: absolute;
+  top: -8px;
+  right: -8px;
+  background: #007bff;
+  color: #fff;
+  padding: 2px 6px;
+  border-radius: 50%;
+  box-shadow: 0 1px 4px rgba(0,0,0,0.2);
+}
+
+.user-badge {
+  display: inline-block;
+  margin-left: 10px;
+  padding: 2px 8px;
+  border-radius: 12px;
+  font-size: 0.8em;
+  color: #fff;
+  vertical-align: middle;
+}
+
+.role-student {
+  background-color: #007bff;
+}
+
+.role-lawyer {
+  background-color: #28a745;
+}
+
+.role-observer {
+  background-color: #6c757d;
+}
+
+.delete-comment-btn {
+  margin-top: 8px;
+  background-color: #dc3545;
+  color: #fff;
+  border: none;
+  padding: 5px 12px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 0.85em;
+}
+
+.delete-comment-btn:hover {
+  background-color: #c82333;
 }

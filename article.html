@@ -95,15 +95,15 @@
       </div>
 
       <section class="comment-section">
-        <h2>Comments</h2>
-        <div class="comments-container"></div>
-        <h3>Leave a Comment</h3>
-        <form class="comment-form">
-          <input type="text" placeholder="Your Name" required />
-          <textarea placeholder="Your Comment" rows="4" required></textarea>
-          <button type="submit">Post Comment</button>
-        </form>
-      </section>
+  <h2 class="section-heading">💬 Comments</h2>
+  <div class="comments-container"></div>
+  <div class="comment-form"></div>
+</section>
+<section class="reaction-section">
+  <h2 class="section-heading">📊 Reactions</h2>
+  <!-- Reaction buttons will auto-generate here -->
+</section>
+
     </article>
 
     <aside class="article-sidebar">
@@ -127,5 +127,8 @@
 
   <script src="auth.js"></script>
   <script src="script.js"></script>
+  <script type="module" src="scripts/comment.js"></script>
+  <script type="module" src="scripts/reaction.js"></script>
+
 </body>
 </html>
