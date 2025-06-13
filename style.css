@@ -334,7 +334,7 @@ main {
     grid-column: 1 / span 2;
 }
 /* Articles and Newsletter */
-.student-articles-section {
+.articles-section {
     grid-column: 1;
 }
 
@@ -342,13 +342,18 @@ main {
     grid-column: 2;
 }
 
-/* Moot Court and Campus Guides */
-.mootcourt-section {
+/* Moot Court and Campus Guides row */
+.moot-court-section {
     grid-column: 1;
 }
 
-.campusguides-section {
+.campus-guides-section {
     grid-column: 2;
+}
+
+/* Contact section also full width */
+.contact-section {
+    grid-column: 1 / span 2;
 }
 
 .about-section p {
