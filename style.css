@@ -143,8 +143,12 @@ main {
 }
 
 .homepage-main {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
     display: grid;
-    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: auto auto auto;
     gap: 20px;
 }
 
@@ -222,7 +226,6 @@ main {
   margin-bottom: 5px;
 }
 
-/* Description text */
 .article-card p {
   display: -webkit-box;
   -webkit-box-orient: vertical;
@@ -329,6 +332,23 @@ main {
 
 .bottom-about {
     grid-column: 1 / span 2;
+}
+/* Articles and Newsletter */
+.student-articles-section {
+    grid-column: 1;
+}
+
+.newsletter-section {
+    grid-column: 2;
+}
+
+/* Moot Court and Campus Guides */
+.mootcourt-section {
+    grid-column: 1;
+}
+
+.campusguides-section {
+    grid-column: 2;
 }
 
 .about-section p {
