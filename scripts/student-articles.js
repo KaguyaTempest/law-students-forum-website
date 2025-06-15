@@ -3,7 +3,7 @@
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.11.0/firebase-app.js";
 import { getStorage, ref, getDownloadURL } from "https://www.gstatic.com/firebasejs/10.11.0/firebase-storage.js";
 
-// Initialize Firebase (replace this with your real config)
+// Initialize Firebase (replace with your actual Firebase config)
 const firebaseConfig = {
   apiKey: "YOUR-API-KEY",
   authDomain: "YOUR-PROJECT.firebaseapp.com",
@@ -15,7 +15,6 @@ const firebaseConfig = {
 
 const app = initializeApp(firebaseConfig);
 const storage = getStorage(app);
-
 const storageRef = ref(storage, "articles/articles.json");
 
 // Fetch articles.json from Firebase Storage
@@ -24,7 +23,7 @@ getDownloadURL(storageRef)
   .then((response) => response.json())
   .then((data) => {
     renderArticles(data);
-    setupFilters(data);
+    setupFilters(); // move filter setup AFTER rendering
   })
   .catch((err) => {
     console.error("Error loading articles.json:", err);
@@ -60,9 +59,8 @@ function renderArticles(data) {
   });
 }
 
-function setupFilters(data) {
+function setupFilters() {
   const filterLinks = document.querySelectorAll('.filter-link');
-  const articleCards = document.querySelectorAll('.article-card');
 
   filterLinks.forEach(link => {
     link.addEventListener('click', function(event) {
@@ -71,6 +69,8 @@ function setupFilters(data) {
 
       filterLinks.forEach(fl => fl.classList.remove('active'));
       this.classList.add('active');
+
+      const articleCards = document.querySelectorAll('.article-card'); // fetch AFTER rendering
 
       articleCards.forEach(card => {
         const topics = card.dataset.topics.split(' ');
