@@ -532,13 +532,14 @@ footer {
   }
 }
 
-.article-carousel-container {
+.article-carousel-container,
+.newsletter-carousel-container {
   position: relative;
   overflow: hidden;
-  max-width: 600px; /* ✅ controls total width */
-  margin: 0 auto;   /* ✅ centers the carousel */
-  border-radius: 8px; /* optional: rounded edges */
-  box-shadow: 2px 2px 8px rgba(0, 0, 0, 0.1); /* optional: subtle shadow */
+  max-width: 600px;
+  margin: 0 auto;
+  border-radius: 8px;
+  box-shadow: 2px 2px 8px rgba(0, 0, 0, 0.1);
 }
 
 /* Scrollable inner carousel tracks */
