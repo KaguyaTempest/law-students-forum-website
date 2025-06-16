@@ -372,6 +372,26 @@ footer {
     transition: background-color 0.3s ease;
 }
 
+.newsletter-article.alert {
+  background-color: #ffe5e5;
+  border-left: 5px solid #ff4c4c;
+}
+
+.newsletter-article.notice {
+  background-color: #fff8e5;
+  border-left: 5px solid #ffc107;
+}
+
+.newsletter-article.update {
+  background-color: #e5f6ff;
+  border-left: 5px solid #17a2b8;
+}
+
+.newsletter-article.commentary {
+  background-color: #e5ffe5;
+  border-left: 5px solid #28a745;
+}
+
 .newsletter-section a:hover {
     background-color: #37434c; /* Darker GREY on hover */
 }
@@ -565,8 +585,8 @@ footer {
   left: 0;
 }
 
-.left-arrow {
-  left: 0;
+.right-arrow {
+  right: 0;
 }
 
 /* Optional: make headings stand out slightly */
