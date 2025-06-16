@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Academic Resources - LAW STUDENTS INTELLECTUAL FORUM</title>
+    <link rel="stylesheet" href="style.css" />
+    <link rel="stylesheet" href="academic-resources.css" />
+</head>
+<body>
+    <div id="header-placeholder"></div>
+
+    <main class="resources-main">
+        <section class="resources-hero">
+            <h1>Academic Resources</h1>
+            <p>Your central hub for legal academic support and tools.</p>
+        </section>
+
+        <section class="resources-grid">
+            <!-- Digital Library -->
+            <div class="resource-card">
+                <div class="resource-icon">📚</div>
+                <h3>Digital Law Library</h3>
+                <p>Access a growing collection of textbooks, notes & materials.</p>
+                <a href="library.html" class="resource-link">Open Library</a>
+            </div>
+
+            <!-- Rate My Lecturer -->
+            <div class="resource-card">
+                <div class="resource-icon">⭐</div>
+                <h3>Rate My Lecturer</h3>
+                <p>Share your experiences and see who leads the pack this semester.</p>
+                <a href="rate-my-lecturer.html" class="resource-link">Start Rating</a>
+            </div>
+
+            <!-- Sexual Harassment Hotline -->
+            <div class="resource-card">
+                <div class="resource-icon">🚨</div>
+                <h3>Report Sexual Harassment</h3>
+                <p>Speak up safely & anonymously. Reports go directly to Panashe Gwitirwa (ZILSA Gender Officer).</p>
+                <a href="mailto:panashegwitirwa@zilsa.org" class="resource-link">Report Now</a>
+            </div>
+
+            <!-- Legal Quiz Arena -->
+            <div class="resource-card">
+                <div class="resource-icon">🧠</div>
+                <h3>Legal Quiz Arena</h3>
+                <p>Test your legal knowledge. Compete for leaderboard spots weekly!</p>
+                <a href="legal-quiz.html" class="resource-link">Take Quiz</a>
+            </div>
+
+            <!-- Career Center -->
+            <div class="resource-card">
+                <div class="resource-icon">🎓</div>
+                <h3>Career Center</h3>
+                <p>Find internships, clerkships, and build your career profile.</p>
+                <a href="career-center.html" class="resource-link">Visit Career Center</a>
+            </div>
+        </section>
+
+        <section class="academic-resources-section">
+            <h2>Academic Resources</h2>
+            <div class="resources-grid">
+                <div class="resource-card library-card">
+                    <span class="resource-icon">📚</span>
+                    <h3>Library</h3>
+                    <p>Access digital and physical law resources.</p>
+                    <a href="#">Visit Library</a>
+                </div>
+                <div class="resource-card lecturer-card">
+                    <span class="resource-icon">👨‍🏫</span>
+                    <h3>Rate My Lecturer</h3>
+                    <p>Share and view lecturer ratings.</p>
+                    <a href="#">View Leaderboard</a>
+                    <div class="leaderboard">
+                        <h4>Top Lecturers</h4>
+                        <ol>
+                            <li>L. Madhuku</li>
+                            <li>S. Kanyangarara</li>
+                        </ol>
+                    </div>
+                </div>
+                <!-- Add more .resource-card as needed -->
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <p>&copy; 2025 LAW STUDENTS INTELLECTUAL FORUM</p>
+    </footer>
+
+    <script>
+        // Load header dynamically
+        fetch('header.html')
+            .then(response => response.text())
+            .then(html => {
+                document.getElementById('header-placeholder').innerHTML = html;
+            })
+            .catch(err => console.error('Failed to load header:', err));
+    </script>
+</body>
+</html>
