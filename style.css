@@ -396,6 +396,12 @@ footer {
     background-color: #37434c; /* Darker GREY on hover */
 }
 
+.newsletter-section h2 a {
+  white-space: nowrap;
+  font-size: 1.6rem;
+  display: inline-block;
+}
+
 .auth-main {
   max-width: 420px;
   margin: 40px auto;
@@ -549,6 +555,7 @@ footer {
   gap: 20px;
   overflow-x: auto;
   scroll-behavior: smooth;
+  scroll-snap-type: x mandatory;
   padding-bottom: 10px;
 }
 
@@ -590,6 +597,27 @@ footer {
   right: 0;
 }
 
+.newsletter-carousel-arrow {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 2rem;
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
+  z-index: 2;
+  padding: 0 10px;
+  color: #333;
+}
+
+.newsletter-left-arrow {
+  left: 0;
+}
+
+.newsletter-right-arrow {
+  right: 0;
+}
+
 /* Optional: make headings stand out slightly */
 .newsletter-article h3 {
   margin-top: 0;
@@ -601,4 +629,55 @@ footer {
   .homepage-main {
     grid-template-columns: 1fr;
   }
+}
+.icon-container {
+  width: 60px;
+  height: 60px;
+  background-color: #f1f1f1;
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.icon-container:hover {
+  transform: scale(1.1) rotate(2deg);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+}
+
+.tutorial-icon {
+  width: 32px;
+  height: 32px;
+  color: #333;
+  transition: stroke 0.3s ease;
+}
+
+.icon-container:hover .tutorial-icon {
+  stroke: #0066cc; /* or your brand blue */
+}
+.attachment-icon {
+  width: 32px;
+  height: 32px;
+  color: #333;
+  transition: stroke 0.3s ease;
+}
+
+.icon-container:hover .attachment-icon {
+  stroke: #009944; /* or a green tone to contrast Tutorials */
+}
+
+.newsletter-theme {
+  font-size: 1.1rem;
+  margin-bottom: 1rem;
+  color: #444;
+  background: linear-gradient(to right, #dff1ff, #f0f7ff);
+  padding: 0.5rem 1rem;
+  border-left: 4px solid #0077cc;
+  border-radius: 4px;
+  font-style: normal;
+}
+.newsletter-theme span {
+  color: #0077cc;
+  font-weight: bold;
 }
