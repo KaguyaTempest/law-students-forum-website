@@ -1,4 +1,13 @@
 // Assumes Firebase is already initialized in script.js
+import { auth, database } from './firebase.js';
+
+document.addEventListener('DOMContentLoaded', () => {
+  const showSignupBtn = document.getElementById("show-signup");
+  const showLoginBtn = document.getElementById("show-login");
+  const signupFormContainer = document.getElementById("signup-form-container");
+  const loginFormContainer = document.getElementById("login-form-container");
+  // ... rest of your code
+});
 
 document.addEventListener('DOMContentLoaded', () => {
   const showSignupBtn = document.getElementById('show-signup');
