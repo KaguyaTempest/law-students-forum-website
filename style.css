@@ -681,3 +681,9 @@ footer {
   color: #0077cc;
   font-weight: bold;
 }
+
+#splash{position:fixed;inset:0;display:flex;flex-direction:column;justify-content:center;align-items:center;gap:1.5rem;background:#fff;z-index:9999;transition:opacity .6s ease,visibility .6s}
+#splash.hidden{opacity:0;visibility:hidden}
+.splash-logo{width:clamp(120px,30vw,220px);object-fit:contain}
+.splash-tag{font-size:1rem;letter-spacing:.03em;color:#555;font-family:var(--font-sans,sans-serif)}
+.splash-tag span{font-weight:600;background:linear-gradient(90deg,#2d6cff,#4bbdff);-webkit-background-clip:text;color:transparent}
