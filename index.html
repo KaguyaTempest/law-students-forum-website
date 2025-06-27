@@ -8,12 +8,20 @@
     <link rel="stylesheet" href="style.css" />
 </head>
 <body>
+  <div id="splash">
+  <div class="splash-inner">
+    <img src="assets/forum-logo0.png" alt="Forum logo" class="splash-logo" />
+    <p class="splash-tag">Sponsored by <span>KT Industries</span></p>
+  </div>
+</div>
     <div id="header-placeholder"></div>
 
     <main class="homepage-main">
         <!-- Existing homepage content -->
-        <h2>Student Articles</h2>
-<div class="article-carousel-container">
+     
+    <section class="student-articles-section">
+      <h2>Student Articles</h2>
+    <div class="article-carousel-container">
   <button class="carousel-arrow left-arrow">&#10094;</button>
 
   <div class="article-carousel" id="article-carousel">
@@ -29,7 +37,7 @@
 
     <div class="article-card">
       <div class="article-image-container">
-        <img src="assets/ai-religion-article" alt="AI will not replace Religion" />
+        <img src="assets/ai-religion-article.png" alt="AI will not replace Religion" />
       </div>
       <h3>Will artificial intelligence replace religion? A discussion</h3>
       <p>Will algorithms dictate morality? Lionel Chidaushe investigates AI's rise as the next architecture of unquestioned supremacy.</p>
@@ -45,11 +53,14 @@
   </div>
 
   <button class="carousel-arrow right-arrow">&#10095;</button>
-</div>
+ </div>
+</section>
         
   <section class="newsletter-section">
   <h2><a href="Forum-Newsletter.html">Forum Newsletter: June 2025 Edition</a></h2>
-  <p><em>Theme: Resilience, Rights & Reality</em></p>
+  <p class="newsletter-theme">
+  <span>🧭 Theme:</span> <strong>Resilience, Rights & Reality</strong>
+</p>
 
   <div class="newsletter-carousel-container">
     <button class="newsletter-carousel-arrow newsletter-left-arrow">&#10094;</button>
@@ -97,22 +108,40 @@
         </section>
 
         <section class="campus-guides-section">
-            <h2>Campus Guides</h2>
-            <div class="guides-grid">
-                <div class="guide-card">
-                    <a href="tutorials.html">
-                        <div class="play-icon"></div>
-                        <p>Tutorials</p>
-                    </a>
-                </div>
-                <div class="guide-card">
-                    <a href="attachment.html">
-                        <div class="scales-icon"></div>
-                        <p>Attachment</p>
-                    </a>
-                </div>
-            </div>
-        </section>
+  <h2>Campus Guides</h2>
+  <div class="guides-grid">
+    
+    <!-- Tutorials Card -->
+    <div class="guide-card">
+      <a href="tutorials.html">
+        <div class="icon-container">
+          <svg class="tutorial-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/>
+            <path d="M4 4.5A2.5 2.5 0 0 1 6.5 7H20"/>
+            <path d="M6.5 7v10"/>
+            <path d="M14 10l2 2 2-2"/>
+            <path d="M16 12V4"/>
+          </svg>
+        </div>
+        <p>Tutorials</p>
+      </a>
+    </div>
+
+    <!-- Attachment Card -->
+    <div class="guide-card">
+      <a href="attachment.html">
+        <div class="icon-container">
+          <svg class="attachment-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M2 7h20v14H2z" />
+            <path d="M16 3h-8v4h8V3z" />
+            <path d="M2 7l4 4h12l4-4" />
+          </svg>
+        </div>
+        <p>Attachment</p>
+      </a>
+    </div>
+</section>
+
 
         <section class="about-section top-about" id="about-us">
             <h2>About</h2>
@@ -125,107 +154,11 @@
             <p><a href="mailto:info@lsif.uz.ac.zw">info@lsif.uz.ac.zw</a></p>
         </section>
 
-        <!-- NEW: Authentication Section -->
-        <section class="auth-section">
-  <div id="auth-modal" class="auth-modal hidden">
-    <button class="close-auth-modal">&times;</button> <!-- ✅ Close button added -->
-
-    <div class="auth-card">
-      <div class="auth-toggle">
-        <button id="show-login" class="active">Login</button>
-        <button id="show-signup">Sign Up</button>
-      </div>
-
-      <!-- ✅ Signup form: no 'active' class here -->
-      <div id="signup-form-container" class="auth-form-container hidden">
-        <h2>Create an Account</h2>
-        <form id="signup-form">
-          <input type="text" id="signup-username" placeholder="Username" required />
-          <input type="email" id="signup-email" placeholder="Email" required />
-          <input
-            type="password"
-            id="signup-password"
-            placeholder="Password (min 6 characters)"
-            required
-          />
-          <input
-            type="password"
-            id="signup-confirm-password"  <!-- ✅ Fixed ID typo -->
-            placeholder="Confirm Password"
-            required
-          />
-
-          <select id="user-role" required>
-            <option value="">Select your role</option>
-            <option value="student">Law Student</option>
-            <option value="lawyer">Lawyer (in field)</option>
-            <option value="observer">Observer</option>
-          </select>
-
-          <div id="student-fields" class="hidden">
-            <input
-              type="text"
-              id="student-id"
-              placeholder="Student ID Number"
-              required
-            />
-            <select id="student-university" required>
-              <option value="">Select your University</option>
-              <option value="UZ">University of Zimbabwe</option>
-              <option value="MSU">Midlands State University</option>
-              <option value="ZEGU">Zimbabwe Ezekiel Guti University (ZEGU)</option>
-              <option value="GZU">Great Zimbabwe University (GZU)</option>
-            </select>
-            <select id="student-year-of-study" required>
-              <option value="">Select Year of Study</option>
-              <option value="1">Year 1</option>
-              <option value="2">Year 2</option>
-              <option value="3">Year 3</option>
-              <option value="4">Year 4</option>
-              <option value="5">Year 5</option>
-              <option value="6">Year 6</option>
-              <option value="7">Year 7</option>
-            </select>
-          </div>
-
-          <div id="lawyer-fields" class="hidden">
-            <input
-              type="number"
-              id="lawyer-years-experience"
-              placeholder="Years of Experience"
-              min="0"
-              required
-            />
-          </div>
-
-          <button type="submit">Sign Up</button>
-          <div id="signup-error-message" class="error-message"></div>
-        </form>
-      </div>
-
-      <!-- ✅ Login form: now visible by default -->
-      <div id="login-form-container" class="auth-form-container">
-        <h2>Login to your Account</h2>
-        <form id="login-form">
-          <input type="email" id="login-email" placeholder="Email" required />
-          <input type="password" id="login-password" placeholder="Password" required />
-          <button type="submit">Login</button>
-          <div id="login-error-message" class="error-message"></div>
-          <p><a href="#" id="forgot-password-link">Forgot Password?</a></p>
-        </form>
-      </div>
-    </div>
-  </div>
-</section>
     </main>
 
     <footer>
         <p>&copy; 2025 LAW STUDENTS INTELLECTUAL FORUM</p>
     </footer>
-
-<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
-<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-auth-compat.js"></script>
-<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-database-compat.js"></script>
 
 <script>
     // Load the header dynamically
@@ -241,8 +174,10 @@
   .catch(err => console.error('Failed to load header:', err));
     </script>
 
-<script src="auth.js"></script>
-<script src="script.js"></script>
+<script type="module" src="scripts/auth.js"></script>
+<script type="module" src="script.js"></script>
+<script type="module" src="scripts/student-articles.js"></script>
+
 
 </body>
 </html>
