@@ -8,6 +8,12 @@
     <link rel="stylesheet" href="style.css" />
 </head>
 <body>
+  <div id="splash">
+  <div class="splash-inner">
+    <img src="assets/forum-logo0.png" alt="Forum logo" class="splash-logo" />
+    <p class="splash-tag">Sponsored by <span>KT Industries</span></p>
+  </div>
+</div>
     <div id="header-placeholder"></div>
 
     <main class="homepage-main">
@@ -154,10 +160,6 @@
         <p>&copy; 2025 LAW STUDENTS INTELLECTUAL FORUM</p>
     </footer>
 
-<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
-<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-auth-compat.js"></script>
-<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-database-compat.js"></script>
-
 <script>
     // Load the header dynamically
       fetch('header.html')
@@ -172,8 +174,9 @@
   .catch(err => console.error('Failed to load header:', err));
     </script>
 
-<script type="module" src="auth.js"></script>
+<script type="module" src="scripts/auth.js"></script>
 <script type="module" src="script.js"></script>
+<script type="module" src="scripts/student-articles.js"></script>
 
 
 </body>

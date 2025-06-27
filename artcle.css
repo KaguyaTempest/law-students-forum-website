@@ -301,3 +301,144 @@
 .delete-comment-btn:hover {
   background-color: #c82333;
 }
+/* =========================================================
+   Forum ✨ Enhanced Comment & Reaction Styling
+   (overrides plain defaults)
+   ========================================================= */
+
+/* 1️⃣ Comment Box ------------------------------------------------ */
+.comment-form textarea {
+  width: 100%;
+  padding: 12px 14px;
+  border: 1px solid #d0d7de;
+  border-radius: 8px;
+  background: #fefefe;
+  font-family: inherit;
+  font-size: 0.95rem;
+  line-height: 1.4;
+  transition: border-color 0.25s ease;
+}
+.comment-form textarea:focus {
+  outline: none;
+  border-color: #2d6cff;
+  box-shadow: 0 0 0 3px rgba(45,108,255,0.15);
+}
+
+.comment-form button {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: linear-gradient(90deg,#2d6cff,#4bbdff);
+  color: #fff;
+  padding: 10px 20px;
+  font-weight: 600;
+  font-size: 0.95rem;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
+}
+.comment-form button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 12px rgba(45,108,255,0.35);
+}
+
+/* 2️⃣ Individual Comment Card ----------------------------------- */
+.forum-comment {
+  position: relative;
+  padding: 18px 20px 14px;
+  margin-bottom: 18px;
+  background: #ffffff;
+  border-radius: 10px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+  border-left: 4px solid #2d6cff;
+}
+.forum-comment:hover {
+  box-shadow: 0 4px 16px rgba(0,0,0,0.08);
+}
+
+.comment-header {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 6px;
+  font-size: 0.85rem;
+  color: #556;
+}
+.comment-user { font-weight: 600; color: #222; }
+.comment-time { font-style: italic; }
+
+.comment-text {
+  font-size: 1rem;
+  color: #333;
+  line-height: 1.55;
+  margin-bottom: 6px;
+}
+
+/* Role badges */
+.user-badge {
+  padding: 2px 8px;
+  border-radius: 12px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: #fff;
+}
+.role-student  { background:#0069ff; }
+.role-lawyer   { background:#28a745; }
+.role-observer { background:#6c757d; }
+
+/* Admin delete button */
+.delete-comment-btn {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  background:#dc3545;
+  color:#fff;
+  border:none;
+  padding:4px 10px;
+  font-size:0.75rem;
+  border-radius:6px;
+  cursor:pointer;
+  opacity:0.85;
+  transition:opacity 0.2s ease;
+}
+.delete-comment-btn:hover { opacity:1; }
+
+/* 3️⃣ Reaction Bar ---------------------------------------------- */
+.reaction-bar {
+  display: flex;
+  gap: 10px;
+  margin-top: 8px;
+}
+.reaction-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 1rem;
+  padding: 6px 12px;
+  background:#f1f4ff;
+  border:1px solid #cfd8ff;
+  border-radius: 8px;
+  cursor:pointer;
+  transition: background 0.15s ease, transform 0.1s ease;
+}
+.reaction-btn span { font-weight:600; }
+
+.reaction-btn:hover {
+  background:#e4eaff;
+  transform: scale(1.08);
+}
+.reaction-btn:active { transform: scale(0.96); }
+
+/* 4️⃣ Responsive tweaks ----------------------------------------- */
+@media (max-width: 640px) {
+  .reaction-btn { font-size: 0.9rem; padding:6px 10px; }
+  .forum-comment { padding:14px 16px; }
+}
+
+.reaction-bar { margin-top: .5rem; display:flex; gap:.5rem; }
+.reaction-btn { background:#f3f3f3; border:1px solid #ccc; border-radius:6px;
+                padding:.2rem .5rem; cursor:pointer; font-size:.9rem; }
+.reaction-btn span { margin-left:2px; font-weight:600; }
+

@@ -24,7 +24,10 @@ document.addEventListener('DOMContentLoaded', () => {
   loadHeader();         // Will call setupAuthUI after header is loaded
   generateArticleCards();
 });
-
+window.addEventListener('load',()=>{
+  const splash=document.getElementById('splash');
+  splash?.classList.add('hidden');
+});
 // ✅ Load shared header then trigger auth UI setup
 function loadHeader() {
   fetch('header.html')
