@@ -10,23 +10,22 @@ const firebaseConfig = {
   measurementId: "G-GGNJJSP3DJ"
 };
 
-// Initialize Firebase if needed
+// ✅ Initialize Firebase (safely once)
 if (!firebase.apps.length) {
   firebase.initializeApp(firebaseConfig);
-  firebase.analytics();
 }
 
-const auth = firebase.auth();
+// ✅ Initialize services
+const auth = firebase.auth(); // << MUST come BEFORE setupAuthUI
 const database = firebase.database();
 
-// Main setup
+// ✅ Setup DOM after everything is ready
 document.addEventListener('DOMContentLoaded', () => {
-  loadHeader();
+  loadHeader();         // Will call setupAuthUI after header is loaded
   generateArticleCards();
-  setupCarousel();
 });
 
-// Load reusable header
+// ✅ Load shared header then trigger auth UI setup
 function loadHeader() {
   fetch('header.html')
     .then(res => {
@@ -35,7 +34,7 @@ function loadHeader() {
     })
     .then(html => {
       document.getElementById('header-placeholder').innerHTML = html;
-      setupAuthUI(); // Must wait for header to exist in DOM
+      setupAuthUI(); // ✅ only call this after DOM contains header elements
     })
     .catch(err => {
       console.error('Header error:', err);
@@ -107,20 +106,38 @@ function generateArticleCards() {
   });
 }
 
-// Carousel logic (safe!)
-function setupCarousel() {
-  const carousel = document.getElementById('article-carousel');
-  const leftArrow = document.getElementById('carousel-left');
-  const rightArrow = document.getElementById('carousel-right');
-  const scrollStep = 400;
+const newsletterCarousel = document.querySelector('.newsletter-carousel');
+  const leftArrow = document.querySelector('.newsletter-left-arrow');
+  const rightArrow = document.querySelector('.newsletter-right-arrow');
 
-  if (carousel && leftArrow && rightArrow) {
-    leftArrow.addEventListener('click', () => {
-      carousel.scrollBy({ left: -scrollStep, behavior: 'smooth' });
+  if (leftArrow && rightArrow && newsletterCarousel) {
+  leftArrow.addEventListener('click', () => {
+    newsletterCarousel.scrollBy({ left: -320, behavior: 'smooth' });
+  });
+
+  rightArrow.addEventListener('click', () => {
+    newsletterCarousel.scrollBy({ left: 320, behavior: 'smooth' });
+  });
+
+  // Auto-scroll every 7 seconds
+  setInterval(() => {
+    newsletterCarousel.scrollBy({ left: 320, behavior: 'smooth' });
+  }, 7000);
+}
+const articleCarousel = document.querySelector('.article-carousel');
+  const articleLeftArrow = document.querySelector('.left-arrow');
+  const articleRightArrow = document.querySelector('.right-arrow');
+
+  if (articleCarousel && articleLeftArrow && articleRightArrow) {
+    articleLeftArrow.addEventListener('click', () => {
+      articleCarousel.scrollBy({ left: -320, behavior: 'smooth' });
     });
 
-    rightArrow.addEventListener('click', () => {
-      carousel.scrollBy({ left: scrollStep, behavior: 'smooth' });
+    articleRightArrow.addEventListener('click', () => {
+      articleCarousel.scrollBy({ left: 320, behavior: 'smooth' });
     });
-  }
+// Auto-scroll every 7 seconds
+  setInterval(() => {
+    newsletterCarousel.scrollBy({ left: 320, behavior: 'smooth' });
+  }, 7000);
 }

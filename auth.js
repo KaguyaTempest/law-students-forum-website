@@ -13,23 +13,17 @@ document.addEventListener('DOMContentLoaded', () => {
   const studentFields = document.getElementById('student-fields');
   const lawyerFields = document.getElementById('lawyer-fields');
   const forgotPasswordLink = document.getElementById('forgot-password-link');
+  const authModal = document.getElementById("auth-modal");
+  const closeBtn = document.querySelector(".close-auth-modal");
+  const openAuthButtons = document.querySelectorAll(".open-auth-modal");
 
-  // 🔁 Toggle forms
-  if (showSignupBtn && showLoginBtn) {
-    showSignupBtn.addEventListener('click', () => {
-      signupFormContainer.classList.add('active');
-      loginFormContainer.classList.remove('active');
-      clearMessages();
-    });
-
-    showLoginBtn.addEventListener('click', () => {
-      loginFormContainer.classList.add('active');
-      signupFormContainer.classList.remove('active');
-      clearMessages();
-    });
+  // Clear any messages
+  function clearMessages() {
+    signupErrorMsg.textContent = '';
+    loginErrorMsg.textContent = '';
   }
 
-  // 🔄 Toggle role-specific fields
+  // Show/hide role-specific fields
   if (userRoleSelect) {
     userRoleSelect.addEventListener('change', () => {
       const role = userRoleSelect.value;
@@ -38,13 +32,7 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 
-  // 🧹 Clear messages
-  function clearMessages() {
-    signupErrorMsg.textContent = '';
-    loginErrorMsg.textContent = '';
-  }
-
-  // 📝 Sign up form
+  // Signup form submission
   if (signupForm) {
     signupForm.addEventListener('submit', async (e) => {
       e.preventDefault();
@@ -104,7 +92,7 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 
-  // 🔐 Login form
+  // Login form submission
   if (loginForm) {
     loginForm.addEventListener('submit', async (e) => {
       e.preventDefault();
@@ -123,7 +111,7 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 
-  // 🔑 Forgot password
+  // Forgot password
   if (forgotPasswordLink) {
     forgotPasswordLink.addEventListener('click', async (e) => {
       e.preventDefault();
@@ -141,14 +129,39 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 
-  // 🚪 Logout button (delegated)
-  document.addEventListener("click", (e) => {
-    if (e.target.id === "logout-btn") {
-      firebase.auth().signOut();
-    }
+  // Auth modal open/close logic
+  openAuthButtons.forEach((btn) => {
+    btn.addEventListener("click", () => {
+      authModal.classList.remove("hidden");
+      loginFormContainer.classList.remove("hidden");
+      signupFormContainer.classList.add("hidden");
+    });
   });
 
-  // 👤 Update header UI based on login state
+  if (closeBtn) {
+    closeBtn.addEventListener("click", () => {
+      authModal.classList.add("hidden");
+    });
+  }
+
+  showSignupBtn.addEventListener("click", () => {
+    signupFormContainer.classList.remove("hidden");
+    loginFormContainer.classList.add("hidden");
+    showSignupBtn.classList.add("active");
+    showLoginBtn.classList.remove("active");
+    clearMessages();
+    document.getElementById("signup-username").focus();
+  });
+
+  showLoginBtn.addEventListener("click", () => {
+    loginFormContainer.classList.remove("hidden");
+    signupFormContainer.classList.add("hidden");
+    showLoginBtn.classList.add("active");
+    showSignupBtn.classList.remove("active");
+    clearMessages();
+  });
+
+  // UI update based on login state
   firebase.auth().onAuthStateChanged((user) => {
     const authButtons = document.getElementById("auth-buttons");
     const userInfo = document.getElementById("user-info");
@@ -170,6 +183,13 @@ document.addEventListener('DOMContentLoaded', () => {
     } else {
       if (authButtons) authButtons.classList.remove("hidden");
       if (userInfo) userInfo.classList.add("hidden");
+    }
+  });
+
+  // Logout
+  document.addEventListener("click", (e) => {
+    if (e.target.id === "logout-btn") {
+      firebase.auth().signOut();
     }
   });
 });
