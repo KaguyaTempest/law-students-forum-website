@@ -16,6 +16,7 @@ header {
     align-items: center;
     justify-content: space-between;
     gap: 20px;
+    gap: 20px;
     position: static; /* Keep the header's normal scrolling behavior */
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2); /* Add a subtle shadow */
     height: 90px; /* Set a fixed height for the header */
@@ -140,6 +141,7 @@ nav ul li.about-link {
 main {
     padding: 20px;
     margin-top: 0;
+    margin-top: 0;
 }
 
 .homepage-main {
@@ -221,7 +223,6 @@ main {
   display: -webkit-box;
   -webkit-box-orient: vertical;
   -webkit-line-clamp: 3;
-  line-clamp: 3;
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: normal;
@@ -364,6 +365,7 @@ footer {
 
 .newsletter-section a {
     background-color: #4f606d; /* Grey button */
+    background-color: #4f606d; /* Dark gray button */
     color: #fff;
     padding: 10px 20px;
     border-radius: 5px;
@@ -374,6 +376,7 @@ footer {
 
 .newsletter-section a:hover {
     background-color: #37434c; /* Darker GREY on hover */
+    background-color: #37434c; /* Darker gray on hover */
 }
 
 .auth-main {

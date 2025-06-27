@@ -15,25 +15,55 @@
       <p class="author-name">By Kudakwashe Kwitireni</p>
       <img src="assets/law-ai.png" alt="AI and Copyright" class="article-banner" />
 
-      <p>The rapid evolution of generative AI has ignited a fervent debate surrounding its intersection with intellectual property rights...</p>
+      <p>The rapid evolution of generative AI has ignited a fervent debate surrounding its intersection
+with intellectual property rights. Last month, I had the privilege of participating in a moot
+court competition hosted by the World Intellectual Property Organization (WIPO), where we
+delved into the complex issue of whether the utilization of generative AI, trained on
+datasets containing cultural heritage artifacts, to generate NFTs constitutes copyright
+infringement. This essay serves as an analysis of this critical question, examining the
+potential infringement of copyright in AI-generated images. By exploring the nuances of this
+emerging legal landscape, I aim to contribute to the ongoing discourse and offer insights for
+policymakers, legal professionals, and creators alike.The Nature of AI-Generated Content
+and Copyright Law
+</p>
 
       <h3>Copyright Law and Originality</h3>
-      <p>Copyright law protects original works of authorship fixed in a tangible medium...</p>
+      <p>Copyright law protects original works of authorship fixed in a tangible medium of
+expression. To be eligible for copyright protection, a work must exhibit a modicum of
+creativity and originality. AI-generated content, while often novel and innovative, may not
+meet the traditional standards of authorship.
+</p>
 
       <h3>The Role of Human Intervention</h3>
-      <p>A key question in determining copyright ownership of AI-generated content...</p>
+      <p>A key question in determining copyright ownership of AI-generated content is the extent of
+human intervention in the creative process. If a human author provides substantial creative
+input, such as writing prompts or curating training data, they may be considered the author
+of the work. However, if the AI model generates content autonomously, without significant
+human intervention, it may be difficult to identify a clear author.</p>
 
       <h3>Training Data and Copyright Infringement</h3>
-      <p>One of the primary concerns regarding AI-generated content is...</p>
+      <p>One of the primary concerns regarding AI-generated content is the potential for copyright
+infringement during the training process. AI models are often trained on vast datasets that
+include copyrighted works. If these works are used without authorization, it could
+constitute copyright infringement. This issue is akin to the unauthorized use of copyrighted
+material in Harper & Row Publishers, Inc. v. Nation Enterprises.
+</p>
 
       <h3>Fair Use and AI-Generated Content</h3>
-      <p>The fair use doctrine, which allows for limited use of copyrighted material...</p>
+      <p>TThe fair use doctrine, which allows for limited use of copyrighted material without
+permission, may provide a defense against copyright infringement claims in certain cases
+involving AI-generated content. However, the application of fair use to AI is complex and
+subject to interpretation.</p>
 
       <h3>Cultural Heritage and Copyright</h3>
-      <p>Cultural heritage artifacts, such as paintings, sculptures, and documents...</p>
+      <p>: If AI-generated content significantly transforms the original
+copyrighted work, it may be more likely to qualify as fair use. This concept is similar to the
+transformative use of Java APIs in Google LLC v. Oracle America, Inc.
+</p>
 
       <h3>Platform Liability and the DMCA</h3>
-      <p>Platforms that host AI content may face copyright liability...</p>
+      <p>The nature of the copyrighted work, such as whether it
+is factual or creative, can influence the fair use analysis.</p>
 
       <h3>Looking Forward</h3>
       <p>International law, licensing practices, and recognition of AI contributions...</p>
