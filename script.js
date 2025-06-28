@@ -1,146 +1,119 @@
-// Firebase configuration
-const firebaseConfig = {
-  apiKey: "AIzaSyC0qWjJ8kt5jo1rOwNAd21RZ9QeK6pE7yU",
-  authDomain: "lsif-cedb1.firebaseapp.com",
-  databaseURL: "https://lsif-cedb1-default-rtdb.firebaseio.com",
-  projectId: "lsif-cedb1",
-  storageBucket: "lsif-cedb1.firebasestorage.app",
-  messagingSenderId: "761903090404",
-  appId: "1:761903090404:web:0b7c914fa2c3599faebaf1",
-  measurementId: "G-GGNJJSP3DJ"
-};
+/* scripts/home.js — modular, no global firebase object */
+import { auth } from '../js/firebase.js';   // adjust path if you moved firebase.js
+import {
+  onAuthStateChanged,
+  signOut
+} from 'https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js';
 
-// ✅ Initialize Firebase (safely once)
-if (!firebase.apps.length) {
-  firebase.initializeApp(firebaseConfig);
-}
-
-// ✅ Initialize services
-const auth = firebase.auth(); // << MUST come BEFORE setupAuthUI
-const database = firebase.database();
-
-// ✅ Setup DOM after everything is ready
+/* ───────────────── DOM READY ────────────────────────────── */
 document.addEventListener('DOMContentLoaded', () => {
-  loadHeader();         // Will call setupAuthUI after header is loaded
+  loadHeader();          // pulls in header.html then wires up auth UI
   generateArticleCards();
 });
-window.addEventListener('load',()=>{
-  const splash=document.getElementById('splash');
-  splash?.classList.add('hidden');
+
+/* Hide splash once every asset has loaded */
+window.addEventListener('load', () => {
+  document.getElementById('splash')?.classList.add('hidden');
 });
-// ✅ Load shared header then trigger auth UI setup
+
+/* ───────────────── HEADER LOAD + AUTH UI ───────────────── */
 function loadHeader() {
   fetch('header.html')
-    .then(res => {
-      if (!res.ok) throw new Error("Header load failed");
-      return res.text();
-    })
+    .then(res => (res.ok ? res.text() : Promise.reject('Header load failed')))
     .then(html => {
       document.getElementById('header-placeholder').innerHTML = html;
-      setupAuthUI(); // ✅ only call this after DOM contains header elements
+      setupAuthUI();               // run only after header markup exists
     })
     .catch(err => {
-      console.error('Header error:', err);
-      document.getElementById('header-placeholder').innerHTML = '<header>LAW STUDENTS INTELLECTUAL FORUM</header>';
+      console.error(err);
+      document.getElementById('header-placeholder').innerHTML =
+        '<header>LAW STUDENTS INTELLECTUAL FORUM</header>';
     });
 }
 
-// Handle Login/Logout UI
 function setupAuthUI() {
-  const loginBtn = document.getElementById('login-btn');
+  const loginBtn  = document.getElementById('login-btn');
   const logoutBtn = document.getElementById('logout-btn');
-  const authButtons = document.getElementById('auth-buttons');
-  const userInfo = document.getElementById('user-info');
+  const authBtns  = document.getElementById('auth-buttons');
+  const userInfo  = document.getElementById('user-info');
 
-  if (!loginBtn || !logoutBtn || !authButtons || !userInfo) {
-    console.warn('Auth elements not found.');
-    return;
-  }
+  if (!loginBtn || !logoutBtn || !authBtns || !userInfo) return;
 
-  auth.onAuthStateChanged(user => {
+  onAuthStateChanged(auth, user => {
     if (user) {
-      authButtons.style.display = 'none';
+      authBtns.style.display = 'none';
       userInfo.style.display = 'flex';
-      document.getElementById('user-name').textContent = user.displayName || user.email;
+      document.getElementById('user-name').textContent =
+        user.displayName || user.email;
       if (user.photoURL) {
         document.getElementById('user-avatar').src = user.photoURL;
       }
     } else {
-      authButtons.style.display = 'flex';
+      authBtns.style.display = 'flex';
       userInfo.style.display = 'none';
     }
   });
 
-  loginBtn.addEventListener('click', () => {
-    const loginTab = document.getElementById('show-login');
-    if (loginTab) loginTab.click();
-  });
-
-  logoutBtn.addEventListener('click', () => auth.signOut());
+  loginBtn.addEventListener('click', () =>
+    document.getElementById('show-login')?.click()
+  );
+  logoutBtn.addEventListener('click', () => signOut(auth));
 }
 
-// Generate article cards
+/* ───────────────── ARTICLE CARDS (placeholder) ─────────── */
 function generateArticleCards() {
   const articles = [
     {
-      title: "Developing Effective Legal Writing",
-      content: "Strategies for improving precision and clarity in legal documents.",
-      link: "#"
+      title: 'Developing Effective Legal Writing',
+      content: 'Strategies for improving precision and clarity in legal documents.',
+      link: '#'
     },
     {
-      title: "Navigating Legal Research",
-      content: "Tips for efficiently finding and using legal sources.",
-      link: "#"
+      title: 'Navigating Legal Research',
+      content: 'Tips for efficiently finding and using legal sources.',
+      link: '#'
     }
   ];
 
-  const articleContainer = document.getElementById('article-container');
-  if (!articleContainer) return;
+  const container = document.getElementById('article-container');
+  if (!container) return;
 
-  articles.forEach(article => {
+  articles.forEach(a => {
     const card = document.createElement('div');
-    card.classList.add('article-card');
+    card.className = 'article-card';
     card.innerHTML = `
-      <h3>${article.title}</h3>
-      <p>${article.content}</p>
-      <a href="${article.link}">READ MORE</a>
+      <h3>${a.title}</h3>
+      <p>${a.content}</p>
+      <a href="${a.link}">READ MORE</a>
     `;
-    articleContainer.appendChild(card);
+    container.appendChild(card);
   });
 }
 
+/* ───────────────── NEWSLETTER CAROUSEL ─────────────────── */
 const newsletterCarousel = document.querySelector('.newsletter-carousel');
-  const leftArrow = document.querySelector('.newsletter-left-arrow');
-  const rightArrow = document.querySelector('.newsletter-right-arrow');
+const newsletterLeft  = document.querySelector('.newsletter-left-arrow');
+const newsletterRight = document.querySelector('.newsletter-right-arrow');
 
-  if (leftArrow && rightArrow && newsletterCarousel) {
-  leftArrow.addEventListener('click', () => {
-    newsletterCarousel.scrollBy({ left: -320, behavior: 'smooth' });
-  });
-
-  rightArrow.addEventListener('click', () => {
-    newsletterCarousel.scrollBy({ left: 320, behavior: 'smooth' });
-  });
-
-  // Auto-scroll every 7 seconds
-  setInterval(() => {
-    newsletterCarousel.scrollBy({ left: 320, behavior: 'smooth' });
-  }, 7000);
+if (newsletterCarousel && newsletterLeft && newsletterRight) {
+  newsletterLeft.addEventListener('click',  () =>
+    newsletterCarousel.scrollBy({ left: -320, behavior: 'smooth' }));
+  newsletterRight.addEventListener('click', () =>
+    newsletterCarousel.scrollBy({ left:  320, behavior: 'smooth' }));
+  setInterval(() =>
+    newsletterCarousel.scrollBy({ left: 320, behavior: 'smooth' }), 7000);
 }
-const articleCarousel = document.querySelector('.article-carousel');
-  const articleLeftArrow = document.querySelector('.left-arrow');
-  const articleRightArrow = document.querySelector('.right-arrow');
 
-  if (articleCarousel && articleLeftArrow && articleRightArrow) {
-    articleLeftArrow.addEventListener('click', () => {
-      articleCarousel.scrollBy({ left: -320, behavior: 'smooth' });
-    });
+/* ───────────────── ARTICLE CAROUSEL ─────────────────────── */
+const articleCarousel   = document.querySelector('.article-carousel');
+const articleLeftArrow  = document.querySelector('.left-arrow');
+const articleRightArrow = document.querySelector('.right-arrow');
 
-    articleRightArrow.addEventListener('click', () => {
-      articleCarousel.scrollBy({ left: 320, behavior: 'smooth' });
-    });
-// Auto-scroll every 7 seconds
-  setInterval(() => {
-    newsletterCarousel.scrollBy({ left: 320, behavior: 'smooth' });
-  }, 7000);
+if (articleCarousel && articleLeftArrow && articleRightArrow) {
+  articleLeftArrow.addEventListener('click', () =>
+    articleCarousel.scrollBy({ left: -320, behavior: 'smooth' }));
+  articleRightArrow.addEventListener('click', () =>
+    articleCarousel.scrollBy({ left: 320, behavior: 'smooth' }));
+  setInterval(() =>
+    articleCarousel.scrollBy({ left: 320, behavior: 'smooth' }), 7000);
 }
