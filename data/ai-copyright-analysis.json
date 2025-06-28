@@ -1,123 +1,40 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>The Evolving Landscape of AI and Copyright</title>
-  <link rel="stylesheet" href="style.css" />
-</head>
-<body>
-  <div id="header-placeholder"></div>
-
-  <main class="article-content">
-    <section class="student-articles-section">
-      <h2>The Evolving Landscape of AI and Copyright</h2>
-      <p class="author-name">By Kudakwashe Kwitireni</p>
-      <img src="assets/law-ai.png" alt="AI and Copyright" class="article-banner" />
-
-      <p>The rapid evolution of generative AI has ignited a fervent debate surrounding its intersection with intellectual property rights...</p>
-
-      <h3>Copyright Law and Originality</h3>
-      <p>Copyright law protects original works of authorship fixed in a tangible medium...</p>
-
-      <h3>The Role of Human Intervention</h3>
-      <p>A key question in determining copyright ownership of AI-generated content...</p>
-
-      <h3>Training Data and Copyright Infringement</h3>
-      <p>One of the primary concerns regarding AI-generated content is...</p>
-
-      <h3>Fair Use and AI-Generated Content</h3>
-      <p>The fair use doctrine, which allows for limited use of copyrighted material...</p>
-
-      <h3>Cultural Heritage and Copyright</h3>
-      <p>Cultural heritage artifacts, such as paintings, sculptures, and documents...</p>
-
-      <h3>Platform Liability and the DMCA</h3>
-      <p>Platforms that host AI content may face copyright liability...</p>
-
-      <h3>Looking Forward</h3>
-      <p>International law, licensing practices, and recognition of AI contributions...</p>
-
-      <p><em>Originally submitted during a moot court hosted by WIPO.</em></p>
-    </section>
-    <div class="emoji-reactions">
-      <p>React to this article:</p>
-      <button class="emoji-btn" data-emoji="❤️">❤️</button>
-      <button class="emoji-btn" data-emoji="👏">👏</button>
-      <button class="emoji-btn" data-emoji="🤔">🤔</button>
-      <button class="emoji-btn" data-emoji="🔥">🔥</button>
-      <div id="emoji-counts"></div>
-    </div>
-    <section class="comment-section">
-      <h3>Leave a Comment</h3>
-      <textarea id="comment-text" placeholder="Write your thoughts..."></textarea>
-      <button id="submit-comment">Post Comment</button>
-      <div id="comments-list"></div>
-    </section>
-  </main>
-
-  <footer>
-    <p>&copy; 2025 LAW STUDENTS INTELLECTUAL FORUM</p>
-  </footer>
-
-  <script src="auth.js"></script>
-  <script src="script.js"></script>
-  <script>
-    // Load the header dynamically
-    fetch('header.html')
-      .then(response => response.text())
-      .then(html => {
-        document.getElementById('header-placeholder').innerHTML = html;
-      })
-      .catch(err => console.error('Failed to load header:', err));
-
-    // Emoji reaction logic
-    document.addEventListener("click", function (e) {
-      if (e.target.classList.contains("emoji-btn")) {
-        const emoji = e.target.dataset.emoji;
-        const reactionRef = firebase.database().ref("newsletter/news_001/emoji_reactions/" + emoji);
-        reactionRef.transaction(current => (current || 0) + 1);
-      }
-    });
-
-    // Display counts (optional)
-    const countRef = firebase.database().ref("newsletter/news_001/emoji_reactions");
-    countRef.on("value", snapshot => {
-      const counts = snapshot.val() || {};
-      const countDiv = document.getElementById("emoji-counts");
-      countDiv.innerHTML = "";
-      for (const emoji in counts) {
-        countDiv.innerHTML += `<span style="margin-right:10px">${emoji} ${counts[emoji]}</span>`;
-      }
-    });
-    // Comment submission logic
-    document.getElementById("submit-comment").addEventListener("click", () => {
-      const comment = document.getElementById("comment-text").value.trim();
-      const user = firebase.auth().currentUser;
-      if (user && comment) {
-       const newCommentRef = firebase.database().ref("articles/article_001/comments").push();
-       newCommentRef.set({
-       uid: user.uid,
-       text: comment,
-       timestamp: Date.now()
-    });
-    document.getElementById("comment-text").value = "";
-  }   else {
-    alert("Please log in and enter a comment.");
-  }
-});
-
-// Load comments
-    firebase.database().ref("articles/article_001/comments").on("value", snapshot => {
-      const comments = snapshot.val();
-      const list = document.getElementById("comments-list");
-      list.innerHTML = "";
-      for (const key in comments) {
-        const item = comments[key];
-        list.innerHTML += `<p><strong>${item.uid}:</strong> ${item.text}</p>`;
-  }
-});
-
-  </script>
-</body>
-</html>
+{
+  "title": "The Evolving Landscape of AI and Copyright",
+  "author": "Kudakwashe Kwitireni",
+  "bannerImage": "assets/law-ai.png",
+  "content": [
+    {
+      "heading": "Introduction",
+      "text": "The rapid evolution of generative AI has ignited a fervent debate surrounding its intersection with intellectual property rights. Last month, I had the privilege of participating in a moot court competition hosted by the World Intellectual Property Organization (WIPO), where we delved into the complex issue of whether the utilization of generative AI, trained on datasets containing cultural heritage artifacts, to generate NFTs constitutes copyright infringement. This essay serves as an analysis of this critical question, examining the potential infringement of copyright in AI-generated images. By exploring the nuances of this emerging legal landscape, I aim to contribute to the ongoing discourse and offer insights for policymakers, legal professionals, and creators alike."
+    },
+    {
+      "heading": "Copyright Law and Originality",
+      "text": "Copyright law protects original works of authorship fixed in a tangible medium of expression. To be eligible for copyright protection, a work must exhibit a modicum of creativity and originality. AI-generated content, while often novel and innovative, may not meet the traditional standards of authorship."
+    },
+    {
+      "heading": "The Role of Human Intervention",
+      "text": "A key question in determining copyright ownership of AI-generated content is the extent of human intervention in the creative process. If a human author provides substantial creative input, such as writing prompts or curating training data, they may be considered the author of the work. However, if the AI model generates content autonomously, without significant human intervention, it may be difficult to identify a clear author."
+    },
+    {
+      "heading": "Training Data and Copyright Infringement",
+      "text": "One of the primary concerns regarding AI-generated content is the potential for copyright infringement during the training process. AI models are often trained on vast datasets that include copyrighted works. If these works are used without authorization, it could constitute copyright infringement. This issue is akin to the unauthorized use of copyrighted material in Harper & Row Publishers, Inc. v. Nation Enterprises."
+    },
+    {
+      "heading": "Fair Use and AI-Generated Content",
+      "text": "The fair use doctrine, which allows for limited use of copyrighted material without permission, may provide a defense against copyright infringement claims in certain cases involving AI-generated content. However, the application of fair use to AI is complex and subject to interpretation."
+    },
+    {
+      "heading": "Cultural Heritage and Copyright",
+      "text": "If AI-generated content significantly transforms the original copyrighted work, it may be more likely to qualify as fair use. This concept is similar to the transformative use of Java APIs in Google LLC v. Oracle America, Inc."
+    },
+    {
+      "heading": "Platform Liability and the DMCA",
+      "text": "The nature of the copyrighted work, such as whether it is factual or creative, can influence the fair use analysis."
+    },
+    {
+      "heading": "Looking Forward",
+      "text": "International law, licensing practices, and recognition of AI contributions..."
+    }
+  ],
+  "note": "Originally submitted during a moot court hosted by WIPO."
+}
