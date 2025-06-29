@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Crafting Persuasive Legal Arguments – FIRAC Tutorial | LSIF</title>
+  <!-- The main LSIF stylesheet -->
+  <link rel="stylesheet" href="/style.css" />
+  <!-- Optional: add any additional tutorial‑specific CSS here -->
+</head>
+<body class="tutorial-page">
+  <div id="header-placeholder"></div>
+
+  <main class="max-w-4xl mx-auto px-4 py-8">
+    <!-- PDF download button -->
+    <p class="mb-6 text-right">
+      <a href="/downloads/crafting-persuasive-arguments.pdf" class="btn btn-primary">
+        📥 Download this tutorial as a PDF
+      </a>
+    </p>
+
+    <article class="prose lg:prose-xl">
+      <h1>Crafting Persuasive Legal Arguments</h1>
+      <p>
+        At the heart of the legal profession and advocacy lies <strong>legal writing</strong>.
+        Often, before you can present your arguments orally, you must first express
+        them in writing. In this sense, your writing skills are just as important—if
+        not more so—than your oral communication abilities. The way you organize your
+        writing will determine whether a reader can understand and be persuaded by
+        your argument.
+      </p>
+      <p>
+        ... (introductory paragraphs retained here; truncated for brevity in this preview)
+      </p>
+
+      <h2>Magaya v&nbsp;Magaya</h2>
+      <p><em>Supreme Court of Zimbabwe – Judgment No. S.C. 210/98 – Decided 16 February 1999</em></p>
+      <p>
+        Upon the death of Shoniwa Magaya in 1994, his daughter Venia Magaya was
+        appointed heir to his estate by a magistrate’s court. Shortly afterward, her
+        younger half‑brother, Nhaka Magaya, contested her appointment on the grounds
+        that under Shona customary law a woman could not be appointed heir where a
+        male heir existed. The magistrate later reversed its decision, ruling that
+        Nhaka should inherit the estate. Venia appealed to the Supreme Court,
+        arguing that the customary law principle was discriminatory on the basis of
+        sex and thus unconstitutional under the 1980 Constitution of Zimbabwe.
+      </p>
+
+      <!-- ------------------ F – Facts ------------------ -->
+      <h2 id="facts">F – Facts</h2>
+      <p>
+        The "F" in FIRAC stands for <strong>Facts</strong>. This is the starting point of any
+        legal analysis. The facts of a case form the factual foundation on which the
+        legal issues rest. Not every detail is important: the skill lies in
+        identifying which facts are <em>legally relevant</em>—those the court must consider
+        to resolve the legal question—and which are irrelevant background details
+        that do not affect the legal outcome.
+      </p>
+      <h3>How to identify relevant facts</h3>
+      <blockquote>
+        <p>Would the court need this fact to decide the legal issue?</p>
+      </blockquote>
+      <p>If the answer is yes, it's a relevant fact&hellip;</p>
+      <h4>Applying it to <em>Magaya v&nbsp;Magaya</em></h4>
+      <ul>
+        <li>Shoniwa Magaya died in 1994.</li>
+        <li>His daughter Venia Magaya was initially appointed heir by a magistrate’s court.</li>
+        <li>Her younger half‑brother, Nhaka Magaya, contested the appointment based on Shona customary law.</li>
+        <li>The magistrate reversed the decision, awarding heirship to Nhaka.</li>
+        <li>Venia appealed, arguing the disqualification based on sex was unconstitutional.</li>
+      </ul>
+
+      <!-- ------------------ I – Issue ------------------ -->
+      <h2 id="issue">I – Issue</h2>
+      <p>The "I" in FIRAC stands for <strong>Issue</strong>&hellip;</p>
+      <h3>What does it mean for an issue to be &ldquo;legally framed&rdquo;?</h3>
+      <p>When we say an issue must be legally framed&hellip;</p>
+      <p><strong>Legally framed:</strong> Does disqualifying Venia from inheriting under customary law violate her constitutional right to non‑discrimination on the grounds of sex?</p>
+
+      <!-- ------------------ R – Rule ------------------ -->
+      <h2 id="rule">R – Rule</h2>
+      <p>The "R" in FIRAC stands for <strong>Rule</strong>&hellip;</p>
+      <h3>Teaching Point: Be Specific and Precise</h3>
+      <p>When stating the rule&hellip;</p>
+      <h4>Example of Good Rule Presentation</h4>
+      <blockquote>
+        <p>Section 23(1) of the Constitution of Zimbabwe&hellip;</p>
+      </blockquote>
+      <h4>Rules Applied in <em>Magaya v&nbsp;Magaya</em></h4>
+      <ol>
+        <li><strong>Section 23 of the 1980 Constitution of Zimbabwe</strong>&hellip;</li>
+        <li><strong>Shona Customary Law on Inheritance</strong>&hellip;</li>
+        <li><strong>Administration of Estates Act [Chapter 6:01]</strong>&hellip;</li>
+      </ol>
+
+      <!-- ------------------ A – Application ------------------ -->
+      <h2 id="application">A – Application</h2>
+      <p>The "A" in FIRAC stands for <strong>Application</strong>&hellip;</p>
+      <blockquote>
+        <p>“The appellant, being a woman, was not entitled to inherit under customary law. That law, in the light of s 23(3), cannot be held to be unconstitutional.”&nbsp;— <em>per Gubbay&nbsp;CJ</em></p>
+      </blockquote>
+      <h3>Your Application = Your Argument</h3>
+      <p>This is where you do your persuasive work&hellip;</p>
+
+      <!-- ------------------ C – Conclusion ------------------ -->
+      <h2 id="conclusion">C – Conclusion</h2>
+      <p>Because section 23(3) allows customary rules to govern inheritance&hellip;</p>
+
+      <hr />
+      <p class="text-sm italic">Tutorial prepared for the Law Students Intellectual Forum (LSIF).</p>
+    </article>
+  </main>
+
+  <!-- ========================================================= -->
+  <!-- Replace this block with your shared site footer include -->
+  <!-- ========================================================= -->
+  <footer id="site-footer"></footer>
+</body>
+</html>
