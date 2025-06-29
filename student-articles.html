@@ -9,6 +9,7 @@
   <!-- Base + page‑specific styles -->
   <link rel="stylesheet" href="style.css" />
   <link rel="stylesheet" href="student-articles.css" />
+
 </head>
 <body>
   <!-- Header is injected dynamically by load-header.js -->
@@ -58,12 +59,19 @@
   </footer>
 
   <!-- ── MODULE SCRIPTS ────────────────────────────────── -->
+
   <script type="module" src="scripts/load-header.js"></script>
   <!-- load-header.js fetches header.html; it should dispatch a custom event e.g. 'header:loaded' when done -->
 
   <script type="module" src="scripts/auth.js"></script>
   <!-- auth.js assumes header elements exist; it will work once load-header.js has inserted the header markup -->
+  <script type="module" src="/scripts/student-articles.js"></script>
+</body>
+</html>
 
+ 
+    <script type="module" src="scripts/auth.js"></script>
+    <script type="module" src="scripts/home.js"></script>
   <script type="module" src="scripts/student-articles.js"></script>
 
 </body>
