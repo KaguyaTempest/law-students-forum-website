@@ -149,15 +149,26 @@ document.addEventListener('DOMContentLoaded', () => {
      Modal open/close logic
   ───────────────────────────── */
   openAuthBtns.forEach(btn =>
-    btn.addEventListener('click', () => {
-      clearMsgs();
-      show(authModal);
+  btn.addEventListener('click', () => {
+    clearMsgs();
+    show(authModal);
+
+    const openingSignup = btn.id === 'signup-btn';
+
+    // toggle the inner forms
+    if (openingSignup) {
+      show(signupFormContainer);
+      hide(loginFormContainer);
+      showSignupBtn.classList.add('active');
+      showLoginBtn.classList.remove('active');
+    } else {
       show(loginFormContainer);
       hide(signupFormContainer);
       showLoginBtn.classList.add('active');
       showSignupBtn.classList.remove('active');
-    })
-  );
+    }
+  })
+);
 
   closeBtn?.addEventListener('click', () => hide(authModal));
 

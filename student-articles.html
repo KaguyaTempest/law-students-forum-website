@@ -1,92 +1,76 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Student Articles - LAW STUDENTS INTELLECTUAL FORUM</title>
-    <link rel="icon" href="favicon.ico" type="image/x-icon">
-    <link rel="stylesheet" href="style.css">
-    <link rel="stylesheet" href="student-articles.css">
-    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-auth-compat.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore-compat.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-storage-compat.js"></script>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Student Articles | Law Students Intellectual Forum</title>
+  <link rel="icon" href="/favicon.ico" type="image/x-icon" />
 
+  <!-- Base + page‑specific styles -->
+  <link rel="stylesheet" href="/style.css" />
+  <link rel="stylesheet" href="/student-articles.css" />
 </head>
 <body>
+  <!-- Header is injected dynamically by load-header.js -->
+  <div id="header-placeholder"></div>
 
-        <div id="header-placeholder"></div>
-    <main class="articles-main">
-        <section class="articles-hero">
-            <h2>Explore Student Articles</h2>
-            <p>Dive into insightful articles written by law students, covering a wide range of legal topics and analyses.</p>
-        </section>
+  <main class="container mx-auto px-4 articles-main">
+    <!-- ── HERO ─────────────────────────────────────────── -->
+    <section class="articles-hero text-center py-10">
+      <h2 class="hero-title">Explore Student Articles</h2>
+      <p class="hero-subtitle max-w-2xl mx-auto">
+        Dive into insightful articles written by law students, covering a wide range of legal topics and analyses.
+      </p>
+    </section>
 
-        <section class="article-filters">
-            <ul>
-                <li><a href="#" class="filter-link active" data-filter="all">All</a></li>
-                <li><a href="#" class="filter-link" data-filter="human-rights-law">Human Rights Law</a></li>
-                <li><a href="#" class="filter-link" data-filter="commercial-law">Commercial Law</a></li>
-                <li><a href="#" class="filter-link" data-filter="intellectual-property-law">Intellectual Property Law</a></li>
-                <li><a href="#" class="filter-link" data-filter="international-law">International Law</a></li>
-                <li><a href="#" class="filter-link" data-filter="constitutional-law">Constitutional Law</a></li>
-            </ul>
-        </section>
+    <!-- ── CATEGORIES / FILTERS ─────────────────────────── -->
+    <section class="article-filters mb-8">
+      <ul class="flex flex-wrap gap-4 justify-center">
+        <li><a href="#" class="filter-link active" data-filter="all">All</a></li>
+        <li><a href="#" class="filter-link" data-filter="human-rights-law">Human Rights&nbsp;Law</a></li>
+        <li><a href="#" class="filter-link" data-filter="commercial-law">Commercial&nbsp;Law</a></li>
+        <li><a href="#" class="filter-link" data-filter="intellectual-property-law">Intellectual&nbsp;Property</a></li>
+        <li><a href="#" class="filter-link" data-filter="international-law">International&nbsp;Law</a></li>
+        <li><a href="#" class="filter-link" data-filter="constitutional-law">Constitutional&nbsp;Law</a></li>
+      </ul>
+    </section>
 
-        <section class="articles-list" id="articles-list">
-  <!-- Dynamically generated -->
-</section>
+    <!-- ── ARTICLES LIST ───────────────────────────────── -->
+    <section id="articles-list" class="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+      <!-- Cards are injected by scripts/student-articles.js -->
+      <p id="articles-loading" class="col-span-full text-center py-10 opacity-70">
+        Loading articles…
+      </p>
+    </section>
 
-        <section class="pagination">
-            <a href="#" class="page-btn prev-page">Previous</a>
-            <span class="page-number">Page 1 of [Total Pages]</span>
-            <a href="#" class="page-btn next-page">Next</a>
-        </section>
-    </main>
+    <!-- ✨ Optional pagination section: hide until implemented -->
+    <!--
+    <section class="pagination mt-12 flex justify-center items-center gap-4 hidden" id="pagination">
+      <button class="page-btn prev-page">Previous</button>
+      <span class="page-number">Page <span id="current-page">1</span> of <span id="total-pages">1</span></span>
+      <button class="page-btn next-page">Next</button>
+    </section>
+    -->
+  </main>
 
-    <footer>
-        <p>&copy; 2025 LAW STUDENTS INTELLECTUAL FORUM</p>
-    </footer>
+  <footer class="text-center py-8 text-sm opacity-70">
+    &copy; 2025 Law Students Intellectual Forum
+  </footer>
 
-    <script>
-    // Load the header dynamically
-     fetch('header.html')
-      .then(response => response.text())
-      .then(html => {
-        document.getElementById('header-placeholder').innerHTML = html;
-      })
-      .catch(err => console.error('Failed to load header:', err));
+  <!-- ── MODULE SCRIPTS ────────────────────────────────── -->
+  <script type="module" src="/scripts/load-header.js"></script>
+  <!-- load-header.js fetches header.html; it should dispatch a custom event e.g. 'header:loaded' when done -->
 
-        document.addEventListener('DOMContentLoaded', function() {
-            const filterLinks = document.querySelectorAll('.filter-link');
-            const articleCards = document.querySelectorAll('.article-card');
+  <script type="module" src="/scripts/auth.js"></script>
+  <!-- auth.js assumes header elements exist; it will work once load-header.js has inserted the header markup -->
 
-            filterLinks.forEach(link => {
-                link.addEventListener('click', function(event) {
-                    event.preventDefault();
-                    const filterValue = this.getAttribute('data-filter');
+  <script type="module" src="/scripts/student-articles.js"></script>
+</body>
+</html>
 
-                    // Update active state of filter links
-                    filterLinks.forEach(fl => fl.classList.remove('active'));
-                    this.classList.add('active');
-
-                    // Filter article cards
-                    articleCards.forEach(card => {
-                        const topics = card.getAttribute('data-topics').split(' ');
-                        if (filterValue === 'all' || topics.includes(filterValue)) {
-                            card.style.display = 'block';
-                        } else {
-                            card.style.display = 'none';
-                        }
-                    });
-                });
-            });
-        });
-    </script>
-  
-    <script type="module" src="assets/student-articles.js"></script>
-    <script type="module" src="auth.js"></script>
-    <script type="module" src="script.js"></script>
+    <script type="module" src="scripts/student-articles.js"></script>
+    <script type="module" src="scripts/auth.js"></script>
+    <script type="module" src="scripts/home.js"></script>
 
 
 </body>
