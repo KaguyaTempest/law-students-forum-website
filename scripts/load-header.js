@@ -16,8 +16,11 @@ async function insertHeader() {
     if (!placeholder) throw new Error('header-placeholder div not found.');
 
     placeholder.innerHTML = headerHTML;
+    // after placeholder.innerHTML = headerHTML; …
+const modal = placeholder.querySelector('#auth-modal');
+if (modal) document.body.appendChild(modal); // detach & append to body
 
-    // ── Highlight the active nav link ───────────────────────────────
+    // ── Highlight the active nav link ──────────────────────────────
     const currentPage = window.location.pathname.split('/').pop() || 'index.html';
     placeholder.querySelectorAll('nav a').forEach(link => {
       const linkHref = link.getAttribute('href');
