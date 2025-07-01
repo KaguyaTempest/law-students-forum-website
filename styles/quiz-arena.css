@@ -1,0 +1,182 @@
+/* ===== RESET & CORE ===== */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  background-color: #f5f5f5;
+  color: #333;
+}
+
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+/* ===== HERO SECTION ===== */
+.arena-hero h1,
+header h1 {
+  font-size: 3rem;
+  color: #4caf50;
+  font-weight: bold;
+}
+
+.arena-hero p,
+header p {
+  font-size: 1.25rem;
+  color: #666;
+}
+
+/* ===== GAME CARDS GRID ===== */
+.game-cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+  gap: 1.5rem;
+}
+
+/* ===== SHARED CARD STYLES ===== */
+.game-card,
+.card {
+  background-color: #fff;
+  padding: 20px;
+  border-radius: 16px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+  position: relative;
+  overflow: hidden;
+}
+
+.game-card:hover,
+.card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+}
+
+/* Radial highlight (legacy flare) */
+.game-card::after,
+.card::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(circle at 20% 20%, rgba(99, 102, 241, 0.08), transparent 70%);
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.game-card:hover::after,
+.card:hover::after {
+  opacity: 1;
+}
+
+/* Card headings & body */
+.card-header h2,
+.game-card h2 {
+  font-size: 1.5rem;
+  font-weight: bold;
+  color: #4caf50;
+}
+
+.card-body,
+.game-card p {
+  margin: 1rem 0;
+  color: #555;
+}
+
+/* ===== BUTTONS ===== */
+.btn-primary,
+.card-footer .play-btn {
+  background-color: #4caf50;
+  color: #fff;
+  padding: 10px 20px;
+  border-radius: 5px;
+  font-size: 1rem;
+  cursor: pointer;
+  border: none;
+  transition: background-color 0.3s ease-in-out, transform 0.15s ease, box-shadow 0.15s ease;
+}
+
+.btn-primary:hover,
+.card-footer .play-btn:hover {
+  background-color: #45a049;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+/* ===== LEADERBOARD SECTION ===== */
+.leaderboard-section h2 {
+  font-size: 2rem;
+  color: #4caf50;
+}
+
+.leaderboard-tabs .tab-btn {
+  background-color: #f5f5f5;
+  padding: 10px 20px;
+  border-radius: 5px;
+  cursor: pointer;
+  border: none;
+  font-size: 1rem;
+  transition: background-color 0.3s ease-in-out;
+}
+
+.leaderboard-tabs .tab-btn.active {
+  background-color: #4caf50;
+  color: #fff;
+}
+
+.leaderboard-wrapper {
+  background-color: #fff;
+  border-radius: 10px;
+  padding: 20px;
+  margin-top: 20px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+/* ===== MODAL ===== */
+.modal {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(0, 0, 0, 0.6);
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+.modal-content {
+  background-color: #fff;
+  padding: 2rem;
+  border-radius: 10px;
+  width: 80vw;
+  max-width: 900px;
+  height: 90vh;
+  overflow: auto;
+  position: relative;
+}
+
+.modal-close {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  font-size: 2rem;
+  cursor: pointer;
+}
+
+/* ===== RESPONSIVE TWEAKS (if Tailwind absent) ===== */
+@media (min-width: 640px) {
+  .game-cards {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (min-width: 1024px) {
+  .game-cards {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
