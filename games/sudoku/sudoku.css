@@ -1,0 +1,75 @@
+/* sudoku.css */
+
+body {
+  background-color: #1a1a1a; /* dark base */
+  background-image: url('./legal-bg.png');
+  background-repeat: no-repeat;
+  background-size: 65%;
+  background-position: center;
+  background-attachment: fixed;
+  color: #f1f1f1;
+  font-family: 'Georgia', serif;
+}
+
+#sudoku-grid {
+  background-color: rgba(255, 255, 255, 0.05); /* semi-transparent for dark mode */
+  padding: 12px;
+  border-radius: 8px;
+  box-shadow: 0 0 10px rgba(255,255,255,0.08);
+  backdrop-filter: blur(4px);
+  max-width: 100vw;
+  overflow-x: auto;
+}
+
+input[type='text'] {
+  background-color: rgba(255,255,255,0.1);
+  font-size: 1.2rem;
+  font-weight: 600;
+  color: #f9f9f9;
+  border-radius: 4px;
+  width: 2.5rem;
+  height: 2.5rem;
+  border: 1px solid rgba(255,255,255,0.2);
+  text-align: center;
+}
+
+input[type='text']:focus {
+  outline: 2px solid #c084fc;
+  background-color: rgba(255,255,255,0.2);
+}
+
+input[disabled] {
+  background-color: rgba(255,255,255,0.2);
+  color: #e2e8f0;
+  font-weight: bold;
+}
+
+button {
+  transition: background-color 0.2s ease, transform 0.2s ease;
+  font-weight: 600;
+}
+
+button:hover {
+  transform: scale(1.03);
+}
+
+@media screen and (max-width: 768px) {
+  #sudoku-grid {
+    grid-template-columns: repeat(9, 1fr);
+    gap: 0.25rem;
+  }
+
+  input[type='text'] {
+    width: 2rem;
+    height: 2rem;
+    font-size: 1rem;
+  }
+
+  h1 {
+    font-size: 1.75rem;
+  }
+
+  p {
+    font-size: 1rem;
+  }
+}
