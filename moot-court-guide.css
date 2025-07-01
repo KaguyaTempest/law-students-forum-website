@@ -1,205 +1,175 @@
-/* moot-court-guide.css */
+/* ===========================
+   Moot Court Guide – Styling
+   Matches LSIF site aesthetic
+=========================== */
 
+/* Core Reset */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+:root {
+  --lsif-green: #4caf50;
+  --lsif-green-dark: #45a049;
+  --text-dark: #333;
+  --text-muted: #666;
+  --bg-light: #f5f5f5;
+  --bg-white: #ffffff;
+  --radius-lg: 16px;
+  --shadow-sm: 0 4px 6px rgba(0, 0, 0, 0.1);
+  --shadow-lg: 0 8px 20px rgba(0, 0, 0, 0.15);
+  --transition: 0.3s ease-in-out;
+}
+
+body {
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  background: var(--bg-light);
+  color: var(--text-dark);
+  line-height: 1.6;
+}
+
+/* --------- Layout Wrappers --------- */
 .moot-court-guide-main {
-    padding: 20px;
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 2rem 1rem 4rem;
 }
 
-.moot-court-hero {
-    background-color: #f9f9f9;
-    padding: 40px;
-    border-radius: 8px;
-    margin-bottom: 30px;
-    text-align: center;
-}
-
-.moot-court-hero h2 {
-    color: #333;
-    margin-bottom: 10px;
-    font-size: 2em;
-}
-
-.moot-court-hero p {
-    color: #666;
-    font-size: 1.1em;
-}
-
-/* Styles for the Current Moot Section */
-.current-moot-section {
-    background-color: #fff;
-    padding: 25px;
-    margin-bottom: 30px;
-    border-radius: 8px;
-    box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.1);
-}
-
-.current-moot-section h2 {
-    color: #333;
-    border-bottom: 2px solid #555;
-    padding-bottom: 10px;
-    margin-bottom: 20px;
-    font-size: 1.8em;
-}
-
-.current-moot-card {
-    background-color: #f9f9f9;
-    padding: 20px;
-    border-radius: 5px;
-    border: 1px solid #eee;
-}
-
-.current-moot-card h3 a {
-    color: #007bff;
-    text-decoration: none;
-    font-size: 1.3em;
-    margin-top: 0;
-    margin-bottom: 10px;
-    display: block;
-}
-
-.current-moot-card h3 a:hover {
-    text-decoration: underline;
-}
-
-.current-moot-card p {
-    color: #555;
-    margin-bottom: 10px;
-    font-size: 0.95em;
-}
-
-.current-moot-card a {
-    display: inline-block;
-    text-decoration: none;
-    background-color: #007bff;
-    color: #fff;
-    padding: 8px 15px;
-    border-radius: 5px;
-    font-weight: bold;
-    transition: background-color 0.3s ease;
-}
-
-.current-moot-card a:hover {
-    background-color: #0056b3;
-}
-
-/* Styles for the Moot Forecast Section */
-.moot-forecast-section {
-    background-color: #fff;
-    padding: 25px;
-    margin-bottom: 30px;
-    border-radius: 8px;
-    box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.1);
-}
-
-.moot-forecast-section h2 {
-    color: #333;
-    border-bottom: 2px solid #555;
-    padding-bottom: 10px;
-    margin-bottom: 20px;
-    font-size: 1.8em;
-}
-
-.moot-forecast-section p {
-    color: #666;
-    margin-bottom: 15px;
-}
-
-.moot-forecast-list {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-    gap: 20px;
-}
-
-.forecast-item {
-    background-color: #f9f9f9;
-    padding: 15px;
-    border-radius: 5px;
-    border: 1px solid #eee;
-}
-
-.forecast-item h4 {
-    color: #008000; /* Green for forecast items */
-    margin-top: 0;
-    margin-bottom: 5px;
-    font-size: 1.1em;
-}
-
-.forecast-item.internal-moot h4 {
-    color: #a78b00; /* Gold/Brown for internal moots */
-}
-
-.forecast-item.external-moot h4 {
-    color: #007bff; /* Blue for external moots */
-}
-
-.forecast-item p {
-    color: #555;
-    margin-bottom: 10px;
-    font-size: 0.95em;
-}
-
-.forecast-item a {
-    display: inline-block;
-    text-decoration: none;
-    color: #007bff;
-    font-weight: bold;
-    transition: color 0.3s ease;
-}
-
-.forecast-item a:hover {
-    color: #0056b3;
-    text-decoration: underline;
-}
-
-/* Guide Content Styles (Remain the same) */
 .guide-content {
-    max-width: 960px;
-    margin: 0 auto;
+  margin-top: 2rem;
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
 }
 
 .guide-section {
-    background-color: #fff;
-    padding: 25px;
-    margin-bottom: 25px;
-    border-radius: 8px;
-    box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.1);
+  background: var(--bg-white);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-sm);
+  padding: 2rem;
 }
 
+/* --------- Hero Section --------- */
+.moot-court-hero {
+  text-align: center;
+  margin-bottom: 3rem;
+}
+.moot-court-hero h2 {
+  font-size: clamp(2rem, 5vw, 3rem);
+  color: var(--lsif-green);
+  font-weight: 700;
+  margin-bottom: 0.75rem;
+}
+.moot-court-hero p {
+  font-size: 1.15rem;
+  color: var(--text-muted);
+}
+
+/* --------- Headings & Text --------- */
 .guide-section h3 {
-    color: #333;
-    border-bottom: 2px solid #555;
-    padding-bottom: 10px;
-    margin-bottom: 15px;
-    font-size: 1.5em;
-}
-
-.guide-section p {
-    color: #555;
-    line-height: 1.7;
-    margin-bottom: 15px;
+  color: var(--lsif-green);
+  margin-bottom: 1rem;
+  font-size: 1.5rem;
+  font-weight: 600;
 }
 
 .guide-section ul,
 .guide-section ol {
-    padding-left: 25px;
-    margin-bottom: 15px;
+  margin-left: 1.25rem;
+  display: grid;
+  gap: 0.5rem;
 }
 
 .guide-section li {
-    color: #555;
-    line-height: 1.7;
-    margin-bottom: 8px;
+  list-style: disc;
+  color: var(--text-dark);
 }
 
-.guide-section li strong {
-    font-weight: bold;
+.guide-section ol li {
+  list-style: decimal;
 }
 
-.guide-section a {
-    color: #007bff;
-    text-decoration: none;
-    font-weight: bold;
+/* --------- Buttons --------- */
+.btn {
+  display: inline-block;
+  padding: 0.65rem 1.5rem;
+  background: var(--lsif-green);
+  color: #fff;
+  border: none;
+  border-radius: 6px;
+  font-weight: 600;
+  text-decoration: none;
+  transition: background var(--transition), transform 0.15s ease, box-shadow 0.15s ease;
+}
+.btn:hover {
+  background: var(--lsif-green-dark);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
 }
 
-.guide-section a:hover {
-    text-decoration: underline;
+/* --------- Calendar Placeholder --------- */
+#moot-calendar {
+  display: grid;
+  gap: 1rem;
+  font-style: italic;
+  color: var(--text-muted);
+}
+
+/* --------- Video Wrapper --------- */
+.video-wrapper {
+  position: relative;
+  padding-bottom: 56.25%; /* 16:9 */
+  height: 0;
+  overflow: hidden;
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-sm);
+}
+.video-wrapper iframe {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  border: 0;
+  border-radius: var(--radius-lg);
+}
+
+/* --------- Registration Form --------- */
+#moot-registration-form {
+  display: grid;
+  gap: 1rem;
+  margin-top: 1rem;
+}
+
+#moot-registration-form label {
+  font-weight: 600;
+  color: var(--text-dark);
+}
+
+#moot-registration-form input,
+#moot-registration-form select {
+  padding: 0.6rem 0.75rem;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  font-size: 1rem;
+  width: 100%;
+}
+
+#moot-registration-form input[type="file"] {
+  padding: 0.35rem 0.75rem;
+}
+
+/* Keep submit button consistent */
+#moot-registration-form button.btn {
+  width: max-content;
+  justify-self: start;
+}
+
+/* --------- Responsive Tweaks --------- */
+@media (min-width: 768px) {
+  .guide-content {
+    gap: 2.5rem;
+  }
 }

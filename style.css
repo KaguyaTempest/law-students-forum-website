@@ -801,3 +801,20 @@ footer {
   margin-top: 0.5rem;
 }
 
+.audio-card {
+    background: #f9f9f9;
+    border-left: 4px solid #004aad;
+    padding: 1.5rem;
+    margin-bottom: 1.5rem;
+    border-radius: 12px;
+}
+
+.audio-card h3 {
+    margin-top: 0;
+    font-size: 1.2rem;
+}
+
+.audio-card p {
+    margin: 0.5rem 0;
+    color: #555;
+}
