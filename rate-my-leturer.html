@@ -22,8 +22,34 @@
     <div id="lecturer-grid" class="lecturer-grid"></div>
   </main>
 
-  <!-- Rating modal will be injected in Phase 2 -->
+  <!-- ─── Rating Modal (Phase 2) ─────────────────────────────── -->
+<div id="rating-modal" class="modal hidden">
+  <div class="modal-content">
+    <button id="modal-close" class="modal-close">&times;</button>
 
-  <script type="module" src="scripts/lecturer-grid.js"></script>
+    <h2 id="modal-title">Rate Lecturer</h2>
+
+    <!-- 5‑star picker -->
+    <div id="star-picker" class="star-picker">
+      <span data-value="1">☆</span>
+      <span data-value="2">☆</span>
+      <span data-value="3">☆</span>
+      <span data-value="4">☆</span>
+      <span data-value="5">☆</span>
+    </div>
+
+    <textarea id="rating-comment"
+              placeholder="Optional comment (max 200 chars)"
+              maxlength="200"></textarea>
+
+    <button id="submit-rating" class="submit-rating" disabled>
+      Submit
+    </button>
+  </div>
+</div>
+
+<!-- Existing lecturer grid script -->
+<script type="module" src="scripts/lecturer-grid.js"></script>
+
 </body>
 </html>
