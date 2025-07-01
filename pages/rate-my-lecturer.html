@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Rate My Lecturer | LSIF</title>
+  <link rel="stylesheet" href="..styles/rate-my-lecturer.css">
+
+</head>
+<body>
+  <!-- ── Header & Filters ──────────────────────────────────────────── -->
+  <header>
+    <h1>📚 Rate My Lecturer</h1>
+
+    <div class="filters">
+      <!-- Search by lecturer name -->
+      <input
+        type="text"
+        id="searchBar"
+        placeholder="Search lecturer by name…"
+        aria-label="Search lecturer by name"
+      >
+
+      <!-- Filter by university (LSIF law schools only) -->
+      <select id="universityFilter" aria-label="Filter by university">
+        <option value="">All Universities</option>
+        <option value="UZ">University of Zimbabwe (UZ)</option>
+        <option value="GZU">Great Zimbabwe University (GZU)</option>
+        <option value="MSU">Midlands State University (MSU)</option>
+        <option value="ZEGU">Zimbabwe Ezekiel Guti University (ZEGU)</option>
+      </select>
+
+      <!-- Filter by module / course (populated dynamically via JS) -->
+      <select id="moduleFilter" aria-label="Filter by module">
+        <option value="">All Modules</option>
+        <!-- JS will inject distinct module names here, e.g.:
+             <option value="Civil Procedure">Civil Procedure</option> -->
+      </select>
+    </div>
+  </header>
+
+  <!-- ── Main Content Area ──────────────────────────────────────────── -->
+  <main>
+    <!-- Lecturer cards will be injected here -->
+    <section id="lecturerList" class="lecturer-list"></section>
+
+    <!-- Rating Modal -->
+    <div id="ratingFormContainer" class="modal hidden" role="dialog" aria-modal="true">
+      <div class="modal-content">
+        <button class="close-btn" aria-label="Close rating form" onclick="closeForm()">×</button>
+
+        <h2>
+          Rate <span id="lecturerName">Lecturer Name</span>
+          <small id="lecturerMeta"></small> <!-- e.g., “— UZ, Civil Procedure” -->
+        </h2>
+
+        <form id="ratingForm">
+          <input type="hidden" id="lecturerId">
+
+          <!-- 5‑star widget -->
+          <label for="starRating">Your Rating:</label>
+          <div class="stars" id="starRating"></div>
+
+          <!-- Review text -->
+          <textarea
+            id="reviewText"
+            placeholder="Write your review…"
+            required
+          ></textarea>
+
+          <button type="submit">Submit Rating</button>
+        </form>
+      </div>
+    </div>
+  </main>
+
+  <!-- ── Footer ─────────────────────────────────────────────────────── -->
+  <footer>
+    <p>&copy; 2025 Law Students Intellectual Forum</p>
+  </footer>
+
+  <!-- ── JS Module (handles Firestore, filters, stars, etc.) ────────── -->
+
+  <script type="module" src="scripts/rate-my-lecturer.js"></script>
+
+</body>
+</html>

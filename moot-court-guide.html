@@ -12,72 +12,135 @@
             background-color: #0056b3;
         }
     </style>
-<div id="header-placeholder"></div>
+    <div id="header-placeholder"></div>
 </head>
-    
-    <main class="moot-court-guide-main">
-        <section class="moot-court-hero">
-            <h2>Your Comprehensive Guide to Moot Court Competitions</h2>
-            <p>Everything you need to know to participate and excel in moot court, from preparation to presentation.</p>
-        </section>
+<body>
+<main class="moot-court-guide-main">
+    <section class="moot-court-hero">
+        <h2>Your Comprehensive Guide to Moot Court Competitions</h2>
+        <p>Everything you need to know to participate and excel in moot court, from preparation to presentation.</p>
+    </section>
 
-        <section class="guide-content">
-            <div class="guide-section">
-                <h3>What is Moot Court?</h3>
-                <p>Moot court is an extracurricular activity in which participants take part in simulated court proceedings, which usually involves drafting memorials (written submissions) and participating in oral arguments.</p>
+    <!-- INTRODUCTION SECTION -->
+    <section class="guide-content">
+        <div class="guide-section">
+            <h3>What is Moot Court?</h3>
+            <p>Moot court is a simulated court proceeding that mirrors real legal argumentation. Law students participate as advocates arguing fictional cases before a panel of judges. It involves both written and oral submissions.</p>
+        </div>
+
+        <div class="guide-section">
+            <h3>Why Moot?</h3>
+            <ul>
+                <li>Master legal research and writing.</li>
+                <li>Polish oral advocacy and courtroom confidence.</li>
+                <li>Understand complex legal principles in practice.</li>
+                <li>Impress employers and expand your professional network.</li>
+            </ul>
+        </div>
+    </section>
+
+    <!-- TUTORIAL SECTION -->
+    <section class="guide-content">
+        <div class="guide-section">
+            <h3>Step-by-Step Mooting Tutorial</h3>
+            <ol>
+                <li><strong>Understanding the Moot Problem:</strong> Break down the factual matrix and spot the legal issues.</li>
+                <li><strong>Legal Research:</strong> Use databases and libraries to gather authorities and precedents.</li>
+                <li><strong>Writing the Memorial:</strong> Follow formatting rules, develop arguments, and cite sources properly.</li>
+                <li><strong>Practicing Oral Submissions:</strong> Rehearse with teammates, seek feedback, and improve delivery.</li>
+                <li><strong>Courtroom Etiquette:</strong> Address the bench respectfully, follow proper structure, and be professional.</li>
+            </ol>
+        </div>
+
+        <div class="guide-section">
+            <h3>Oral Presentation Tips</h3>
+            <ul>
+                <li>Start with a strong introduction: "May it please the court..."</li>
+                <li>Keep answers focused and concise.</li>
+                <li>Use case law effectively in responses.</li>
+                <li>Control pacing and avoid filler words.</li>
+                <li>Stay calm under pressure; judges are testing your reasoning, not attacking you.</li>
+            </ul>
+        </div>
+    </section>
+
+    <!-- MOOT COURT HANDBOOK -->
+    <section class="guide-content">
+        <div class="guide-section">
+            <h3>Moot Court Handbook</h3>
+            <p>This is your definitive reference guide. It includes formatting rules, scoring breakdowns, sample problems, and frequently asked questions.</p>
+            <a href="#" class="btn">Download Handbook</a>
+        </div>
+    </section>
+
+    <!-- UPCOMING MOOTS CALENDAR -->
+    <section class="guide-content">
+        <div class="guide-section">
+            <h3>Upcoming Moot Court Competitions</h3>
+            <div id="moot-calendar">
+                <!-- Dynamically loaded calendar entries -->
+                <p><em>Loading upcoming events...</em></p>
             </div>
+        </div>
+    </section>
 
-            <div class="guide-section">
-                <h3>Why Participate in Moot Court?</h3>
-                <ul>
-                    <li>Develop strong legal research and writing skills.</li>
-                    <li>Enhance your public speaking and advocacy abilities.</li>
-                    <li>Gain a deeper understanding of legal principles and procedures.</li>
-                    <li>Network with fellow law students and legal professionals.</li>
-                </ul>
+    <!-- WINNING MEMORIALS EXAMPLES -->
+    <section class="guide-content">
+        <div class="guide-section">
+            <h3>Examples of Winning Memorials</h3>
+            <ul id="winning-memorials">
+                <li><a href="#">1st Place - National Human Rights Moot 2024 (Applicant)</a></li>
+                <li><a href="#">1st Place - ZILSA Novice Moot 2023 (Respondent)</a></li>
+                <li><a href="#">Best Memorial - Environmental Law Moot 2023</a></li>
+            </ul>
+        </div>
+    </section>
+
+    <!-- YOUTUBE DEMO VIDEO -->
+    <section class="guide-content">
+        <div class="guide-section">
+            <h3>Watch a Real Moot Court in Action</h3>
+            <p>Get a sense of courtroom flow, oral structure, and judicial questioning by watching this example moot session.</p>
+            <div class="video-wrapper">
+                <iframe width="100%" height="400" src="https://www.youtube.com/embed/YOUTUBE_DEMO_LINK" frameborder="0" allowfullscreen></iframe>
             </div>
+        </div>
+    </section>
 
-            <div class="guide-section">
-                <h3>Steps to Success in Moot Court</h3>
-                <ol>
-                    <li><strong>Understand the Problem:</strong> Analyze the factual scenario and identify the legal issues.</li>
-                    <li><strong>Conduct Thorough Research:</strong> Explore relevant case law, statutes, and legal theories.</li>
-                    <li><strong>Draft Your Memorial:</strong> Construct well-reasoned and persuasive written arguments.</li>
-                    <li><strong>Prepare Your Oral Arguments:</strong> Develop clear and concise points to present before the judges.</li>
-                    <li><strong>Practice and Refine:</strong> Rehearse your arguments and anticipate potential questions.</li>
-                    <li><strong>Present with Confidence:</strong> Deliver your arguments clearly and persuasively.</li>
-                </ol>
-            </div>
+    <!-- TEAM REGISTRATION + MEMORIAL UPLOAD -->
+    <section class="guide-content">
+        <div class="guide-section">
+            <h3>Team Registration & Memorial Submission</h3>
+            <p>Register your team for an upcoming moot and upload your memorial before the deadline.</p>
+            <form id="moot-registration-form">
+                <label for="team-name">Team Name:</label>
+                <input type="text" id="team-name" name="teamName" required>
 
-            <div class="guide-section">
-                <h3>Tips for Effective Oral Advocacy</h3>
-                <ul>
-                    <li>Speak clearly and at a reasonable pace.</li>
-                    <li>Maintain eye contact with the judges.</li>
-                    <li>Listen carefully to the judges' questions and respond directly.</li>
-                    <li>Be prepared to concede points when necessary.</li>
-                    <li>Know your case and the relevant law inside and out.</li>
-                </ul>
-            </div>
+                <label for="moot-event">Select Moot:</label>
+                <select id="moot-event" name="mootEvent">
+                    <option value="human-rights">National Human Rights Moot</option>
+                    <option value="zilsa-novice">ZILSA Novice Moot</option>
+                </select>
 
-            <div class="guide-section">
-                <h3>Resources for Moot Court</h3>
-                <p>Check out these helpful resources to further enhance your moot court journey:</p>
-                <ul>
-                    <li><a href="#">Moot Court Handbook</a></li>
-                    <li><a href="#">Leading Case Law Databases</a></li>
-                    <li><a href="#">Examples of Winning Memorials</a></li>
-                </ul>
-            </div>
-        </section>
-    </main>
+                <label for="memorial-upload">Upload Memorial (PDF):</label>
+                <input type="file" id="memorial-upload" name="memorial" accept="application/pdf" required>
 
-    <footer>
-        <p>&copy; 2025 LAW STUDENTS INTELLECTUAL FORUM</p>
-    </footer>
-    <script src="auth.js"></script>
-    <script src="script.js"></script>
-    <script>
+                <label for="submission-deadline">Deadline:</label>
+                <input type="date" id="submission-deadline" name="deadline" readonly value="2025-08-31">
+
+                <button type="submit" class="btn">Submit</button>
+            </form>
+        </div>
+    </section>
+</main>
+
+<footer>
+    <p>&copy; 2025 LAW STUDENTS INTELLECTUAL FORUM</p>
+</footer>
+
+<script src="auth.js"></script>
+<script src="script.js"></script>
+<script>
     // Load the header dynamically
     fetch('header.html')
       .then(response => response.text())
@@ -85,6 +148,6 @@
         document.getElementById('header-placeholder').innerHTML = html;
       })
       .catch(err => console.error('Failed to load header:', err));
-      </script>
+</script>
 </body>
 </html>

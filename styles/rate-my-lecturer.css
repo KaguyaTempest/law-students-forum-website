@@ -1,0 +1,213 @@
+/* ───────────────────────────
+   Rate My Lecturer – LSIF
+   ─────────────────────────── */
+
+/* ===== Design Tokens ===== */
+:root {
+  --primary: #0051a3;   /* LSIF blue */
+  --accent:  #ffc107;   /* star gold / CTA */
+  --bg:      #f5f7fa;   /* page background */
+  --text:    #222;
+  --card-bg: #ffffff;
+  --border:  #e1e4e8;
+  --shadow:  0 2px 4px rgba(0,0,0,.04);
+  --radius:  8px;
+  --fast:    .25s;
+}
+
+/* ===== Reset & Base ===== */
+*,
+*::before,
+*::after { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  font-family: "Inter", "Segoe UI", sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  line-height: 1.5;
+}
+
+/* ===== Header & Filters ===== */
+header {
+  background: var(--primary);
+  color: #fff;
+  padding: 1rem 2rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+header h1 { font-size: 1.75rem; }
+
+.filters {
+  display: flex;
+  flex-wrap: wrap;
+  gap: .5rem;
+}
+
+.filters input,
+.filters select {
+  min-width: 180px;
+  padding: .5rem .75rem;
+  border: 1px solid var(--border);
+  border-radius: 4px;
+}
+
+/* ===== Layout ===== */
+main {
+  max-width: 1200px;
+  margin-inline: auto;
+  padding: 2rem 1rem;
+}
+
+.lecturer-list {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  gap: 1.5rem;
+}
+
+/* ===== Lecturer Card ===== */
+.lecturer-card {
+  background: var(--card-bg);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 1rem 1.25rem;
+  box-shadow: var(--shadow);
+  display: flex;
+  flex-direction: column;
+}
+
+.lecturer-card h3 {
+  font-size: 1.1rem;
+  margin-bottom: .25rem;
+}
+
+.rating-summary {
+  display: flex;
+  align-items: center;
+  gap: .25rem;
+  margin-bottom: .75rem;
+}
+
+.rating-summary .star {        /* average‑rating star icon */
+  color: var(--accent);
+  font-size: 1.1rem;
+}
+
+.rating-summary span { font-weight: 600; }
+
+.lecturer-card button {
+  margin-top: auto;
+  align-self: flex-start;
+  padding: .45rem .9rem;
+  background: var(--primary);
+  color: #fff;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background var(--fast);
+}
+
+.lecturer-card button:hover { background: #003e7d; }
+
+/* ===== Modal ===== */
+.modal {
+  position: fixed;
+  inset: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: rgba(0,0,0,.5);
+  z-index: 1000;
+}
+
+.modal.hidden { display: none; }
+
+.modal-content {
+  position: relative;
+  width: 90%;
+  max-width: 500px;
+  padding: 2rem;
+  background: #fff;
+  border-radius: var(--radius);
+  animation: fadeIn var(--fast) ease;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: scale(.95); }
+  to   { opacity: 1; transform: scale(1); }
+}
+
+.close-btn {
+  position: absolute;
+  top: .75rem;
+  right: .75rem;
+  font-size: 1.5rem;
+  color: #666;
+  cursor: pointer;
+}
+
+.close-btn:hover { color: #000; }
+
+.modal-content h2 { margin-bottom: 1rem; }
+
+/* ===== Star‑Rating Widget ===== */
+.stars {
+  display: flex;
+  gap: .4rem;
+  margin-bottom: 1rem;
+}
+
+/* Each star will be an inline SVG; JS toggles .active / .hovered */
+.stars svg {
+  width: 32px;
+  height: 32px;
+  fill: #d0d0d0;
+  cursor: pointer;
+  transition: fill .2s;
+}
+
+.stars svg.active,
+.stars svg.hovered { fill: var(--accent); }
+
+/* ===== Review Form Elements ===== */
+textarea {
+  width: 100%;
+  min-height: 120px;
+  resize: vertical;
+  padding: .65rem .75rem;
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  font-family: inherit;
+  font-size: 1rem;
+  margin-bottom: 1rem;
+}
+
+button[type="submit"] {
+  padding: .55rem 1.2rem;
+  background: var(--accent);
+  border: none;
+  border-radius: 4px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background var(--fast);
+}
+
+button[type="submit"]:hover { background: #e0a800; }
+
+/* ===== Footer ===== */
+footer {
+  text-align: center;
+  padding: 1rem 0;
+  font-size: .9rem;
+  color: #666;
+}
+
+/* ===== Responsive Touch‑ups ===== */
+@media (max-width: 600px) {
+  header { padding: 1rem; }
+  .filters input,
+  .filters select { flex: 1 1 100%; }
+  .lecturer-card { padding: 1rem; }
+}

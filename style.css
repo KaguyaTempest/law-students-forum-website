@@ -682,8 +682,139 @@ footer {
   font-weight: bold;
 }
 
-#splash{position:fixed;inset:0;display:flex;flex-direction:column;justify-content:center;align-items:center;gap:1.5rem;background:#fff;z-index:9999;transition:opacity .6s ease,visibility .6s}
-#splash.hidden{opacity:0;visibility:hidden}
-.splash-logo{width:clamp(120px,30vw,220px);object-fit:contain}
-.splash-tag{font-size:1rem;letter-spacing:.03em;color:#555;font-family:var(--font-sans,sans-serif)}
-.splash-tag span{font-weight:600;background:linear-gradient(90deg,#2d6cff,#4bbdff);-webkit-background-clip:text;color:transparent}
+/* ─── Splash Screen Styling ─────────────────────────────── */
+#splash {
+  background-color: #000; /* or match your logo's background */
+  color: #fff;
+  position: fixed;
+  inset: 0;
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+}
+
+#splash.fade-out {
+  opacity: 0;
+  visibility: hidden;
+}
+
+.splash-inner {
+  text-align: center;
+}
+
+.splash-logo {
+  width: 120px;
+  animation: splash-spin 2s linear infinite;
+  will-change: transform;
+}
+
+@keyframes splash-spin {
+  0%   { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+.splash-tag {
+  margin-top: 0.5rem;
+  font-size: 0.9rem;
+  font-weight: 500;
+  opacity: 0.8;
+}
+.splash-tag span {
+  font-weight: 700;
+}
+
+.splash-message {
+  margin-top: 0.75rem;
+  font-size: 0.85rem;
+  opacity: 0.65;
+}
+
+/* ===== Auth Modal ===== */
+.auth-modal {
+  position: fixed;         /* sit on top of everything */
+  inset: 0;                /* shorthand: top/left/right/bottom 0 */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(0, 0, 0, 0.6); /* semi‑transparent backdrop */
+  z-index: 1000;           /* above header & other UI */
+}
+
+.auth-modal.hidden {
+  display: none;
+}
+
+/* The white card inside */
+.auth-card {
+  width: 100%;
+  max-width: 420px;
+  background: #ffffff;
+  border-radius: 8px;
+  padding: 2rem 2.25rem;
+  position: relative;
+}
+
+/* Close “×” button */
+.close-auth-modal {
+  position: absolute;
+  top: -14px;
+  right: -14px;
+  background: #f3f4f6;
+  border: 1px solid #d1d5db;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  font-size: 1.25rem;
+  line-height: 0;
+  cursor: pointer;
+}
+
+/* Toggle buttons */
+.auth-toggle {
+  display: flex;
+  gap: 1rem;
+  margin-bottom: 1.25rem;
+}
+.auth-toggle button {
+  flex: 1;
+  padding: 0.5rem 0.75rem;
+  border-radius: 4px;
+  border: 1px solid #d1d5db;
+  background: #f9fafb;
+  cursor: pointer;
+}
+.auth-toggle button.active {
+  background: #2563eb;
+  color: #fff;
+  border-color: #2563eb;
+}
+
+/* Hide/show form containers */
+.auth-form-container.hidden { display: none; }
+
+/* Error messages */
+.error-message {
+  color: #b91c1c;
+  font-size: 0.875rem;
+  margin-top: 0.5rem;
+}
+
+.audio-card {
+    background: #f9f9f9;
+    border-left: 4px solid #004aad;
+    padding: 1.5rem;
+    margin-bottom: 1.5rem;
+    border-radius: 12px;
+}
+
+.audio-card h3 {
+    margin-top: 0;
+    font-size: 1.2rem;
+}
+
+.audio-card p {
+    margin: 0.5rem 0;
+    color: #555;
+}

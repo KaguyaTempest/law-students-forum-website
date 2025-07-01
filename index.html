@@ -8,12 +8,22 @@
     <link rel="stylesheet" href="style.css" />
 </head>
 <body>
-  <div id="splash">
+  <!-- ─── Splash / Loading Screen ───────────────────────────── -->
+<div id="splash">
   <div class="splash-inner">
-    <img src="assets/forum-logo0.png" alt="Forum logo" class="splash-logo" />
-    <p class="splash-tag">Sponsored by <span>KT Industries</span></p>
+    <img src="assets/forum-logo.png" alt="Forum logo" class="splash-logo" />
+
+    <p class="splash-tag">
+      Sponsored by <span>KT Industries</span>
+    </p>
+
+    <p id="splash-message" class="splash-message">
+      Loading…
+    </p>
   </div>
 </div>
+
+<!-- Your normal page content starts below -->
     <div id="header-placeholder"></div>
 
     <main class="homepage-main">
@@ -173,10 +183,11 @@
   })
   .catch(err => console.error('Failed to load header:', err));
     </script>
-
+<script type="module" src="/scripts/load-header.js"></script>
 <script type="module" src="scripts/auth.js"></script>
-<script type="module" src="script.js"></script>
+<script type="module" src="scripts/home"></script>
 <script type="module" src="scripts/student-articles.js"></script>
+<script type="module" src="scripts/loader.js" defer></script>
 
 
 </body>
