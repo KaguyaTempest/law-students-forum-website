@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Student Articles | Law Students Intellectual Forum</title>
+  <link rel="icon" href="favicon.ico" type="image/x-icon" />
+
+  <!-- Base + page‑specific styles -->
+  <link rel="stylesheet" href="../style.css" />
+  <link rel="stylesheet" href="../styles/student-articles.css" />
+</head>
+
+<body>
+  <div id="header-placeholder"></div>
+
+  <main class="container mx-auto px-4 articles-main">
+    <!-- ── HERO ─────────────────────────────────────────── -->
+    <section class="articles-hero text-center py-10">
+      <h2 class="hero-title">Explore Student Articles</h2>
+      <p class="hero-subtitle max-w-2xl mx-auto">
+        Dive into insightful articles written by law students, covering a wide range of legal topics and analyses.
+      </p>
+    </section>
+
+    <!-- ── CATEGORIES / FILTERS ─────────────────────────── -->
+    <section class="article-filters mb-8">
+      <ul class="flex flex-wrap gap-4 justify-center">
+        <li><a href="#" class="filter-link active" data-filter="all">All</a></li>
+        <li><a href="#" class="filter-link" data-filter="human-rights-law">Human Rights&nbsp;Law</a></li>
+        <li><a href="#" class="filter-link" data-filter="commercial-law">Commercial&nbsp;Law</a></li>
+        <li><a href="#" class="filter-link" data-filter="intellectual-property-law">Intellectual&nbsp;Property</a></li>
+        <li><a href="#" class="filter-link" data-filter="international-law">International&nbsp;Law</a></li>
+        <li><a href="#" class="filter-link" data-filter="constitutional-law">Constitutional&nbsp;Law</a></li>
+      </ul>
+    </section>
+
+    <!-- ── ARTICLES LIST ───────────────────────────────── -->
+    <section id="articles-list" class="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+      <!-- Cards are injected by scripts/student-articles.js -->
+      <p id="articles-loading" class="col-span-full text-center py-10 opacity-70">
+        Loading articles…
+      </p>
+    </section>
+
+    <!-- ✨ Optional pagination section -->
+    
+    <section class="pagination mt-12 flex justify-center items-center gap-4 hidden" id="pagination">
+      <button class="page-btn prev-page">Previous</button>
+      <span class="page-number">Page <span id="current-page">1</span> of <span id="total-pages">1</span></span>
+      <button class="page-btn next-page">Next</button>
+    </section>
+  </main>
+
+  <footer class="text-center py-8 text-sm opacity-70">
+    &copy; 2025 Law Students Intellectual Forum
+  </footer>
+
+  <!-- ── MODULE SCRIPTS ────────────────────────────────── -->
+  <script type="module" src="../scripts/load-header.js"></script>
+  <script type="module" src="../scripts/auth.js"></script>
+  <script type="module" src="../scripts/student-articles.js"></script>
+  <script type="module" src="../scripts/loader.js"></script>
+
+</body>
+</html>
