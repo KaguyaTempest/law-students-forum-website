@@ -3,14 +3,14 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Student Articles | Law Students Intellectual Forum</title>
+  <title>Student Articles | Law Students Intellectual Forum</title>
   <link rel="icon" href="favicon.ico" type="image/x-icon" />
 
   <!-- Base + page‑specific styles -->
   <link rel="stylesheet" href="style.css" />
   <link rel="stylesheet" href="student-articles.css" />
-
 </head>
+
 <body>
   <!-- Header is injected dynamically by load-header.js -->
   <div id="header-placeholder"></div>
@@ -44,35 +44,22 @@
       </p>
     </section>
 
-    <!-- ✨ Optional pagination section: hide until implemented -->
-    <!--
+    <!-- ✨ Optional pagination section -->
+    
     <section class="pagination mt-12 flex justify-center items-center gap-4 hidden" id="pagination">
       <button class="page-btn prev-page">Previous</button>
       <span class="page-number">Page <span id="current-page">1</span> of <span id="total-pages">1</span></span>
       <button class="page-btn next-page">Next</button>
     </section>
-    -->
   </main>
 
   <footer class="text-center py-8 text-sm opacity-70">
-    &copy; 2025 Law Students Intellectual Forum
+    &copy; 2025 Law Students Intellectual Forum
   </footer>
 
   <!-- ── MODULE SCRIPTS ────────────────────────────────── -->
-
   <script type="module" src="scripts/load-header.js"></script>
-  <!-- load-header.js fetches header.html; it should dispatch a custom event e.g. 'header:loaded' when done -->
-
   <script type="module" src="scripts/auth.js"></script>
-  <!-- auth.js assumes header elements exist; it will work once load-header.js has inserted the header markup -->
-  <script type="module" src="/scripts/student-articles.js"></script>
-</body>
-</html>
-
- 
-    <script type="module" src="scripts/auth.js"></script>
-    <script type="module" src="scripts/home.js"></script>
   <script type="module" src="scripts/student-articles.js"></script>
-
 </body>
 </html>
