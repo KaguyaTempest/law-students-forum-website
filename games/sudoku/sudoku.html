@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Legal Sudoku</title>
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@3.4.1/dist/tailwind.min.css" rel="stylesheet" />
+</head>
+<body class="bg-gray-50 min-h-screen flex flex-col items-center justify-center py-10">
+  <h1 class="text-3xl font-bold mb-4 text-indigo-700">Legal Sudoku</h1>
+  <p class="mb-6 text-gray-600">Bring order to the bench by completing the puzzle below.</p>
+
+  <div class="mb-4">
+  <label for="difficulty" class="mr-2 font-semibold">Difficulty:</label>
+  <select id="difficulty" class="px-2 py-1 rounded border border-gray-400 bg-white text-black">
+    <option value="easy" selected>Easy</option>
+    <option value="medium">Medium</option>
+    <option value="hard">Hard</option>
+  </select>
+</div>
+
+  <div id="sudoku-grid" class="grid grid-cols-9 gap-1 border-2 border-gray-500 p-2 bg-white shadow-lg"></div>
+
+  <div class="mt-6 flex gap-4">
+    <button id="check-btn" class="px-4 py-2 bg-indigo-600 text-white rounded hover:bg-indigo-700">Check</button>
+    <button id="reset-btn" class="px-4 py-2 bg-gray-300 rounded hover:bg-gray-400">Reset</button>
+  </div>
+
+  <script src="sudoku.js"></script>
+</body>
+</html>
