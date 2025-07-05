@@ -1,28 +1,48 @@
 /* ──────────────────────────────────────────────────────────────
-   student-articles.js  – modular Firebase version
+   student-articles.js  – modular Firebase version (MERGED)
    Folder: /scripts
-   Depends on:  storage (Firebase Storage) exported from ./firebase.js
+   Purpose: Dynamically list every article JSON inside
+            Firebase Storage bucket path "articles/" and render
+            them on the Student Articles page, keeping the
+            existing topic‑filter system intact.
 ─────────────────────────────────────────────────────────────── */
 
 import { storage } from './firebase.js';
 import {
   ref,
+  listAll,
   getDownloadURL,
 } from 'https://www.gstatic.com/firebasejs/10.12.2/firebase-storage.js';
 
+/* ───────────── Main Bootstrap ───────────── */
 document.addEventListener('DOMContentLoaded', async () => {
   try {
-    /* 1. Download the JSON file from Storage */
-    const url  = await getDownloadURL(
-      ref(storage, 'articles/articles.json')
-    );
-    const data = await fetch(url).then(r => r.json());
+    /* 1. List every JSON file in /articles/ */
+    const articlesRef = ref(storage, 'articles/');
+    const listResult  = await listAll(articlesRef);
 
-    /* 2. Render + activate filters */
-    renderArticles(data);
+    /* 2. Pull each JSON, keeping filename so we can build links */
+    const articlePromises = listResult.items
+      .filter(item => item.name.endsWith('.json'))
+      .map(async itemRef => {
+        const url      = await getDownloadURL(itemRef);
+        const article  = await fetch(url).then(r => r.json());
+        return { filename: itemRef.name, article };
+      });
+
+    const articlesArray = await Promise.all(articlePromises);
+
+    /* 3. Convert to object keyed by filename for existing render logic */
+    const articlesObj = {};
+    articlesArray.forEach(({ filename, article }) => {
+      articlesObj[filename] = article;
+    });
+
+    /* 4. Render + activate filters */
+    renderArticles(articlesObj);
     setupFilters();
   } catch (err) {
-    console.error('Error loading articles.json:', err);
+    console.error('Error loading articles from Storage:', err);
     const container = document.querySelector('.articles-list');
     if (container)
       container.innerHTML = '<p>Failed to load articles.</p>';
@@ -37,7 +57,7 @@ function renderArticles(data) {
   container.innerHTML = '';
 
   Object.entries(data).forEach(([filename, article]) => {
-    const topicsAttr = article.topics
+    const topicsAttr = (article.topics || [])
       .map(t => t.toLowerCase().replace(/\s+/g, '-'))
       .join(' ');
 
@@ -57,11 +77,11 @@ function renderArticles(data) {
         <span class="article-author">Author: ${article.author}</span>
       </div>
 
-      <a href="article.html?article=${filename.replace('.json','')}"
+      <a href="article.html?article=${encodeURIComponent(filename.replace('.json',''))}"
          class="read-more-btn">Read More</a>
 
       <div class="article-topics">
-        ${article.topics.map(t => `<span>${t}</span>`).join(' ')}
+        ${(article.topics || []).map(t => `<span>${t}</span>`).join(' ')}
       </div>
     `;
 
@@ -83,7 +103,7 @@ function setupFilters() {
       link.classList.add('active');
 
       document.querySelectorAll('.article-card').forEach(card => {
-        const topics = card.dataset.topics.split(' ');
+        const topics = card.dataset.topics.split(' ').filter(Boolean);
         card.style.display =
           filter === 'all' || topics.includes(filter) ? 'block' : 'none';
       });

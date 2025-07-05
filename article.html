@@ -3,116 +3,61 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Article - LAW STUDENTS INTELLECTUAL FORUM</title>
+  <title>Article ‑ LAW STUDENTS INTELLECTUAL FORUM</title>
+
   <link rel="icon" href="favicon.ico" type="image/x-icon">
   <link rel="stylesheet" href="style.css" />
   <link rel="stylesheet" href="article.css" />
-  <script type="module">
-    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.11.0/firebase-app.js";
-    import { getStorage, ref, getDownloadURL } from "https://www.gstatic.com/firebasejs/10.11.0/firebase-storage.js";
-
-    const firebaseConfig = {
-      // REPLACE THIS WITH YOUR CONFIG
-      apiKey: "YOUR-API-KEY",
-      authDomain: "YOUR-DOMAIN.firebaseapp.com",
-      projectId: "YOUR-PROJECT-ID",
-      storageBucket: "YOUR-STORAGE-BUCKET",
-      messagingSenderId: "YOUR-MESSAGE-SENDER-ID",
-      appId: "YOUR-APP-ID"
-    };
-
-    const app = initializeApp(firebaseConfig);
-    const storage = getStorage(app);
-
-    document.addEventListener("DOMContentLoaded", () => {
-      const params = new URLSearchParams(window.location.search);
-      const articleFile = params.get("article");
-
-      if (!articleFile) {
-        document.querySelector(".article-content").innerHTML = "<p>No article specified.</p>";
-        return;
-      }
-
-      const storageRef = ref(storage, `articles/${articleFile}.json`);
-      getDownloadURL(storageRef)
-        .then((url) => fetch(url))
-        .then((response) => response.json())
-        .then((data) => {
-          document.title = `${data.title} - LAW STUDENTS INTELLECTUAL FORUM`;
-          document.querySelector(".article-title").textContent = data.title;
-          document.querySelector(".article-meta .article-date").textContent = `Published: ${data.date || "Unknown Date"}`;
-          document.querySelector(".article-meta .article-author").textContent = `Author: ${data.author || "Anonymous"}`;
-          document.querySelector(".article-banner").src = data.image || "";
-          document.querySelector(".article-banner").alt = data.title;
-
-          const bodyContainer = document.querySelector(".article-body");
-          bodyContainer.innerHTML = "";
-          if (Array.isArray(data.content)) {
-            data.content.forEach(p => {
-              const para = document.createElement("p");
-              para.textContent = p;
-              bodyContainer.appendChild(para);
-            });
-          } else {
-            bodyContainer.textContent = data.content || "No content available.";
-          }
-
-          const topicsContainer = document.querySelector(".article-topics");
-          const label = topicsContainer.querySelector("span");
-          while (topicsContainer.lastChild !== label) {
-            topicsContainer.removeChild(topicsContainer.lastChild);
-          }
-
-          if (Array.isArray(data.topics)) {
-            data.topics.forEach(topic => {
-              const t = document.createElement("span");
-              t.textContent = topic;
-              topicsContainer.appendChild(t);
-            });
-          }
-        })
-        .catch((err) => {
-          console.error("Error loading article:", err);
-          document.querySelector(".article-content").innerHTML = "<p>Error loading article.</p>";
-        });
-    });
-  </script>
 </head>
+
 <body>
   <div id="header-placeholder"></div>
 
-  <main class="article-page-main">
+  <!-- ①  Splash screen -->
+  <div id="splash"> 
+    <div class="splash-inner">
+      <img src="assets/forum-logo.png" alt="Forum logo" class="splash-logo" />
+      <p class="splash-tag">Sponsored by <span>KT Industries</span></p>
+      <p id="splash-message" class="splash-message">Loading…</p>
+    </div>
+  </div>
+
+  <!-- ⑤  Accessibility: give the main region a landmark -->
+  <main class="article-page-main" role="main">
     <article class="article-content">
       <h1 class="article-title">[Article Title]</h1>
+
       <div class="article-meta">
         <span class="article-date">Published: [Date]</span>
         <span class="article-author">Author: [Author]</span>
       </div>
-      <img src="[Article Banner Image]" alt="[Article Title]" class="article-banner" />
+
+      <!-- ③  Banner gets hidden when the JSON has no image -->
+      <img src="" alt="" class="article-banner" style="display:none;" />
+
       <div class="article-body">[Article Body Content Here]</div>
+
       <div class="article-topics">
         <span>Topics:</span>
-        [Article Topic Tags]
+        <!-- Tags load here -->
       </div>
 
+      <!-- (existing) comments & reactions -->
       <section class="comment-section">
-  <h2 class="section-heading">💬 Comments</h2>
-  <div class="comments-container"></div>
-  <div class="comment-form"></div>
-</section>
-<section class="reaction-section">
-  <h2 class="section-heading">📊 Reactions</h2>
-  <!-- Reaction buttons will auto-generate here -->
-</section>
+        <h2 class="section-heading">💬 Comments</h2>
+        <div class="comments-container"></div>
+        <div class="comment-form"></div>
+      </section>
 
+      <section class="reaction-section">
+        <h2 class="section-heading">📊 Reactions</h2>
+      </section>
     </article>
 
     <aside class="article-sidebar">
       <section class="you-may-like">
         <h2>You May Also Like</h2>
-        <div class="related-articles">
-          <!-- You may dynamically fill this later -->
-        </div>
+        <div class="related-articles"></div>
       </section>
 
       <section class="popular-articles">
@@ -123,13 +68,14 @@
   </main>
 
   <footer>
-    <p>&copy; 2025 LAW STUDENTS INTELLECTUAL FORUM</p>
+    <p>&copy; 2025 LAW STUDENTS INTELLECTUAL FORUM</p>
   </footer>
 
+  <!-- Scripts -->
   <script src="auth.js"></script>
   <script src="script.js"></script>
+  <script type="module" src="scripts/article.js"></script>
   <script type="module" src="scripts/comment.js"></script>
   <script type="module" src="scripts/reaction.js"></script>
-
 </body>
 </html>

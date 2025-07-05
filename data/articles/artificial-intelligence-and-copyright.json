@@ -1,0 +1,18 @@
+{
+  "ai-the-new-oracle.json": {
+    "title": "The New Oracle: How AI Is Replacing Thought",
+    "author": "LMC Kingmaker, Kaguya Tempest",
+    "date": "2025-07-04",
+    "excerpt": "Artificial intelligence is poised to supplant religion as the modern architecture of control, argue LMC Kingmaker and Kaguya Tempest.",
+    "topics": ["ai", "religion", "philosophy", "technology", "society"],
+    "thumbnail": "ai-oracle.png"
+  },
+  "artificial-intelligence-and-copyright.json": {
+    "title": "The Evolving Landscape of AI and Copyright",
+    "author": "Kudakwashe Kwitireni",
+    "date": "2025-07-04",
+    "excerpt": "A legal analysis of the tension between authorship, cultural heritage, and intellectual property in the age of generative AI.",
+    "topics": ["ai", "copyright", "cultural-heritage", "intellectual-property", "law"],
+    "thumbnail": "law-ai.png"
+  }
+}
