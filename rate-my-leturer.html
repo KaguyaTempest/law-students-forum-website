@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Rate My Lecturer | LSIF</title>
+  <link rel="stylesheet" href="style.css" />
+  <link rel="stylesheet" href="lecturers.css" />
+</head>
+<body>
+  <div id="header-placeholder"></div>
+
+  <main class="lecturer-page-main">
+    <h1 class="page-heading">Rate My Lecturer</h1>
+
+    <!-- Filter dropdown (icon only – opens later) -->
+    <button id="filter-btn" class="filter-btn" title="Filter & sort">
+      &#x1F50D;
+    </button>
+
+    <!-- Lecturer grid -->
+    <div id="lecturer-grid" class="lecturer-grid"></div>
+  </main>
+
+  <!-- ─── Rating Modal (Phase 2) ─────────────────────────────── -->
+<div id="rating-modal" class="modal hidden">
+  <div class="modal-content">
+    <button id="modal-close" class="modal-close">&times;</button>
+
+    <h2 id="modal-title">Rate Lecturer</h2>
+
+    <!-- 5‑star picker -->
+    <div id="star-picker" class="star-picker">
+      <span data-value="1">☆</span>
+      <span data-value="2">☆</span>
+      <span data-value="3">☆</span>
+      <span data-value="4">☆</span>
+      <span data-value="5">☆</span>
+    </div>
+
+    <textarea id="rating-comment"
+              placeholder="Optional comment (max 200 chars)"
+              maxlength="200"></textarea>
+
+    <button id="submit-rating" class="submit-rating" disabled>
+      Submit
+    </button>
+  </div>
+</div>
+
+<!-- Existing lecturer grid script -->
+<script type="module" src="scripts/lecturer-grid.js"></script>
+
+</body>
+</html>
