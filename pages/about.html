@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About Us - LAW STUDENTS INTELLECTUAL FORUM</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="about.css">
+</head>
+<body>
+    <div id="splash">
+  <div class="splash-inner">
+    <img src="assets/forum-logo.png" alt="Forum logo" class="splash-logo" />
+    <p class="splash-tag">Sponsored by <span>KT Industries</span></p>
+  </div>
+        <div id="header-placeholder"></div>
+
+    <main class="about-us-main">
+        <section class="about-intro">
+            <h2>About the Law Students Intellectual Forum</h2>
+            <p>Welcome to the Law Students Intellectual Forum (LSIF), a dynamic platform created by and for law students at the University of Zimbabwe. Our mission is to foster intellectual engagement, facilitate the sharing of knowledge, and build a supportive community among aspiring legal professionals.</p>
+            <p>LSIF serves as a central hub where students can access a diverse range of resources, including insightful student-written articles, helpful tutorials, comprehensive guides, and information about academic and career development opportunities.</p>
+        </section>
+
+        <section class="our-vision">
+            <h2>Our Vision</h2>
+            <p>We envision a thriving intellectual environment that empowers law students to excel academically, develop critical thinking skills, and contribute meaningfully to the legal field. We strive to be the go-to platform for collaborative learning and the exchange of ideas within the University of Zimbabwe's Faculty of Law.</p>
+        </section>
+
+        <section class="what-we-offer">
+            <h2>What We Offer</h2>
+            <ul>
+                <li><strong>Student Articles:</strong> A space for students to share their research, analysis, and perspectives on various legal topics.</li>
+                <li><strong>Tutorials:</strong> Step-by-step guides and resources to help students grasp complex legal concepts and develop essential skills.</li>
+                <li><strong>Campus Guides:</strong> Practical information and tips to navigate academic life and resources within the university.</li>
+                <li><strong>Moot Court Guide:</strong> Comprehensive guidance for students interested in participating in moot court competitions.</li>
+                <li><strong>Attachment Guide:</strong> Information and support for students during their crucial attachment periods.</li>
+                <li><strong>Community Forum (Coming Soon):</strong> An interactive space for discussions, questions, and networking among students.</li>
+            </ul>
+        </section>
+
+        <section class="contact-us">
+            <h2>Connect With Us</h2>
+            <p>We value your feedback and encourage you to get in touch with any questions or suggestions.</p>
+            <div class="contact-info">
+                <h3>General Inquiries</h3>
+                <p>Email: <a href="mailto:info@lsif.uz.ac.zw">info@lsif.uz.ac.zw</a></p>
+            </div>
+            <div class="contact-form-placeholder">
+                <h3>Contact Form</h3>
+                <p>[This section will contain a contact form]</p>
+            </div>
+            <div class="social-media-placeholder">
+                <h3>Follow Us</h3>
+                <p>[Links to social media platforms will be added here]</p>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <p>&copy; 2025 LAW STUDENTS INTELLECTUAL FORUM</p>
+    </footer>
+    <script src="auth.js"></script>
+    <script src="script.js"></script>
+    <script>
+    // Load the header dynamically
+    fetch('header.html')
+      .then(response => response.text())
+      .then(html => {
+        document.getElementById('header-placeholder').innerHTML = html;
+      })
+      .catch(err => console.error('Failed to load header:', err));
+      </script>
+</body>
+</html>
