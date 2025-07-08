@@ -20,6 +20,8 @@ header {
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2); /* Add a subtle shadow */
     height: 90px; /* Set a fixed height for the header */
 }
+/* Keep links the same colour after they’re clicked */
+a:visited { color: currentColor; }
 
 /* Style the header logo */
 header .logo-link {
@@ -393,13 +395,15 @@ footer {
 }
 
 .newsletter-section a:hover {
-    background-color: #37434c; /* Darker GREY on hover */
+  background-color: #37434c; /* Darker GREY on hover */
 }
 
 .newsletter-section h2 a {
-  white-space: nowrap;
+  
+  white-space: normal;        /* allow wrapping */
+  overflow-wrap: anywhere;    /* wrap even on long words */
   font-size: 1.6rem;
-  display: inline-block;
+  display: inline-block;      /* keeps existing margin behaviour */
 }
 
 .auth-main {
@@ -556,6 +560,7 @@ footer {
   overflow-x: auto;
   scroll-behavior: smooth;
   scroll-snap-type: x mandatory;
+  scroll-snap-align: start;
   padding-bottom: 10px;
 }
 
@@ -589,25 +594,14 @@ footer {
   border-radius: 4px;
 }
 
+
+
 .left-arrow {
   left: 0;
 }
 
 .right-arrow {
   right: 0;
-}
-
-.newsletter-carousel-arrow {
-  position: absolute;
-  top: 50%;
-  transform: translateY(-50%);
-  font-size: 2rem;
-  background-color: transparent;
-  border: none;
-  cursor: pointer;
-  z-index: 2;
-  padding: 0 10px;
-  color: #333;
 }
 
 .newsletter-left-arrow {
@@ -618,203 +612,229 @@ footer {
   right: 0;
 }
 
+/* Slightly smaller arrows for both carousels */
+.newsletter-carousel-arrow { font-size: 1.8em; }
+
+
 /* Optional: make headings stand out slightly */
 .newsletter-article h3 {
   margin-top: 0;
   font-size: 1.2em;
   color: #333;
 }
-/* On smaller screens, stack vertically */
+.audio-card {
+  background: #f9f9f9;
+  border-left: 4px solid #004aad;
+  padding: 1.5rem;
+  margin-bottom: 1.5rem;
+  border-radius: 12px;
+}
+.audio-card h3 {
+  margin-top: 0;
+  font-size: 1.2rem;
+}
+.audio-card p {
+  margin: 0.5rem 0;
+  color: #555;
+}
+
+.campus-guides-section h2 a {
+  color: #000000;
+}
+/* ─── Mobile header (≤ 640 px) ─────────────────────────── */
+@media (max-width: 640px) {
+
+  header {
+    flex-wrap: wrap;
+    padding: 10px 16px;
+  }
+
+  /* Hamburger button */
+  .nav-toggle {
+    display: inline-flex;
+    flex-direction: column;
+    justify-content: space-between;
+    width: 28px;
+    height: 22px;
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    margin-left: auto;      /* push it to the far right */
+  }
+  .nav-toggle span {
+    display: block;
+    height: 3px;
+    width: 100%;
+    background: #fff;
+    border-radius: 2px;
+    transition: transform 0.3s, opacity 0.3s;
+  }
+
+  /* Rotate bars into an “X” when menu is open */
+  header.nav-open .nav-toggle span:nth-child(1) {
+    transform: translateY(9px) rotate(45deg);
+  }
+  header.nav-open .nav-toggle span:nth-child(2) {
+    opacity: 0;
+  }
+  header.nav-open .nav-toggle span:nth-child(3) {
+    transform: translateY(-9px) rotate(-45deg);
+  }
+
+  /* Hide the regular nav until toggled */
+  nav ul {
+    display: none;
+    flex-direction: column;
+    gap: 0;
+    width: 100%;
+    background: #4f606d;
+    margin-top: 10px;
+    border-radius: 6px;
+    padding: 10px 0;
+  }
+  header.nav-open nav ul {           /* show when menu open */
+    display: flex;
+  }
+  nav ul li {
+    width: 100%;
+    text-align: center;
+  }
+  nav ul li a {
+    display: block;
+    padding: 10px;
+  }
+  /* ─────────────────────────────── 
+   GLOBAL STYLES (keep above this)
+───────────────────────────────── */
+
+/* ... your existing desktop styles ... */
+
+/* ─────────── Splash, Auth Modal, Audio Card etc. ─────────── */
+.audio-card {
+  background: #f9f9f9;
+  border-left: 4px solid #004aad;
+  padding: 1.5rem;
+  margin-bottom: 1.5rem;
+  border-radius: 12px;
+}
+.audio-card h3 {
+  margin-top: 0;
+  font-size: 1.2rem;
+}
+.audio-card p {
+  margin: 0.5rem 0;
+  color: #555;
+}
+
+.campus-guides-section h2 a {
+  color: #000000;
+}
+
+/* ─────────────────────────────── 
+   MOBILE QUERIES START HERE
+───────────────────────────────── */
 @media (max-width: 900px) {
   .homepage-main {
-    grid-template-columns: 1fr;
+    display: block;
+    padding: 1rem;
+  }
+
+  header {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  nav {
+    flex-wrap: wrap;
+    gap: 0.5rem;
+  }
+
+  .auth-buttons,
+  #user-info {
+    margin-top: 0.5rem;
+  }
+
+  .article-carousel,
+  .newsletter-carousel {
+    scroll-snap-type: x mandatory;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .article-card,
+  .newsletter-card {
+    scroll-snap-align: start;
+    flex: 0 0 85%;
+    max-width: 85%;
+    margin-right: 1rem;
+  }
+
+  .left-arrow,
+  .right-arrow,
+  .newsletter-left-arrow,
+  .newsletter-right-arrow {
+    font-size: 1.25rem;
+    padding: 0.5rem;
+  }
+
+  .article-carousel-wrapper,
+  .newsletter-carousel-wrapper {
+    padding-left: 0.5rem;
+  }
+
+  .splash-logo {
+    width: 80px;
+  }
+
+  .auth-card {
+    padding: 1rem 1.25rem;
+  }
+
+  .tutorial-icon,
+  .attachment-icon {
+    width: 24px;
+    height: 24px;
+  }
+
+  .icon-container {
+    width: 48px;
+    height: 48px;
+  }
+
+  .audio-card {
+    padding: 1rem;
+    font-size: 0.9rem;
+  }
+
+  .newsletter-theme {
+    font-size: 1rem;
+  }
+
+  footer {
+    padding: 1rem;
+    text-align: center;
+  }
+
+  .footer-columns {
+    display: block;
+  }
+
+  .footer-column {
+    margin-bottom: 1rem;
   }
 }
-.icon-container {
-  width: 60px;
-  height: 60px;
-  background-color: #f1f1f1;
-  border-radius: 50%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
-}
-
-.icon-container:hover {
-  transform: scale(1.1) rotate(2deg);
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
-}
-
-.tutorial-icon {
-  width: 32px;
-  height: 32px;
-  color: #333;
-  transition: stroke 0.3s ease;
-}
-
-.icon-container:hover .tutorial-icon {
-  stroke: #0066cc; /* or your brand blue */
-}
-.attachment-icon {
-  width: 32px;
-  height: 32px;
-  color: #333;
-  transition: stroke 0.3s ease;
-}
-
-.icon-container:hover .attachment-icon {
-  stroke: #009944; /* or a green tone to contrast Tutorials */
-}
-
-.newsletter-theme {
-  font-size: 1.1rem;
-  margin-bottom: 1rem;
-  color: #444;
-  background: linear-gradient(to right, #dff1ff, #f0f7ff);
-  padding: 0.5rem 1rem;
-  border-left: 4px solid #0077cc;
-  border-radius: 4px;
-  font-style: normal;
-}
-.newsletter-theme span {
-  color: #0077cc;
-  font-weight: bold;
-}
-
-/* ─── Splash Screen Styling ─────────────────────────────── */
+/* ─── Splash must cover everything ───────────────────────── */
 #splash {
-  background-color: #000; /* or match your logo's background */
-  color: #fff;
-  position: fixed;
-  inset: 0;
-  z-index: 1000;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  position: fixed !important;   /* pin to viewport */
+  inset: 0 !important;          /* shorthand: top/right/bottom/left = 0 */
+  width: 100vw !important;      /* full width */
+  height: 100vh !important;     /* full height */
+  z-index: 9999 !important;     /* above header/nav (which is ≤1000) */
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
   flex-direction: column;
+  pointer-events: none;         /* clicks pass through if user’s impatient */
 }
 
-#splash.fade-out {
-  opacity: 0;
-  visibility: hidden;
-}
-
-.splash-inner {
-  text-align: center;
-}
-
-.splash-logo {
-  width: 120px;
-  animation: splash-spin 2s linear infinite;
-  will-change: transform;
-}
-
-@keyframes splash-spin {
-  0%   { transform: rotate(0deg); }
-  100% { transform: rotate(360deg); }
-}
-
-.splash-tag {
-  margin-top: 0.5rem;
-  font-size: 0.9rem;
-  font-weight: 500;
-  opacity: 0.8;
-}
-.splash-tag span {
-  font-weight: 700;
-}
-
-.splash-message {
-  margin-top: 0.75rem;
-  font-size: 0.85rem;
-  opacity: 0.65;
-}
-
-/* ===== Auth Modal ===== */
-.auth-modal {
-  position: fixed;         /* sit on top of everything */
-  inset: 0;                /* shorthand: top/left/right/bottom 0 */
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  background: rgba(0, 0, 0, 0.6); /* semi‑transparent backdrop */
-  z-index: 1000;           /* above header & other UI */
-}
-
-.auth-modal.hidden {
-  display: none;
-}
-
-/* The white card inside */
-.auth-card {
-  width: 100%;
-  max-width: 420px;
-  background: #ffffff;
-  border-radius: 8px;
-  padding: 2rem 2.25rem;
-  position: relative;
-}
-
-/* Close “×” button */
-.close-auth-modal {
-  position: absolute;
-  top: -14px;
-  right: -14px;
-  background: #f3f4f6;
-  border: 1px solid #d1d5db;
-  width: 32px;
-  height: 32px;
-  border-radius: 50%;
-  font-size: 1.25rem;
-  line-height: 0;
-  cursor: pointer;
-}
-
-/* Toggle buttons */
-.auth-toggle {
-  display: flex;
-  gap: 1rem;
-  margin-bottom: 1.25rem;
-}
-.auth-toggle button {
-  flex: 1;
-  padding: 0.5rem 0.75rem;
-  border-radius: 4px;
-  border: 1px solid #d1d5db;
-  background: #f9fafb;
-  cursor: pointer;
-}
-.auth-toggle button.active {
-  background: #2563eb;
-  color: #fff;
-  border-color: #2563eb;
-}
-
-/* Hide/show form containers */
-.auth-form-container.hidden { display: none; }
-
-/* Error messages */
-.error-message {
-  color: #b91c1c;
-  font-size: 0.875rem;
-  margin-top: 0.5rem;
-}
-
-.audio-card {
-    background: #f9f9f9;
-    border-left: 4px solid #004aad;
-    padding: 1.5rem;
-    margin-bottom: 1.5rem;
-    border-radius: 12px;
-}
-
-.audio-card h3 {
-    margin-top: 0;
-    font-size: 1.2rem;
-}
-
-.audio-card p {
-    margin: 0.5rem 0;
-    color: #555;
 }
