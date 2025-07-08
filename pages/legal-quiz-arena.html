@@ -1,93 +1,98 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Legal Quiz Arena | Law Students Intellectual Forum</title>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Legal Quiz Arena | LSIF</title>
 
-  <!-- favicon + global styles -->
-  <link rel="icon" href="/assets/favicon.ico" type="image/x-icon" />
-  <link rel="stylesheet" href="/styles/style.css" />
+    <!-- Tailwind (optional CDN for utility classes) -->
+    <!-- If you already bundle Tailwind elsewhere, remove this line -->
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@3.4.1/dist/tailwind.min.css" rel="stylesheet" />
 
-  <!-- Tailwind (utility classes via CDN) -->
-  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@3.4.1/dist/tailwind.min.css" rel="stylesheet" />
+    <!-- Arena‑specific styles -->
+    <link rel="stylesheet" href="../styles/quiz-arena.css" />
+  </head>
+  <body class="bg-gray-50 text-gray-800 min-h-screen flex flex-col">
+    <header class="bg-indigo-700 text-white py-8 shadow-md">
+      <div class="container mx-auto px-4 text-center">
+        <h1 class="text-4xl font-bold mb-2">Legal Quiz Arena</h1>
+        <p class="text-lg">Sharpen your legal skills while having fun – choose a challenge below.</p>
+      </div>
+    </header>
 
-  <!-- arena‑specific styles -->
-  <link rel="stylesheet" href="/styles/quiz-arena.css" />
-</head>
-<body class="bg-gray-50 text-gray-800 min-h-screen flex flex-col">
+    <main class="flex-1 container mx-auto px-4 py-10">
+      <!-- Game selection grid -->
+      <section
+        class="game-cards grid gap-6 sm:grid-cols-2 lg:grid-cols-3"
+        id="game-selection"
+      >
+        <!-- Lawyer's Crossword -->
+        <article
+          class="game-card bg-white rounded-xl shadow hover:shadow-lg transition p-6 flex flex-col"
+          data-game="crossword"
+        >
+          <h2 class="text-2xl font-semibold mb-2">Lawyer's Crossword</h2>
+          <p class="flex-1">Crack the clues, conquer the grid.</p>
+          <button class="play-btn btn-primary mt-4 w-full py-2 rounded bg-indigo-600 text-white font-semibold hover:bg-indigo-700 transition">
+            Play Now
+          </button>
+        </article>
 
+        <!-- Legal Sudoku -->
+        <article
+          class="game-card bg-white rounded-xl shadow hover:shadow-lg transition p-6 flex flex-col"
+          data-game="sudoku"
+        >
+          <h2 class="text-2xl font-semibold mb-2">Legal Sudoku</h2>
+          <p class="flex-1">Order in the court… and in the boxes!</p>
+          <a href="sudoku.html" class="play-btn btn-primary mt-4 w-full py-2 rounded bg-indigo-600 text-white font-semibold hover:bg-indigo-700 transition">
+            Play Now
+          </a>
+        </article>
 
-  <header class="bg-indigo-700 text-white py-8 shadow-md">
-    <div class="container mx-auto px-4 text-center">
-  <a href="/pages/index.html" class="logo-link">
-  <img src="/assets/scales-of-justice.png" alt="LSIF logo" class="header-logo">
+        <!-- Lawyer's Trivia -->
+        <article
+          class="game-card bg-white rounded-xl shadow hover:shadow-lg transition p-6 flex flex-col"
+          data-game="trivia"
+        >
+          <h2 class="text-2xl font-semibold mb-2">Lawyer's Trivia</h2>
+          <p class="flex-1">Test your knowledge – objection, sustained!</p>
+          <button class="play-btn btn-primary mt-4 w-full py-2 rounded bg-indigo-600 text-white font-semibold hover:bg-indigo-700 transition">
+            Play Now
+          </button>
+        </article>
 
-      <h1 class="text-4xl font-bold mb-2">Legal Quiz Arena</h1>
-      <p class="text-lg">Sharpen your legal skills while having fun – pick a challenge below.</p>
-    </div>
-  </header>
+        <!-- Legal Word Search -->
+        <article
+          class="game-card bg-white rounded-xl shadow hover:shadow-lg transition p-6 flex flex-col"
+          data-game="word-search"
+        >
+          <h2 class="text-2xl font-semibold mb-2">Legal Word Search</h2>
+          <p class="flex-1">Find the missing precedents.</p>
+          <button class="play-btn btn-primary mt-4 w-full py-2 rounded bg-indigo-600 text-white font-semibold hover:bg-indigo-700 transition">
+            Play Now
+          </button>
+        </article>
 
-  <main class="flex-1 container mx-auto px-4 py-10">
-    <!-- Game selection grid -->
-    <section class="game-cards grid gap-6 sm:grid-cols-2 lg:grid-cols-3" id="game-selection">
+        <!-- Battleship (bonus game) -->
+        <article
+          class="game-card bg-white rounded-xl shadow hover:shadow-lg transition p-6 flex flex-col"
+          data-game="battleship"
+        >
+          <h2 class="text-2xl font-semibold mb-2">Legal Battleship</h2>
+          <p class="flex-1">Sink opposing arguments in classic style.</p>
+          <button class="play-btn btn-primary mt-4 w-full py-2 rounded bg-indigo-600 text-white font-semibold hover:bg-indigo-700 transition">
+            Play Now
+          </button>
+        </article>
+      </section>
+    </main>
 
-      <!-- Lawyer's Crossword (coming soon) -->
-      <article class="game-card bg-white rounded-xl shadow hover:shadow-lg transition p-6 flex flex-col" data-game="crossword">
-        <h2 class="text-2xl font-semibold mb-2">Lawyer's Crossword</h2>
-        <p class="flex-1">Crack the clues, conquer the grid.</p>
-        <button class="play-btn btn-primary mt-4 w-full py-2 rounded bg-gray-400 text-white font-semibold cursor-not-allowed" disabled>
-          Coming Soon
-        </button>
-      </article>
+    <footer class="bg-gray-100 py-4 text-center text-sm text-gray-600">
+      © 2025 Law Students Intellectual Forum. All rights reserved.
+    </footer>
 
-      <!-- Legal Sudoku (live) -->
-      <article class="game-card bg-white rounded-xl shadow hover:shadow-lg transition p-6 flex flex-col" data-game="sudoku">
-        <h2 class="text-2xl font-semibold mb-2">
-         <a href="/games/sudoku/sudoku.html" class="hover:underline text-indigo-700">Legal Sudoku</a>
-        </h2>
-        <p class="flex-1">Order in the court… and in the boxes!</p>
-        <a href="/games/sudoku/sudoku.html" class="play-btn btn-primary mt-4 w-full py-2 rounded bg-indigo-600 text-white font-semibold hover:bg-indigo-700 transition text-center">
-           Play Now
-        </a>
-      </article>
-
-      <!-- Trivia (coming soon) -->
-      <article class="game-card bg-white rounded-xl shadow hover:shadow-lg transition p-6 flex flex-col" data-game="trivia">
-        <h2 class="text-2xl font-semibold mb-2">Lawyer's Trivia</h2>
-        <p class="flex-1">Test your knowledge – objection, sustained!</p>
-        <button class="play-btn btn-primary mt-4 w-full py-2 rounded bg-gray-400 text-white font-semibold cursor-not-allowed" disabled>
-          Coming Soon
-        </button>
-      </article>
-
-      <!-- Word Search (coming soon) -->
-      <article class="game-card bg-white rounded-xl shadow hover:shadow-lg transition p-6 flex flex-col" data-game="word-search">
-        <h2 class="text-2xl font-semibold mb-2">Legal Word Search</h2>
-        <p class="flex-1">Find the missing precedents.</p>
-        <button class="play-btn btn-primary mt-4 w-full py-2 rounded bg-gray-400 text-white font-semibold cursor-not-allowed" disabled>
-          Coming Soon
-        </button>
-      </article>
-
-      <!-- Battleship (coming soon) -->
-      <article class="game-card bg-white rounded-xl shadow hover:shadow-lg transition p-6 flex flex-col" data-game="battleship">
-        <h2 class="text-2xl font-semibold mb-2">Legal Battleship</h2>
-        <p class="flex-1">Sink opposing arguments in classic style.</p>
-        <button class="play-btn btn-primary mt-4 w-full py-2 rounded bg-gray-400 text-white font-semibold cursor-not-allowed" disabled>
-          Coming Soon
-        </button>
-      </article>
-    </section>
-  </main>
-
-  <footer class="bg-gray-100 py-4 text-center text-sm text-gray-600">
-    © 2025 Law Students Intellectual Forum
-  </footer>
-
-  <!-- scripts -->
-  <script type="module" src="/scripts/loader.js"></script>
-  <!-- placeholder for arena‑specific JS -->
-  <script type="module" src="/scripts/quiz-arena.js"></script>
-</body>
+    <!-- Future JavaScript (placeholder) -->
+    <script src="../scripts/quiz-arena.js" defer></script>
+  </body>
 </html>

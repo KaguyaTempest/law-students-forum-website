@@ -4,11 +4,11 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Student Articles | Law Students Intellectual Forum</title>
-  <link rel="icon" href="/assets/favicon.ico" type="image/x-icon" />
+  <link rel="icon" href="../favicon.ico" type="image/x-icon" />
 
   <!-- Base + page‑specific styles -->
-  <link rel="stylesheet" href="/styles/style.css" />
-  <link rel="stylesheet" href="/styles/student-articles.css" />
+  <link rel="stylesheet" href="../style.css" />
+  <link rel="stylesheet" href="../styles/student-articles.css" />
 </head>
 
 <body>
@@ -36,45 +36,11 @@
     </section>
 
     <!-- ── ARTICLES LIST ───────────────────────────────── -->
-    <section id="articles-list" class="articles-list grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+    <section id="articles-list" class="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
       <!-- Cards are injected by scripts/student-articles.js -->
-      <!-- ——— Article #1 ——— -->
-<article class="article-card" data-topics="ai technology philosophy">
-  <img src="/assets/ai-oracle.png"
-       alt="AI replacing religion"
-       class="article-thumbnail w-full h-48 object-cover rounded mb-3" />
-
-  <h3 class="text-xl font-semibold mb-1">
-    The New Oracle: How AI Is Replacing Thought
-  </h3>
-  <p class="article-excerpt mb-3">
-    AI is quietly taking over the role religion once played as the unquestioned source of truth. Is critical thinking at risk?
-  </p>
-
-  <a href="/pages/articles/ai-the-new-oracle.html"
-     class="read-more-btn text-indigo-600 hover:underline font-semibold">
-    Read More →
-  </a>
-</article>
-
-<!-- ——— Article #2 ——— -->
-<article class="article-card" data-topics="ai intellectual-property-law technology">
-  <img src="/assets/law-ai.png"
-       alt="AI and Copyright"
-       class="article-thumbnail w-full h-48 object-cover rounded mb-3" />
-
-  <h3 class="text-xl font-semibold mb-1">
-    The Evolving Landscape of AI and Copyright
-  </h3>
-  <p class="article-excerpt mb-3">
-    A legal analysis of authorship, fair use, and cultural heritage in the age of generative AI.
-  </p>
-
-  <a href="/pages/articles/artificial-intelligence-and-copyright.html"
-     class="read-more-btn text-indigo-600 hover:underline font-semibold">
-    Read More →
-  </a>
-</article>
+      <p id="articles-loading" class="col-span-full text-center py-10 opacity-70">
+        Loading articles…
+      </p>
     </section>
 
     <!-- ✨ Optional pagination section -->
@@ -91,9 +57,10 @@
   </footer>
 
   <!-- ── MODULE SCRIPTS ────────────────────────────────── -->
-  <script type="module" src="/scripts/load-header.js"></script>
-  <script type="module" src="/scripts/student-articles.js"></script>
-  <script type="module" src="/scripts/loader.js"></script>
+  <script type="module" src="../scripts/load-header.js"></script>
+  <script type="module" src="../scripts/auth.js"></script>
+  <script type="module" src="../scripts/student-articles.js"></script>
+  <script type="module" src="../scripts/loader.js"></script>
 
 </body>
 </html>

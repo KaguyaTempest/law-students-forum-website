@@ -1,152 +1,18 @@
 {
-    "id": "the-evolving-landscape-of-ai-and-copyright",
+  "ai-the-new-oracle.json": {
+    "title": "The New Oracle: How AI Is Replacing Thought",
+    "author": "LMC Kingmaker, Kaguya Tempest",
+    "date": "2025-07-04",
+    "excerpt": "Artificial intelligence is poised to supplant religion as the modern architecture of control, argue LMC Kingmaker and Kaguya Tempest.",
+    "topics": ["ai", "religion", "philosophy", "technology", "society"],
+    "thumbnail": "ai-oracle.png"
+  },
+  "artificial-intelligence-and-copyright.json": {
     "title": "The Evolving Landscape of AI and Copyright",
     "author": "Kudakwashe Kwitireni",
-    "published": "2025-06-10",
-    "tags": [
-        "artificial-intelligence",
-        "law",
-        "intellectual-property-law",
-        "technology"
-    ],
-    "coverImage": "assets/law-ai.png",
-    "content": [
-        {
-            "type": "paragraph",
-            "text": "The rapid evolution of generative AI has ignited a fervent debate surrounding its intersection with intellectual property rights. Last month, I had the privilege of participating in a moot court competition hosted by the World Intellectual Property Organization (WIPO), where we delved into the complex issue of whether the utilization of generative AI, trained on datasets containing cultural heritage artifacts, to generate NFTs constitutes copyright infringement. This essay serves as an analysis of this critical question, examining the potential infringement of copyright in AI-generated images. By exploring the nuances of this emerging legal landscape, I aim to contribute to the ongoing discourse and offer insights for policymakers, legal professionals, and creators alike.The Nature of AI-Generated Content and Copyright Law"
-        },
-        {
-            "type": "heading",
-            "level": 2,
-            "text": "Copyright Law and Originality"
-        },
-        {
-            "type": "paragraph",
-            "text": "Copyright law protects original works of authorship fixed in a tangible medium of expression. To be eligible for copyright protection, a work must exhibit a modicum of creativity and originality. AI-generated content, while often novel and innovative, may not meet the traditional standards of authorship."
-        },
-        {
-            "type": "heading",
-            "level": 2,
-            "text": "The Role of Human Intervention"
-        },
-        {
-            "type": "paragraph",
-            "text": "A key question in determining copyright ownership of AI-generated content is the extent of human intervention in the creative process. If a human author provides substantial creative input, such as writing prompts or curating training data, they may be considered the author of the work. However, if the AI model generates content autonomously, without significant human intervention, it may be difficult to identify a clear author."
-        },
-        {
-            "type": "heading",
-            "level": 2,
-            "text": "AI and Copyright Infringement"
-        },
-        {
-            "type": "heading",
-            "level": 2,
-            "text": "Training Data and Copyright Infringement"
-        },
-        {
-            "type": "paragraph",
-            "text": "One of the primary concerns regarding AI-generated content is the potential for copyright infringement during the training process. AI models are often trained on vast datasets that include copyrighted works. If these works are used without authorization, it could constitute copyright infringement. This issue is akin to the unauthorized use of copyrighted material in Harper & Row Publishers, Inc. v. Nation Enterprises."
-        },
-        {
-            "type": "heading",
-            "level": 2,
-            "text": "Fair Use and AI-Generated Content"
-        },
-        {
-            "type": "paragraph",
-            "text": "The fair use doctrine, which allows for limited use of copyrighted material without permission, may provide a defense against copyright infringement claims in certain cases"
-        },
-        {
-            "type": "paragraph",
-            "text": "involving AI-generated content. However, the application of fair use to AI is complex and subject to interpretation."
-        },
-        {
-            "type": "heading",
-            "level": 2,
-            "text": "Transformative Use: If AI-generated content significantly transforms the original copyrighted work, it may be more likely to qualify as fair use. This concept is similar to the transformative use of Java APIs in Google LLC v. Oracle America, Inc."
-        },
-        {
-            "type": "heading",
-            "level": 2,
-            "text": "Nature of the Copyrighted Work: The nature of the copyrighted work, such as whether it is factual or creative, can influence the fair use analysis."
-        },
-        {
-            "type": "heading",
-            "level": 2,
-            "text": "Amount and Substantiality of the Portion Used: The extent to which the AI-generated content incorporates elements of the original work is a crucial factor."
-        },
-        {
-            "type": "heading",
-            "level": 2,
-            "text": "Effect on the Market for the Original Work: The potential impact of AI-generated content on the market for the original work is another important consideration."
-        },
-        {
-            "type": "heading",
-            "level": 2,
-            "text": "Cultural Heritage and Copyright"
-        },
-        {
-            "type": "paragraph",
-            "text": "Cultural heritage artifacts, such as paintings, sculptures, and historical documents, are often protected by copyright law. When these artifacts are used to train AI models, it raises questions about the potential infringement of copyright."
-        },
-        {
-            "type": "heading",
-            "level": 2,
-            "text": "Balancing Innovation and Protection: While AI has the potential to revolutionize the way we access and appreciate cultural heritage, it is essential to balance innovation with the protection of copyright. Striking the right balance requires careful consideration of the following factors:"
-        },
-        {
-            "type": "paragraph",
-            "text": "The nature of the cultural heritage artifact. Is it a creative work that is subject to copyright protection, or is it a public domain work?"
-        },
-        {
-            "type": "paragraph",
-            "text": "The extent to which the AI model incorporates elements of the artifact. Does the AI model simply mimic the style of the artifact, or does it create something entirely new?"
-        },
-        {
-            "type": "paragraph",
-            "text": "The impact of the AI-generated content on the market for the original work.Does the AI-generated content compete with or diminish the value of the original work?"
-        },
-        {
-            "type": "heading",
-            "level": 2,
-            "text": "Platform Liability and AI-Generated Content"
-        },
-        {
-            "type": "paragraph",
-            "text": "Platforms that host or distribute AI-generated content may face liability for copyright infringement. The Digital Millennium Copyright Act (DMCA) provides a safe harbor for online service providers, but this protection may not extend to AI-generated content that infringes on copyright. The case of A&M Records v. Napster established that platforms can be held liable for contributory and vicarious infringement if they know or should know that their services are being used to infringe copyrights."
-        },
-        {
-            "type": "paragraph",
-            "text": "YouTube's notice and takedown system, which operates in conjunction with the DMCA, is a mechanism designed to protect copyright holders' rights. However, the application of this system to AI-generated content can be complex, especially when determining whether the content is original or derivative."
-        },
-        {
-            "type": "heading",
-            "level": 2,
-            "text": "The Future of AI and Copyright"
-        },
-        {
-            "type": "paragraph",
-            "text": "As AI technology continues to evolve, it is essential to develop a robust legal framework to address the challenges and opportunities presented by AI-generated content. Some key considerations include:"
-        },
-        {
-            "type": "paragraph",
-            "text": "International Cooperation: International cooperation is necessary to harmonize copyright laws and ensure consistent protection of intellectual property rights in the age of AI."
-        },
-        {
-            "type": "paragraph",
-            "text": "Technological measures, such as watermarking and fingerprinting, can be used to identify and track the origin of AI-generated content."
-        },
-        {
-            "type": "paragraph",
-            "text": "Licensing and Contractual Agreements: Clear licensing agreements can be used to govern the use of copyrighted material in AI training and the distribution of AI-generated content."
-        },
-        {
-            "type": "paragraph",
-            "text": "AI as Author: The question of whether AI can be considered an author is a complex one. While AI systems can generate creative content, they lack the human capacity for independent thought and judgment."
-        },
-        {
-            "type": "paragraph",
-            "text": "In conclusion, the intersection of AI, cultural heritage, and copyright is a complex and rapidly evolving field. By understanding the legal principles and case law that apply to AI-generated content, creators, consumers, and policymakers can navigate this new frontier and ensure the protection of intellectual property rights while fostering innovation and creativity."
-        }
-    ]
+    "date": "2025-07-04",
+    "excerpt": "A legal analysis of the tension between authorship, cultural heritage, and intellectual property in the age of generative AI.",
+    "topics": ["ai", "copyright", "cultural-heritage", "intellectual-property", "law"],
+    "thumbnail": "law-ai.png"
+  }
 }
