@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tutorials - LAW STUDENTS INTELLECTUAL FORUM</title>
+    <link rel="icon" href="favicon.ico" type="image/x-icon">
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="tutorials.css">
+</head>
+<body>
+    <div id="header-placeholder"></div>
+
+    <main class="tutorials-main">
+        <section class="tutorials-hero">
+            <h2>Unlock Your Legal Skills with Our Tutorials</h2>
+            <p>Explore a variety of tutorials designed to help you master key legal concepts and practical skills.</p>
+        </section>
+
+        <section class="tutorials-grid">
+            <div class="tutorial-card">
+                <div class="tutorial-icon">🎬</div>
+                <h3>Understanding Case Law Analysis</h3>
+                <p>Learn how to effectively read and analyze legal judgments.</p>
+                <a href="#">Watch Tutorial</a>
+            </div>
+
+            <div class="tutorial-card">
+                <div class="tutorial-icon">📝</div>
+                <h3>Crafting Persuasive Legal Arguments</h3>
+                <p>Improve your skills in constructing compelling written and oral arguments.</p>
+                <a href="pages/crafting-persuasive-arguments.html">View Tutorial</a>
+            </div>
+
+            <div class="tutorial-card">
+                <div class="tutorial-icon">🔍</div>
+                <h3>Mastering Legal Databases</h3>
+                <p>Discover tips and tricks for efficient legal research using online databases.</p>
+                <a href="#">Explore Tutorial</a>
+            </div>
+
+            <div class="tutorial-card">
+                <div class="tutorial-icon">🗣️</div>
+                <h3>Effective Moot Court Presentation</h3>
+                <p>Enhance your presentation techniques for moot court competitions.</p>
+                <a href="#">Learn More</a>
+            </div>
+
+            <div class="tutorial-card">
+                <div class="tutorial-icon">📚</div>
+                <h3>Navigating Statutes and Regulations</h3>
+                <p>Understand how to interpret and apply legislative texts.</p>
+                <a href="#">Go to Tutorial</a>
+            </div>
+
+            <div class="tutorial-card">
+                <div class="tutorial-icon">✍️</div>
+                <h3>Legal Citation Made Easy</h3>
+                <p>A comprehensive guide to proper legal citation formats.</p>
+                <a href="#">See Guide</a>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <p>&copy; 2025 LAW STUDENTS INTELLECTUAL FORUM</p>
+    </footer>
+    <script>
+    // Load the header dynamically
+      fetch('header.html')
+        .then(response => response.text())
+        .then(html => {
+          document.getElementById('header-placeholder').innerHTML = html;
+        })
+        .catch(err => console.error('Failed to load header:', err));
+    </script>
+</body>
+</html>

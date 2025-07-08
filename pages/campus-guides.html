@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Campus Guides | Law Students Intellectual Forum</title>
+
+  <!-- favicon + global styles -->
+  <link rel="icon" href="/assets/favicon.ico" type="image/x-icon" />
+  <link rel="stylesheet" href="/styles/style.css" />
+  <!-- page‑specific styles (create /styles/campus-guides.css if you want extras) -->
+  <link rel="stylesheet" href="/styles/campus-guides.css" />
+</head>
+<body>
+
+  <!-- Header will be injected by load‑header.js -->
+  <div id="header-placeholder"></div>
+
+  <main class="campus-guides-main">
+    <!-- ─── HERO ───────────────────────────────────────── -->
+    <section class="guides-hero text-center py-12">
+      <h1 class="text-3xl md:text-4xl font-bold mb-4">Welcome to Campus Guides</h1>
+      <p class="max-w-2xl mx-auto text-lg opacity-80">
+        Your launch‑pad to mastering life at law school. From finding lecture halls to
+        landing that critical attachment, we’ve got you covered.
+      </p>
+    </section>
+
+    <!-- ─── WHAT’S INSIDE  ─────────────────────────────── -->
+    <section class="guides-overview grid gap-8 md:grid-cols-2 px-6 py-12">
+      <!-- Tutorials Card -->
+      <article class="guide-card p-6 bg-white rounded-lg shadow">
+        <h2 class="text-2xl font-semibold mb-3">🏛 Tutorials Guide</h2>
+        <p class="mb-4">
+          Orientation hacks, study groups, where to print at 7 a.m., and how
+          to brief a case before your first Contracts class. Adapt fast, thrive
+          faster.
+        </p>
+        <a href="/pages/tutorials.html" class="btn">Enter Tutorials Guide</a>
+      </article>
+
+      <!-- Attachment Guide Card -->
+      <article class="guide-card p-6 bg-white rounded-lg shadow">
+        <h2 class="text-2xl font-semibold mb-3">📑 Attachment Guide</h2>
+        <p class="mb-4">
+          Everything unpaid internships never tell you: application timelines,
+          crafting a punchy CV, supervisor etiquette, and turning “free
+          labour” into career leverage.
+        </p>
+        <a href="/pages/attachment.html" class="btn">Explore Attachment Guide</a>
+      </article>
+    </section>
+
+    <!-- ─── CALL TO ACTION  ────────────────────────────── -->
+    <section class="cta text-center py-12 bg-gray-100">
+      <h3 class="text-xl font-semibold mb-2">New to Campus Guides?</h3>
+      <p class="mb-4">
+        Start with Tutorials, then level‑up with the Attachment Guide when
+        you’re ready to dive into real‑world practice.
+      </p>
+      <a href="/pages/tutorials.html" class="btn">Jump In ➜</a>
+    </section>
+  </main>
+
+  <footer class="text-center py-8 text-sm opacity-70">
+    &copy; 2025 Law Students Intellectual Forum
+  </footer>
+
+  <!-- Module scripts -->
+  <script type="module" src="/scripts/load-header.js"></script>
+  <script type="module" src="/scripts/loader.js"></script>
+</body>
+</html>
