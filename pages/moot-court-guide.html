@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Moot Court Guide - LAW STUDENTS INTELLECTUAL FORUM</title>
+    <link rel="icon" href="/assets/favicon.ico" type="image/x-icon">
+    <link rel="stylesheet" href="/styles/style.css">
+    <link rel="stylesheet" href="/styles/moot-court-guide.css">
+    
+    <style>
+        #student-articles .comment-form button[type="submit"]:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+    <!-- Header injected by load-header.js -->
+    <div id="header-placeholder"></div>
+<main class="moot-court-guide-main">
+    <section class="moot-court-hero">
+        <h2>Your Comprehensive Guide to Moot Court Competitions</h2>
+        <p>Everything you need to know to participate and excel in moot court, from preparation to presentation.</p>
+    </section>
+
+    <!-- INTRODUCTION SECTION -->
+    <section class="guide-content">
+        <div class="guide-section">
+            <h3>What is Moot Court?</h3>
+            <p>Moot court is a simulated court proceeding that mirrors real legal argumentation. Law students participate as advocates arguing fictional cases before a panel of judges. It involves both written and oral submissions.</p>
+        </div>
+
+        <div class="guide-section">
+            <h3>Why Moot?</h3>
+            <ul>
+                <li>Master legal research and writing.</li>
+                <li>Polish oral advocacy and courtroom confidence.</li>
+                <li>Understand complex legal principles in practice.</li>
+                <li>Impress employers and expand your professional network.</li>
+            </ul>
+        </div>
+    </section>
+
+    <!-- TUTORIAL SECTION -->
+    <section class="guide-content">
+        <div class="guide-section">
+            <h3>Step-by-Step Mooting Tutorial</h3>
+            <ol>
+                <li><strong>Understanding the Moot Problem:</strong> Break down the factual matrix and spot the legal issues.</li>
+                <li><strong>Legal Research:</strong> Use databases and libraries to gather authorities and precedents.</li>
+                <li><strong>Writing the Memorial:</strong> Follow formatting rules, develop arguments, and cite sources properly.</li>
+                <li><strong>Practicing Oral Submissions:</strong> Rehearse with teammates, seek feedback, and improve delivery.</li>
+                <li><strong>Courtroom Etiquette:</strong> Address the bench respectfully, follow proper structure, and be professional.</li>
+            </ol>
+        </div>
+
+        <div class="guide-section">
+            <h3>Oral Presentation Tips</h3>
+            <ul>
+                <li>Start with a strong introduction: "May it please the court..."</li>
+                <li>Keep answers focused and concise.</li>
+                <li>Use case law effectively in responses.</li>
+                <li>Control pacing and avoid filler words.</li>
+                <li>Stay calm under pressure; judges are testing your reasoning, not attacking you.</li>
+            </ul>
+        </div>
+    </section>
+
+    <!-- MOOT COURT HANDBOOK -->
+    <section class="guide-content">
+        <div class="guide-section">
+            <h3>Moot Court Handbook</h3>
+            <p>This is your definitive reference guide. It includes formatting rules, scoring breakdowns, sample problems, and frequently asked questions.</p>
+            <a href="#" class="btn">Download Handbook</a>
+        </div>
+    </section>
+
+    <!-- UPCOMING MOOTS CALENDAR -->
+    <section class="guide-content">
+        <div class="guide-section">
+            <h3>Upcoming Moot Court Competitions</h3>
+            <div id="moot-calendar">
+                <!-- Dynamically loaded calendar entries -->
+                <p><em>Loading upcoming events...</em></p>
+            </div>
+        </div>
+    </section>
+
+    <!-- WINNING MEMORIALS EXAMPLES -->
+    <section class="guide-content">
+        <div class="guide-section">
+            <h3>Examples of Winning Memorials</h3>
+            <ul id="winning-memorials">
+                <li><a href="#">1st Place - National Human Rights Moot 2024 (Applicant)</a></li>
+                <li><a href="#">1st Place - ZILSA Novice Moot 2023 (Respondent)</a></li>
+                <li><a href="#">Best Memorial - Environmental Law Moot 2023</a></li>
+            </ul>
+        </div>
+    </section>
+
+    <!-- YOUTUBE DEMO VIDEO -->
+    <section class="guide-content">
+        <div class="guide-section">
+            <h3>Watch a Real Moot Court in Action</h3>
+            <p>Get a sense of courtroom flow, oral structure, and judicial questioning by watching this example moot session.</p>
+            <div class="video-wrapper">
+                <iframe width="100%" height="400" src="https://www.youtube.com/watch?v=JDTx4LJ56Lo&pp=ygUMd2hhdCBpcyBtb290" frameborder="0" allowfullscreen></iframe>
+            </div>
+        </div>
+    </section>
+
+    <!-- TEAM REGISTRATION + MEMORIAL UPLOAD -->
+    <section class="guide-content">
+        <div class="guide-section">
+            <h3>Team Registration & Memorial Submission</h3>
+            <p>Register your team for an upcoming moot and upload your memorial before the deadline.</p>
+            <form id="moot-registration-form">
+                <label for="team-name">Team Name:</label>
+                <input type="text" id="team-name" name="teamName" required>
+
+                <label for="moot-event">Select Moot:</label>
+                <select id="moot-event" name="mootEvent">
+                    <option value="human-rights">National Human Rights Moot</option>
+                    <option value="zilsa-novice">ZILSA Novice Moot</option>
+                </select>
+
+                <label for="memorial-upload">Upload Memorial (PDF):</label>
+                <input type="file" id="memorial-upload" name="memorial" accept="application/pdf" required>
+
+                <label for="submission-deadline">Deadline:</label>
+                <input type="date" id="submission-deadline" name="deadline" readonly value="2025-08-31">
+
+                <button type="submit" class="btn">Submit</button>
+            </form>
+        </div>
+    </section>
+</main>
+
+<footer>
+    <p>&copy; 2025 LAW STUDENTS INTELLECTUAL FORUM</p>
+</footer>
+
+<!-- Module scripts -->
+  <script type="module" src="/scripts/load-header.js"></script>
+  <script type="module" src="/scripts/moot-court-guide.js"></script> <!-- if/when you add page‑specific JS -->
+  <script type="module" src="/scripts/loader.js"></script>
+</script>
+</body>
+</html>

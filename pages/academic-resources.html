@@ -4,11 +4,13 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Academic Resources - LAW STUDENTS INTELLECTUAL FORUM</title>
-    <link rel="icon" href="favicon.ico" type="image/x-icon">
-    <link rel="stylesheet" href="style.css" />
-    <link rel="stylesheet" href="academic-resources.css" />
+    <link rel="icon" href="/assets/favicon.ico"  type="image/x-icon">
+    <link rel="stylesheet" href="/styles/style.css" />
+    <link rel="stylesheet" href="/styles/academic-resources.css" />
 </head>
 <body>
+
+    <!-- header will be injected by load-header.js -->
     <div id="header-placeholder"></div>
 
     <main class="resources-main">
@@ -23,7 +25,7 @@
                 <div class="resource-icon">📚</div>
                 <h3>Digital Law Library</h3>
                 <p>Access a growing collection of textbooks, notes & materials.</p>
-                <a href="library.html" class="resource-link">Open Library</a>
+                <a href="/pages/library.html" class="resource-link">Open Library</a>
             </div>
 
             <!-- Rate My Lecturer -->
@@ -31,7 +33,7 @@
                 <div class="resource-icon">⭐</div>
                 <h3>Rate My Lecturer</h3>
                 <p>Share your experiences and see who leads the pack this semester.</p>
-                <a href="pages/rate-my-lecturer.html" class="resource-link">Start Rating</a>
+                <a href="/pages/rate-my-lecturer.html" class="resource-link">Start Rating</a>
             </div>
 
             <!-- Sexual Harassment Hotline -->
@@ -47,7 +49,7 @@
                 <div class="resource-icon">🧠</div>
                 <h3>Legal Quiz Arena</h3>
                 <p>Test your legal knowledge. Compete for leaderboard spots weekly!</p>
-                <a href="pages/legal-quiz-arena.html" class="resource-link">Take Quiz</a>
+                <a href="/pages/legal-quiz-arena.html" class="resource-link">Take Quiz</a>
             </div>
 
             <!-- Career Center -->
@@ -55,7 +57,7 @@
                 <div class="resource-icon">🎓</div>
                 <h3>Career Center</h3>
                 <p>Find internships, clerkships, and build your career profile.</p>
-                <a href="career-center.html" class="resource-link">Visit Career Center</a>
+                <a href="/pages/career-center.html" class="resource-link">Visit Career Center</a>
             </div>
         </section>
 
@@ -66,7 +68,7 @@
                     <span class="resource-icon">📚</span>
                     <h3>Library</h3>
                     <p>Access digital and physical law resources.</p>
-                    <a href="#">Visit Library</a>
+                    <a href="/pages/library.html">Visit Library</a>
                 </div>
                 <div class="resource-card lecturer-card">
                     <span class="resource-icon">👨‍🏫</span>
@@ -96,16 +98,7 @@
         <p>&copy; 2025 LAW STUDENTS INTELLECTUAL FORUM</p>
     </footer>
 
-    <script>
-        // Load header dynamically
-        fetch('header.html')
-            .then(response => response.text())
-            .then(html => {
-                document.getElementById('header-placeholder').innerHTML = html;
-            })
-            .catch(err => console.error('Failed to load header:', err));
-    </script>
-    <script type="module" src="scripts/auth.js"></script>
-    <script type="module" src="scripts/home.js"></script>
+    <script type="module" src="/scripts/load-header.js"></script>
+    <script type="module" src="/scripts/loader.js"></script>
 </body>
 </html>

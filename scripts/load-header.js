@@ -3,7 +3,7 @@
 //   relative to this script’s own location (import.meta.url).
 // • After insertion it dispatches a custom "header:loaded" event.
 
-const HEADER_URL = new URL('../header.html', import.meta.url).href; // ✔ dynamic
+const HEADER_URL = new URL('../pages/partials/header.html', import.meta.url).href;
 
 async function insertHeader() {
   try {
@@ -15,6 +15,15 @@ async function insertHeader() {
     if (!placeholder) throw new Error('header-placeholder div not found');
 
     placeholder.innerHTML = headerHTML;
+    /* ① hamburger toggle */
+   const navBtn = placeholder.querySelector('.nav-toggle');
+   const header = placeholder.querySelector('header');
+
+   /* ② click to open/close */
+   navBtn?.addEventListener('click', () => {
+     const isOpen = header.classList.toggle('nav-open');
+     navBtn.setAttribute('aria-expanded', isOpen);   // accessibility
+     navBtn.setAttribute('aria-label', isOpen ? 'Close navigation' : 'Open navigation');});
 
     // Move auth-modal (if present) to <body> so z‑index works across pages
     const modal = placeholder.querySelector('#auth-modal');

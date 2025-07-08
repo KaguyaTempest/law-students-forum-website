@@ -1,0 +1,81 @@
+/* tutorials.css */
+
+/* Style for the main content area of the tutorials page */
+.tutorials-main {
+    padding: 20px;
+}
+
+/* Hero section for the tutorials page */
+.tutorials-hero {
+    background-color: #f9f9f9;
+    padding: 40px;
+    border-radius: 8px;
+    margin-bottom: 30px;
+    text-align: center;
+}
+
+.tutorials-hero h2 {
+    color: #333;
+    margin-bottom: 10px;
+    font-size: 2em;
+}
+
+.tutorials-hero p {
+    color: #666;
+    font-size: 1.1em;
+}
+
+/* Grid layout for the tutorial cards */
+.tutorials-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 25px;
+}
+
+/* Style for each individual tutorial card */
+.tutorial-card {
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.1);
+    text-align: center;
+}
+
+/* Style for the tutorial icon */
+.tutorial-icon {
+    font-size: 2.5em;
+    margin-bottom: 15px;
+    color: #007bff; /* Blue icon color */
+}
+
+/* Style for the tutorial title */
+.tutorial-card h3 {
+    color: #333;
+    margin-top: 0;
+    margin-bottom: 10px;
+    font-size: 1.2em;
+}
+
+/* Style for the tutorial description */
+.tutorial-card p {
+    color: #555;
+    font-size: 0.95em;
+    line-height: 1.4;
+    margin-bottom: 15px;
+}
+
+/* Style for the tutorial link/button */
+.tutorial-card a {
+    display: inline-block;
+    text-decoration: none;
+    background-color: #007bff;
+    color: #fff;
+    padding: 10px 20px;
+    border-radius: 5px;
+    font-weight: bold;
+    transition: background-color 0.3s ease;
+}
+
+.tutorial-card a:hover {
+    background-color: #0056b3;
+}
