@@ -824,17 +824,40 @@ footer {
   }
 }
 /* ─── Splash must cover everything ───────────────────────── */
+/* ─── Splash basics ─────────────────────────── */
 #splash {
-  position: fixed !important;   /* pin to viewport */
-  inset: 0 !important;          /* shorthand: top/right/bottom/left = 0 */
-  width: 100vw !important;      /* full width */
-  height: 100vh !important;     /* full height */
-  z-index: 9999 !important;     /* above header/nav (which is ≤1000) */
-  display: flex !important;
-  align-items: center !important;
-  justify-content: center !important;
+  position: fixed;
+  inset: 0;
+  background: #000;          /* full‑black backdrop */
+  display: flex;
   flex-direction: column;
-  pointer-events: none;         /* clicks pass through if user’s impatient */
+  justify-content: center;
+  align-items: center;
+  z-index: 9999;             /* on top of everything */
+  transition: opacity 0.5s ease;
+}
+#splash.fade-out {
+  opacity: 0;
+  visibility: hidden;
+}
+
+/* spinning logo */
+.splash-logo {
+  width: 120px;              /* adjust as needed */
+  animation: splash-spin 2s linear infinite;
+}
+@keyframes splash-spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+/* loading text */
+.splash-message {
+  margin-top: 0.75rem;
+  font-size: 0.9rem;
+  color: #fff;
+  opacity: 0.8;
+  text-align: center;
 }
 
 }
