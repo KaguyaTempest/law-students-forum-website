@@ -1,110 +1,112 @@
-/* ───────────────────────────────────────────────
-   Static‑card helper for Student Articles page
-   • No network calls — works with cards already
-     present in the DOM.
-   • Features:
-       ① Tag/category filtering
-       ② Sort by newest / oldest / A‑Z
-       ③ Client‑side pagination (6 per page)
-─────────────────────────────────────────────── */
+/* ──────────────────────────────────────────────────────────────
+   student-articles.js  – modular Firebase version (MERGED)
+   Folder: /scripts
+   Purpose: Dynamically list every article JSON inside
+            Firebase Storage bucket path "articles/" and render
+            them on the Student Articles page, keeping the
+            existing topic‑filter system intact.
+─────────────────────────────────────────────────────────────── */
 
-const PAGE_SIZE = 6;
+import { storage } from './firebase.js';
+import {
+  ref,
+  listAll,
+  getDownloadURL,
+} from 'https://www.gstatic.com/firebasejs/10.12.2/firebase-storage.js';
 
-/* Cached node lists */
-const cardNodes   = Array.from(document.querySelectorAll('.article-card'));
-const filterLinks = document.querySelectorAll('.filter-link');
-const sortSelect  = document.getElementById('sort-select');   // <select> (add in HTML)
-const pagBar      = document.getElementById('pagination');
-const prevBtn     = pagBar?.querySelector('.prev-page');
-const nextBtn     = pagBar?.querySelector('.next-page');
-const curPageEl   = pagBar?.querySelector('#current-page');
-const totPagesEl  = pagBar?.querySelector('#total-pages');
+/* ───────────── Main Bootstrap ───────────── */
+document.addEventListener('DOMContentLoaded', async () => {
+  try {
+    /* 1. List every JSON file in /articles/ */
+    const articlesRef = ref(storage, 'articles/');
+    const listResult  = await listAll(articlesRef);
 
-/* State */
-let currentFilter = 'all';
-let currentSort   = 'newest';
-let currentPage   = 1;
-let filteredCards = cardNodes;
+    /* 2. Pull each JSON, keeping filename so we can build links */
+    const articlePromises = listResult.items
+      .filter(item => item.name.endsWith('.json'))
+      .map(async itemRef => {
+        const url      = await getDownloadURL(itemRef);
+        const article  = await fetch(url).then(r => r.json());
+        return { filename: itemRef.name, article };
+      });
 
-/* ── Init ───────────────────────────────────── */
-setupFilters();
-setupSort();
-applyAll();                                // initial render
+    const articlesArray = await Promise.all(articlePromises);
 
-/* ── FILTERING ─────────────────────────────── */
+    /* 3. Convert to object keyed by filename for existing render logic */
+    const articlesObj = {};
+    articlesArray.forEach(({ filename, article }) => {
+      articlesObj[filename] = article;
+    });
+
+    /* 4. Render + activate filters */
+    renderArticles(articlesObj);
+    setupFilters();
+  } catch (err) {
+    console.error('Error loading articles from Storage:', err);
+    const container = document.querySelector('.articles-list');
+    if (container)
+      container.innerHTML = '<p>Failed to load articles.</p>';
+  }
+});
+
+/* ───────────── Render cards ───────────── */
+function renderArticles(data) {
+  const container = document.querySelector('.articles-list');
+  if (!container) return;
+
+  container.innerHTML = '';
+
+  Object.entries(data).forEach(([filename, article]) => {
+    const topicsAttr = (article.topics || [])
+      .map(t => t.toLowerCase().replace(/\s+/g, '-'))
+      .join(' ');
+
+    const card = document.createElement('div');
+    card.className      = 'article-card';
+    card.dataset.topics = topicsAttr;
+
+    card.innerHTML = `
+      <img src="assets/${article.thumbnail}"
+           alt="${article.title}"
+           class="article-thumbnail">
+      <h3>${article.title}</h3>
+      <p class="article-excerpt">${article.excerpt}</p>
+
+      <div class="article-meta">
+        <span class="article-date">Published: ${article.date}</span>
+        <span class="article-author">Author: ${article.author}</span>
+      </div>
+
+      <a href="article.html?article=${encodeURIComponent(filename.replace('.json',''))}"
+         class="read-more-btn">Read More</a>
+
+      <div class="article-topics">
+        ${(article.topics || []).map(t => `<span>${t}</span>`).join(' ')}
+      </div>
+    `;
+
+    container.appendChild(card);
+  });
+}
+
+/* ───────────── Topic filter links ───────────── */
 function setupFilters() {
+  const filterLinks = document.querySelectorAll('.filter-link');
+  if (!filterLinks.length) return;
+
   filterLinks.forEach(link => {
     link.addEventListener('click', e => {
       e.preventDefault();
-      currentFilter = link.dataset.filter || 'all';
-      filterLinks.forEach(l => l.classList.remove('active'));
+      const filter = link.dataset.filter || 'all';
+
+      filterLinks.forEach(fl => fl.classList.remove('active'));
       link.classList.add('active');
-      currentPage = 1;
-      applyAll();
+
+      document.querySelectorAll('.article-card').forEach(card => {
+        const topics = card.dataset.topics.split(' ').filter(Boolean);
+        card.style.display =
+          filter === 'all' || topics.includes(filter) ? 'block' : 'none';
+      });
     });
   });
-}
-
-/* ── SORTING ───────────────────────────────── */
-function setupSort() {
-  if (!sortSelect) return;
-  sortSelect.addEventListener('change', () => {
-    currentSort = sortSelect.value;
-    currentPage = 1;
-    applyAll();
-  });
-}
-
-/* ── MAIN PIPELINE ─────────────────────────── */
-function applyAll() {
-  filterCards();
-  sortCards();
-  paginateCards();
-}
-
-/* Step 1: filter */
-function filterCards() {
-  filteredCards = cardNodes.filter(card => {
-    if (currentFilter === 'all') return true;
-    const topics = card.dataset.topics?.split(' ').filter(Boolean) || [];
-    return topics.includes(currentFilter);
-  });
-}
-
-/* Step 2: sort (needs data-date attr "YYYY-MM-DD") */
-function sortCards() {
-  if (currentSort === 'a-z') {
-    filteredCards.sort((a, b) =>
-      a.querySelector('h3').textContent.localeCompare(b.querySelector('h3').textContent));
-  } else { // newest or oldest
-    filteredCards.sort((a, b) => {
-      const dA = new Date(a.dataset.date);
-      const dB = new Date(b.dataset.date);
-      return currentSort === 'newest' ? dB - dA : dA - dB;
-    });
-  }
-}
-
-/* Step 3: pagination */
-function paginateCards() {
-  const totalPages = Math.max(1, Math.ceil(filteredCards.length / PAGE_SIZE));
-  if (pagBar) pagBar.classList.toggle('hidden', totalPages <= 1);
-  if (curPageEl) curPageEl.textContent = currentPage;
-  if (totPagesEl) totPagesEl.textContent = totalPages;
-
-  prevBtn?.classList.toggle('opacity-50', currentPage === 1);
-  nextBtn?.classList.toggle('opacity-50', currentPage === totalPages);
-
-  prevBtn?.addEventListener('click', () => {
-    if (currentPage > 1) { currentPage--; applyAll(); }
-  });
-  nextBtn?.addEventListener('click', () => {
-    if (currentPage < totalPages) { currentPage++; applyAll(); }
-  });
-
-  /* Show / hide cards */
-  cardNodes.forEach(card => card.style.display = 'none');
-  filteredCards
-    .slice((currentPage - 1) * PAGE_SIZE, currentPage * PAGE_SIZE)
-    .forEach(card => card.style.display = 'block');
 }
