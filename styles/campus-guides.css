@@ -1,0 +1,100 @@
+/* ====================================================================
+   Campus‑Guides CSS – page‑specific enhancements
+   --------------------------------------------------------------------
+   This file assumes the global stylesheet already provides Tailwind‑like
+   utility classes plus root variables for colours + typography.
+   ==================================================================== */
+
+/* ---------- 1. Theming helpers ------------------------------------ */
+:root {
+  /* Override or fall back to site‑wide variables */
+  --cg‑accent: var(--accent-color, #2d6cdf);
+  --cg‑bg‑hero: linear-gradient(135deg, #e3f2ff 0%, #f8fbff 100%);
+  --cg‑card‑bg: #ffffff;
+  --cg‑card‑shadow: 0 6px 20px rgba(0, 0, 0, 0.08);
+  --cg‑card‑shadow‑hover: 0 8px 28px rgba(0, 0, 0, 0.12);
+}
+
+/* ---------- 2. Layout tweaks -------------------------------------- */
+.campus-guides-main {
+  scroll-behavior: smooth;
+}
+
+/* ---------- 3. Hero section --------------------------------------- */
+.guides-hero {
+  background: var(--cg‑bg‑hero);
+  color: var(--text-primary, #111827);
+  padding: 5rem 1rem;
+  text-align: center;
+}
+
+.guides-hero h1 {
+  line-height: 1.2;
+}
+
+.guides-hero p {
+  max-width: 38rem;
+  margin: 0 auto;
+}
+
+/* ---------- 4. Card grid ------------------------------------------ */
+.guides-overview {
+  display: grid;
+  gap: 2rem;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  padding: 0 1rem 4rem;
+}
+
+.guide-card {
+  background: var(--cg‑card‑bg);
+  border-radius: 1rem;
+  box-shadow: var(--cg‑card‑shadow);
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+}
+
+.guide-card:hover {
+  transform: translateY(-4px);
+  box-shadow: var(--cg‑card‑shadow‑hover);
+}
+
+.guide-card h2 {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 1.25rem; /* tightened for mobile */
+}
+
+/* ---------- 5. Buttons -------------------------------------------- */
+.btn {
+  display: inline-block;
+  margin-top: 1rem;
+  background: var(--cg‑accent);
+  color: #ffffff;
+  padding: 0.6em 1.4em;
+  font-weight: 500;
+  border-radius: 999px;
+  text-decoration: none;
+  transition: background 0.2s ease, transform 0.2s ease;
+}
+
+.btn:hover,
+.btn:focus {
+  background: shade(var(--cg‑accent), 10%);
+  transform: translateY(-1px);
+}
+
+/* ---------- 6. Call‑to‑Action ------------------------------------- */
+.cta {
+  background: #f3f6fa;
+}
+
+.cta h3 {
+  color: var(--cg‑accent);
+}
+
+/* ---------- 7. Responsive tweaks ---------------------------------- */
+@media (min-width: 768px) {
+  .guides-hero h1 {
+    font-size: 2.5rem;
+  }
+}
