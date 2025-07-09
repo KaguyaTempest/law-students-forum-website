@@ -5,8 +5,16 @@
    ▸ Seamlessly upgrades to Firestore data when docs exist
    ▸ Real‑time filters, 5‑star modal, aggregate rating updates
    ------------------------------------------------------------------ */
+// ---- Root prefix for GitHub Pages ----------------------------------
+const ROOT = "/law-students-forum-website/";   // ← trailing slash required!
+const fixPath = (p) =>
+  !p || p.startsWith("http") || p.startsWith("/") || p.startsWith("data:")
+    ? p
+    : ROOT + p.replace(/^\/+/, "");
+
 
 /* === 0. Static fallback dataset ==================================== */
+
 const staticLecturers = [
   {
     id: "lovemore-madhuku",
@@ -17,7 +25,7 @@ const staticLecturers = [
       "Constitutional Law",
       "Jurisprudence"
     ],
-    sprite: "images/sprites/madhuku.png",
+    sprite: fixPath("assets/sprites/madhuku.png"),
     avgRating: 0,
     numRatings: 0
   },
@@ -26,7 +34,7 @@ const staticLecturers = [
     name: "Doc Munyaradzi Gwisai",
     university: "UZ",
     modules: ["Foundations of Zimbabwean Law"],
-    sprite: "images/sprites/gwisai.png",
+    sprite: fixPath("assets/sprites/gwisai.png"),
     avgRating: 0,
     numRatings: 0
   },
@@ -35,7 +43,7 @@ const staticLecturers = [
     name: "Fadzai Mahere",
     university: "UZ",
     modules: ["Family Law"],
-    sprite: "images/sprites/mahere.png",
+    sprite: fixPath("assets/sprites/mahere.png"),
     avgRating: 0,
     numRatings: 0
   },
@@ -44,7 +52,7 @@ const staticLecturers = [
     name: "Sheillah Kanyangarara",
     university: "UZ",
     modules: ["Criminal Procedure"],
-    sprite: "images/sprites/kanyangarara.png",
+    sprite: fixPath("assets/sprites/kanyangarara.png"),
     avgRating: 0,
     numRatings: 0
   }
@@ -136,7 +144,7 @@ function normalise(id, data) {
     name: data.name,
     university: data.university || "UZ",
     modules: data.modules || (data.module ? [data.module] : []),
-    sprite: data.sprite || "images/sprites/placeholder.png",
+    sprite: fixPath(data.sprite || "assets/sprites/placeholder.png"),
     avgRating: data.avgRating || 0,
     numRatings: data.numRatings || 0
   };
