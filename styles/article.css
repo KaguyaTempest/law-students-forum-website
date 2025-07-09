@@ -1,8 +1,8 @@
 /* --------------------------------------------------
-   LSIF • Article layout & prose
+   LSIF • Article Layout & Styling (Semantic Version)
    -------------------------------------------------- */
 
-/* 1️⃣ Variable fallbacks (remove if already defined) */
+/* 🌐 Variables (Fallbacks) */
 :root {
   --primary-color: #1e3a8a;
   --accent-color:  #f59e0b;
@@ -14,7 +14,6 @@
   --shadow-md:     0 6px 12px rgba(0,0,0,.08);
 }
 
-/* Dark‑mode overrides */
 @media (prefers-color-scheme: dark) {
   :root {
     --bg-color:      #111827;
@@ -25,92 +24,120 @@
   }
 }
 
-/* 2️⃣ Page wrapper */
+/* 🌙 Page Wrapper */
 body.article-page {
   background: var(--bg-color);
   color: var(--text-color);
+  font-family: system-ui, sans-serif;
+  line-height: 1.7;
 }
 
-/* 3️⃣ Main article card */
+/* 📰 Article Main Block */
 .article-main {
   background: var(--surface-color);
   box-shadow: var(--shadow-sm);
   border-radius: var(--radius-lg);
   padding: 2.5rem 2rem 3rem;
   margin: 3rem auto 4rem;
-  max-width: 48rem;           /* ≈ 768 px */
-  line-height: 1.7;
+  max-width: 48rem; /* ~768px */
   font-size: 1rem;
 }
 
-/* 4️⃣ Heading hierarchy */
-.article-main h1 {
-  font-size: 2rem;
-  font-weight: 700;
-  margin: 0 0 0.75rem;
-  color: var(--primary-color);
-}
-.article-main h2 {
-  font-size: 1.5rem;
-  font-weight: 600;
-  margin: 2.25rem 0 0.75rem;
-}
-.article-main h3 {
-  font-size: 1.25rem;
-  font-weight: 600;
-  margin: 1.75rem 0 0.5rem;
-}
-
-/* 5️⃣ Banner / cover */
-.article-main img {
+/* 🖼️ Cover Image */
+.article-cover {
   width: 100%;
   height: auto;
+  object-fit: cover;
   border-radius: var(--radius-lg);
   margin-bottom: 1.5rem;
-  object-fit: cover;
 }
 
-/* 6️⃣ Meta */
+/* 📝 Headings */
+.article-title {
+  font-size: 2rem;
+  font-weight: 700;
+  margin-bottom: 0.75rem;
+  color: var(--primary-color);
+}
+
+.article-subtitle {
+  font-size: 1.125rem;
+  font-style: italic;
+  margin-bottom: 1.5rem;
+}
+
 .article-meta {
   font-size: 0.95rem;
   opacity: 0.75;
   margin-bottom: 2rem;
 }
 
-/* 7️⃣ Prose tweaks */
+.article-main h2 {
+  font-size: 1.5rem;
+  font-weight: 600;
+  margin: 2.25rem 0 0.75rem;
+}
+
+.article-main h3 {
+  font-size: 1.25rem;
+  font-weight: 600;
+  margin: 1.75rem 0 0.5rem;
+}
+
+/* 🧾 Paragraphs & Lists */
 .article-main p {
   margin-bottom: 1.25rem;
 }
+
 .article-main ul,
 .article-main ol {
   padding-left: 1.5rem;
   margin-bottom: 1.25rem;
 }
+
 .article-main li {
   margin-bottom: 0.5rem;
 }
 
-/* 8️⃣ CTA links inside prose */
+/* 🔗 Inline Links */
 .article-main a {
   color: var(--accent-color);
   font-weight: 600;
   text-decoration: underline;
 }
+
 .article-main a:hover {
   text-decoration-thickness: 2px;
 }
 
-/* 9️⃣ Footnotes / references */
-.references {
+/* 📚 References */
+.reference {
   font-size: 0.9rem;
   opacity: 0.85;
+  margin-bottom: 0.5rem;
 }
 
+/* 🦶 Footer */
+.site-footer {
+  text-align: center;
+  font-size: 0.85rem;
+  opacity: 0.7;
+  padding: 2rem 0;
+}
+
+/* 🗨️ Comments */
+.comments-section {
+  max-width: 48rem;
+  margin: 0 auto;
+  padding: 3rem 2rem;
+}
+
+/* 📱 Responsive */
 @media (max-width: 640px) {
   .article-main {
     padding: 2rem 1.25rem 2.5rem;
   }
-  .article-main h1 {
+  .article-title {
     font-size: 1.75rem;
   }
 }
