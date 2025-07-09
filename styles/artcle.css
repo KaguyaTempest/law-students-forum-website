@@ -1,91 +1,118 @@
-/* article.css */
+/* --------------------------------------------------
+   LSIF • Article layout & prose
+   -------------------------------------------------- */
 
-.article-page-main {
-    display: grid;
-    grid-template-columns: 2fr 1fr; /* Main content takes 2/3, sidebar 1/3 */
-    gap: 30px;
-    padding: 20px;
-    max-width: 1200px;
-    margin: 0 auto;
+/* 1️⃣ Variable fallbacks (remove if already defined) */
+:root {
+  --primary-color: #1e3a8a;
+  --accent-color:  #f59e0b;
+  --bg-color:      #f9fafb;
+  --surface-color: #ffffff;
+  --text-color:    #1f2937;
+  --radius-lg:     1rem;
+  --shadow-sm:     0 1px 3px rgba(0,0,0,.06);
+  --shadow-md:     0 6px 12px rgba(0,0,0,.08);
 }
 
-.article-content {
-    background-color: #fff;
-    padding: 30px;
-    border-radius: 8px;
-    box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.1);
+/* Dark‑mode overrides */
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg-color:      #111827;
+    --surface-color: #1f2937;
+    --text-color:    #f3f4f6;
+    --shadow-sm:     0 1px 3px rgba(0,0,0,.6);
+    --shadow-md:     0 6px 12px rgba(0,0,0,.7);
+  }
 }
 
-.article-title {
-    color: #333;
-    margin-top: 0;
-    margin-bottom: 15px;
-    font-size: 2.2em;
+/* 2️⃣ Page wrapper */
+body.article-page {
+  background: var(--bg-color);
+  color: var(--text-color);
 }
 
+/* 3️⃣ Main article card */
+.article-main {
+  background: var(--surface-color);
+  box-shadow: var(--shadow-sm);
+  border-radius: var(--radius-lg);
+  padding: 2.5rem 2rem 3rem;
+  margin: 3rem auto 4rem;
+  max-width: 48rem;           /* ≈ 768 px */
+  line-height: 1.7;
+  font-size: 1rem;
+}
+
+/* 4️⃣ Heading hierarchy */
+.article-main h1 {
+  font-size: 2rem;
+  font-weight: 700;
+  margin: 0 0 0.75rem;
+  color: var(--primary-color);
+}
+.article-main h2 {
+  font-size: 1.5rem;
+  font-weight: 600;
+  margin: 2.25rem 0 0.75rem;
+}
+.article-main h3 {
+  font-size: 1.25rem;
+  font-weight: 600;
+  margin: 1.75rem 0 0.5rem;
+}
+
+/* 5️⃣ Banner / cover */
+.article-main img {
+  width: 100%;
+  height: auto;
+  border-radius: var(--radius-lg);
+  margin-bottom: 1.5rem;
+  object-fit: cover;
+}
+
+/* 6️⃣ Meta */
 .article-meta {
-    color: #777;
-    font-size: 0.9em;
-    margin-bottom: 20px;
+  font-size: 0.95rem;
+  opacity: 0.75;
+  margin-bottom: 2rem;
 }
 
-.article-meta span {
-    margin-right: 15px;
+/* 7️⃣ Prose tweaks */
+.article-main p {
+  margin-bottom: 1.25rem;
+}
+.article-main ul,
+.article-main ol {
+  padding-left: 1.5rem;
+  margin-bottom: 1.25rem;
+}
+.article-main li {
+  margin-bottom: 0.5rem;
 }
 
-.article-banner {
-    width: 100%;
-    height: auto;
-    border-radius: 5px;
-    margin-bottom: 25px;
-    display: block;
+/* 8️⃣ CTA links inside prose */
+.article-main a {
+  color: var(--accent-color);
+  font-weight: 600;
+  text-decoration: underline;
+}
+.article-main a:hover {
+  text-decoration-thickness: 2px;
 }
 
-.article-body {
-    color: #555;
-    line-height: 1.7;
-    font-size: 1.1em;
-    margin-bottom: 30px;
+/* 9️⃣ Footnotes / references */
+.references {
+  font-size: 0.9rem;
+  opacity: 0.85;
 }
 
-.article-body p {
-    margin-bottom: 15px;
-}
-
-.article-body h2,
-.article-body h3 {
-    color: #333;
-    margin-top: 25px;
-    margin-bottom: 10px;
-}
-
-.article-body ul,
-.article-body ol {
-    padding-left: 25px;
-    margin-bottom: 15px;
-}
-
-.article-body li {
-    margin-bottom: 8px;
-}
-
-.article-topics {
-    color: #777;
-    font-size: 0.9em;
-    margin-bottom: 20px;
-}
-
-.article-topics span {
-    font-weight: bold;
-    margin-right: 5px;
-}
-
-.article-topics span:not(:first-child) {
-    background-color: #f0f0f0;
-    color: #555;
-    padding: 5px 8px;
-    border-radius: 3px;
-    margin-left: 5px;
+@media (max-width: 640px) {
+  .article-main {
+    padding: 2rem 1.25rem 2.5rem;
+  }
+  .article-main h1 {
+    font-size: 1.75rem;
+  }
 }
 
 /* Comment Section */

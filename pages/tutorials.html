@@ -2,11 +2,12 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <base href="/law-students-forum-website/" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Tutorials - LAW STUDENTS INTELLECTUAL FORUM</title>
-    <link rel="icon" href="favicon.ico" type="image/x-icon">
-    <link rel="stylesheet" href="style.css">
-    <link rel="stylesheet" href="tutorials.css">
+    <link rel="icon" href="/assets/favicon.ico" type="image/x-icon">
+    <link rel="stylesheet" href="/styles/style.css">
+    <link rel="stylesheet" href="/pages/tutorials.css">
 </head>
 <body>
     <div id="header-placeholder"></div>
@@ -29,7 +30,7 @@
                 <div class="tutorial-icon">📝</div>
                 <h3>Crafting Persuasive Legal Arguments</h3>
                 <p>Improve your skills in constructing compelling written and oral arguments.</p>
-                <a href="pages/crafting-persuasive-arguments.html">View Tutorial</a>
+                <a href="/pages/crafting-persuasive-arguments.html">View Tutorial</a>
             </div>
 
             <div class="tutorial-card">
@@ -65,14 +66,6 @@
     <footer>
         <p>&copy; 2025 LAW STUDENTS INTELLECTUAL FORUM</p>
     </footer>
-    <script>
-    // Load the header dynamically
-      fetch('header.html')
-        .then(response => response.text())
-        .then(html => {
-          document.getElementById('header-placeholder').innerHTML = html;
-        })
-        .catch(err => console.error('Failed to load header:', err));
-    </script>
+    <script type="module" src="..scripts/load-header.js"></script>
 </body>
 </html>
