@@ -1,3 +1,5 @@
+// auth-modal.js
+
 document.addEventListener("header:loaded", () => {
   const modal = document.querySelector("#auth-modal");
   const openButtons = document.querySelectorAll(".open-auth-modal");
@@ -8,17 +10,18 @@ document.addEventListener("header:loaded", () => {
   const showLoginBtn = modal.querySelector("#show-login");
   const showSignupBtn = modal.querySelector("#show-signup");
 
-  // Open modal
+  // Open modal and default to login/signup
   openButtons.forEach((btn) => {
     btn.addEventListener("click", () => {
       modal.classList.remove("hidden");
       modal.classList.add("show");
 
-      // Default to login view
-      loginContainer.classList.add("active");
-      signupContainer.classList.remove("active");
-      showLoginBtn.classList.add("active");
-      showSignupBtn.classList.remove("active");
+      // Automatically switch to correct tab
+      if (btn.id === "signup-btn") {
+        showSignupBtn.click();
+      } else {
+        showLoginBtn.click();
+      }
     });
   });
 
@@ -28,7 +31,7 @@ document.addEventListener("header:loaded", () => {
     modal.classList.add("hidden");
   });
 
-  // Switch between login and signup
+  // Switch between login and signup views
   showLoginBtn.addEventListener("click", () => {
     loginContainer.classList.add("active");
     signupContainer.classList.remove("active");

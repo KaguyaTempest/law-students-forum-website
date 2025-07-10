@@ -106,27 +106,49 @@ nav ul li.about-link {
   display: block; /* Or use flex/grid depending on your layout */
 }
 
+/* Fix modal layout */
 .auth-modal {
   position: fixed;
   top: 0; left: 0;
   width: 100%;
   height: 100%;
-  background: rgba(0,0,0,0.5);
+  background: rgba(0, 0, 0, 0.6);
   display: flex;
   align-items: center;
   justify-content: center;
   z-index: 1000;
+  padding: 20px;
 }
 
+/* Modal card styling */
 .auth-card {
-  background: white;
-  padding: 2rem;
-  border-radius: 10px;
-  width: 90%;
-  max-width: 420px;
-  box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+  background: #fff;
+  padding: 30px;
+  border-radius: 12px;
+  width: 100%;
+  max-width: 460px;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.25);
+  display: flex;
+  flex-direction: column;
+  position: relative;
 }
 
+/* X button styling */
+.close-auth-modal {
+  position: absolute;
+  top: 14px;
+  right: 14px;
+  background: transparent;
+  border: none;
+  font-size: 1.5rem;
+  color: #4f606d;
+  cursor: pointer;
+  transition: color 0.3s ease;
+}
+
+.close-auth-modal:hover {
+  color: #ff3333;
+}
 
 /* User Panel (shows after login) */
 .user-panel {
