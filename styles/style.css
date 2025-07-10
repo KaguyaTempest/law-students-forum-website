@@ -98,6 +98,14 @@ nav ul li.about-link {
     background-color: #0056b3;
     transform: scale(1.05);
 }
+.auth-modal.hidden {
+  display: none;
+}
+
+.auth-modal.show {
+  display: block; /* Or use flex/grid depending on your layout */
+}
+
 
 /* User Panel (shows after login) */
 .user-panel {

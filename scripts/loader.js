@@ -4,7 +4,7 @@ const messageEl  = document.getElementById('splash-message');
 
 if (splash && messageEl) {
   /* Fun one‑liners */
-  const messages = [
+  const messages = [  
     
     "Consulting Athena’s scrolls…",
     "Charging KT Industries credit card…",
