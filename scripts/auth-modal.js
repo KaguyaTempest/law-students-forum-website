@@ -1,5 +1,3 @@
-// auth-modal.js
-
 document.addEventListener("header:loaded", () => {
   const modal = document.querySelector("#auth-modal");
   const openButtons = document.querySelectorAll(".open-auth-modal");
@@ -15,6 +13,12 @@ document.addEventListener("header:loaded", () => {
     btn.addEventListener("click", () => {
       modal.classList.remove("hidden");
       modal.classList.add("show");
+
+      // Default to login view
+      loginContainer.classList.add("active");
+      signupContainer.classList.remove("active");
+      showLoginBtn.classList.add("active");
+      showSignupBtn.classList.remove("active");
     });
   });
 
@@ -26,15 +30,15 @@ document.addEventListener("header:loaded", () => {
 
   // Switch between login and signup
   showLoginBtn.addEventListener("click", () => {
-    loginContainer.classList.remove("hidden");
-    signupContainer.classList.add("hidden");
+    loginContainer.classList.add("active");
+    signupContainer.classList.remove("active");
     showLoginBtn.classList.add("active");
     showSignupBtn.classList.remove("active");
   });
 
   showSignupBtn.addEventListener("click", () => {
-    signupContainer.classList.remove("hidden");
-    loginContainer.classList.add("hidden");
+    signupContainer.classList.add("active");
+    loginContainer.classList.remove("active");
     showSignupBtn.classList.add("active");
     showLoginBtn.classList.remove("active");
   });
