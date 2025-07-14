@@ -36,9 +36,10 @@ function rotateMessage() {
 function hideSplash() {
   const splashScreen = document.getElementById('splash-screen');
   splashScreen.style.opacity = 0;
-  
+
   setTimeout(() => {
     splashScreen.style.display = 'none';
+    document.body.style.overflow = 'auto'; // <== moved here
   }, 500);
 }
 
