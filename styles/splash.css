@@ -16,8 +16,8 @@ body {
   position: fixed;
   top: 0;
   left: 0;
-  width: 100%;
-  height: 100%;
+  width: 100vw;
+  height: 100vh;
   background: #000;
   display: flex;
   flex-direction: column;
@@ -26,6 +26,7 @@ body {
   z-index: 9999;
   opacity: 1;
   transition: opacity 0.5s ease;
+  pointer-events: all;
 }
 
 .logo-container {
@@ -85,7 +86,7 @@ body {
 .loading-bar-container {
   width: 400px;
   height: 3px;
-  background: rgba(255, 255, 255, 0.1);
+  background: rgba(255, 255, 255, 0.2); /* Slightly stronger */
   border-radius: 2px;
   overflow: hidden;
   margin-top: 20px;
@@ -94,7 +95,7 @@ body {
 .loading-bar {
   height: 100%;
   width: 0;
-  background: linear-gradient(90deg, #4e54c8, #8f94fb);
+  background: linear-gradient(90deg, #64b4ff, #3a86ff);
   border-radius: 2px;
   transition: width 0.3s ease;
 }
@@ -118,6 +119,7 @@ body {
   align-items: center;
   gap: 8px;
   transition: all 0.3s ease;
+  text-shadow: 0 0 4px rgba(100, 180, 255, 0.1);
 }
 
 .skip-btn {
