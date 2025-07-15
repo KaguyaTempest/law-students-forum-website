@@ -31,18 +31,24 @@ document.addEventListener("header:loaded", () => {
     modal.classList.add("hidden");
   });
 
-  // Switch between login and signup views
-  showLoginBtn.addEventListener("click", () => {
-    loginContainer.classList.add("active");
-    signupContainer.classList.remove("active");
-    showLoginBtn.classList.add("active");
-    showSignupBtn.classList.remove("active");
-  });
+ // Switch between login and signup views
+showLoginBtn.addEventListener("click", () => {
+  loginContainer.classList.add("active");
+  loginContainer.classList.remove("hidden");
+  signupContainer.classList.add("hidden");
+  signupContainer.classList.remove("active");
 
-  showSignupBtn.addEventListener("click", () => {
-    signupContainer.classList.add("active");
-    loginContainer.classList.remove("active");
-    showSignupBtn.classList.add("active");
-    showLoginBtn.classList.remove("active");
-  });
+  showLoginBtn.classList.add("active");
+  showSignupBtn.classList.remove("active");
 });
+
+showSignupBtn.addEventListener("click", () => {
+  signupContainer.classList.add("active");
+  signupContainer.classList.remove("hidden");
+  loginContainer.classList.add("hidden");
+  loginContainer.classList.remove("active");
+
+  showSignupBtn.classList.add("active");
+  showLoginBtn.classList.remove("active");
+});
+  });
