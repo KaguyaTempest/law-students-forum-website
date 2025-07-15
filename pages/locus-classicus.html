@@ -4,11 +4,15 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
     <title>Locus Classicus</title>
-    <link rel="stylesheet" href="/law-students-forum-website/styles/style.css">
-    <link rel="stylesheet" href="/law-students-forum-website/styles/locus-classicus.css">
+    <link rel="icon" href="assets/favicon.ico" type="image/x-icon"/>
+    <link rel="stylesheet" href="/law-students-forum-website/styles/style.css"/>
+    <link rel="stylesheet" href="/law-students-forum-website/styles/locus-classicus.css"/>
 
 </head>
 <body>
+
+    <div id="header-placeholder"></div>
+
     <main class="locus-main">
         <section class="hero">
             <h1>🎙️ Locus Classicus</h1>
@@ -34,8 +38,16 @@
                     Your browser does not support the audio element.
                 </audio>
             </div>
-
-            <!-- Add more audio-card sections as needed -->
+            
+            <div class="audio-card">
+                <h3>S v Banana (2000)</h3>
+                <p>By C. Chimhanda – A critical narration of the former president’s trial and its implications on public justice.</p>
+                <audio controls>
+                <source src="../audio/s-v-banana.mp3" type="audio/mpeg">
+                Your browser does not support the audio element.
+            </audio>
+        </div>
+    <!-- Add more audio-card sections as needed -->
         </section>
     </main>
     <script type="module" src="/law-students-forum-website/scripts/load-header.js"></script>
