@@ -217,7 +217,7 @@ function handleWrongGuess(isAutomatic) {
         "The court awaits your answer!",
         "Justice hangs in the balance!",
         "One more mistake, and it's curtains!",
-        "This case is almost closed...",
+        "All rise for sentencing...",
         "Guilty! The verdict is in!" // For loss state
     ];
     taglineElement.textContent = taglines[mistakeCount];
@@ -252,16 +252,17 @@ function endGame(win, message) {
     });
 
     if (!win) {
+        judgeImage.src = "/law-students-forum-website/assets/images/judge_slam.png"; // **CHANGED: Change judge sprite on loss**
         judgeGavel.classList.add('slam'); // Trigger gavel slam animation
     }
 
     setTimeout(() => {
         alert(message);
         judgeGavel.classList.remove('slam'); // Reset gavel for next round
+        judgeImage.src = "/law-students-forum-website/assets/images/judge_idle.png"; // **CHANGED: Reset judge sprite for next game**
         window.location.reload(); // Reload to difficulty screen
     }, 1500); // Wait for gavel animation (0.4s) + a little extra before reload
 }
-
 // === Event Listeners ===
 difficultyButtonsContainer.addEventListener('click', handleDifficultySelection);
 

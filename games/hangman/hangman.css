@@ -137,70 +137,72 @@ h1 {
   padding-top: 20px; /* Adjust if needed */
 }
 
-/* --- Judge and Gavel Styles --- */
+/* ... (previous general styles for body, game-wrapper, h1, etc.) ... */
+
+/* --- Judge and Gavel Styles (keep as is from previous discussion) --- */
 #judge-container {
   position: relative;
-  width: 150px; /* Adjust based on your judge image size */
-  height: 200px; /* Adjust based on your judge image size */
+  width: 150px;
+  height: 200px;
   margin-top: 20px;
 }
 
 #judge-image {
   width: 100%;
   height: 100%;
-  object-fit: contain; /* Ensure image fits well */
+  object-fit: contain;
   position: absolute;
-  bottom: 0; /* Align judge to the bottom of its container */
+  bottom: 0;
   left: 0;
+  image-rendering: pixelated;
+  image-rendering: -moz-crisp-edges;
+  image-rendering: crisp-edges;
 }
 
 .gavel {
   position: absolute;
-  bottom: 0; /* Start at the bottom, near the judge's hand */
-  right: 0; /* Position relative to judge */
-  width: 60px; /* Size of the gavel */
+  bottom: 0;
+  right: 0;
+  width: 60px;
   height: 60px;
-  background-color: #8b4513; /* Brown for wood */
+  background-color: #8b4513;
   border-radius: 5px;
-  transform-origin: bottom right; /* Rotate around the handle */
-  transform: rotate(0deg); /* Initial state */
-  transition: transform 0.1s ease-out; /* Smooth transition for slam */
+  transform-origin: bottom right;
+  transform: rotate(0deg);
+  transition: transform 0.1s ease-out;
+  border: 2px solid #333;
 }
 
 .gavel::before {
   content: '';
   position: absolute;
   top: 50%;
-  left: -20px; /* Position the head of the gavel */
+  left: -20px;
   transform: translateY(-50%);
   width: 40px;
   height: 25px;
   background-color: #8b4513;
   border-radius: 5px;
-}
-
-/* Gavel Slam Animation */
-.gavel.slam {
-  animation: gavelSlam 0.4s ease-out forwards;
+  border: 2px solid #333;
 }
 
 @keyframes gavelSlam {
   0% { transform: rotate(0deg); }
-  25% { transform: rotate(45deg); } /* Lift up */
-  50% { transform: rotate(-30deg); } /* Slam down */
-  75% { transform: rotate(10deg); } /* Rebound slightly */
-  100% { transform: rotate(0deg); } /* Return to original */
+  25% { transform: rotate(45deg); }
+  50% { transform: rotate(-30deg); }
+  75% { transform: rotate(10deg); }
+  100% { transform: rotate(0deg); }
 }
 
-/* --- Hangman Drawing (retained from previous) --- */
+/* --- Hangman Drawing --- */
 .hangman-figure {
   position: relative;
-  width: 200px;
-  height: 250px;
+  width: 200px; /* Adjust as needed */
+  height: 250px; /* Adjust as needed */
   margin: 20px auto;
-  border-bottom: 4px solid #000;
-  /* Ensure overflow is visible if parts go slightly outside bounds, though usually not an issue */
-  overflow: visible;
+  border-bottom: 4px solid #000; /* Base of the gallows */
+  /* Remove overflow: visible if you prefer parts not going outside the drawing area.
+     Keep it if parts like arms/legs might slightly extend. */
 }
 
 /* Gallows vertical pole */
@@ -213,6 +215,9 @@ h1 {
   height: 200px;
   background-color: #000;
   transform-origin: bottom;
+  /* Add rounded corner to the top of the pole */
+  border-top-left-radius: 2px;
+  border-top-right-radius: 2px;
 }
 
 /* Gallows horizontal beam */
@@ -224,6 +229,9 @@ h1 {
   width: 80px;
   height: 4px;
   background-color: #000;
+  /* Add rounded corner to the end of the beam */
+  border-top-right-radius: 2px;
+  border-bottom-right-radius: 2px;
 }
 
 /* Rope */
@@ -234,15 +242,18 @@ h1 {
   width: 4px;
   height: 30px;
   background-color: #000;
+  /* Add a slight curve or rounded ends to the rope if desired */
+  border-bottom-left-radius: 2px;
+  border-bottom-right-radius: 2px;
 }
 
 /* --- Body Parts --- */
-/* Shared styles for body parts (hidden by default) */
 .hangman-figure .part {
   position: absolute;
   background-color: #000;
-  /* IMPORTANT: Initially hide all parts but only override on specific steps */
   display: none;
+  /* Add slight border-radius to all parts for a softer look */
+  border-radius: 2px;
 }
 
 /* Head */
@@ -256,56 +267,66 @@ h1 {
   background-color: transparent;
 }
 
-/* Body */
+/* Body (Torso) */
 .hangman-figure .body {
-  width: 4px;
+  width: 4px; /* Keep thin */
   height: 60px;
   top: 70px;
   left: 130px;
+  /* Make the body slightly wider or give it more shape */
+  width: 8px; /* Slightly wider body */
+  left: 128px; /* Re-center if width changes */
+  border-radius: 4px; /* More rounded body */
+}
+
+/* Arms and Legs - Make them slightly wider and more rounded */
+.hangman-figure .left-arm,
+.hangman-figure .right-arm,
+.hangman-figure .left-leg,
+.hangman-figure .right-leg {
+  width: 6px; /* Slightly wider limbs */
+  border-radius: 3px; /* Rounded limb ends */
 }
 
 /* Left Arm */
 .hangman-figure .left-arm {
-  width: 4px;
   height: 40px;
   top: 80px;
-  left: 130px;
+  left: 125px; /* Adjust left position due to wider body/arm */
   transform-origin: top center;
   transform: rotate(45deg);
 }
 
 /* Right Arm */
 .hangman-figure .right-arm {
-  width: 4px;
   height: 40px;
   top: 80px;
-  left: 130px;
+  left: 135px; /* Adjust left position due to wider body/arm */
   transform-origin: top center;
   transform: rotate(-45deg);
 }
 
 /* Left Leg */
 .hangman-figure .left-leg {
-  width: 4px;
   height: 50px;
   top: 130px;
-  left: 130px;
+  left: 126px; /* Adjust left position due to wider body/leg */
   transform-origin: top center;
   transform: rotate(45deg);
 }
 
 /* Right Leg */
 .hangman-figure .right-leg {
-  width: 4px;
   height: 50px;
   top: 130px;
-  left: 130px;
+  left: 134px; /* Adjust left position due to wider body/leg */
   transform-origin: top center;
   transform: rotate(-45deg);
 }
 
-/* --- Step Classes to Reveal Body Parts --- */
-/* Corrected CSS to show parts cumulatively: */
+
+/* --- Step Classes to Reveal Body Parts (Progressive Display) --- */
+/* These remain crucial for cumulative display */
 .hangman-figure.step-1 .head,
 .hangman-figure.step-2 .head, .hangman-figure.step-2 .body,
 .hangman-figure.step-3 .head, .hangman-figure.step-3 .body, .hangman-figure.step-3 .left-arm,
@@ -314,7 +335,7 @@ h1 {
 .hangman-figure.step-6 .head, .hangman-figure.step-6 .body, .hangman-figure.step-6 .left-arm, .hangman-figure.step-6 .right-arm, .hangman-figure.step-6 .left-leg, .hangman-figure.step-6 .right-leg {
     display: block;
 }
-
+ 
 /* --- Game UI Elements (Word Display, Buttons, Hint) --- */
 .word-display {
   /* ... existing styles ... */
