@@ -3,100 +3,88 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Legal Quiz Arena | Law Students Intellectual Forum</title>
+  <title>Legal Quiz Arena | Law Students Intellectual Forum</title>
 
-  <!-- favicon + global styles -->
   <link rel="icon" href="/law-students-forum-website/assets/favicon.ico" type="image/x-icon" />
   <link rel="stylesheet" href="/law-students-forum-website/styles/style.css" />
 
-  <!-- Tailwind (utility classes via CDN) -->
   <link href="https://cdn.jsdelivr.net/npm/tailwindcss@3.4.1/dist/tailwind.min.css" rel="stylesheet" />
 
-  <!-- arena‑specific styles -->
-  <link rel="stylesheet" href="/law-students-forum-website/styles/quiz-arena.css" />
+  <link rel="stylesheet" href="/law-students-forum-website/styles/legal-quiz-arena.css" />
 </head>
 <body class="bg-gray-50 text-gray-800 min-h-screen flex flex-col">
 
-  <!-- Shared nav/header -->
   <div id="header-placeholder"></div>
 
-  <!-- HERO -->
   <header class="bg-indigo-700 text-white py-8 shadow-md">
     <div class="container mx-auto px-4 text-center">
-      <h1 class="text-4xl font-bold mb-2">Legal Quiz Arena</h1>
+      <h1 class="text-4xl font-bold mb-2">Legal Quiz Arena</h1>
       <p class="text-lg">Sharpen your legal skills while having fun – pick a challenge below.</p>
     </div>
   </header>
 
   <main class="flex-1 container mx-auto px-4 py-10">
-    <!-- Game selection grid -->
     <section class="game-cards grid gap-6 sm:grid-cols-2 lg:grid-cols-3" id="game-selection">
 
-      <!-- Lawyer's Crossword (coming soon) -->
-      <article class="game-card bg-white rounded-xl shadow hover:shadow-lg transition p-6 flex flex-col" data-game="crossword">
-        <h2 class="text-2xl font-semibold mb-2">Lawyer's Crossword</h2>
-        <p class="flex-1">Crack the clues, conquer the grid.</p>
-        <button class="play-btn btn-primary mt-4 w-full py-2 rounded bg-gray-400 text-white font-semibold cursor-not-allowed" disabled>
-          Coming Soon
-        </button>
-      </article>
-
-      <!-- Legal Sudoku (live) -->
-      <article class="game-card bg-white rounded-xl shadow hover:shadow-lg transition p-6 flex flex-col" data-game="sudoku">
+      <article class="game-card" data-game="hangman">
         <h2 class="text-2xl font-semibold mb-2">
-          <a href="/law-students-forum-website/games/sudoku/sudoku.html" class="hover:underline text-indigo-700">Legal Sudoku</a>
-        </h2>
-        <p class="flex-1">Order in the court… and in the boxes!</p>
-        <a href="/law-students-forum-website/games/sudoku/sudoku.html" class="play-btn btn-primary mt-4 w-full py-2 rounded bg-indigo-600 text-white font-semibold hover:bg-indigo-700 transition text-center">
-           Play Now
-        </a>
-      </article>
-
-      <!-- Trivia (coming soon) -->
-      <article class="game-card bg-white rounded-xl shadow hover:shadow-lg transition p-6 flex flex-col" data-game="trivia">
-        <h2 class="text-2xl font-semibold mb-2">Lawyer's Trivia</h2>
-        <p class="flex-1">Test your knowledge – objection, sustained!</p>
-        <button class="play-btn btn-primary mt-4 w-full py-2 rounded bg-gray-400 text-white font-semibold cursor-not-allowed" disabled>
-          Coming Soon
-        </button>
-      </article>
-
-      <!-- Word Search (coming soon) -->
-      <article class="game-card bg-white rounded-xl shadow hover:shadow-lg transition p-6 flex flex-col" data-game="word-search">
-        <h2 class="text-2xl font-semibold mb-2">Legal Word Search</h2>
-        <p class="flex-1">Find the missing precedents.</p>
-        <button class="play-btn btn-primary mt-4 w-full py-2 rounded bg-gray-400 text-white font-semibold cursor-not-allowed" disabled>
-          Coming Soon
-        </button>
-      </article>
-
-      <!-- Battleship (coming soon) -->
-      <article class="game-card bg-white rounded-xl shadow hover:shadow-lg transition p-6 flex flex-col" data-game="battleship">
-        <h2 class="text-2xl font-semibold mb-2">Legal Battleship</h2>
-        <p class="flex-1">Sink opposing arguments in classic style.</p>
-        <button class="play-btn btn-primary mt-4 w-full py-2 rounded bg-gray-400 text-white font-semibold cursor-not-allowed" disabled>
-          Coming Soon
-        </button>
-      </article>
-    </section>
-      <!-- Legal Hangman (live) -->
-      <article class="game-card bg-white rounded-xl shadow hover:shadow-lg transition p-6 flex flex-col" data-game="hangman">
-        <h2 class="text-2xl font-semibold mb-2">
-        <a href="/law-students-forum-website/games/hangman/hangman.html" class="hover:underline text-indigo-700">Legal Hangman</a>
+          <a href="/law-students-forum-website/games/hangman/hangman.html" class="hover:underline">Legal Hangman</a>
         </h2>
         <p class="flex-1">Guess the legal term before the gavel drops!</p>
-        <a href="/law-students-forum-website/games/hangman/hangman.html" class="play-btn btn-primary mt-4 w-full py-2 rounded bg-indigo-600 text-white font-semibold hover:bg-indigo-700 transition text-center">
+        <a href="/law-students-forum-website/games/hangman/hangman.html" class="play-btn">
           Play Now
         </a>
       </article>
 
+      <article class="game-card" data-game="sudoku">
+        <h2 class="text-2xl font-semibold mb-2">
+          <a href="/law-students-forum-website/games/sudoku/sudoku.html" class="hover:underline">Legal Sudoku</a>
+        </h2>
+        <p class="flex-1">Order in the court… and in the boxes!</p>
+        <a href="/law-students-forum-website/games/sudoku/sudoku.html" class="play-btn">
+          Play Now
+        </a>
+      </article>
+
+      <article class="game-card coming-soon" data-game="crossword">
+        <h2 class="text-2xl font-semibold mb-2">Lawyer's Crossword</h2>
+        <p class="flex-1">Crack the clues, conquer the grid.</p>
+        <button class="play-btn" disabled>
+          Coming Soon
+        </button>
+      </article>
+
+      <article class="game-card coming-soon" data-game="trivia">
+        <h2 class="text-2xl font-semibold mb-2">Lawyer's Trivia</h2>
+        <p class="flex-1">Test your knowledge – objection, sustained!</p>
+        <button class="play-btn" disabled>
+          Coming Soon
+        </button>
+      </article>
+
+      <article class="game-card coming-soon" data-game="word-search">
+        <h2 class="text-2xl font-semibold mb-2">Legal Word Search</h2>
+        <p class="flex-1">Find the missing precedents.</p>
+        <button class="play-btn" disabled>
+          Coming Soon
+        </button>
+      </article>
+
+      <article class="game-card coming-soon" data-game="battleship">
+        <h2 class="text-2xl font-semibold mb-2">Legal Battleship</h2>
+        <p class="flex-1">Sink opposing arguments in classic style.</p>
+        <button class="play-btn" disabled>
+          Coming Soon
+        </button>
+      </article>
+
+    </section>
   </main>
 
   <footer class="bg-gray-100 py-4 text-center text-sm text-gray-600">
-    © 2025 Law Students Intellectual Forum
+    © 2025 Law Students Intellectual Forum
   </footer>
 
-  <!-- scripts -->
   <script type="module" src="/law-students-forum-website/scripts/load-header.js"></script>
   <script type="module" src="/law-students-forum-website/scripts/auth-modal.js"></script>
   <script type="module" src="/law-students-forum-website/scripts/loader.js"></script>

@@ -1,0 +1,97 @@
+/* legal-quiz-arena.css */
+
+/* --- Game Card Base Styles --- */
+.game-card {
+  background-color: #fff;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+  transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+  border: 1px solid #e2e8f0; /* Light border */
+}
+
+.game-card:hover {
+  transform: translateY(-5px); /* Lift effect on hover */
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.12); /* Stronger shadow on hover */
+}
+
+.game-card h2 {
+  color: #333; /* Darker heading color */
+  margin-bottom: 8px;
+}
+
+.game-card h2 a {
+  color: #4f46e5; /* Indigo for links */
+  text-decoration: none;
+}
+
+.game-card h2 a:hover {
+  text-decoration: underline;
+}
+
+.game-card p {
+  flex: 1; /* Allows description to take up available space */
+  color: #666;
+  margin-bottom: 20px;
+  line-height: 1.6;
+}
+
+/* --- Play Button Styles --- */
+.play-btn {
+  display: block; /* Make anchor act like a block button */
+  width: 100%;
+  padding: 12px 20px;
+  border-radius: 8px;
+  font-weight: 600;
+  text-align: center;
+  text-decoration: none; /* Remove underline for anchor buttons */
+  transition: background-color 0.2s ease, transform 0.1s ease;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.game-card:not(.coming-soon) .play-btn {
+  background-color: #4f46e5; /* Indigo for active play buttons */
+  color: #fff;
+}
+
+.game-card:not(.coming-soon) .play-btn:hover {
+  background-color: #635bff; /* Lighter indigo on hover */
+  transform: translateY(-1px);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+}
+
+.game-card:not(.coming-soon) .play-btn:active {
+  background-color: #3e33c6; /* Darker indigo on active */
+  transform: translateY(0);
+}
+
+/* --- Coming Soon Card Specific Styles --- */
+.game-card.coming-soon {
+  opacity: 0.7;
+  cursor: not-allowed;
+  pointer-events: none; /* Disables all mouse events */
+}
+
+.game-card.coming-soon:hover {
+  transform: none; /* No lift effect for coming soon */
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08); /* No stronger shadow */
+}
+
+.game-card.coming-soon .play-btn {
+  background-color: #cbd5e0; /* Gray background for disabled buttons */
+  color: #94a3b8; /* Lighter gray text */
+  cursor: not-allowed;
+}
+
+.game-card.coming-soon .play-btn:hover {
+  background-color: #cbd5e0; /* No change on hover */
+  transform: none;
+}
+
+.game-card.coming-soon h2 a {
+  color: #666; /* Gray out links too */
+  text-decoration: none;
+  pointer-events: none;
+}
