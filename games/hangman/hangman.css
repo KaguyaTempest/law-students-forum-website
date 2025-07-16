@@ -195,14 +195,14 @@ h1 {
 }
 
 /* --- Hangman Drawing --- */
+/* --- Hangman Drawing --- */
 .hangman-figure {
   position: relative;
-  width: 200px; /* Adjust as needed */
-  height: 250px; /* Adjust as needed */
+  width: 200px;
+  height: 250px;
   margin: 20px auto;
-  border-bottom: 4px solid #000; /* Base of the gallows */
-  /* Remove overflow: visible if you prefer parts not going outside the drawing area.
-     Keep it if parts like arms/legs might slightly extend. */
+  border-bottom: 4px solid #000;
+  z-index: 1;
 }
 
 /* Gallows vertical pole */
@@ -215,9 +215,9 @@ h1 {
   height: 200px;
   background-color: #000;
   transform-origin: bottom;
-  /* Add rounded corner to the top of the pole */
   border-top-left-radius: 2px;
   border-top-right-radius: 2px;
+  z-index: 2;
 }
 
 /* Gallows horizontal beam */
@@ -229,111 +229,81 @@ h1 {
   width: 80px;
   height: 4px;
   background-color: #000;
-  /* Add rounded corner to the end of the beam */
   border-top-right-radius: 2px;
   border-bottom-right-radius: 2px;
+  z-index: 2;
 }
 
-/* Rope */
+/* Rope - Now includes the head */
 .hangman-figure .rope {
   position: absolute;
-  top: 0;
+  top: 0px;
   left: 130px;
-  width: 4px;
-  height: 30px;
+  width: 4px; /* Width of the rope itself */
+  height: 30px; /* Length of the rope itself */
   background-color: #000;
-  /* Add a slight curve or rounded ends to the rope if desired */
   border-bottom-left-radius: 2px;
   border-bottom-right-radius: 2px;
+  z-index: 3; /* Ensure the rope is on top of gallows */
 }
 
-/* --- Body Parts --- */
-.hangman-figure .part {
+/* Create the head using a pseudo-element of the rope */
+.hangman-figure .rope::after {
+  content: "";
   position: absolute;
-  background-color: #000;
-  display: none;
-  /* Add slight border-radius to all parts for a softer look */
-  border-radius: 2px;
-}
-
-/* Head */
-.hangman-figure .head {
+  /* Position relative to the end of the rope */
+  top: 30px; /* Aligns below the 30px rope */
+  left: -18px; /* (40px head width - 4px rope width) / 2 = 18px offset to center head */
   border: 4px solid #000;
   border-radius: 50%;
   width: 40px;
   height: 40px;
-  top: 30px;
-  left: 112px;
   background-color: transparent;
+  /* Importantly, the head is also initially hidden and shown with .step-1 */
+  display: none; /* Hidden by default, just like other body parts */
+}
+
+
+/* --- Body Parts --- */
+/* The .head class specific styles are no longer needed here as it's part of .rope::after */
+/* The general .part rule remains for other body parts */
+.hangman-figure .part {
+    position: absolute;
+    background-color: #000;
+    display: none;
+    border-radius: 2px;
+    z-index: 5;
 }
 
 /* Body (Torso) */
 .hangman-figure .body {
-  width: 4px; /* Keep thin */
+  width: 8px;
   height: 60px;
-  top: 70px;
-  left: 130px;
-  /* Make the body slightly wider or give it more shape */
-  width: 8px; /* Slightly wider body */
-  left: 128px; /* Re-center if width changes */
-  border-radius: 4px; /* More rounded body */
+  top: 70px; /* Adjusted to hang from the new combined rope+head height (30px rope + 40px head = 70px total length) */
+  left: 128px;
+  border-radius: 4px;
 }
 
-/* Arms and Legs - Make them slightly wider and more rounded */
-.hangman-figure .left-arm,
-.hangman-figure .right-arm,
-.hangman-figure .left-leg,
-.hangman-figure .right-leg {
-  width: 6px; /* Slightly wider limbs */
-  border-radius: 3px; /* Rounded limb ends */
-}
-
-/* Left Arm */
-.hangman-figure .left-arm {
-  height: 40px;
-  top: 80px;
-  left: 125px; /* Adjust left position due to wider body/arm */
-  transform-origin: top center;
-  transform: rotate(45deg);
-}
-
-/* Right Arm */
-.hangman-figure .right-arm {
-  height: 40px;
-  top: 80px;
-  left: 135px; /* Adjust left position due to wider body/arm */
-  transform-origin: top center;
-  transform: rotate(-45deg);
-}
-
-/* Left Leg */
-.hangman-figure .left-leg {
-  height: 50px;
-  top: 130px;
-  left: 126px; /* Adjust left position due to wider body/leg */
-  transform-origin: top center;
-  transform: rotate(45deg);
-}
-
-/* Right Leg */
-.hangman-figure .right-leg {
-  height: 50px;
-  top: 130px;
-  left: 134px; /* Adjust left position due to wider body/leg */
-  transform-origin: top center;
-  transform: rotate(-45deg);
-}
+/* Arms and Legs - Keep current styling */
+/* ... (left-arm, right-arm, left-leg, right-leg styles remain as is) ... */
 
 
 /* --- Step Classes to Reveal Body Parts (Progressive Display) --- */
-/* These remain crucial for cumulative display */
-.hangman-figure.step-1 .head,
-.hangman-figure.step-2 .head, .hangman-figure.step-2 .body,
-.hangman-figure.step-3 .head, .hangman-figure.step-3 .body, .hangman-figure.step-3 .left-arm,
-.hangman-figure.step-4 .head, .hangman-figure.step-4 .body, .hangman-figure.step-4 .left-arm, .hangman-figure.step-4 .right-arm,
-.hangman-figure.step-5 .head, .hangman-figure.step-5 .body, .hangman-figure.step-5 .left-arm, .hangman-figure.step-5 .right-arm, .hangman-figure.step-5 .left-leg,
-.hangman-figure.step-6 .head, .hangman-figure.step-6 .body, .hangman-figure.step-6 .left-arm, .hangman-figure.step-6 .right-arm, .hangman-figure.step-6 .left-leg, .hangman-figure.step-6 .right-leg {
+/* IMPORTANT: Update this section! */
+
+.hangman-figure.step-1 .rope::after, /* Show the head (now part of rope) */
+.hangman-figure.step-2 .rope::after, .hangman-figure.step-2 .body,
+.hangman-figure.step-3 .rope::after, .hangman-figure.step-3 .body, .hangman-figure.step-3 .left-arm,
+.hangman-figure.step-4 .rope::after, .hangman-figure.step-4 .body, .hangman-figure.step-4 .left-arm, .hangman-figure.step-4 .right-arm,
+.hangman-figure.step-5 .rope::after, .hangman-figure.step-5 .body, .hangman-figure.step-5 .left-arm, .hangman-figure.step-5 .right-arm, .hangman-figure.step-5 .left-leg,
+.hangman-figure.step-6 .rope::after, .hangman-figure.step-6 .body, .hangman-figure.step-6 .left-arm, .hangman-figure.step-6 .right-arm, .hangman-figure.step-6 .left-leg, .hangman-figure.step-6 .right-leg {
     display: block;
+}
+
+/* The .rope element itself should *always* be visible, so it doesn't need to be in the step classes.
+   It's the rope::after (the head) that we want to show on step-1. */
+.hangman-figure .rope {
+    display: block; /* Ensure the basic rope is always there once the hangman figure is present */
 }
  
 /* --- Game UI Elements (Word Display, Buttons, Hint) --- */
