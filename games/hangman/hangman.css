@@ -1,0 +1,418 @@
+/* General Body Styles */
+body {
+  font-family: Arial, sans-serif;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start; /* Align to the top, not center vertically */
+  min-height: 100vh; /* Use min-height to ensure it takes full viewport height */
+  margin: 0;
+  background-color: #f0f0f0;
+  color: #333;
+  padding: 20px; /* Add some padding around the content */
+  box-sizing: border-box; /* Include padding in element's total width and height */
+}
+
+.game-wrapper {
+  background-color: #fff;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  padding: 30px;
+  text-align: center;
+  max-width: 900px; /* Max width for the game container */
+  width: 100%; /* Make it responsive */
+  box-sizing: border-box;
+}
+
+h1 {
+  color: #5a2d80; /* A legal-themed color */
+  margin-bottom: 20px;
+  font-size: 2.5em;
+}
+
+/* --- Section Visibility --- */
+.game-section {
+  display: none;
+}
+
+.game-section.active {
+  display: block;
+}
+
+.game-section.hidden {
+    display: none;
+}
+
+/* --- Difficulty Screen Styles --- */
+#difficulty-screen h2 {
+  color: #333;
+  margin-bottom: 15px;
+  font-size: 1.8em;
+}
+
+#difficulty-screen p {
+  font-style: italic;
+  margin-bottom: 30px;
+  font-size: 1.1em;
+  color: #666;
+}
+
+.button-group {
+  display: flex;
+  flex-wrap: wrap; /* Allow buttons to wrap */
+  justify-content: center;
+  gap: 15px; /* Space between buttons */
+}
+
+.button-group button {
+  background-color: #5a2d80;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  padding: 12px 25px;
+  font-size: 1.1em;
+  cursor: pointer;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+  min-width: 150px; /* Ensure buttons have a minimum width */
+}
+
+.button-group button:hover {
+  background-color: #7b4ea3;
+  transform: translateY(-2px);
+}
+
+.button-group button:active {
+  background-color: #4a246b;
+  transform: translateY(0);
+}
+
+/* --- Main Game Screen Layout --- */
+#game-screen {
+  text-align: center;
+}
+
+#game-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 25px;
+  padding-bottom: 15px;
+  border-bottom: 1px solid #eee;
+}
+
+.tagline {
+  flex-grow: 1; /* Allow tagline to take available space */
+  font-size: 1.2em;
+  color: #888;
+  font-style: italic;
+  text-align: left;
+}
+
+.timer {
+  font-size: 1.5em;
+  font-weight: bold;
+  color: #d9534f; /* Red for urgency */
+}
+
+.main-game-area {
+  display: flex;
+  flex-direction: row; /* Default for larger screens */
+  justify-content: center;
+  align-items: flex-start;
+  gap: 40px; /* Space between visual and word/button areas */
+}
+
+.visual-area {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 20px;
+  flex-shrink: 0; /* Prevent visual area from shrinking */
+}
+
+.word-and-buttons-area {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  flex-grow: 1; /* Allow this area to grow */
+  padding-top: 20px; /* Adjust if needed */
+}
+
+/* --- Judge and Gavel Styles --- */
+#judge-container {
+  position: relative;
+  width: 150px; /* Adjust based on your judge image size */
+  height: 200px; /* Adjust based on your judge image size */
+  margin-top: 20px;
+}
+
+#judge-image {
+  width: 100%;
+  height: 100%;
+  object-fit: contain; /* Ensure image fits well */
+  position: absolute;
+  bottom: 0; /* Align judge to the bottom of its container */
+  left: 0;
+}
+
+.gavel {
+  position: absolute;
+  bottom: 0; /* Start at the bottom, near the judge's hand */
+  right: 0; /* Position relative to judge */
+  width: 60px; /* Size of the gavel */
+  height: 60px;
+  background-color: #8b4513; /* Brown for wood */
+  border-radius: 5px;
+  transform-origin: bottom right; /* Rotate around the handle */
+  transform: rotate(0deg); /* Initial state */
+  transition: transform 0.1s ease-out; /* Smooth transition for slam */
+}
+
+.gavel::before {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: -20px; /* Position the head of the gavel */
+  transform: translateY(-50%);
+  width: 40px;
+  height: 25px;
+  background-color: #8b4513;
+  border-radius: 5px;
+}
+
+/* Gavel Slam Animation */
+.gavel.slam {
+  animation: gavelSlam 0.4s ease-out forwards;
+}
+
+@keyframes gavelSlam {
+  0% { transform: rotate(0deg); }
+  25% { transform: rotate(45deg); } /* Lift up */
+  50% { transform: rotate(-30deg); } /* Slam down */
+  75% { transform: rotate(10deg); } /* Rebound slightly */
+  100% { transform: rotate(0deg); } /* Return to original */
+}
+
+/* --- Hangman Drawing (retained from previous) --- */
+.hangman-figure {
+  position: relative;
+  width: 200px;
+  height: 250px;
+  margin: 20px auto;
+  border-bottom: 4px solid #000;
+  /* Removed the linear-gradient backgrounds for gallows parts to use pseudo-elements/divs */
+}
+
+/* Gallows vertical pole */
+.hangman-figure::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 50px;
+  width: 4px;
+  height: 200px;
+  background-color: #000;
+  transform-origin: bottom;
+}
+
+/* Gallows horizontal beam */
+.hangman-figure::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 50px;
+  width: 80px;
+  height: 4px;
+  background-color: #000;
+}
+
+/* Rope */
+.hangman-figure .rope {
+  position: absolute;
+  top: 0;
+  left: 130px;
+  width: 4px;
+  height: 30px;
+  background-color: #000;
+}
+
+/* --- Body Parts --- */
+.hangman-figure .part {
+  position: absolute;
+  background-color: #000;
+  display: none;
+}
+
+.hangman-figure .head {
+  border: 4px solid #000;
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+  top: 30px;
+  left: 112px;
+  background-color: transparent;
+}
+
+.hangman-figure .body {
+  width: 4px;
+  height: 60px;
+  top: 70px;
+  left: 130px;
+}
+
+.hangman-figure .left-arm {
+  width: 4px;
+  height: 40px;
+  top: 80px;
+  left: 130px;
+  transform-origin: top center;
+  transform: rotate(45deg);
+}
+
+.hangman-figure .right-arm {
+  width: 4px;
+  height: 40px;
+  top: 80px;
+  left: 130px;
+  transform-origin: top center;
+  transform: rotate(-45deg);
+}
+
+.hangman-figure .left-leg {
+  width: 4px;
+  height: 50px;
+  top: 130px;
+  left: 130px;
+  transform-origin: top center;
+  transform: rotate(45deg);
+}
+
+.hangman-figure .right-leg {
+  width: 4px;
+  height: 50px;
+  top: 130px;
+  left: 130px;
+  transform-origin: top center;
+  transform: rotate(-45deg);
+}
+
+/* --- Step Classes to Reveal Body Parts --- */
+.hangman-figure.step-1 .head { display: block; }
+.hangman-figure.step-2 .body { display: block; }
+.hangman-figure.step-3 .left-arm { display: block; }
+.hangman-figure.step-4 .right-arm { display: block; }
+.hangman-figure.step-5 .left-leg { display: block; }
+.hangman-figure.step-6 .right-leg { display: block; }
+
+/* --- Game UI Elements (Word Display, Buttons, Hint) --- */
+.word-display {
+  margin-bottom: 25px;
+  font-size: 2.5em; /* Larger font for word */
+  font-family: 'Courier New', monospace; /* Monospace for word */
+  letter-spacing: 0.2em; /* Spacing for blanks */
+  font-weight: bold;
+  color: #333;
+}
+
+.letter-buttons {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(40px, 1fr)); /* Responsive grid */
+  gap: 8px;
+  max-width: 500px;
+  margin: 0 auto 25px auto;
+}
+
+.letter-buttons button {
+  background-color: #4CAF50; /* Green button */
+  color: white;
+  border: none;
+  border-radius: 5px;
+  padding: 10px 0; /* Adjust padding for height */
+  font-size: 1.1em;
+  cursor: pointer;
+  transition: background-color 0.2s ease, transform 0.1s ease;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+}
+
+.letter-buttons button:hover:not(:disabled) {
+  background-color: #45a049;
+  transform: translateY(-1px);
+}
+
+.letter-buttons button:disabled {
+  background-color: #ccc;
+  cursor: not-allowed;
+  opacity: 0.6;
+  box-shadow: none;
+}
+
+.theme-hint {
+  margin-top: 20px;
+  font-size: 0.95em;
+  min-height: 40px; /* Reserve space to prevent layout shift */
+}
+
+.theme-hint div {
+  margin-bottom: 5px;
+}
+
+.theme-hint .text-indigo-600 {
+  color: #4f46e5; /* Example indigo color */
+}
+
+.theme-hint .text-red-600 {
+  color: #dc2626; /* Example red color */
+}
+
+/* --- Responsive Adjustments --- */
+@media (max-width: 768px) {
+  h1 {
+    font-size: 2em;
+  }
+
+  #game-header {
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .tagline {
+    text-align: center;
+  }
+
+  .main-game-area {
+    flex-direction: column;
+    gap: 20px;
+    align-items: center; /* Center items when stacked */
+  }
+
+  .visual-area {
+    width: 100%; /* Take full width on smaller screens */
+  }
+
+  .word-and-buttons-area {
+    width: 100%;
+  }
+
+  .letter-buttons {
+    grid-template-columns: repeat(auto-fit, minmax(35px, 1fr)); /* More compact buttons */
+    max-width: 100%;
+  }
+}
+
+@media (max-width: 480px) {
+  .game-wrapper {
+    padding: 15px;
+  }
+
+  h1 {
+    font-size: 1.8em;
+  }
+
+  .button-group button {
+    font-size: 1em;
+    padding: 10px 20px;
+  }
+
+  .word-display {
+    font-size: 2em;
+  }
+}

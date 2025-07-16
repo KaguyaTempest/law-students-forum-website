@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Legal Hangman: Judge's Verdict</title>
+  <link rel="stylesheet" href="/law-students-forum-website/games/hangman/hangman.css" />
+  </head>
+<body>
+  <div class="game-wrapper">
+    <h1>⚖️ Legal Hangman: Judge's Verdict 📜</h1>
+
+    <div id="difficulty-screen" class="game-section active">
+      <h2>Choose Your Challenge!</h2>
+      <p>Guess the word before the judge passes sentence!</p>
+      <div id="difficulty-buttons" class="button-group">
+        <button data-difficulty="easy" data-time="600">Easy (10 mins)</button>
+        <button data-difficulty="medium" data-time="300">Medium (5 mins)</button>
+        <button data-difficulty="hard" data-time="180">Hard (3 mins)</button>
+        <button data-difficulty="insane" data-time="120">Insane (2 mins)</button>
+      </div>
+    </div>
+
+    <div id="game-screen" class="game-section hidden">
+      <div id="game-header">
+        <div id="tagline" class="tagline"></div>
+        <div id="timer" class="timer">Time: 00:00</div>
+      </div>
+
+      <div class="main-game-area">
+        <div class="visual-area">
+          <div id="judge-container">
+            <img src="https://via.placeholder.com/100x150?text=Judge" alt="Judge" id="judge-image">
+            <div id="gavel" class="gavel"></div>
+          </div>
+
+          <div id="hangman-drawing" class="hangman-figure step-0">
+            <div class="rope part"></div>
+            <div class="head part"></div>
+            <div class="body part"></div>
+            <div class="left-arm part"></div>
+            <div class="right-arm part"></div>
+            <div class="left-leg part"></div>
+            <div class="right-leg part"></div>
+          </div>
+        </div>
+
+        <div class="word-and-buttons-area">
+          <div id="word-display" class="word-display"></div>
+          <div id="letter-buttons" class="letter-buttons"></div>
+          <div id="theme-hint" class="theme-hint"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script type="module" src="/law-students-forum-website/games/hangman/hangman.js"></script>
+</body>
+</html>
