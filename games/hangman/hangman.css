@@ -199,7 +199,8 @@ h1 {
   height: 250px;
   margin: 20px auto;
   border-bottom: 4px solid #000;
-  /* Removed the linear-gradient backgrounds for gallows parts to use pseudo-elements/divs */
+  /* Ensure overflow is visible if parts go slightly outside bounds, though usually not an issue */
+  overflow: visible;
 }
 
 /* Gallows vertical pole */
@@ -236,12 +237,15 @@ h1 {
 }
 
 /* --- Body Parts --- */
+/* Shared styles for body parts (hidden by default) */
 .hangman-figure .part {
   position: absolute;
   background-color: #000;
+  /* IMPORTANT: Initially hide all parts but only override on specific steps */
   display: none;
 }
 
+/* Head */
 .hangman-figure .head {
   border: 4px solid #000;
   border-radius: 50%;
@@ -252,6 +256,7 @@ h1 {
   background-color: transparent;
 }
 
+/* Body */
 .hangman-figure .body {
   width: 4px;
   height: 60px;
@@ -259,6 +264,7 @@ h1 {
   left: 130px;
 }
 
+/* Left Arm */
 .hangman-figure .left-arm {
   width: 4px;
   height: 40px;
@@ -268,6 +274,7 @@ h1 {
   transform: rotate(45deg);
 }
 
+/* Right Arm */
 .hangman-figure .right-arm {
   width: 4px;
   height: 40px;
@@ -277,6 +284,7 @@ h1 {
   transform: rotate(-45deg);
 }
 
+/* Left Leg */
 .hangman-figure .left-leg {
   width: 4px;
   height: 50px;
@@ -286,6 +294,7 @@ h1 {
   transform: rotate(45deg);
 }
 
+/* Right Leg */
 .hangman-figure .right-leg {
   width: 4px;
   height: 50px;
@@ -296,71 +305,37 @@ h1 {
 }
 
 /* --- Step Classes to Reveal Body Parts --- */
-.hangman-figure.step-1 .head { display: block; }
-.hangman-figure.step-2 .body { display: block; }
-.hangman-figure.step-3 .left-arm { display: block; }
-.hangman-figure.step-4 .right-arm { display: block; }
-.hangman-figure.step-5 .left-leg { display: block; }
-.hangman-figure.step-6 .right-leg { display: block; }
+/* Corrected CSS to show parts cumulatively: */
+.hangman-figure.step-1 .head,
+.hangman-figure.step-2 .head, .hangman-figure.step-2 .body,
+.hangman-figure.step-3 .head, .hangman-figure.step-3 .body, .hangman-figure.step-3 .left-arm,
+.hangman-figure.step-4 .head, .hangman-figure.step-4 .body, .hangman-figure.step-4 .left-arm, .hangman-figure.step-4 .right-arm,
+.hangman-figure.step-5 .head, .hangman-figure.step-5 .body, .hangman-figure.step-5 .left-arm, .hangman-figure.step-5 .right-arm, .hangman-figure.step-5 .left-leg,
+.hangman-figure.step-6 .head, .hangman-figure.step-6 .body, .hangman-figure.step-6 .left-arm, .hangman-figure.step-6 .right-arm, .hangman-figure.step-6 .left-leg, .hangman-figure.step-6 .right-leg {
+    display: block;
+}
 
 /* --- Game UI Elements (Word Display, Buttons, Hint) --- */
 .word-display {
-  margin-bottom: 25px;
-  font-size: 2.5em; /* Larger font for word */
-  font-family: 'Courier New', monospace; /* Monospace for word */
-  letter-spacing: 0.2em; /* Spacing for blanks */
-  font-weight: bold;
-  color: #333;
-}
-
-.letter-buttons {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(40px, 1fr)); /* Responsive grid */
-  gap: 8px;
-  max-width: 500px;
-  margin: 0 auto 25px auto;
+  /* ... existing styles ... */
 }
 
 .letter-buttons button {
-  background-color: #4CAF50; /* Green button */
-  color: white;
-  border: none;
-  border-radius: 5px;
-  padding: 10px 0; /* Adjust padding for height */
-  font-size: 1.1em;
-  cursor: pointer;
-  transition: background-color 0.2s ease, transform 0.1s ease;
-  box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+  background-color: var(--primary-color); /* Use new primary color */
+  /* ... existing styles ... */
 }
 
 .letter-buttons button:hover:not(:disabled) {
-  background-color: #45a049;
-  transform: translateY(-1px);
+  background-color: var(--primary-color-dark); /* Use darker shade */
+  /* ... existing styles ... */
 }
 
-.letter-buttons button:disabled {
-  background-color: #ccc;
-  cursor: not-allowed;
-  opacity: 0.6;
-  box-shadow: none;
+.theme-hint .text-indigo-600 { /* Changed to use new color variables */
+  color: var(--primary-color);
 }
-
-.theme-hint {
-  margin-top: 20px;
-  font-size: 0.95em;
-  min-height: 40px; /* Reserve space to prevent layout shift */
-}
-
-.theme-hint div {
-  margin-bottom: 5px;
-}
-
-.theme-hint .text-indigo-600 {
-  color: #4f46e5; /* Example indigo color */
-}
-
+/* For the red color (hint), keep it if you want it to stand out as a warning */
 .theme-hint .text-red-600 {
-  color: #dc2626; /* Example red color */
+  color: #dc2626; /* Example red color - keep as is for warnings */
 }
 
 /* --- Responsive Adjustments --- */

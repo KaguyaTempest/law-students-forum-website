@@ -1,6 +1,41 @@
 /* legal-quiz-arena.css */
 
+/* --- General Adjustments --- */
+/* Changing the primary color from purple to #2596be */
+:root {
+  --primary-color: #2596be; /* A vibrant blue */
+  --primary-color-dark: #1e7a9b; /* Slightly darker for hover */
+  --primary-color-light: #4bb4d8; /* Lighter for lighter effects */
+}
+
+/* Update any elements that were explicitly indigo-700 or similar */
+body {
+  /* ... existing styles ... */
+}
+
+/* Update h1 color in quiz-arena.html context if it's not handled by Tailwind classes */
+/* If you want the h1 in quiz-arena.html to match the new primary color: */
+.bg-indigo-700 { /* This is from your HTML hero section */
+    background-color: var(--primary-color) !important; /* Override Tailwind */
+}
+
+.text-indigo-700 { /* For links in game cards */
+    color: var(--primary-color) !important;
+}
+
+
 /* --- Game Card Base Styles --- */
+.game-cards {
+    /* Existing grid gap and sm/lg cols are fine for responsive layout.
+       To enforce 2 columns consistently, you might adjust `lg:grid-cols-3`
+       to `lg:grid-cols-2` in quiz-arena.html, or rely on `sm:grid-cols-2`
+       for smaller screens and adjust larger screen behavior.
+       I'll keep the current HTML for now and assume the grid-cols will handle it.
+       If you explicitly want 2 columns on ALL sizes, change the grid-cols in HTML.
+    */
+    /* If you want a strict 2-column layout on larger screens, change lg:grid-cols-3 to lg:grid-cols-2 in your HTML */
+}
+
 .game-card {
   background-color: #fff;
   border-radius: 12px;
@@ -9,21 +44,21 @@
   display: flex;
   flex-direction: column;
   transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
-  border: 1px solid #e2e8f0; /* Light border */
+  border: 1px solid #e2e8f0;
 }
 
 .game-card:hover {
-  transform: translateY(-5px); /* Lift effect on hover */
-  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.12); /* Stronger shadow on hover */
+  transform: translateY(-5px);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.12);
 }
 
 .game-card h2 {
-  color: #333; /* Darker heading color */
+  color: #333;
   margin-bottom: 8px;
 }
 
 .game-card h2 a {
-  color: #4f46e5; /* Indigo for links */
+  color: var(--primary-color); /* Use the new primary color */
   text-decoration: none;
 }
 
@@ -32,7 +67,7 @@
 }
 
 .game-card p {
-  flex: 1; /* Allows description to take up available space */
+  flex: 1;
   color: #666;
   margin-bottom: 20px;
   line-height: 1.6;
@@ -40,30 +75,30 @@
 
 /* --- Play Button Styles --- */
 .play-btn {
-  display: block; /* Make anchor act like a block button */
+  display: block;
   width: 100%;
   padding: 12px 20px;
   border-radius: 8px;
   font-weight: 600;
   text-align: center;
-  text-decoration: none; /* Remove underline for anchor buttons */
+  text-decoration: none;
   transition: background-color 0.2s ease, transform 0.1s ease;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
 .game-card:not(.coming-soon) .play-btn {
-  background-color: #4f46e5; /* Indigo for active play buttons */
+  background-color: var(--primary-color); /* Use the new primary color */
   color: #fff;
 }
 
 .game-card:not(.coming-soon) .play-btn:hover {
-  background-color: #635bff; /* Lighter indigo on hover */
+  background-color: var(--primary-color-dark); /* Darker shade on hover */
   transform: translateY(-1px);
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
 }
 
 .game-card:not(.coming-soon) .play-btn:active {
-  background-color: #3e33c6; /* Darker indigo on active */
+  background-color: #3e33c6; /* Use an appropriate active state color */
   transform: translateY(0);
 }
 
@@ -71,27 +106,27 @@
 .game-card.coming-soon {
   opacity: 0.7;
   cursor: not-allowed;
-  pointer-events: none; /* Disables all mouse events */
+  pointer-events: none;
 }
 
 .game-card.coming-soon:hover {
-  transform: none; /* No lift effect for coming soon */
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08); /* No stronger shadow */
+  transform: none;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
 }
 
 .game-card.coming-soon .play-btn {
-  background-color: #cbd5e0; /* Gray background for disabled buttons */
-  color: #94a3b8; /* Lighter gray text */
+  background-color: #cbd5e0;
+  color: #94a3b8;
   cursor: not-allowed;
 }
 
 .game-card.coming-soon .play-btn:hover {
-  background-color: #cbd5e0; /* No change on hover */
+  background-color: #cbd5e0;
   transform: none;
 }
 
 .game-card.coming-soon h2 a {
-  color: #666; /* Gray out links too */
+  color: #666;
   text-decoration: none;
   pointer-events: none;
 }
