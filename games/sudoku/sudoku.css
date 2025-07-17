@@ -13,7 +13,7 @@
   --disabled-input-bg: rgba(255, 255, 255, 0.2);
   --disabled-input-text: #e2e8f0;
   --accent-color: #c084fc; /* Purple for focus, from your original CSS */
-  --dark-text-on-light-bg: #333; /* NEW: For text that needs to be dark on a light background */
+  --dark-text-on-light-bg: #333; /* For text that needs to be dark on a light background */
 }
 
 body {
@@ -23,10 +23,10 @@ body {
   background-size: 65%;
   background-position: center;
   background-attachment: fixed;
-  color: var(--text-color); /* Ensures main body text is visible */
+  color: var(--text-color);
   font-family: 'Georgia', serif;
-  display: flex; /* Flexbox for main layout */
-  flex-direction: column; /* Stack header and main content vertically */
+  display: flex;
+  flex-direction: column;
   min-height: 100vh;
 }
 
@@ -47,17 +47,29 @@ body {
   gap: 20px;
 }
 
+/* NEW: Style for the title card */
+.title-card {
+    background-color: rgba(0, 0, 0, 0.6); /* Semi-transparent black background */
+    padding: 20px 30px;
+    border-radius: 10px;
+    text-align: center;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3); /* Subtle shadow for depth */
+    backdrop-filter: blur(8px); /* A stronger blur for better contrast */
+    margin-bottom: 20px; /* Space below the card */
+    border: 1px solid rgba(255, 255, 255, 0.1); /* Subtle border */
+}
+
 .game-title {
   font-size: 2.5rem;
   font-weight: bold;
   color: var(--primary-color);
-  margin-bottom: 8px;
+  margin-bottom: 8px; /* Reduced margin, as card provides spacing */
 }
 
 .game-tagline {
   font-size: 1.1rem;
-  color: #a0aec0; /* Lighter gray for tagline, should be fine if background is B&W image */
-  margin-bottom: 20px;
+  color: #a0aec0;
+  /* margin-bottom: 20px; - This is now handled by the .title-card's padding and margin-bottom */
   text-align: center;
 }
 
@@ -82,11 +94,11 @@ body {
     border-radius: 6px;
     border: 1px solid var(--input-border);
     background-color: var(--input-bg);
-    color: var(--text-color); /* Main text color of the selected option */
+    color: var(--text-color);
     font-size: 1rem;
     cursor: pointer;
     appearance: none;
-    background-image: url('data:image/svg+xml;charset=US-ASCII,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22292.4%22%20height%3D%22292.4%22%3E%3Cpath%20fill%3D%22%23f1f1f1%22%20d%3D%22M287%20197.3l-11.4-11.4c-3.1-3.1-8.2-3.1-11.3%200L146.2%20272.5%2028.1%20138.8c-3.1-3.1-8.2-3.1-11.3%200L5.4%20150.2c-3.1%203.1-3.1%208.2%200%2011.3l126.8%20126.9c3.1%203.1%208.2%203.1%2011.3%200l126.9-126.9c3.1-3.1%203.1-8.2%200-11.3z%22%2F%3E%3C%2Fsvg%3E'); /* Custom arrow */
+    background-image: url('data:image/svg+xml;charset=US-ASCII,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22292.4%22%20height%3D%22292.4%22%3E%3Cpath%20fill%3D%22%23f1f1f1%22%20d%3D%22M287%20197.3l-11.4-11.4c-3.1-3.1-8.2-3.1-11.3%200L146.2%20272.5%2028.1%20138.8c-3.1-3.1-8.2-3.1-11.3%200L5.4%20150.2c-3.1%203.1-3.1%208.2%200%2011.3l126.8%20126.9c3.1%203.1%208.2%203.1%2011.3%200l126.9-126.9c3.1-3.1%203.1-8.2%200-11.3z%22%2F%3E%3C%2Fsvg%3E');
     background-repeat: no-repeat;
     background-position: right 10px center;
     background-size: 10px;
@@ -97,20 +109,17 @@ body {
     border-color: var(--accent-color);
 }
 
-/* NEW: Styles for the dropdown options when the select box is open */
 .difficulty-selector select option {
-    background-color: var(--input-bg); /* Darker background for options */
-    color: var(--text-color); /* White text for options */
+    background-color: var(--input-bg);
+    color: var(--text-color);
     padding: 8px 12px;
 }
 
-/* NEW: Style for hovered/selected option */
 .difficulty-selector select option:checked,
 .difficulty-selector select option:hover {
-    background-color: var(--primary-color-dark); /* Highlight color on hover/selection */
-    color: #fff; /* Ensure text is white on hover/selection */
+    background-color: var(--primary-color-dark);
+    color: #fff;
 }
-
 
 /* Timer Styling */
 .timer-container {
@@ -168,7 +177,7 @@ input[type='text'] {
   background-color: var(--input-bg);
   font-size: 1.2rem;
   font-weight: 600;
-  color: var(--text-color); /* Ensure user input is white/light */
+  color: var(--text-color);
   border-radius: 4px;
   width: 100%;
   height: 100%;
@@ -184,26 +193,26 @@ input[type='text']:focus {
 
 input[disabled] {
   background-color: var(--disabled-input-bg);
-  color: var(--disabled-input-text); /* Ensure pre-filled numbers are visible */
+  color: var(--disabled-input-text);
   font-weight: bold;
 }
 
 /* Styles for thick borders to define 3x3 boxes */
 #sudoku-grid .border-right-thick {
-    border-right: 3px solid #666; /* Darker border for subgrids */
+    border-right: 3px solid #666;
 }
 
 #sudoku-grid .border-bottom-thick {
-    border-bottom: 3px solid #666; /* Darker border for subgrids */
+    border-bottom: 3px solid #666;
 }
 
 /* Override default border on cells at the very right/bottom edges if it's thicker */
-#sudoku-grid input:nth-child(9n) { /* Every 9th child (end of row) */
-    border-right: 2px solid #ccc; /* Match main grid border */
+#sudoku-grid input:nth-child(9n) {
+    border-right: 2px solid #ccc;
 }
 
-#sudoku-grid input:nth-last-child(-n + 9) { /* Last row */
-    border-bottom: 2px solid #ccc; /* Match main grid border */
+#sudoku-grid input:nth-last-child(-n + 9) {
+    border-bottom: 2px solid #ccc;
 }
 
 /* Important: Ensure prefilled cells stand out */
@@ -216,17 +225,17 @@ input[disabled] {
 
 /* Cell Highlighting */
 #sudoku-grid input.selected {
-    background-color: rgba(37, 150, 190, 0.2); /* Using RGB for --primary-color-light */
+    background-color: rgba(37, 150, 190, 0.2);
     border: 2px solid var(--primary-color);
     box-shadow: 0 0 5px var(--primary-color);
 }
 
 #sudoku-grid input.highlighted {
-    background-color: rgba(37, 150, 190, 0.1); /* Using RGB for --primary-color-dark */
+    background-color: rgba(37, 150, 190, 0.1);
 }
 
 #sudoku-grid input.value-highlighted {
-    background-color: rgba(192, 132, 252, 0.2); /* Using RGB for --accent-color */
+    background-color: rgba(192, 132, 252, 0.2);
 }
 
 /* Styles for buttons */
@@ -303,7 +312,7 @@ input[disabled] {
     display: flex;
     justify-content: space-between;
     font-size: 1.1rem;
-    color: var(--text-color); /* Ensure high score list text is visible */
+    color: var(--text-color);
 }
 
 #high-score-list li:last-child {
@@ -334,5 +343,9 @@ input[disabled] {
   .game-buttons {
       flex-direction: column;
       gap: 10px;
+  }
+  /* NEW: Adjust title card padding for smaller screens */
+  .title-card {
+      padding: 15px 20px;
   }
 }
