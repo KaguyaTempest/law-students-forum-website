@@ -151,6 +151,52 @@ function renderGrid() {
 }
 
 /**
+ * Renders the HTML crossword grid based on the internal crosswordGrid.
+ */
+function renderGrid() {
+    gridContainer.innerHTML = ''; // Clear previous grid
+    gridContainer.style.gridTemplateColumns = `repeat(${GRID_SIZE}, 1fr)`; // Set CSS grid columns dynamically
+
+    for (let r = 0; r < GRID_SIZE; r++) {
+        for (let c = 0; c < GRID_SIZE; c++) {
+            const cellDiv = document.createElement('div');
+            cellDiv.classList.add('crossword-cell');
+            cellDiv.dataset.row = r;
+            cellDiv.dataset.col = c;
+
+            if (crosswordGrid[r][c] !== null) {
+                // This is a playable cell
+                cellDiv.classList.add('playable');
+                const input = document.createElement('input');
+                input.type = 'text';
+                input.maxLength = 1;
+                input.dataset.row = r; // Add data attributes for easy lookup
+                input.dataset.col = c;
+                input.addEventListener('input', handleInput);
+                input.addEventListener('keydown', handleKeyDown);
+                input.addEventListener('focus', handleCellFocus); // New event for highlighting on focus
+                cellDiv.appendChild(input);
+
+                // Add clue numbers to the top-left of starting cells
+                const clueNumbers = currentLayout.filter(w => w.row === r && w.col === c);
+                if (clueNumbers.length > 0) {
+                    const clueNumberSpan = document.createElement('span');
+                    clueNumberSpan.classList.add('clue-number');
+                    // Display all numbers if multiple words start here
+                    clueNumberSpan.textContent = clueNumbers.map(cn => cn.number).join(', ');
+                    cellDiv.appendChild(clueNumberSpan);
+                }
+
+            } else {
+                // This is an empty (black) cell
+                cellDiv.classList.add('empty');
+            }
+            gridContainer.appendChild(cellDiv);
+        }
+    }
+}
+
+/**
  * Displays the clues in the respective lists.
  * @param {object} clues - Object with 'across' and 'down' arrays of clues.
  */
