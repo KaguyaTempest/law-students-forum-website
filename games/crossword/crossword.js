@@ -1,6 +1,6 @@
 // crossword.js
 
-// --- Crossword Game Data (from your provided context) ---
+// --- Crossword Game Data ---
 // Define grid dimensions (e.g., 15x15)
 const GRID_SIZE = 15; // A common size for crosswords
 
@@ -45,7 +45,7 @@ const batch1Clues = {
         { number: 17, clue: "A type of court or decision-making body" },
         { number: 18, clue: "To suspend court proceedings temporarily" },
         { number: 20, clue: "Latin: “In this case”" },
-        { number: 22, clue: "Zimbabwe Republic Police (abbr.)" }, // Mismatch from ZRP to JSC in prev output, will use ZRP as per word
+        { number: 22, clue: "Zimbabwe Republic Police (abbr.)" },
     ],
     down: [
         { number: 2, clue: "A formal examination of evidence in court" },
@@ -58,7 +58,7 @@ const batch1Clues = {
         { number: 16, clue: "To question a witness from the opposing side" },
         { number: 19, clue: "A written statement confirmed by oath" },
         { number: 21, clue: "Latin: “At first glance”; presumed true until disproven" },
-        { number: 23, clue: "Judicial Service Commission (abbr.)" }, // Mismatch from JSC to ZRP, will use JSC as per word
+        { number: 23, clue: "Judicial Service Commission (abbr.)" },
         { number: 24, clue: "Criminal Procedure and Evidence Act (abbr.)" },
     ]
 };
@@ -84,8 +84,12 @@ const clearBtn = document.getElementById('clear-crossword-btn');
  * @param {Array} layoutData - Array of word objects {number, word, row, col, direction}
  */
 function initializeGrid(layoutData) {
-    // 1. Create a blank grid filled with nulls
-    crosswordGrid = Array.from({ length: GRID_SIZE }, () => Array(GRID_SIZE).fill(null));
+    // 1. Create a blank grid filled with nulls using a traditional loop for robustness
+    crosswordGrid = []; // Ensure crosswordGrid is an empty array first
+    for (let i = 0; i < GRID_SIZE; i++) {
+        // For each row, create a new array of GRID_SIZE and fill it with nulls
+        crosswordGrid.push(Array(GRID_SIZE).fill(null));
+    }
 
     // 2. Place words into the internal crosswordGrid (solution)
     layoutData.forEach(wordData => {
@@ -93,8 +97,23 @@ function initializeGrid(layoutData) {
         let r = wordData.row;
         let c = wordData.col;
 
+        // Check if starting coordinates are within bounds
+        if (r < 0 || r >= GRID_SIZE || c < 0 || c >= GRID_SIZE) {
+            console.error(`Error: Word "${wordData.word}" starts out of bounds at row ${r}, col ${c}. Please check your layout data.`);
+            return; // Skip this word if out of bounds to prevent further errors
+        }
+
         for (let i = 0; i < word.length; i++) {
-            crosswordGrid[r][c] = word[i]; // Place the letter
+            // Check if the current cell (r, c) for placing the letter is within grid bounds
+            if (r >= 0 && r < GRID_SIZE && c >= 0 && c < GRID_SIZE) {
+                crosswordGrid[r][c] = word[i]; // Place the letter
+            } else {
+                // If a word goes out of bounds mid-placement, log an error and stop placing this word
+                console.error(`Error: Word "${wordData.word}" goes out of bounds at row ${r}, col ${c} during letter ${i}.`);
+                break; // Stop placing this word
+            }
+
+            // Move to the next cell based on direction
             if (wordData.direction === "across") {
                 c++;
             } else { // "down"
@@ -102,52 +121,6 @@ function initializeGrid(layoutData) {
             }
         }
     });
-}
-
-/**
- * Renders the HTML crossword grid based on the internal crosswordGrid.
- */
-function renderGrid() {
-    gridContainer.innerHTML = ''; // Clear previous grid
-    gridContainer.style.gridTemplateColumns = `repeat(${GRID_SIZE}, 1fr)`; // Set CSS grid columns dynamically
-
-    for (let r = 0; r < GRID_SIZE; r++) {
-        for (let c = 0; c < GRID_SIZE; c++) {
-            const cellDiv = document.createElement('div');
-            cellDiv.classList.add('crossword-cell');
-            cellDiv.dataset.row = r;
-            cellDiv.dataset.col = c;
-
-            if (crosswordGrid[r][c] !== null) {
-                // This is a playable cell
-                cellDiv.classList.add('playable');
-                const input = document.createElement('input');
-                input.type = 'text';
-                input.maxLength = 1;
-                input.dataset.row = r; // Add data attributes for easy lookup
-                input.dataset.col = c;
-                input.addEventListener('input', handleInput);
-                input.addEventListener('keydown', handleKeyDown);
-                input.addEventListener('focus', handleCellFocus); // New event for highlighting on focus
-                cellDiv.appendChild(input);
-
-                // Add clue numbers to the top-left of starting cells
-                const clueNumbers = currentLayout.filter(w => w.row === r && w.col === c);
-                if (clueNumbers.length > 0) {
-                    const clueNumberSpan = document.createElement('span');
-                    clueNumberSpan.classList.add('clue-number');
-                    // Display all numbers if multiple words start here
-                    clueNumberSpan.textContent = clueNumbers.map(cn => cn.number).join(', ');
-                    cellDiv.appendChild(clueNumberSpan);
-                }
-
-            } else {
-                // This is an empty (black) cell
-                cellDiv.classList.add('empty');
-            }
-            gridContainer.appendChild(cellDiv);
-        }
-    }
 }
 
 /**
@@ -305,12 +278,12 @@ function handleCellFocus(event) {
     const intersectingWords = currentLayout.filter(wordData => {
         if (wordData.direction === 'across') {
             return wordData.row === parseInt(activeCell.dataset.row) &&
-                   parseInt(activeCell.dataset.col) >= wordData.col &&
-                   parseInt(activeCell.dataset.col) < wordData.col + wordData.word.length;
+                parseInt(activeCell.dataset.col) >= wordData.col &&
+                parseInt(activeCell.dataset.col) < wordData.col + wordData.word.length;
         } else { // 'down'
             return wordData.col === parseInt(activeCell.dataset.col) &&
-                   parseInt(activeCell.dataset.row) >= wordData.row &&
-                   parseInt(activeCell.dataset.row) < wordData.row + wordData.word.length;
+                parseInt(activeCell.dataset.row) >= wordData.row &&
+                parseInt(activeCell.dataset.row) < wordData.row + wordData.word.length;
         }
     });
 
