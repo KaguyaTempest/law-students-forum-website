@@ -4,28 +4,56 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Legal Sudoku</title>
+  <link rel="icon" href="/law-students-forum-website/assets/favicon.ico" type="image/x-icon" />
+  <link rel="stylesheet" href="/law-students-forum-website/styles/style.css" />
+
   <link href="https://cdn.jsdelivr.net/npm/tailwindcss@3.4.1/dist/tailwind.min.css" rel="stylesheet" />
+
+  <link rel="stylesheet" href="sudoku.css" />
 </head>
-<body class="bg-gray-50 min-h-screen flex flex-col items-center justify-center py-10">
-  <h1 class="text-3xl font-bold mb-4 text-indigo-700">Legal Sudoku</h1>
-  <p class="mb-6 text-gray-600">Bring order to the bench by completing the puzzle below.</p>
+<body>
 
-  <div class="mb-4">
-  <label for="difficulty" class="mr-2 font-semibold">Difficulty:</label>
-  <select id="difficulty" class="px-2 py-1 rounded border border-gray-400 bg-white text-black">
-    <option value="easy" selected>Easy</option>
-    <option value="medium">Medium</option>
-    <option value="hard">Hard</option>
-  </select>
-</div>
+  <div id="header-placeholder"></div>
 
-  <div id="sudoku-grid" class="grid grid-cols-9 gap-1 border-2 border-gray-500 p-2 bg-white shadow-lg"></div>
+  <main class="sudoku-container">
+    <h1 class="game-title">Legal Sudoku</h1>
+    <p class="game-tagline">Bring order to the bench by completing the puzzle below.</p>
 
-  <div class="mt-6 flex gap-4">
-    <button id="check-btn" class="px-4 py-2 bg-indigo-600 text-white rounded hover:bg-indigo-700">Check</button>
-    <button id="reset-btn" class="px-4 py-2 bg-gray-300 rounded hover:bg-gray-400">Reset</button>
-  </div>
+    <div class="game-controls">
+      <div class="difficulty-selector">
+        <label for="difficulty">Difficulty:</label>
+        <select id="difficulty">
+          <option value="easy" selected>Easy</option>
+          <option value="medium">Medium</option>
+          <option value="hard">Hard</option>
+          <option value="insane">Insane</option>
+        </select>
+      </div>
 
+      <div id="timer-container" class="timer-container">
+        Time: <span id="timer-display">00:00</span>
+      </div>
+
+      <div id="fact-box" class="fact-box"></div>
+    </div>
+
+    <div id="sudoku-grid" class="sudoku-grid"></div>
+
+    <div class="game-buttons">
+      <button id="check-btn" class="sudoku-btn primary-btn">Check</button>
+      <button id="reset-btn" class="sudoku-btn secondary-btn">Reset</button>
+    </div>
+
+    <div id="high-score-container" class="high-score-container">
+      <h3>Fastest Times:</h3>
+      <ul id="high-score-list">
+        </ul>
+    </div>
+  </main>
+
+  <script type="module" src="/law-students-forum-website/scripts/load-header.js"></script>
+  <script type="module" src="/law-students-forum-website/scripts/auth-modal.js"></script>
+  <script type="module" src="/law-students-forum-website/scripts/loader.js"></script>
   <script src="sudoku.js"></script>
 </body>
 </html>
