@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Legal Hangman: Judge's Verdict</title>
     <link rel="stylesheet" href="/law-students-forum-website/games/hangman/hangman.css" />
+    <link rel="preload" href="/law-students-forum-website/assets/sprites/judge-gavel-slam.png" as="image">
 </head>
 <body>
     <div class="game-wrapper">
@@ -29,9 +30,6 @@
 
             <div class="main-game-area">
                 <div class="visual-area">
-                    <div id="judge-container">
-                        <img src="/law-students-forum-website/assets/sprites/judge-idle.png" alt="Judge" id="judge-image">
-                        </div>
                     <div id="hangman-drawing" class="hangman-figure step-0">
                         <div class="rope"></div>
                         <div class="body part"></div>
@@ -49,6 +47,11 @@
                 </div>
             </div>
         </div>
+
+        <div id="judge-container" class="judge-global-container hidden">
+             <img src="/law-students-forum-website/assets/sprites/judge-idle.png" alt="Judge" id="judge-image">
+        </div>
+
 
         <div id="game-over-screen" class="game-section hidden">
             <h2 id="game-over-message"></h2>

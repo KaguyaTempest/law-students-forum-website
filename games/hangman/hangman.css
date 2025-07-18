@@ -61,9 +61,13 @@ p {
 }
 
 /* --- Section Visibility --- */
+/* The game sections are still controlled by JS, but we ensure the hidden state */
 .game-section {
-    display: none;
+    display: none; /* Default hidden */
     animation: fadeIn 0.5s ease-out; /* Add fade-in animation */
+    /* Ensure it can overlay other elements if needed or is contained */
+    position: relative;
+    z-index: 2; /* Game sections should generally be above the global judge image unless specified */
 }
 
 .game-section.active {
@@ -123,9 +127,8 @@ p {
 }
 
 /* Apply reusable button style to difficulty buttons */
+/* Removed @extend as it's not plain CSS and manually copied properties */
 .button-group button {
-    @extend .button-primary; /* This is a pseudo-mixin, typically in Sass/Less.
-                              For plain CSS, copy properties manually: */
     background-color: var(--primary-color);
     color: var(--text-light);
     border: none;
@@ -158,6 +161,7 @@ p {
     background-color: var(--bg-medium);
     border-radius: 10px;
     padding: 20px;
+    /* Ensure game-screen itself is not positioned absolutely, it's a block */
 }
 
 #game-header {
@@ -209,6 +213,8 @@ p {
     padding: 20px;
     box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.5);
     border: 1px solid var(--border-color);
+    /* Judge container will now be positioned relative to .game-wrapper */
+    /* So, visual-area will only contain hangman-drawing */
 }
 
 .word-and-buttons-area {
@@ -223,16 +229,27 @@ p {
     border: 1px solid var(--border-color);
 }
 
-/* --- Judge Image Styling --- */
+/* --- Judge Image Styling (GLOBAL) --- */
+/* The judge-container is now outside of game-screen/game-over-screen */
+/* It needs to be positioned within game-wrapper and its visibility controlled by JS */
 #judge-container {
-    position: relative;
+    position: absolute; /* Position relative to the game-wrapper */
+    top: 50%; /* Center vertically within the wrapper */
+    left: 50%; /* Center horizontally within the wrapper */
+    transform: translate(-50%, -50%); /* Adjust for its own size */
     width: 200px; /* Larger judge container */
     height: 250px;
-    margin-top: 0; /* Remove top margin */
     overflow: hidden; /* Important for transition to contain images */
     border-bottom: 4px solid var(--border-color);
     background-color: var(--bg-medium);
     border-radius: 5px;
+    z-index: 5; /* Ensure it's above game sections when visible */
+    transition: opacity 0.5s ease-in-out; /* Smooth fade for container itself */
+    display: none; /* Hidden by default, controlled by JS */
+}
+
+#judge-container.active {
+    display: block; /* Show when active */
 }
 
 #judge-image {
@@ -242,14 +259,11 @@ p {
     position: absolute;
     bottom: 0;
     left: 0;
-    transition: opacity 0.5s ease-in-out; /* Smooth fade transition */
     image-rendering: pixelated; /* Maintain pixel art look */
     image-rendering: -moz-crisp-edges;
     image-rendering: crisp-edges;
-    z-index: 2; /* Ensure judge image is above any background */
+    /* transition is now on the container #judge-container for overall fade */
 }
-
-/* Gavel removed, so no gavel-specific styles are needed anymore */
 
 /* --- Hangman Drawing --- */
 .hangman-figure {
@@ -258,7 +272,7 @@ p {
     height: 270px;
     margin: 20px auto 0; /* Adjusted margin */
     border-bottom: 4px solid var(--text-light); /* Gallows base color */
-    z-index: 1;
+    z-index: 1; /* Keep hangman drawing within its visual-area */
 }
 
 /* Gallows vertical pole */
@@ -483,6 +497,9 @@ p {
     box-shadow: 0 8px 16px var(--shadow-color);
     text-align: center;
     animation: fadeIn 0.7s ease-out; /* Fade in animation */
+    /* Ensure it overlays other content when active */
+    position: relative; /* Make it a positioning context for its children */
+    z-index: 3; /* Ensure it's above game-screen and judge-container when active */
 }
 
 #game-over-message {
@@ -518,6 +535,12 @@ p {
     .word-and-buttons-area {
         width: 90%; /* Wider on smaller screens */
         max-width: 500px; /* Constrain max width for content */
+    }
+
+    /* Adjust global judge container position for smaller screens if needed */
+    #judge-container {
+        /* You might want to adjust its top/transform for different screen sizes */
+        /* For example, if it's too high/low on small screens */
     }
 }
 
@@ -570,6 +593,9 @@ p {
     #judge-container {
         width: 150px;
         height: 180px;
+        /* Re-adjust position if needed for smaller judge size */
+        /* For example, if it looks off center: */
+        /* top: 50%; transform: translate(-50%, -50%); */
     }
     .hangman-figure {
         width: 180px;
