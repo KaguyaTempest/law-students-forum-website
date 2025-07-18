@@ -1,124 +1,144 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>LAW STUDENTS INTELLECTUAL FORUM</title>
-  <link rel="icon" href="assets/favicon.ico" type="image/x-icon" />
-  <link rel="stylesheet" href="styles/style.css" />
-  <link rel="stylesheet" href="/law-students-forum-website/styles/splash.css"/> <!-- new splash styling -->
-  <link rel="stylesheet" href="/law-students-forum-website/styles/auth.css"/> <!-- new splash styling -->
-</head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>LAW STUDENTS INTELLECTUAL FORUM</title>
+    <link rel="icon" href="assets/favicon.ico" type="image/x-icon" />
+    <link rel="stylesheet" href="styles/style.css" />
+    <link rel="stylesheet" href="/law-students-forum-website/styles/splash.css"/>
+    <link rel="stylesheet" href="/law-students-forum-website/styles/auth.css"/>
+    <link rel="stylesheet" href="/law-students-forum-website/styles/home.css"/> </head>
 
 <body>
-  <div id="splash-screen">
-  <button class="skip-btn" id="skip-btn">Skip</button>
+    <div id="splash-screen">
+        <button class="skip-btn" id="skip-btn">Skip</button>
 
-  <div class="logo-container">
-    <img src="assets/forum-logo.png" alt="LSIF Logo" class="logo-image">
-  </div>
-
-  <h1 class="title">LAW STUDENTS INTELLECTUAL FORUM</h1>
-
-  <div class="loading-container">
-    <div class="loading-message" id="loading-message">Preparing legal briefs...</div>
-  </div>
-
-  <div class="loading-bar-container">
-    <div class="loading-bar" id="loading-bar"></div>
-  </div>
-
-  <div class="hint">Click anywhere to skip if ready</div>
-  <div class="sponsor">from KT Industries</div>
-</div>
-
-  <!-- ─── Header Placeholder ────────────────────────────────── -->
-  <div id="header-placeholder"></div>
-
-  <!-- ─── Main Page Content ─────────────────────────────────── -->
-  <main class="homepage-main">
-        <!-- Existing homepage content -->
-     
-    <section class="student-articles-section">
-    <h2><a href="pages/student-articles.html">Student Articles</a></h2>
-    <div class="article-carousel-container">
-  <button class="carousel-arrow left-arrow">&#10094;</button>
-
-  <div class="article-carousel" id="article-carousel">
-
-    <article class="article-card featured">
-        <div class="article-image-container">
-          <img src="assets/law-ai.png" alt="AI and Copyright cover" />
+        <div class="logo-container">
+            <img src="assets/forum-logo.png" alt="LSIF Logo" class="logo-image">
         </div>
-        <h3>The Evolving Landscape of AI and Copyright</h3>
-        <p>A legal analysis of authorship, fair use, and cultural heritage in the age of generative AI.</p>
-        <a href="pages/articles/artificial-intelligence-and-copyright.html">READ MORE</a>
-      </article>
 
-      <!-- ——— Card 2 ——— -->
-      <article class="article-card">
-        <div class="article-image-container">
-          <img src="assets/ai-oracle.png" alt="AI replacing thought" />
+        <h1 class="title">LAW STUDENTS INTELLECTUAL FORUM</h1>
+
+        <div class="loading-container">
+            <div class="loading-message" id="loading-message">Preparing legal briefs...</div>
         </div>
-        <h3>The New Oracle: How AI Is Replacing Thought</h3>
-        <p>Has artificial intelligence become the new unquestioned source of truth? Lionel Chidaushe investigates.</p>
-        <a href="pages/articles/ai-the-new-oracle.html">READ MORE</a>
-      </article>
 
-    <div class="article-card">
-      <h3>Navigating Legal Research</h3>
-      <p>Tips for efficiently finding and using legal sources.</p>
-      <a href="#">READ MORE</a>
+        <div class="loading-bar-container">
+            <div class="loading-bar" id="loading-bar"></div>
+        </div>
+
+        <div class="hint">Click anywhere to skip if ready</div>
+        <div class="sponsor">from KT Industries</div>
     </div>
 
-  </div>
+    <div id="header-placeholder"></div>
 
-  <button class="carousel-arrow right-arrow">&#10095;</button>
- </div>
-</section>
-        
-  <section class="newsletter-section">
-  <h2><a href="pages/forum-newsletter.html">Forum Newsletter: July 2025 Edition</a></h2>
-  <p class="newsletter-theme">
-  <span>🧭 Theme:</span> <strong>Resilience, Rights & Reality</strong>
-</p>
+    <main class="homepage-main">
+        <section class="student-articles-section">
+            <h2><a href="pages/student-articles.html">Student Articles</a></h2>
+            <div class="article-carousel-container">
+                <button class="carousel-arrow left-arrow" aria-label="Previous Article">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-chevron-left"><polyline points="15 18 9 12 15 6"></polyline></svg>
+                </button>
 
-  <div class="newsletter-carousel-container">
-    <button class="carousel-arrow newsletter-carousel-arrow newsletter-left-arrow">&#10094;</button>
+                <div class="article-carousel" id="article-carousel">
+                    <article class="article-card featured">
+                        <div class="article-image-container">
+                            <img src="assets/law-ai.png" alt="AI and Copyright cover" />
+                        </div>
+                        <h3>The Evolving Landscape of AI and Copyright</h3>
+                        <p>A legal analysis of authorship, fair use, and cultural heritage in the age of generative AI.</p>
+                        <a href="pages/articles/artificial-intelligence-and-copyright.html">READ MORE</a>
+                    </article>
 
-    <div class="newsletter-carousel">
-      <!-- ALERT: Strike -->
-      <div class="newsletter-article alert">
-        <h3>🚧 Campus Strike Update</h3>
-        <p>Lecturers are on full strike. Exams are delayed and the semester extended to end of June.</p>
-        <a href="pages/forum-newsletter.html" class="button">Read More</a>
-      </div>
+                    <article class="article-card">
+                        <div class="article-image-container">
+                            <img src="assets/ai-oracle.png" alt="AI replacing thought" />
+                        </div>
+                        <h3>The New Oracle: How AI Is Replacing Thought</h3>
+                        <p>Has artificial intelligence become the new unquestioned source of truth? Lionel Chidaushe investigates.</p>
+                        <a href="pages/articles/ai-the-new-oracle.html">READ MORE</a>
+                    </article>
 
-      <!-- NOTICE: Exam Timetable -->
-      <div class="newsletter-article notice">
-        <h3>📅 Exam Timetable Now Available</h3>
-        <p>New exam dates and timetable are now online. Prepare accordingly.</p>
-        <a href="pages/forum-newletter.html" class="button">View Timetable</a>
-      </div>
+                    <article class="article-card">
+                        <div class="article-image-container">
+                            <img src="assets/legal-research.png" alt="Legal Research" /> </div>
+                        <h3>Navigating Legal Research</h3>
+                        <p>Tips for efficiently finding and using legal sources.</p>
+                        <a href="#">READ MORE</a>
+                    </article>
+                    <article class="article-card">
+                        <div class="article-image-container">
+                            <img src="assets/case-briefs.png" alt="Case Briefs" /> </div>
+                        <h3>Mastering Case Briefs</h3>
+                        <p>A comprehensive guide to preparing effective and concise case briefs.</p>
+                        <a href="#">READ MORE</a>
+                    </article>
+                    <article class="article-card">
+                        <div class="article-image-container">
+                            <img src="assets/moot-prep.png" alt="Moot Court Preparation" /> </div>
+                        <h3>Preparing for Moot Court</h3>
+                        <p>Essential strategies and tips for excelling in moot court competitions.</p>
+                        <a href="#">READ MORE</a>
+                    </article>
+                </div>
 
-      <!-- COMMENTARY: Rights & Abuse -->
-      <div class="newsletter-article commentary">
-        <h3>⚖️ Commentary: “Dying in Custody”</h3>
-        <p>Kudakwashe reflects on police abuse and the constitutional rights of arrested persons.</p>
-        <a href="pages/forum-newsletter.html" class="button">Read Commentary</a>
-      </div>
+                <button class="carousel-arrow right-arrow" aria-label="Next Article">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-chevron-right"><polyline points="9 18 15 12 9 6"></polyline></svg>
+                </button>
+                <div class="carousel-indicators" id="article-carousel-indicators"></div>
+            </div>
+        </section>
 
-      <!-- UPDATE: Website Changes -->
-      <div class="newsletter-article update">
-        <h3>✨ What’s New on the Website</h3>
-        <p>New login system, featured articles, and newsletter archives now live!</p>
-        <a href="Forum-Newsletter.html" class="button">See Updates</a>
-      </div>
-    </div>
+        <section class="newsletter-section">
+            <h2><a href="pages/forum-newsletter.html">Forum Newsletter: July 2025 Edition</a></h2>
+            <p class="newsletter-theme">
+                <span>🧭 Theme:</span> <strong>Resilience, Rights & Reality</strong>
+            </p>
 
-    <button class="carousel-arrow newsletter-carousel-arrow newsletter-right-arrow">&#10095;</button>
-  </div>
-</section>
+            <div class="newsletter-carousel-container">
+                <button class="carousel-arrow newsletter-carousel-arrow left-arrow" aria-label="Previous Newsletter">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-chevron-left"><polyline points="15 18 9 12 15 6"></polyline></svg>
+                </button>
+
+                <div class="newsletter-carousel" id="newsletter-carousel">
+                    <div class="newsletter-article alert">
+                        <h3>🚧 Campus Strike Update</h3>
+                        <p>Lecturers are on full strike. Exams are delayed and the semester extended to end of June.</p>
+                        <a href="pages/forum-newsletter.html" class="button">Read More</a>
+                    </div>
+
+                    <div class="newsletter-article notice">
+                        <h3>📅 Exam Timetable Now Available</h3>
+                        <p>New exam dates and timetable are now online. Prepare accordingly.</p>
+                        <a href="pages/forum-newletter.html" class="button">View Timetable</a>
+                    </div>
+
+                    <div class="newsletter-article commentary">
+                        <h3>⚖️ Commentary: “Dying in Custody”</h3>
+                        <p>Kudakwashe reflects on police abuse and the constitutional rights of arrested persons.</p>
+                        <a href="pages/forum-newsletter.html" class="button">Read Commentary</a>
+                    </div>
+
+                    <div class="newsletter-article update">
+                        <h3>✨ What’s New on the Website</h3>
+                        <p>New login system, featured articles, and newsletter archives now live!</p>
+                        <a href="Forum-Newsletter.html" class="button">See Updates</a>
+                    </div>
+                     <div class="newsletter-article notice">
+                        <h3>🏛️ Moot Court Success</h3>
+                        <p>Our team secured top honors at the national moot court competition!</p>
+                        <a href="pages/forum-newsletter.html" class="button">Read About It</a>
+                    </div>
+                </div>
+
+                <button class="carousel-arrow newsletter-carousel-arrow right-arrow" aria-label="Next Newsletter">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-chevron-right"><polyline points="9 18 15 12 9 6"></polyline></svg>
+                </button>
+                <div class="carousel-indicators" id="newsletter-carousel-indicators"></div>
+            </div>
+        </section>
 
         <section class="moot-court-section">
             <a href="moot-court-guide.html">
@@ -129,40 +149,62 @@
         </section>
 
         <section class="campus-guides-section">
-  <h2><a href="pages/campus-guides.html">Campus Guides</a></h2>
-  <div class="guides-grid">
-    
-    <!-- Tutorials Card -->
-    <div class="guide-card">
-      <a href="pages/tutorials.html">
-        <div class="icon-container">
-          <svg class="tutorial-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
-            <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/>
-            <path d="M4 4.5A2.5 2.5 0 0 1 6.5 7H20"/>
-            <path d="M6.5 7v10"/>
-            <path d="M14 10l2 2 2-2"/>
-            <path d="M16 12V4"/>
-          </svg>
-        </div>
-        <p>Tutorials</p>
-      </a>
-    </div>
+            <h2><a href="pages/campus-guides.html">Campus Guides</a></h2>
+            <div class="guides-grid">
 
-    <!-- Attachment Card -->
-    <div class="guide-card">
-      <a href="pages/attachment.html">
-        <div class="icon-container">
-          <svg class="attachment-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
-            <path d="M2 7h20v14H2z" />
-            <path d="M16 3h-8v4h8V3z" />
-            <path d="M2 7l4 4h12l4-4" />
-          </svg>
-        </div>
-        <p>Attachment</p>
-      </a>
-    </div>
-</section>
+                <div class="guide-card">
+                    <a href="pages/tutorials.html">
+                        <div class="icon-container">
+                            <svg class="tutorial-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/>
+                                <path d="M4 4.5A2.5 2.5 0 0 1 6.5 7H20"/>
+                                <path d="M6.5 7v10"/>
+                                <path d="M14 10l2 2 2-2"/>
+                                <path d="M16 12V4"/>
+                            </svg>
+                        </div>
+                        <p>Tutorials</p>
+                    </a>
+                </div>
 
+                <div class="guide-card">
+                    <a href="pages/attachment.html">
+                        <div class="icon-container">
+                            <svg class="attachment-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M2 7h20v14H2z" />
+                                <path d="M16 3h-8v4h8V3z" />
+                                <path d="M2 7l4 4h12l4-4" />
+                            </svg>
+                        </div>
+                        <p>Attachment</p>
+                    </a>
+                </div>
+                <div class="guide-card">
+                    <a href="pages/legal-aid-clinics.html">
+                        <div class="icon-container">
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="feather feather-users">
+                                <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
+                                <circle cx="9" cy="7" r="4"></circle>
+                                <path d="M23 21v-2a4 4 0 0 0-3-3.87"></path>
+                                <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
+                            </svg>
+                        </div>
+                        <p>Legal Aid Clinics</p>
+                    </a>
+                </div>
+                <div class="guide-card">
+                    <a href="pages/student-societies.html">
+                        <div class="icon-container">
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="feather feather-briefcase">
+                                <rect x="2" y="7" width="20" height="14" rx="2" ry="2"></rect>
+                                <path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"></path>
+                            </svg>
+                        </div>
+                        <p>Student Societies</p>
+                    </a>
+                </div>
+            </div>
+        </section>
 
         <section class="about-section top-about" id="about-us">
             <h2><a href="pages/about.html">About</a></h2>
@@ -181,13 +223,10 @@
         <p>&copy; 2025 LAW STUDENTS INTELLECTUAL FORUM</p>
     </footer>
 
-<script type="module" src="scripts/loader.js"></script>
-<script type="module" src="scripts/load-header.js"></script>
-<script type="module" src="/law-students-forum-website/scripts/auth-modal.js"></script>
-<script type="module" src="scripts/home.js"></script>
-<script type="module" src="scripts/student-articles.js"></script>
-
-
-
-</body>
+    <script type="module" src="scripts/loader.js"></script>
+    <script type="module" src="scripts/load-header.js"></script>
+    <script type="module" src="/law-students-forum-website/scripts/auth-modal.js"></script>
+    <script type="module" src="scripts/home.js"></script>
+    <script type="module" src="scripts/student-articles.js"></script>
+    <script type="module" src="scripts/carousel.js"></script> </body>
 </html>

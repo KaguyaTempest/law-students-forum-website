@@ -232,6 +232,7 @@ p {
 /* --- Judge Image Styling (GLOBAL) --- */
 /* The judge-container is now outside of game-screen/game-over-screen */
 /* It needs to be positioned within game-wrapper and its visibility controlled by JS */
+/* --- Judge Image Styling (GLOBAL) --- */
 #judge-container {
     position: absolute; /* Position relative to the game-wrapper */
     top: 50%; /* Center vertically within the wrapper */
@@ -239,13 +240,20 @@ p {
     transform: translate(-50%, -50%); /* Adjust for its own size */
     width: 200px; /* Larger judge container */
     height: 250px;
-    overflow: hidden; /* Important for transition to contain images */
+    overflow: hidden;
     border-bottom: 4px solid var(--border-color);
     background-color: var(--bg-medium);
     border-radius: 5px;
     z-index: 5; /* Ensure it's above game sections when visible */
     transition: opacity 0.5s ease-in-out; /* Smooth fade for container itself */
-    display: none; /* Hidden by default, controlled by JS */
+    /* IMPORTANT: REMOVE THE LINE BELOW from your existing CSS */
+    /* display: none; */
+}
+
+/* ADD THIS NEW RULE to your CSS */
+/* This ensures the container is hidden when the 'hidden' class is present */
+#judge-container.hidden {
+    display: none;
 }
 
 #judge-container.active {
@@ -262,7 +270,6 @@ p {
     image-rendering: pixelated; /* Maintain pixel art look */
     image-rendering: -moz-crisp-edges;
     image-rendering: crisp-edges;
-    /* transition is now on the container #judge-container for overall fade */
 }
 
 /* --- Hangman Drawing --- */

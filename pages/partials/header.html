@@ -1,111 +1,43 @@
 <header>
-  <a href="/law-students-forum-website/index.html" class="logo-link">
-  <img src="/law-students-forum-website/assets/scales-of-justice.png" alt="LSIF logo" class="header-logo">
-  </a>
-  <h1>
-    LAW STUDENTS<br>
-    INTELLECTUAL FORUM
-  </h1>
-  <!-- Mobile hamburger -->
-  <button class="nav-toggle" aria-label="Toggle navigation" aria-expanded="false">
-    <span></span><span></span><span></span>
-  </button>
-  <nav>
-    <ul>
-      <li><a href="/law-students-forum-website/pages/student-articles.html">Student Articles</a></li>
-      <li><a href="/law-students-forum-website/pages/academic-resources.html">Academic Resources</a></li>
-      <li><a href="/law-students-forum-website/pages/campus-guides.html">Campus Guides</a></li>
-      <li><a href="/law-students-forum-website/pages/moot-court-guide.html">Moot Court Guide</a></li>
-      <li><a href="/law-students-forum-website/pages/about.html">About</a></li>
-    </ul>
-  </nav>
-  
-<!-- Auth buttons (for guests) -->
-  <div id="auth-buttons">
-  <button id="login-btn" class="auth-action open-auth-modal">Login</button>
-  <button id="signup-btn" class="auth-action open-auth-modal">Sign Up</button>
-</div>
-
-  <!-- User info (shown when logged in) -->
-  <div id="user-info" class="hidden" style="display: flex; align-items: center; gap: 10px;">
-    <img id="user-avatar" src="/law-students-forum-website/assets/default-avatar.png" alt="Avatar" class="avatar">
-    <span id="user-name"></span>
-    <span id="user-role-badge" class="role-badge"></span>
-    <button id="logout-btn">Logout</button>
-  </div>
- <section class="auth-section">
-  <div id="auth-modal" class="auth-modal hidden">
-    <button class="close-auth-modal">&times;</button> <!-- ✅ Close button added -->
-
-    <section class="auth-section">
-  <div id="auth-modal" class="auth-modal hidden">
-    <button class="close-auth-modal">&times;</button>
-
-    <div class="auth-card">
-      <!-- Toggle Buttons -->
-      <div class="auth-toggle">
-        <button id="show-login" class="active">Login</button>
-        <button id="show-signup">Sign Up</button>
-      </div>
-
-      <!-- Signup Form -->
-      <div id="signup-form-container" class="auth-form-container hidden">
-        <h2>Create an Account</h2>
-        <form id="signup-form">
-          <input type="text" id="signup-username" placeholder="Username" required />
-          <input type="email" id="signup-email" placeholder="Email" required />
-          <input type="password" id="signup-password" placeholder="Password (min 6 characters)" required />
-          <input type="password" id="signup-confirm-password" placeholder="Confirm Password" required />
-
-          <select id="user-role" required>
-            <option value="">Select your role</option>
-            <option value="student">Law Student</option>
-            <option value="lawyer">Lawyer (in field)</option>
-            <option value="observer">Observer</option>
-          </select>
-
-          <div id="student-fields" class="hidden">
-            <input type="text" id="student-id" placeholder="Student ID Number" required />
-            <select id="student-university" required>
-              <option value="">Select your University</option>
-              <option value="UZ">University of Zimbabwe</option>
-              <option value="MSU">Midlands State University</option>
-              <option value="ZEGU">Zimbabwe Ezekiel Guti University (ZEGU)</option>
-              <option value="GZU">Great Zimbabwe University (GZU)</option>
-            </select>
-            <select id="student-year-of-study" required>
-              <option value="">Select Year of Study</option>
-              <option value="1">Year 1</option>
-              <option value="2">Year 2</option>
-              <option value="3">Year 3</option>
-              <option value="4">Year 4</option>
-              <option value="5">Year 5</option>
-              <option value="6">Year 6</option>
-              <option value="7">Year 7</option>
-            </select>
-          </div>
-
-          <div id="lawyer-fields" class="hidden">
-            <input type="number" id="lawyer-years-experience" placeholder="Years of Experience" min="0" required />
-          </div>
-
-          <button type="submit">Sign Up</button>
-          <div id="signup-error-message" class="error-message"></div>
-        </form>
-      </div>
-
-      <!-- Login Form -->
-      <div id="login-form-container" class="auth-form-container">
-        <h2>Login to your Account</h2>
-        <form id="login-form">
-          <input type="email" id="login-email" placeholder="Email" required />
-          <input type="password" id="login-password" placeholder="Password" required />
-          <button type="submit">Login</button>
-          <div id="login-error-message" class="error-message"></div>
-          <p><a href="#" id="forgot-password-link">Forgot Password?</a></p>
-        </form>
-      </div>
+    <a href="/law-students-forum-website/index.html" class="logo-link">
+        <img src="/law-students-forum-website/assets/scales-of-justice.png" alt="LSIF logo" class="header-logo">
+    </a>
+    <h1>
+        LAW STUDENTS<br>
+        <span>INTELLECTUAL FORUM</span>
+    </h1>
+    <button class="nav-toggle" aria-label="Toggle navigation" aria-expanded="false">
+        <span></span><span></span><span></span>
+    </button>
+    <nav>
+        <ul>
+            <li><a href="/law-students-forum-website/pages/student-articles.html">Student Articles</a></li>
+            <li><a href="/law-students-forum-website/pages/academic-resources.html">Academic Resources</a></li>
+            <li><a href="/law-students-forum-website/pages/campus-guides.html">Campus Guides</a></li>
+            <li><a href="/law-students-forum-website/pages/moot-court-guide.html">Moot Court Guide</a></li>
+            <li><a href="/law-students-forum-website/pages/about.html">About</a></li>
+        </ul>
+    </nav>
+    
+    <div class="auth-buttons" id="auth-controls">
+        <button id="login-btn" class="auth-action open-auth-modal">Login</button>
+        <button id="signup-btn" class="auth-action open-auth-modal">Sign Up</button>
     </div>
-  </div>
-</section>
+
+    <button id="mode-toggle" class="mode-toggle" aria-label="Toggle dark and light mode">
+        <svg class="sun-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="12" cy="12" r="5"></circle>
+            <line x1="12" y1="1" x2="12" y2="3"></line>
+            <line x1="12" y1="21" x2="12" y2="23"></line>
+            <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+            <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+            <line x1="1" y1="12" x2="3" y2="12"></line>
+            <line x1="21" y1="12" x2="23" y2="12"></line>
+            <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+            <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+        </svg>
+        <svg class="moon-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+        </svg>
+    </button>
 </header>
