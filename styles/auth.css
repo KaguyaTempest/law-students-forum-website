@@ -1,24 +1,28 @@
 /* --- Auth Modal Styling --- */
-.auth-modal.hidden {
-    display: none;
-}
-
-.auth-modal.show {
-    display: flex; /* Or block, depending on desired transition/layout */
-}
-
-/* Fix modal layout */
+/* The base state of the modal (hidden by default, allows transition) */
 .auth-modal {
     position: fixed;
-    top: 0; left: 0;
+    top: 0;
+    left: 0;
     width: 100%;
     height: 100%;
-    background: rgba(0, 0, 0, 0.6);
-    display: flex;
+    background: rgba(0, 0, 0, 0.7); /* Slightly darker overlay for better contrast */
+    display: flex; /* Always use flexbox to center content */
     align-items: center;
     justify-content: center;
     z-index: 1000;
-    padding: 20px;
+    padding: 20px; /* Padding around the modal content */
+
+    /* Transition properties for smooth fade-in/out */
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.3s ease, visibility 0.3s ease;
+}
+
+/* State when the modal should be visible */
+.auth-modal.show {
+    opacity: 1;
+    visibility: visible;
 }
 
 /* Modal card styling */
@@ -29,11 +33,19 @@
     width: 100%;
     max-width: 460px;
     box-shadow: var(--card-shadow); /* Use CSS variable */
-    display: flex;
+    display: flex; /* Maintain flex for internal layout of toggle/forms */
     flex-direction: column;
     position: relative;
-    transition: background-color 0.3s ease, box-shadow 0.3s ease;
+    /* Adding a subtle transform for entry animation */
+    transform: translateY(20px);
+    transition: background-color 0.3s ease, box-shadow 0.3s ease, transform 0.3s ease;
 }
+
+/* Animate card into view when modal is shown */
+.auth-modal.show .auth-card {
+    transform: translateY(0);
+}
+
 
 /* Close button styling */
 .close-auth-modal {
@@ -42,9 +54,11 @@
     right: 14px;
     background: transparent;
     border: none;
-    font-size: 1.5rem;
+    font-size: 1.8rem; /* Slightly larger for better tap target */
     color: var(--text-color-medium); /* Use CSS variable */
     cursor: pointer;
+    line-height: 1; /* Ensures consistent vertical alignment */
+    padding: 5px; /* Add padding for easier clicking */
     transition: color 0.3s ease;
 }
 
@@ -56,7 +70,8 @@
     outline-offset: 2px;
 }
 
-/* Auth Main (if used as a standalone page) */
+/* Auth Main (if used as a standalone page - usually not for a modal) */
+/* This section might be redundant if auth.html is ONLY used for the modal */
 .auth-main {
     max-width: 420px;
     margin: 40px auto;
@@ -90,7 +105,7 @@
 .auth-toggle button.active {
     border-bottom-color: var(--auth-primary); /* Use CSS variable */
     color: var(--auth-primary); /* Use CSS variable */
-    background-color: var(--auth-bg); /* Use CSS variable */
+    /* Removed background-color here to keep it cleaner, as it was subtle */
 }
 
 .auth-toggle button:focus {
@@ -98,13 +113,18 @@
     outline-offset: 2px;
 }
 
+/* Form containers - crucial for toggling */
 .auth-form-container {
-    display: none;
-    flex-direction: column;
+    display: none; /* Hidden by default */
+    flex-direction: column; /* Ensure content inside forms stacks vertically */
+    /* Added transition for subtle fade-in when switching forms */
+    opacity: 0;
+    transition: opacity 0.3s ease-in-out;
 }
 
 .auth-form-container.active {
-    display: flex;
+    display: flex; /* Show when active */
+    opacity: 1;
 }
 
 .auth-form-container h2 {
@@ -130,6 +150,8 @@
     color: var(--text-color-dark); /* Ensure input text is readable */
     background-color: var(--bg-color); /* Input background */
     transition: border-color 0.3s, background-color 0.3s;
+    width: 100%; /* Ensure inputs take full width */
+    box-sizing: border-box; /* Include padding/border in width calculation */
 }
 
 .auth-form-container input:focus,
@@ -148,6 +170,8 @@
     cursor: pointer;
     transition: background-color 0.3s;
     font-size: 1.1em;
+    width: 100%; /* Ensure submit button takes full width */
+    box-sizing: border-box;
 }
 
 .auth-form-container button[type="submit"]:hover {
@@ -187,10 +211,43 @@
     outline-offset: 2px;
 }
 
-/* Responsive for small screens */
+/* --- Responsive for small screens --- */
 @media (max-width: 480px) {
-    .auth-main {
+    /* Adjust padding for the modal on very small screens */
+    .auth-modal {
+        padding: 10px; /* Reduce overall padding to give more space to the card */
+    }
+
+    .auth-card {
+        padding: 20px; /* Reduce card padding */
+        border-radius: 8px; /* Slightly less rounded corners */
+        width: 95%; /* Make it take up more width on small screens */
+    }
+
+    .close-auth-modal {
+        font-size: 1.5rem; /* Smaller close button */
+        top: 8px;
+        right: 8px;
+    }
+
+    .auth-main { /* If you are still using auth-main for a standalone page */
         margin: 20px 10px;
         padding: 20px;
+    }
+
+    .auth-form-container h2 {
+        font-size: 1.2em; /* Smaller headings */
+    }
+
+    .auth-toggle button {
+        padding: 10px 0; /* Slightly less padding for toggle buttons */
+        font-size: 1em;
+    }
+
+    .auth-form-container input,
+    .auth-form-container select,
+    .auth-form-container button[type="submit"] {
+        padding: 10px; /* Slightly less padding for inputs/buttons */
+        font-size: 0.95em;
     }
 }
