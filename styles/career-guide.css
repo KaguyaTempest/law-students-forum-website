@@ -1,0 +1,142 @@
+/* --------------------------------------------------
+   Career Center • Law Students Intellectual Forum
+   -------------------------------------------------- */
+
+/* Fallback variables (delete if already defined globally) */
+:root {
+  --primary-color: #1e3a8a;          /* LSIF blue */
+  --accent-color:  #f59e0b;          /* LSIF orange */
+  --bg-color:      #f9fafb;          /* light gray canvas */
+  --surface-color: #ffffff;          /* card surface */
+  --text-color:    #1f2937;          /* near‑black */
+  --radius-lg:     1rem;
+  --shadow-sm:     0 1px 3px rgba(0,0,0,.06);
+  --shadow-md:     0 4px 6px rgba(0,0,0,.08);
+}
+
+/* Dark‑mode overrides */
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg-color:      #111827;
+    --surface-color: #1f2937;
+    --text-color:    #f3f4f6;
+    --shadow-sm:     0 1px 3px rgba(0,0,0,.6);
+    --shadow-md:     0 4px 6px rgba(0,0,0,.7);
+  }
+}
+
+/* ---------- Layout wrappers ---------- */
+
+body.career-center {
+  background: var(--bg-color);
+  color: var(--text-color);
+}
+
+/* hero banner */
+.career-hero {
+  padding: 4rem 1rem 2.5rem;
+  text-align: center;
+  background: linear-gradient(135deg, var(--primary-color) 0%, #233b96 100%);
+  color: #fff;
+}
+
+.career-hero h1 {
+  margin: 0 0 1rem;
+  font-size: clamp(2rem, 4vw + 0.5rem, 2.5rem);
+  font-weight: 700;
+}
+
+.career-hero p {
+  margin: 0 auto;
+  max-width: 42rem;
+  font-size: 1.125rem;
+  line-height: 1.6;
+}
+
+/* grid of cards */
+.career-grid {
+  width: min(1200px, 100%);
+  margin: 0 auto;
+  padding: 2.5rem 1rem 4rem;
+  display: grid;
+  gap: 1.5rem;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+}
+
+/* ---------- Career cards ---------- */
+
+.career-card {
+  display: flex;
+  flex-direction: column;
+  background: var(--surface-color);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-sm);
+  transition: transform .2s ease, box-shadow .2s ease;
+  overflow: hidden;
+  text-decoration: none;          /* kill default link underline */
+  color: inherit;                 /* inherit text color */
+}
+
+.career-card:hover,
+.career-card:focus-visible {
+  transform: translateY(-4px);
+  box-shadow: var(--shadow-md);
+}
+
+.career-card img {
+  width: 100%;
+  height: 180px;
+  object-fit: cover;
+}
+
+.career-content {
+  flex: 1;
+  padding: 1.25rem 1.5rem 1.75rem;
+  display: flex;
+  flex-direction: column;
+}
+
+.career-content h2 {
+  margin: 0 0 .5rem;
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: var(--primary-color);
+}
+
+.career-content p {
+  flex: 1;
+  margin: 0 0 1.25rem;
+  font-size: .95rem;
+  line-height: 1.55;
+}
+
+.career-content .cta {
+  align-self: flex-start;
+  background: var(--accent-color);
+  padding: .5rem 1rem;
+  border-radius: .5rem;
+  font-weight: 600;
+  color: #1e293b;
+  transition: background .15s ease;
+}
+
+.career-content .cta:hover,
+.career-content .cta:focus-visible {
+  background: #f0b34a;            /* lighter accent on hover */
+}
+
+/* ---------- Responsive tweaks ---------- */
+
+@media (max-width: 480px) {
+  .career-hero {
+    padding: 3rem 1rem 1.5rem;
+  }
+
+  .career-hero p {
+    font-size: 1rem;
+  }
+
+  .career-card img {
+    height: 150px;
+  }
+}

@@ -1,0 +1,124 @@
+/* ================================================================
+   Campus‑Guides – site‑themed stylesheet (v2)
+   Matches the core LSIF palette & typography set in /styles/style.css
+   ================================================================ */
+
+:root {
+  --accent: var(--accent-color, #4f46e5);   /* fallback indigo‑600 */
+  --bg‑light: #f9fafb;                      /* tailwind gray‑50 */
+  --card‑bg: #ffffff;
+  --card‑shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+  --card‑shadow‑hover: 0 8px 24px rgba(0, 0, 0, 0.08);
+  --radius‑lg: 1rem;
+}
+
+/* ---------- Layout shell ----------------------------------------- */
+.campus-guides-main {
+  background: var(--bg‑light);
+  scroll-behavior: smooth;
+}
+
+/* ---------- Hero -------------------------------------------------- */
+.guides-hero {
+  background: linear-gradient(135deg, var(--accent) 0%, #6366f1 60%, #818cf8 100%);
+  color: #ffffff;
+  padding: 6rem 1rem;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+}
+
+.guides-hero h1 {
+  font-size: clamp(2rem, 5vw, 3rem);
+  font-weight: 700;
+  margin-bottom: 0.75rem;
+  line-height: 1.2;
+}
+
+.guides-hero p {
+  max-width: 40rem;
+  margin: 0 auto;
+  font-size: 1.125rem;
+  opacity: 0.9;
+}
+
+/* ---------- Guides grid ------------------------------------------ */
+.guides-overview {
+  display: grid;
+  gap: 2rem;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  padding: 4rem 1rem;
+}
+
+.guide-card {
+  background: var(--card‑bg);
+  border-radius: var(--radius‑lg);
+  box-shadow: var(--card‑shadow);
+  display: flex;
+  flex-direction: column;
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+}
+
+.guide-card:hover {
+  transform: translateY(-6px);
+  box-shadow: var(--card‑shadow‑hover);
+}
+
+.guide-card h2 {
+  font-size: 1.5rem;
+  font-weight: 600;
+  margin-bottom: 0.5rem;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.guide-card p {
+  flex: 1;
+  line-height: 1.45;
+}
+
+/* ---------- CTA --------------------------------------------------- */
+.cta {
+  background: #e0e7ff; /* indigo‑100 */
+  text-align: center;
+  padding: 4rem 1rem;
+}
+
+.cta h3 {
+  color: var(--accent);
+  font-size: 1.5rem;
+  font-weight: 600;
+  margin-bottom: 0.5rem;
+}
+
+.cta p {
+  max-width: 32rem;
+  margin: 0 auto 1.5rem;
+  line-height: 1.4;
+}
+
+/* ---------- Buttons ---------------------------------------------- */
+.btn {
+  align-self: flex-start;
+  background: var(--accent);
+  color: #ffffff;
+  padding: 0.6em 1.4em;
+  border-radius: 999px;
+  font-weight: 500;
+  text-decoration: none;
+  display: inline-block;
+  transition: background 0.2s ease;
+}
+
+.btn:hover,
+.btn:focus {
+  background: #3343d1; /* darker indigo */
+}
+
+/* ---------- Responsive tweaks ------------------------------------ */
+@media (min-width: 768px) {
+  .cta h3 {
+    font-size: 1.75rem;
+  }
+}

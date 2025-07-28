@@ -1,0 +1,101 @@
+/* ===== Modal Backdrop ===== */
+.auth-modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.7);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 999;
+}
+
+/* ===== Hide/Show Control ===== */
+.hidden {
+  display: none !important;
+}
+.show {
+  display: flex !important;
+}
+
+/* ===== Modal Container ===== */
+.auth-card {
+  background: #fff;
+  padding: 2rem;
+  border-radius: 12px;
+  width: 90%;
+  max-width: 500px;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+  position: relative;
+}
+
+/* ===== Close Button ===== */
+.close-auth-modal {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  background: transparent;
+  border: none;
+  font-size: 1.8rem;
+  cursor: pointer;
+}
+
+/* ===== Toggle Buttons ===== */
+.auth-toggle {
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+  margin-bottom: 1rem;
+}
+
+.auth-toggle button {
+  padding: 0.5rem 1rem;
+  font-weight: bold;
+  cursor: pointer;
+  border: none;
+  background: #ddd;
+  border-radius: 5px;
+}
+
+.auth-toggle button.active {
+  background-color: #0077cc;
+  color: white;
+}
+
+/* ===== Forms ===== */
+.auth-form-container {
+  display: none;
+}
+.auth-form-container.active {
+  display: block;
+}
+
+.auth-form-container form {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.auth-form-container input,
+.auth-form-container select,
+.auth-form-container textarea,
+.auth-form-container button {
+  padding: 0.6rem;
+  font-size: 1rem;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+}
+
+.auth-form-container button {
+  background: #0077cc;
+  color: white;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.error-message {
+  color: red;
+  font-size: 0.9rem;
+}

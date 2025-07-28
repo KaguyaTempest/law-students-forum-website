@@ -1,27 +1,36 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>LAW STUDENTS INTELLECTUAL FORUM</title>
-    <link rel="icon" href="/assets/favicon.ico" type="image/x-icon" />
-    <link rel="stylesheet" href="/styles/style.css" />
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>LAW STUDENTS INTELLECTUAL FORUM</title>
+  <link rel="icon" href="assets/favicon.ico" type="image/x-icon" />
+  <link rel="stylesheet" href="styles/style.css" />
+  <link rel="stylesheet" href="/law-students-forum-website/styles/splash.css"/> <!-- new splash styling -->
+  <link rel="stylesheet" href="/law-students-forum-website/styles/auth.css"/> <!-- new splash styling -->
 </head>
+
 <body>
-  <!-- ─── Splash / Loading Screen ───────────────────────────── -->
-  <div id="splash" class="splash">
-    <div class="splash-inner">
-      <img src="/assets/forum-logo.png" alt="Forum logo" class="splash-logo" />
+  <div id="splash-screen">
+  <button class="skip-btn" id="skip-btn">Skip</button>
 
-      <p class="splash-tag">
-        Sponsored by <span>KT Industries</span>
-      </p>
-
-      <p id="splash-message" class="splash-message">
-        Loading…
-      </p>
-    </div>
+  <div class="logo-container">
+    <img src="assets/forum-logo.png" alt="LSIF Logo" class="logo-image">
   </div>
+
+  <h1 class="title">LAW STUDENTS INTELLECTUAL FORUM</h1>
+
+  <div class="loading-container">
+    <div class="loading-message" id="loading-message">Preparing legal briefs...</div>
+  </div>
+
+  <div class="loading-bar-container">
+    <div class="loading-bar" id="loading-bar"></div>
+  </div>
+
+  <div class="hint">Click anywhere to skip if ready</div>
+  <div class="sponsor">from KT Industries</div>
+</div>
 
   <!-- ─── Header Placeholder ────────────────────────────────── -->
   <div id="header-placeholder"></div>
@@ -31,7 +40,7 @@
         <!-- Existing homepage content -->
      
     <section class="student-articles-section">
-    <h2><a href="/pages/student-articles.html">Student Articles</a></h2>
+    <h2><a href="pages/student-articles.html">Student Articles</a></h2>
     <div class="article-carousel-container">
   <button class="carousel-arrow left-arrow">&#10094;</button>
 
@@ -39,21 +48,21 @@
 
     <article class="article-card featured">
         <div class="article-image-container">
-          <img src="/assets/law-ai.png" alt="AI and Copyright cover" />
+          <img src="assets/law-ai.png" alt="AI and Copyright cover" />
         </div>
         <h3>The Evolving Landscape of AI and Copyright</h3>
         <p>A legal analysis of authorship, fair use, and cultural heritage in the age of generative AI.</p>
-        <a href="/pages/articles/artificial-intelligence-and-copyright.html">READ MORE</a>
+        <a href="pages/articles/artificial-intelligence-and-copyright.html">READ MORE</a>
       </article>
 
       <!-- ——— Card 2 ——— -->
       <article class="article-card">
         <div class="article-image-container">
-          <img src="/assets/ai-oracle.png" alt="AI replacing thought" />
+          <img src="assets/ai-oracle.png" alt="AI replacing thought" />
         </div>
         <h3>The New Oracle: How AI Is Replacing Thought</h3>
         <p>Has artificial intelligence become the new unquestioned source of truth? Lionel Chidaushe investigates.</p>
-        <a href="/pages/articles/ai-the-new-oracle.html">READ MORE</a>
+        <a href="pages/articles/ai-the-new-oracle.html">READ MORE</a>
       </article>
 
     <div class="article-card">
@@ -69,7 +78,7 @@
 </section>
         
   <section class="newsletter-section">
-  <h2><a href="/pages/forum-newsletter.html">Forum Newsletter: July 2025 Edition</a></h2>
+  <h2><a href="pages/forum-newsletter.html">Forum Newsletter: July 2025 Edition</a></h2>
   <p class="newsletter-theme">
   <span>🧭 Theme:</span> <strong>Resilience, Rights & Reality</strong>
 </p>
@@ -82,21 +91,21 @@
       <div class="newsletter-article alert">
         <h3>🚧 Campus Strike Update</h3>
         <p>Lecturers are on full strike. Exams are delayed and the semester extended to end of June.</p>
-        <a href="Forum-Newsletter.html" class="button">Read More</a>
+        <a href="pages/forum-newsletter.html" class="button">Read More</a>
       </div>
 
       <!-- NOTICE: Exam Timetable -->
       <div class="newsletter-article notice">
         <h3>📅 Exam Timetable Now Available</h3>
         <p>New exam dates and timetable are now online. Prepare accordingly.</p>
-        <a href="Forum-Newsletter.html" class="button">View Timetable</a>
+        <a href="pages/forum-newletter.html" class="button">View Timetable</a>
       </div>
 
       <!-- COMMENTARY: Rights & Abuse -->
       <div class="newsletter-article commentary">
         <h3>⚖️ Commentary: “Dying in Custody”</h3>
         <p>Kudakwashe reflects on police abuse and the constitutional rights of arrested persons.</p>
-        <a href="Forum-Newsletter.html" class="button">Read Commentary</a>
+        <a href="pages/forum-newsletter.html" class="button">Read Commentary</a>
       </div>
 
       <!-- UPDATE: Website Changes -->
@@ -116,16 +125,16 @@
                 <h2>Guide to Moot Court Competitions</h2>
             </a>
             <p>A step-by-step guide for participating and succeeding in moot court competitions.</p>
-            <a href="moot-court-guide.html">READ MORE</a>
+            <a href="pages/moot-court-guide.html">READ MORE</a>
         </section>
 
         <section class="campus-guides-section">
-  <h2><a href="/pages/campus-guides.html">Campus Guides</a></h2>
+  <h2><a href="pages/campus-guides.html">Campus Guides</a></h2>
   <div class="guides-grid">
     
     <!-- Tutorials Card -->
     <div class="guide-card">
-      <a href="tutorials.html">
+      <a href="pages/tutorials.html">
         <div class="icon-container">
           <svg class="tutorial-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
             <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/>
@@ -141,7 +150,7 @@
 
     <!-- Attachment Card -->
     <div class="guide-card">
-      <a href="attachment.html">
+      <a href="pages/attachment.html">
         <div class="icon-container">
           <svg class="attachment-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
             <path d="M2 7h20v14H2z" />
@@ -156,7 +165,7 @@
 
 
         <section class="about-section top-about" id="about-us">
-            <h2><a href="/pages/about.html">About</a></h2>
+            <h2><a href="pages/about.html">About</a></h2>
             <p>A platform for law students to share and access intellectual resources.</p>
             <p>University of Zimbabwe<br />Faculty of Law</p>
         </section>
@@ -172,10 +181,11 @@
         <p>&copy; 2025 LAW STUDENTS INTELLECTUAL FORUM</p>
     </footer>
 
-<script type="module" src="/scripts/load-header.js"></script>
-<script type="module" src="/scripts/home.js"></script>
-<script type="module" src="/scripts/student-articles.js"></script>
-<script type="module" src="/scripts/loader.js"></script>
+<script type="module" src="scripts/loader.js"></script>
+<script type="module" src="scripts/load-header.js"></script>
+<script type="module" src="/law-students-forum-website/scripts/auth-modal.js"></script>
+<script type="module" src="scripts/home.js"></script>
+<script type="module" src="scripts/student-articles.js"></script>
 
 
 

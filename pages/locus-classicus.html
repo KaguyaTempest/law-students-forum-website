@@ -4,9 +4,15 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
     <title>Locus Classicus</title>
-    <link rel="stylesheet" href="../style.css">
+    <link rel="icon" href="assets/favicon.ico" type="image/x-icon"/>
+    <link rel="stylesheet" href="/law-students-forum-website/styles/style.css"/>
+    <link rel="stylesheet" href="/law-students-forum-website/styles/locus-classicus.css"/>
+
 </head>
 <body>
+
+    <div id="header-placeholder"></div>
+
     <main class="locus-main">
         <section class="hero">
             <h1>🎙️ Locus Classicus</h1>
@@ -32,9 +38,30 @@
                     Your browser does not support the audio element.
                 </audio>
             </div>
-
-            <!-- Add more audio-card sections as needed -->
+            
+            <div class="audio-card">
+                <h3>S v Banana (2000)</h3>
+                <p>By C. Chimhanda – A critical narration of the former president’s trial and its implications on public justice.</p>
+                <audio controls>
+                <source src="https://firebasestorage.googleapis.com/v0/b/lsif-cedb1.firebasestorage.app/o/locus-classicus%2Fs-v-banana.mp3?alt=media&token=66c3b16b-43ba-4703-a496-ae6ae90f2b5d" type="audio/mpeg">
+                Your browser does not support the audio element.
+            </audio>
+            </div>
+            <div class="audio-card">
+                <h3>Mukoko v Attourney General (2000)</h3>
+                <p>By C. Chimhanda – A critical narration of the former president’s trial and its implications on public justice.</p>
+                <audio controls>
+                <source src="https://firebasestorage.googleapis.com/v0/b/lsif-cedb1.firebasestorage.app/o/locus-classicus%2Fmukoko-v-ag.mp3?alt=media&token=5680de0d-76bc-4764-ba87-6cef4d4be974" type="audio/mpeg"
+                Your browser does not support the audio element.
+            </audio>
+            </div>
+            
+    <!-- Add more audio-card sections as needed -->
         </section>
     </main>
+    <script type="module" src="/law-students-forum-website/scripts/load-header.js"></script>
+    <script type="module" src="/law-students-forum-website/scripts/auth-modal.js"></script>
+    <script type="module" src="/law-students-forum-website/scripts/load-audio.js"></script>
+
 </body>
 </html>

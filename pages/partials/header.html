@@ -1,6 +1,11 @@
 <header>
+<<<<<<< HEAD
   <a href="/pages/index.html" class="logo-link">
   <img src="/assets/scales-of-justice.png" alt="LSIF logo" class="header-logo">
+=======
+  <a href="/law-students-forum-website/index.html" class="logo-link">
+  <img src="/law-students-forum-website/assets/scales-of-justice.png" alt="LSIF logo" class="header-logo">
+>>>>>>> 02d0d546db2c5b78beb3e1dd705e1fc16a16de8a
   </a>
   <h1>
     LAW STUDENTS<br>
@@ -11,6 +16,7 @@
     <span></span><span></span><span></span>
   </button>
   <nav>
+<<<<<<< HEAD
   <ul>
     <li><a href="/pages/student-articles.html">Student Articles</a></li>
     <li><a href="/pages/academic-resources.html">Academic Resources</a></li>
@@ -19,6 +25,16 @@
     <li><a href="/pages/about.html">About</a></li>
   </ul>
 </nav>
+=======
+    <ul>
+      <li><a href="/law-students-forum-website/pages/student-articles.html">Student Articles</a></li>
+      <li><a href="/law-students-forum-website/pages/academic-resources.html">Academic Resources</a></li>
+      <li><a href="/law-students-forum-website/pages/campus-guides.html">Campus Guides</a></li>
+      <li><a href="/law-students-forum-website/pages/moot-court-guide.html">Moot Court Guide</a></li>
+      <li><a href="/law-students-forum-website/pages/about.html">About</a></li>
+    </ul>
+  </nav>
+>>>>>>> 02d0d546db2c5b78beb3e1dd705e1fc16a16de8a
   
 <!-- Auth buttons (for guests) -->
   <div id="auth-buttons">
@@ -28,8 +44,12 @@
 
   <!-- User info (shown when logged in) -->
   <div id="user-info" class="hidden" style="display: flex; align-items: center; gap: 10px;">
+<<<<<<< HEAD
     <img id="user-avatar" src="/assets/default-avatar.png"
      alt="Avatar" class="avatar">
+=======
+    <img id="user-avatar" src="/law-students-forum-website/assets/default-avatar.png" alt="Avatar" class="avatar">
+>>>>>>> 02d0d546db2c5b78beb3e1dd705e1fc16a16de8a
     <span id="user-name"></span>
     <span id="user-role-badge" class="role-badge"></span>
     <button id="logout-btn">Logout</button>
@@ -38,30 +58,25 @@
   <div id="auth-modal" class="auth-modal hidden">
     <button class="close-auth-modal">&times;</button> <!-- ✅ Close button added -->
 
+    <section class="auth-section">
+  <div id="auth-modal" class="auth-modal hidden">
+    <button class="close-auth-modal">&times;</button>
+
     <div class="auth-card">
+      <!-- Toggle Buttons -->
       <div class="auth-toggle">
         <button id="show-login" class="active">Login</button>
         <button id="show-signup">Sign Up</button>
       </div>
 
-      <!-- ✅ Signup form: no 'active' class here -->
+      <!-- Signup Form -->
       <div id="signup-form-container" class="auth-form-container hidden">
         <h2>Create an Account</h2>
         <form id="signup-form">
           <input type="text" id="signup-username" placeholder="Username" required />
           <input type="email" id="signup-email" placeholder="Email" required />
-          <input
-            type="password"
-            id="signup-password"
-            placeholder="Password (min 6 characters)"
-            required
-          />
-          <input
-            type="password"
-            id="signup-confirm-password"  <!-- ✅ Fixed ID typo -->
-            placeholder="Confirm Password"
-            required
-          />
+          <input type="password" id="signup-password" placeholder="Password (min 6 characters)" required />
+          <input type="password" id="signup-confirm-password" placeholder="Confirm Password" required />
 
           <select id="user-role" required>
             <option value="">Select your role</option>
@@ -71,12 +86,7 @@
           </select>
 
           <div id="student-fields" class="hidden">
-            <input
-              type="text"
-              id="student-id"
-              placeholder="Student ID Number"
-              required
-            />
+            <input type="text" id="student-id" placeholder="Student ID Number" required />
             <select id="student-university" required>
               <option value="">Select your University</option>
               <option value="UZ">University of Zimbabwe</option>
@@ -97,13 +107,7 @@
           </div>
 
           <div id="lawyer-fields" class="hidden">
-            <input
-              type="number"
-              id="lawyer-years-experience"
-              placeholder="Years of Experience"
-              min="0"
-              required
-            />
+            <input type="number" id="lawyer-years-experience" placeholder="Years of Experience" min="0" required />
           </div>
 
           <button type="submit">Sign Up</button>
@@ -111,7 +115,7 @@
         </form>
       </div>
 
-      <!-- ✅ Login form: now visible by default -->
+      <!-- Login Form -->
       <div id="login-form-container" class="auth-form-container">
         <h2>Login to your Account</h2>
         <form id="login-form">

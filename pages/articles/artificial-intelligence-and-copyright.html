@@ -5,24 +5,20 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>The Evolving Landscape of AI and Copyright | LSIF</title>
 
-  <link rel="icon" href="/assets/favicon.ico" type="image/x-icon" />
-  <link rel="stylesheet" href="/styles/style.css" />
-  <link rel="stylesheet" href="/styles/article.css" />
+  <link rel="icon" href="/law-students-forum-website/assets/favicon.ico" />
+  <link rel="stylesheet" href="/law-students-forum-website/styles/style.css" />
+  <link rel="stylesheet" href="/law-students-forum-website/styles/article.css" />
 </head>
-<body>
 
-  <!-- site header -->
+<body class="article-page">
+  <!-- LSIF header -->
   <div id="header-placeholder"></div>
-
-  <main class="article-main max-w-3xl mx-auto px-4 py-10">
-    <!-- cover -->
-    <img src="/assets/law-ai.png" alt="Cover image" class="w-full rounded mb-6" />
-
+  <!-- main article container -->
+<main class="article-main">
     <!-- title & meta -->
-    <h1 class="text-3xl font-bold mb-2">The Evolving Landscape of AI and Copyright</h1>
-    <p class="text-sm opacity-70 mb-10">
-      By Kudakwashe Kwitireni • Published 10 June 2025
-    </p>
+    <img src="/law-students-forum-website/assets/law-ai.png" alt="Cover image" class="article-cover" />
+    <h1 class="article-title">The Evolving Landscape of AI and Copyright</h1>
+    <p class="article-meta">By Kudakwashe Kwitireni • Published 10 June 2025</p>
 
     <!-- article body -->
     <p>The rapid evolution of generative AI has ignited a fervent debate surrounding its intersection with intellectual property rights. Last month, I had the privilege of participating in a moot court competition hosted by the World Intellectual Property Organization (WIPO), where we delved into the complex issue of whether the utilization of generative AI, trained on datasets containing cultural heritage artifacts, to generate NFTs constitutes copyright infringement. This essay serves as an analysis of this critical question, examining the potential infringement of copyright in AI-generated images. By exploring the nuances of this emerging legal landscape, I aim to contribute to the ongoing discourse and offer insights for policymakers, legal professionals, and creators alike.The Nature of AI-Generated Content and Copyright Law</p>
@@ -72,16 +68,15 @@
   </main>
 
   <!-- comments placeholder -->
-  <section id="comments" class="max-w-3xl mx-auto px-4 py-10">
-    <!-- comment list + form will be injected later -->
-  </section>
+  <section id="comments" class="comments-section"></section>
 
-  <footer class="text-center py-8 text-sm opacity-70">
-    © 2025 Law Students Intellectual Forum
+  <footer class="site-footer">
+    © 2025 Law Students Intellectual Forum
   </footer>
 
-  <script type="module" src="/scripts/load-header.js"></script>
-  <script type="module" src="/scripts/loader.js"></script>
-  <!-- later: <script type="module" src="/scripts/article-comments.js"></script> -->
+  <!-- JS (absolute paths) -->
+  <script type="module" src="/law-students-forum-website/scripts/load-header.js"></script>
+  <script type="module" src="/law-students-forum-website/scripts/loader.js"></script>
+  <script type="module" src="/law-students-forum-website/scripts/article-comments.js"></script>
 </body>
 </html>

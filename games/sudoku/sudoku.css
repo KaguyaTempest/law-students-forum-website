@@ -1,75 +1,351 @@
 /* sudoku.css */
 
+/* Add CSS Variables for the new primary color for consistency */
+:root {
+  --primary-color: #2596be; /* A vibrant blue */
+  --primary-color-dark: #1e7a9b; /* Slightly darker for hover */
+  --primary-color-light: #4bb4d8; /* Lighter for lighter effects */
+  --text-color: #f1f1f1; /* Main text color - ensure this is bright enough */
+  --bg-color: #1a1a1a;
+  --grid-bg: rgba(255, 255, 255, 0.05);
+  --input-bg: rgba(255, 255, 255, 0.1);
+  --input-border: rgba(255, 255, 255, 0.2);
+  --disabled-input-bg: rgba(255, 255, 255, 0.2);
+  --disabled-input-text: #e2e8f0;
+  --accent-color: #c084fc; /* Purple for focus, from your original CSS */
+  --dark-text-on-light-bg: #333; /* For text that needs to be dark on a light background */
+}
+
 body {
-  background-color: #1a1a1a; /* dark base */
+  background-color: var(--bg-color);
   background-image: url('./legal-bg.png');
   background-repeat: no-repeat;
   background-size: 65%;
   background-position: center;
   background-attachment: fixed;
-  color: #f1f1f1;
+  color: var(--text-color);
   font-family: 'Georgia', serif;
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
 }
 
-#sudoku-grid {
-  background-color: rgba(255, 255, 255, 0.05); /* semi-transparent for dark mode */
+#header-placeholder {
+    width: 100%;
+}
+
+.sudoku-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 40px 20px;
+  flex: 1;
+  width: 100%;
+  max-width: 900px;
+  margin: 0 auto;
+  gap: 20px;
+}
+
+/* NEW: Style for the title card */
+.title-card {
+    background-color: rgba(0, 0, 0, 0.6); /* Semi-transparent black background */
+    padding: 20px 30px;
+    border-radius: 10px;
+    text-align: center;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3); /* Subtle shadow for depth */
+    backdrop-filter: blur(8px); /* A stronger blur for better contrast */
+    margin-bottom: 20px; /* Space below the card */
+    border: 1px solid rgba(255, 255, 255, 0.1); /* Subtle border */
+}
+
+.game-title {
+  font-size: 2.5rem;
+  font-weight: bold;
+  color: var(--primary-color);
+  margin-bottom: 8px; /* Reduced margin, as card provides spacing */
+}
+
+.game-tagline {
+  font-size: 1.1rem;
+  color: #a0aec0;
+  /* margin-bottom: 20px; - This is now handled by the .title-card's padding and margin-bottom */
+  text-align: center;
+}
+
+.game-controls {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    margin-bottom: 20px;
+}
+
+.difficulty-selector label {
+    font-weight: 600;
+    margin-right: 8px;
+    color: var(--text-color);
+}
+
+.difficulty-selector select {
+    padding: 8px 12px;
+    border-radius: 6px;
+    border: 1px solid var(--input-border);
+    background-color: var(--input-bg);
+    color: var(--text-color);
+    font-size: 1rem;
+    cursor: pointer;
+    appearance: none;
+    background-image: url('data:image/svg+xml;charset=US-ASCII,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22292.4%22%20height%3D%22292.4%22%3E%3Cpath%20fill%3D%22%23f1f1f1%22%20d%3D%22M287%20197.3l-11.4-11.4c-3.1-3.1-8.2-3.1-11.3%200L146.2%20272.5%2028.1%20138.8c-3.1-3.1-8.2-3.1-11.3%200L5.4%20150.2c-3.1%203.1-3.1%208.2%200%2011.3l126.8%20126.9c3.1%203.1%208.2%203.1%2011.3%200l126.9-126.9c3.1-3.1%203.1-8.2%200-11.3z%22%2F%3E%3C%2Fsvg%3E');
+    background-repeat: no-repeat;
+    background-position: right 10px center;
+    background-size: 10px;
+}
+
+.difficulty-selector select:focus {
+    outline: 2px solid var(--accent-color);
+    border-color: var(--accent-color);
+}
+
+.difficulty-selector select option {
+    background-color: var(--input-bg);
+    color: var(--text-color);
+    padding: 8px 12px;
+}
+
+.difficulty-selector select option:checked,
+.difficulty-selector select option:hover {
+    background-color: var(--primary-color-dark);
+    color: #fff;
+}
+
+/* Timer Styling */
+.timer-container {
+    font-size: 1.5rem;
+    font-weight: 600;
+    color: var(--primary-color-light);
+    background-color: var(--input-bg);
+    padding: 8px 15px;
+    border-radius: 6px;
+    border: 1px solid var(--input-border);
+}
+
+#timer-display {
+    font-family: 'monospace', 'Courier New', monospace;
+    margin-left: 5px;
+}
+
+/* Fact Box Styling */
+.fact-box {
+  background-color: rgba(var(--primary-color-dark), 0.7);
+  color: var(--text-color);
+  padding: 12px 20px;
+  border-radius: 8px;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+  margin-top: 20px;
+  display: none;
+  text-align: center;
+  font-style: italic;
+  font-size: 1.1rem;
+  max-width: 600px;
+  width: 100%;
+  box-sizing: border-box;
+  border: 1px solid var(--primary-color);
+  backdrop-filter: blur(5px);
+}
+
+/* Sudoku Grid Base */
+#sudoku-grid.sudoku-grid {
+  background-color: var(--grid-bg);
   padding: 12px;
   border-radius: 8px;
   box-shadow: 0 0 10px rgba(255,255,255,0.08);
   backdrop-filter: blur(4px);
-  max-width: 100vw;
-  overflow-x: auto;
+  width: min(calc(9 * 2.5rem + 8 * 4px + 4 * 4px + 2 * 2px + 2 * 12px), 90vw);
+  max-width: 500px;
+  aspect-ratio: 1 / 1;
+  display: grid;
+  grid-template-columns: repeat(9, 1fr);
+  gap: 1px;
+  border: 2px solid #ccc;
 }
 
+
 input[type='text'] {
-  background-color: rgba(255,255,255,0.1);
+  background-color: var(--input-bg);
   font-size: 1.2rem;
   font-weight: 600;
-  color: #f9f9f9;
+  color: var(--text-color);
   border-radius: 4px;
-  width: 2.5rem;
-  height: 2.5rem;
-  border: 1px solid rgba(255,255,255,0.2);
+  width: 100%;
+  height: 100%;
+  border: 1px solid var(--input-border);
   text-align: center;
+  box-sizing: border-box;
 }
 
 input[type='text']:focus {
-  outline: 2px solid #c084fc;
-  background-color: rgba(255,255,255,0.2);
+  outline: 2px solid var(--accent-color);
+  background-color: rgba(var(--text-color), 0.1);
 }
 
 input[disabled] {
-  background-color: rgba(255,255,255,0.2);
-  color: #e2e8f0;
+  background-color: var(--disabled-input-bg);
+  color: var(--disabled-input-text);
   font-weight: bold;
 }
 
-button {
-  transition: background-color 0.2s ease, transform 0.2s ease;
-  font-weight: 600;
+/* Styles for thick borders to define 3x3 boxes */
+#sudoku-grid .border-right-thick {
+    border-right: 3px solid #666;
 }
 
-button:hover {
-  transform: scale(1.03);
+#sudoku-grid .border-bottom-thick {
+    border-bottom: 3px solid #666;
 }
+
+/* Override default border on cells at the very right/bottom edges if it's thicker */
+#sudoku-grid input:nth-child(9n) {
+    border-right: 2px solid #ccc;
+}
+
+#sudoku-grid input:nth-last-child(-n + 9) {
+    border-bottom: 2px solid #ccc;
+}
+
+/* Important: Ensure prefilled cells stand out */
+#sudoku-grid input.prefilled {
+    background-color: var(--disabled-input-bg);
+    color: var(--disabled-input-text);
+    font-weight: bold;
+    cursor: default;
+}
+
+/* Cell Highlighting */
+#sudoku-grid input.selected {
+    background-color: rgba(37, 150, 190, 0.2);
+    border: 2px solid var(--primary-color);
+    box-shadow: 0 0 5px var(--primary-color);
+}
+
+#sudoku-grid input.highlighted {
+    background-color: rgba(37, 150, 190, 0.1);
+}
+
+#sudoku-grid input.value-highlighted {
+    background-color: rgba(192, 132, 252, 0.2);
+}
+
+/* Styles for buttons */
+.game-buttons {
+    margin-top: 25px;
+    display: flex;
+    gap: 20px;
+    justify-content: center;
+    width: 100%;
+}
+
+.sudoku-btn {
+    padding: 12px 25px;
+    border-radius: 8px;
+    font-weight: 600;
+    cursor: pointer;
+    border: none;
+    transition: all 0.2s ease;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+}
+
+.sudoku-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0,0,0,0.3);
+}
+
+.primary-btn {
+    background-color: var(--primary-color);
+    color: #fff;
+}
+
+.primary-btn:hover {
+    background-color: var(--primary-color-dark);
+}
+
+.secondary-btn {
+    background-color: #4a5568;
+    color: #fff;
+}
+
+.secondary-btn:hover {
+    background-color: #2d3748;
+}
+
+/* High Score Container */
+.high-score-container {
+    margin-top: 30px;
+    background-color: var(--grid-bg);
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(255,255,255,0.08);
+    backdrop-filter: blur(4px);
+    width: 100%;
+    max-width: 500px;
+    text-align: center;
+    border: 1px solid var(--input-border);
+}
+
+.high-score-container h3 {
+    font-size: 1.4rem;
+    color: var(--primary-color-light);
+    margin-bottom: 15px;
+}
+
+#high-score-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+#high-score-list li {
+    padding: 8px 0;
+    border-bottom: 1px solid rgba(255,255,255,0.05);
+    display: flex;
+    justify-content: space-between;
+    font-size: 1.1rem;
+    color: var(--text-color);
+}
+
+#high-score-list li:last-child {
+    border-bottom: none;
+}
+
+#high-score-list li strong {
+    color: var(--primary-color);
+}
+
 
 @media screen and (max-width: 768px) {
+  .game-title {
+    font-size: 2rem;
+  }
+  .game-tagline {
+    font-size: 0.9rem;
+  }
+  .timer-container {
+      font-size: 1.2rem;
+  }
   #sudoku-grid {
-    grid-template-columns: repeat(9, 1fr);
-    gap: 0.25rem;
+    width: 95vw;
   }
-
   input[type='text'] {
-    width: 2rem;
-    height: 2rem;
-    font-size: 1rem;
+    font-size: 1.1rem;
   }
-
-  h1 {
-    font-size: 1.75rem;
+  .game-buttons {
+      flex-direction: column;
+      gap: 10px;
   }
-
-  p {
-    font-size: 1rem;
+  /* NEW: Adjust title card padding for smaller screens */
+  .title-card {
+      padding: 15px 20px;
   }
 }
