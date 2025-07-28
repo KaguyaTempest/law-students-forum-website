@@ -20,10 +20,19 @@ const gameScreen = document.getElementById("game-screen");
 const difficultyButtonsContainer = document.getElementById("difficulty-buttons");
 const timerDisplay = document.getElementById("timer");
 const taglineElement = document.getElementById("tagline");
-const judgeGavel = document.getElementById("gavel");
 const wordDisplay = document.getElementById("word-display");
 const letterButtonsContainer = document.getElementById("letter-buttons");
 const themeHintContainer = document.getElementById("theme-hint");
+
+// References to judge elements
+const judgeContainer = document.getElementById("judge-container"); // New reference for the global container
+const judgeImage = document.getElementById("judge-image"); // Reference to the judge image
+
+// New DOM elements for game over screen
+const gameOverScreen = document.getElementById("game-over-screen");
+const gameOverMessage = document.getElementById("game-over-message");
+const correctWordDisplay = document.getElementById("correct-word-display");
+const playAgainBtn = document.getElementById("play-again-btn");
 
 // Theme + Hint elements (dynamically created)
 const themeElement = document.createElement("div");
@@ -32,10 +41,30 @@ const hintElement = document.createElement("div");
 // Hangman drawing element
 const drawingContainer = document.getElementById("hangman-drawing");
 
-// === STEP 1: Initialize Difficulty Screen ===
+// Judge Image Paths
+const JUDGE_IDLE_IMAGE = "/law-students-forum-website/assets/sprites/judge-idle.png";
+const JUDGE_WIN_IMAGE = "/law-students-forum-website/assets/sprites/judge-gavel-slam.png";
+const JUDGE_LOSE_IMAGE = "/law-students-forum-website/assets/sprites/judge-gavel-slam.png";
+
+
+// === STEP 1: Preload Images (New Feature) ===
+function preloadImages(imageUrls) {
+    imageUrls.forEach(url => {
+        const img = new Image();
+        img.src = url;
+    });
+}
+
+// === STEP 2: Initialize Difficulty Screen ===
 function initDifficultyScreen() {
-    difficultyScreen.classList.add('active');
-    gameScreen.classList.add('hidden'); // Ensure game screen is hidden initially
+    // Hide all game sections first
+    gameScreen.classList.add('hidden');
+    gameOverScreen.classList.add('hidden');
+    judgeContainer.classList.add('hidden'); // Ensure judge is hidden initially
+
+    // Show difficulty screen
+    difficultyScreen.classList.remove('hidden');
+    difficultyScreen.classList.add('active'); // Use 'active' class for showing
 
     // Set the initial tagline for the difficulty screen
     taglineElement.textContent = "Guess the word before the judge passes sentence!";
@@ -47,30 +76,38 @@ function initDifficultyScreen() {
         themeHintContainer.appendChild(themeElement);
         themeHintContainer.appendChild(hintElement);
     }
+
+    // Reset judge image (important for 'Play Again' flow)
+    judgeImage.src = JUDGE_IDLE_IMAGE;
 }
 
-// === STEP 2: Handle Difficulty Selection ===
+// === STEP 3: Handle Difficulty Selection ===
 function handleDifficultySelection(event) {
     const target = event.target;
     if (target.tagName === 'BUTTON' && target.dataset.difficulty) {
         currentDifficulty = target.dataset.difficulty;
         timeRemaining = parseInt(target.dataset.time); // Get time in seconds
 
-        // Hide difficulty screen, show game screen
+        // Hide difficulty screen
         difficultyScreen.classList.remove('active');
+        difficultyScreen.classList.add('hidden');
+
+        // Show game screen and judge idle image
         gameScreen.classList.remove('hidden');
         gameScreen.classList.add('active');
+        judgeContainer.classList.remove('hidden'); // Show judge idle on game screen
+        judgeImage.src = JUDGE_IDLE_IMAGE; // Ensure it's idle
 
         startGame(); // Start the game with selected difficulty
     }
 }
 
-// === STEP 3: Start Game (Initialization for a new round) ===
+// === STEP 4: Start Game (Initialization for a new round) ===
 function startGame() {
     gameStarted = true;
     mistakeCount = 0;
     guessedLetters = [];
-
+    
     // Reset hangman drawing to step-0
     drawingContainer.className = `hangman-figure step-0`;
 
@@ -108,7 +145,7 @@ function startGame() {
     }
 }
 
-// === STEP 4: Timer Logic ===
+// === STEP 5: Timer Logic ===
 function startTimer() {
     clearInterval(gameTimerInterval); // Clear any existing timer
     updateTimerDisplay(); // Initial display
@@ -120,7 +157,7 @@ function startTimer() {
         if (timeRemaining <= 0) {
             clearInterval(gameTimerInterval);
             clearInterval(insaneModeLimbTimer); // Stop insane mode timer if main timer ends
-            endGame(false, "Time's up! The judge has passed sentence.");
+            endGame(false, "Time's up! The judge has passed sentence.", selectedWord);
         }
     }, 1000);
 }
@@ -131,30 +168,30 @@ function updateTimerDisplay() {
     timerDisplay.textContent = `Time: ${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
 }
 
-// === STEP 5: Insane Mode Specific Logic ===
+// === STEP 6: Insane Mode Specific Logic ===
 function startInsaneModeLimbTimer() {
     clearInterval(insaneModeLimbTimer); // Clear any previous insane timer
     insaneModeLimbTimer = setInterval(() => {
         if (mistakeCount < maxMistakes) { // Only add limb if game is not over
-            handleWrongGuess(true); // Call wrong guess handler to add a limb
+            handleWrongGuess(true); // Call wrong guess handler to add a limb (isAutomatic = true)
         } else {
             clearInterval(insaneModeLimbTimer); // Stop if all limbs are added
         }
     }, 5000); // 5 seconds per limb if no guess
 }
 
-// === STEP 6: Render Word as Blanks ===
+// === STEP 7: Render Word as Blanks ===
 function renderWord() {
     wordDisplay.innerHTML = selectedWord
         .split("")
         .map(char => {
-            if (char === " ") return " ";
+            if (char === " ") return "&nbsp;"; // Use non-breaking space for actual spaces
             return guessedLetters.includes(char) ? char : "_";
         })
         .join(" ");
 }
 
-// === STEP 7: Create A–Z Buttons ===
+// === STEP 8: Create A–Z Buttons ===
 function renderLetterButtons() {
     letterButtonsContainer.innerHTML = ''; // Clear previous buttons
     const alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
@@ -171,14 +208,17 @@ function renderLetterButtons() {
     });
 }
 
-// === STEP 8: Handle Guesses ===
+// === STEP 9: Handle Guesses ===
 function handleGuess(letter, button) {
     if (!gameStarted) return; // Prevent guesses before game starts
+    if (guessedLetters.includes(letter)) return; // Prevent guessing the same letter twice
+
     if (button) { // Only disable if a button object is passed (i.e., not an automatic limb add)
         button.disabled = true;
         button.classList.add("opacity-50", "cursor-not-allowed");
     }
 
+    guessedLetters.push(letter); // Add to guessed letters immediately
 
     // For Insane mode, reset the automatic limb timer on any guess
     if (currentDifficulty === 'insane') {
@@ -187,7 +227,6 @@ function handleGuess(letter, button) {
     }
 
     if (selectedWord.includes(letter)) {
-        guessedLetters.push(letter);
         renderWord();
 
         // Check win condition
@@ -195,14 +234,14 @@ function handleGuess(letter, button) {
             char === " " || guessedLetters.includes(char)
         );
         if (allRevealed) {
-            endGame(true, "🎉 You won! Justice is served!");
+            endGame(true, "🎉 You won! Justice is served!", selectedWord);
         }
     } else {
         handleWrongGuess(false); // Pass 'false' indicating not an automatic limb add
     }
 }
 
-// === STEP 9: Handle Wrong Guess ===
+// === STEP 10: Handle Wrong Guess ===
 // `isAutomatic` parameter added for Insane mode
 function handleWrongGuess(isAutomatic) {
     if (mistakeCount >= maxMistakes) return; // Prevent adding more limbs if already lost
@@ -218,53 +257,79 @@ function handleWrongGuess(isAutomatic) {
         "Justice hangs in the balance!",
         "One more mistake, and it's curtains!",
         "All rise for sentencing...",
-        "Guilty! The verdict is in!" // For loss state
+        "Guilty! The verdict is in!" // For loss state (mistakeCount = 6)
     ];
     taglineElement.textContent = taglines[mistakeCount];
-    if(mistakeCount >= maxMistakes) { // If this wrong guess leads to loss
-        taglineElement.textContent = taglines[taglines.length - 1]; // Set to loss tagline
-    }
-
 
     if (mistakeCount === 3) {
         themeElement.textContent = `🧩 Theme: ${theme}`;
     }
 
-    if (mistakeCount === maxMistakes - 1) { // 5th mistake
+    if (mistakeCount === maxMistakes - 1) { // 5th mistake (one before final)
         hintElement.textContent = `💡 Hint: ${hint}`;
     }
 
     if (mistakeCount >= maxMistakes) {
-        endGame(false, "💀 You lost! The judge has passed sentence. The word was: " + selectedWord);
+        endGame(false, "💀 You lost! The judge has passed sentence.", selectedWord);
     }
 }
 
-// === STEP 10: End Game ===
-function endGame(win, message) {
+// === STEP 11: End Game (Modified for new screen and judge images) ===
+function endGame(win, message, word) {
     gameStarted = false; // Stop game
     clearInterval(gameTimerInterval); // Stop main timer
     clearInterval(insaneModeLimbTimer); // Stop insane mode timer
+
+    // Hide game screen
+    gameScreen.classList.add('hidden');
+    gameScreen.classList.remove('active'); // Remove active class as well
+
+    // Show game over screen
+    gameOverScreen.classList.remove('hidden');
+    gameOverScreen.classList.add('active');
+
+    // Update game over messages
+    gameOverMessage.textContent = message;
+    correctWordDisplay.innerHTML = `The word was: <span style="color: var(--primary-color);">${word}</span>`;
+
+    // Change judge image based on win/loss and ensure it's visible
+    if (win) {
+        judgeImage.src = JUDGE_WIN_IMAGE;
+    } else {
+        judgeImage.src = JUDGE_LOSE_IMAGE;
+    }
+    // No need to set display block here, as judgeContainer is now globally managed
+    // and will be shown by playAgain or handleDifficultySelection for game screen.
+    // However, we need to make sure it's shown during the end game transition.
+    judgeContainer.classList.remove('hidden');
+
 
     // Disable all letter buttons
     Array.from(letterButtonsContainer.children).forEach(button => {
         button.disabled = true;
         button.classList.add("opacity-50", "cursor-not-allowed");
     });
-
-    if (!win) {
-        judgeImage.src = "/law-students-forum-website/assets/sprites/judge-slam.png"; // **CHANGED: Change judge sprite on loss**
-        judgeGavel.classList.add('slam'); // Trigger gavel slam animation
-    }
-
-    setTimeout(() => {
-        alert(message);
-        judgeGavel.classList.remove('slam'); // Reset gavel for next round
-        judgeImage.src = "/law-students-forum-website/assets/images/judge-idle.png"; // **CHANGED: Reset judge sprite for next game**
-        window.location.reload(); // Reload to difficulty screen
-    }, 1500); // Wait for gavel animation (0.4s) + a little extra before reload
 }
+
+// === STEP 12: Play Again Function (New Feature) ===
+function playAgain() {
+    // Hide game over screen
+    gameOverScreen.classList.remove('active');
+    gameOverScreen.classList.add('hidden');
+    
+    // Hide judge image (return to difficulty screen without judge visible)
+    judgeContainer.classList.add('hidden');
+
+    initDifficultyScreen(); // Return to difficulty selection, which will prepare for a new game
+}
+
 // === Event Listeners ===
 difficultyButtonsContainer.addEventListener('click', handleDifficultySelection);
+playAgainBtn.addEventListener('click', playAgain); // Event listener for the new button
 
 // === INIT ===
-document.addEventListener('DOMContentLoaded', initDifficultyScreen); // Start with difficulty screen
+document.addEventListener('DOMContentLoaded', () => {
+    // Preload judge images for smooth transitions
+    preloadImages([JUDGE_IDLE_IMAGE, JUDGE_WIN_IMAGE, JUDGE_LOSE_IMAGE]);
+    initDifficultyScreen(); // Start with difficulty screen
+});
