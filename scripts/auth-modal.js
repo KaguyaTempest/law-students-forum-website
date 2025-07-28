@@ -1,9 +1,9 @@
 // auth-modal.js - Handles authentication modal functionality
 
 document.addEventListener("DOMContentLoaded", () => {
-    // Listen for the custom 'header:loaded' event dispatched by load-header.js
+    // Listen for the custom 'authModal:loaded' event dispatched by load-header.js (or load-auth-modal.js)
     // This ensures the auth-modal.html content is already in the DOM
-    document.addEventListener("header:loaded", () => {
+    document.addEventListener("authModal:loaded", () => { // <--- KEY CHANGE HERE
         const authModal = document.getElementById("auth-modal");
         const closeAuthModalBtn = authModal?.querySelector(".close-auth-modal");
         const openAuthModalBtns = document.querySelectorAll(".open-auth-modal"); // Login/Sign Up buttons in header
@@ -28,11 +28,13 @@ document.addEventListener("DOMContentLoaded", () => {
         const signupForm = authModal?.querySelector("#signup-form");
 
         // Placeholder for where login/logout buttons are displayed in the header
+        // IMPORTANT: Ensure this element is accessible. It's in the header,
+        // so `document.getElementById` should work after header:loaded.
         const authControls = document.getElementById("auth-controls");
 
         // --- Basic Validation and Element Check ---
         if (!authModal || !loginFormContainer || !signupFormContainer || !showLoginBtn || !showSignupBtn) {
-            console.error("Critical authentication modal elements not found. Check auth-modal.html and load-header.js injection.");
+            console.error("Critical authentication modal elements not found. Check auth-modal.html and its injection.");
             return; // Stop execution if essential elements are missing
         }
 
@@ -52,6 +54,7 @@ document.addEventListener("DOMContentLoaded", () => {
         }
 
         // Attach event listeners for opening the modal
+        // These buttons are in the header, so they should be present when authModal:loaded fires
         openAuthModalBtns.forEach(btn => {
             btn.addEventListener("click", openModal);
         });
@@ -89,6 +92,7 @@ document.addEventListener("DOMContentLoaded", () => {
         }
 
         // Initialize: Show login form by default when modal opens
+        // This will run once the authModal:loaded event fires
         showForm("login");
 
         // Event listeners for switching between login/signup forms
@@ -111,7 +115,9 @@ document.addEventListener("DOMContentLoaded", () => {
         });
 
         // --- Placeholder for Authentication Logic ---
-        // This is where you would integrate with a backend (e.g., Firebase, your own API)
+        // These are the simulated functions.
+        // auth.js will override/replace these with actual Firebase logic
+        // once auth.js is properly loaded and runs its onAuthStateChanged.
 
         function simulateLogin(username, role) {
             if (authControls) {
@@ -152,8 +158,9 @@ document.addEventListener("DOMContentLoaded", () => {
             const email = loginForm.querySelector("#login-email")?.value;
             const password = loginForm.querySelector("#login-password")?.value;
 
+            // This is the simulated login
             if (email === "test@example.com" && password === "password") {
-                simulateLogin("TestUser", "Student"); // Simulate a successful login
+                simulateLogin("TestUser", "Student");
             } else {
                 if (loginErrorMessage) loginErrorMessage.textContent = "Invalid email or password.";
             }
@@ -188,9 +195,10 @@ document.addEventListener("DOMContentLoaded", () => {
         });
 
         // Initial check for logout button (if user was already "logged in" from a previous session state)
+        // This part might be better handled by auth.js's onAuthStateChanged
         const currentLogoutBtn = authControls?.querySelector("#logout-btn");
         if (currentLogoutBtn) {
             currentLogoutBtn.addEventListener("click", simulateLogout);
         }
-    }); // End of header:loaded event listener
+    }); // End of authModal:loaded event listener
 }); // End of DOMContentLoaded event listener
