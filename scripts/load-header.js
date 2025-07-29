@@ -26,7 +26,11 @@ async function insertHeader() {
                 .replace(/\\+/g, "/")
                 .split("/")
                 .filter(Boolean);
-            return parts.length - 1;
+            // Adjust depth calculation if index.html is at root and partials are deeper
+            // For /index.html -> [] -> depth = 0
+            // For /pages/article.html -> [pages] -> depth = 1
+            const pathSegments = window.location.pathname.replace(/\/+/g, "/").split('/').filter(s => s.length > 0);
+            return pathSegments.length > 0 && pathSegments[pathSegments.length - 1].includes('.') ? pathSegments.length -1 : pathSegments.length;
         })();
         const prefix = depth ? "../".repeat(depth) : "";
 
@@ -66,10 +70,12 @@ async function insertHeader() {
             if (currentPath.endsWith(fullPath)) link.classList.add("active");
         });
 
-        // 6. Signal ready for other scripts (like mode toggle)
+        // 6. Signal header is ready
         document.dispatchEvent(new Event("header:loaded"));
+        console.log("Header loaded and event dispatched.");
+
     } catch (err) {
-        console.error("[load-header]", err.message);
+        console.error("[load-header] Error loading header:", err.message);
     }
 }
 
@@ -78,24 +84,40 @@ async function insertModal() {
         const res = await fetch(MODAL_URL, { cache: "no-store" });
         if (!res.ok) throw new Error(`Modal fetch failed: ${res.status}`);
         const modalHTML = await res.text();
-        const container = document.createElement("div");
-        container.innerHTML = modalHTML;
-        document.body.appendChild(container);
+
+        // Target the new placeholder div instead of appending to body
+        const placeholder = document.getElementById("auth-modal-placeholder");
+        if (!placeholder) throw new Error("auth-modal-placeholder div not found");
+
+        placeholder.innerHTML = modalHTML;
+        console.log("Auth modal loaded into placeholder.");
+
+        // Dispatch a custom event after the modal is loaded
+        // This is what auth-modal.js will listen for
+        document.dispatchEvent(new CustomEvent("authModal:loaded"));
+
     } catch (err) {
-        console.error("[load-modal]", err.message);
+        console.error("[load-modal] Error loading modal:", err.message);
     }
 }
 
-// Run both once DOM is ready
+// Run both header and modal insertion once DOM is ready
+// Ensure modal insertion happens *after* header insertion
 if (document.readyState === "loading") {
     document.addEventListener("DOMContentLoaded", () => {
-        insertHeader().then(insertModal);
+        insertHeader()
+            .then(() => insertModal()) // Ensure insertModal is called after insertHeader resolves
+            .catch(err => console.error("Error in loading sequence:", err));
     });
 } else {
-    insertHeader().then(insertModal);
+    // If DOM is already ready (e.g., script loaded late)
+    insertHeader()
+        .then(() => insertModal())
+        .catch(err => console.error("Error in loading sequence:", err));
 }
 
 // Mode Toggle Logic - Runs AFTER header is loaded
+// This listener remains the same, as it depends on header elements
 document.addEventListener("header:loaded", () => {
     const modeToggle = document.getElementById("mode-toggle");
     const body = document.body;
@@ -139,4 +161,5 @@ document.addEventListener("header:loaded", () => {
     });
 });
 
-export { insertHeader };
+// No need to export insertHeader if it's solely managed internally for loading
+// export { insertHeader };
