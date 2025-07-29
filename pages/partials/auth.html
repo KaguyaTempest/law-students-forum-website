@@ -10,12 +10,12 @@
         <div id="signup-form-container" class="auth-form-container hidden">
             <h2>Create an Account</h2>
             <form id="signup-form">
-                <input type="text" id="signup-username" name="signup-username" placeholder="Username" required />
-                <input type="email" id="signup-email" name="signup-email" placeholder="Email" required />
-                <input type="password" id="signup-password" name="signup-password" placeholder="Password (min 6 characters)" required />
-                <input type="password" id="signup-confirm-password" name="signup-confirm-password" placeholder="Confirm Password" required />
+                <input type="text" id="signup-username" placeholder="Username" required />
+                <input type="email" id="signup-email" placeholder="Email" required />
+                <input type="password" id="signup-password" placeholder="Password (min 6 characters)" required />
+                <input type="password" id="signup-confirm-password" placeholder="Confirm Password" required />
 
-                <select id="user-role" name="user-role" required>
+                <select id="user-role" required>
                     <option value="">Select your role</option>
                     <option value="student">Law Student</option>
                     <option value="lawyer">Lawyer (in field)</option>
@@ -23,15 +23,15 @@
                 </select>
 
                 <div id="student-fields" class="hidden">
-                    <input type="text" id="student-id" name="student-id" placeholder="Student ID Number" required />
-                    <select id="student-university" name="student-university" required>
+                    <input type="text" id="student-id" placeholder="Student ID Number" required />
+                    <select id="student-university" required>
                         <option value="">Select your University</option>
                         <option value="UZ">University of Zimbabwe</option>
                         <option value="MSU">Midlands State University</option>
                         <option value="ZEGU">Zimbabwe Ezekiel Guti University (ZEGU)</option>
                         <option value="GZU">Great Zimbabwe University (GZU)</option>
                     </select>
-                    <select id="student-year-of-study" name="student-year-of-study" required>
+                    <select id="student-year-of-study" required>
                         <option value="">Select Year of Study</option>
                         <option value="1">Year 1</option>
                         <option value="2">Year 2</option>
@@ -44,8 +44,7 @@
                 </div>
 
                 <div id="lawyer-fields" class="hidden">
-                    <input type="number" id="lawyer-years-experience" name="lawyer-years-experience" placeholder="Years of Experience" min="0" required>
-                    <input type="text" id="lawyer-number" name="lawyer-number" placeholder="Lawyer Bar Number/ID" required />
+                    <input type="number" id="lawyer-years-experience" placeholder="Years of Experience" min="0" required />
                 </div>
 
                 <button type="submit">Sign Up</button>
@@ -56,8 +55,8 @@
         <div id="login-form-container" class="auth-form-container">
             <h2>Login to your Account</h2>
             <form id="login-form">
-                <input type="email" id="login-email" name="login-email" placeholder="Email" required />
-                <input type="password" id="login-password" name="login-password" placeholder="Password" required />
+                <input type="email" id="login-email" placeholder="Email" required />
+                <input type="password" id="login-password" placeholder="Password" required />
                 <button type="submit">Login</button>
                 <div id="login-error-message" class="error-message"></div>
                 <p><a href="#" id="forgot-password-link">Forgot Password?</a></p>
