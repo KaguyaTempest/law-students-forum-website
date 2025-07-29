@@ -1,9 +1,16 @@
-// auth-modal.js - Handles authentication modal functionality
+// scripts/auth-modal.js - Handles authentication modal functionality and integrates with Firebase Auth
+
+// Import Firebase Authentication and Function calling logic from your Auth.js file
+import {
+    registerUser,
+    loginUser,
+    logoutUser,
+    onAuthChange // Listener for Firebase Auth state changes
+} from './auth.js'; // Ensure this path is correct relative to auth-modal.js
 
 document.addEventListener("DOMContentLoaded", () => {
-    // Listen for the custom 'header:loaded' event dispatched by load-header.js
-    // This ensures the auth-modal.html content is already in the DOM
-    document.addEventListener("header:loaded", () => {
+    document.addEventListener("header:loaded", () => { // Ensures auth-modal.html content is in DOM
+        // --- DOM References ---
         const authModal = document.getElementById("auth-modal");
         const closeAuthModalBtn = authModal?.querySelector(".close-auth-modal");
         const openAuthModalBtns = document.querySelectorAll(".open-auth-modal"); // Login/Sign Up buttons in header
@@ -28,7 +35,7 @@ document.addEventListener("DOMContentLoaded", () => {
         const signupForm = authModal?.querySelector("#signup-form");
 
         // Placeholder for where login/logout buttons are displayed in the header
-        const authControls = document.getElementById("auth-controls");
+        const authControls = document.getElementById("auth-controls"); // This refers to the container in header.html or main index.html
 
         // --- Basic Validation and Element Check ---
         if (!authModal || !loginFormContainer || !signupFormContainer || !showLoginBtn || !showSignupBtn) {
@@ -52,9 +59,14 @@ document.addEventListener("DOMContentLoaded", () => {
         }
 
         // Attach event listeners for opening the modal
-        openAuthModalBtns.forEach(btn => {
-            btn.addEventListener("click", openModal);
-        });
+        // Note: These need to be re-attached if authControls content changes (e.g., after logout)
+        function attachOpenModalListeners() {
+            openAuthModalBtns.forEach(btn => {
+                btn.removeEventListener("click", openModal); // Prevent duplicate listeners
+                btn.addEventListener("click", openModal);
+            });
+        }
+        attachOpenModalListeners(); // Initial attachment
 
         // Attach event listener for closing the modal
         closeAuthModalBtn?.addEventListener("click", closeModal);
@@ -88,7 +100,7 @@ document.addEventListener("DOMContentLoaded", () => {
             if (signupErrorMessage) signupErrorMessage.textContent = "";
         }
 
-        // Initialize: Show login form by default when modal opens
+        // Initialize: Show login form by default when modal opens (or based on Firebase auth state)
         showForm("login");
 
         // Event listeners for switching between login/signup forms
@@ -110,70 +122,54 @@ document.addEventListener("DOMContentLoaded", () => {
             }
         });
 
-        // --- Placeholder for Authentication Logic ---
-        // This is where you would integrate with a backend (e.g., Firebase, your own API)
 
-        function simulateLogin(username, role) {
-            if (authControls) {
-                // Replace login/signup buttons with user info and logout
-                authControls.innerHTML = `
-                    <div id="user-info" style="display: flex; align-items: center; gap: 10px;">
-                        <img id="user-avatar" src="/law-students-forum-website/assets/default-avatar.png" alt="Avatar" class="avatar">
-                        <span id="user-name">${username}</span>
-                        <span id="user-role-badge" class="role-badge">${role}</span>
-                        <button id="logout-btn" class="auth-action">Logout</button>
-                    </div>
-                `;
-                // Attach listener to the new logout button
-                authControls.querySelector("#logout-btn")?.addEventListener("click", simulateLogout);
-            }
-            closeModal();
-            console.log(`Simulated Login: ${username} (${role})`);
-        }
-
-        function simulateLogout() {
-            if (authControls) {
-                // Replace user info with login/signup buttons
-                authControls.innerHTML = `
-                    <button id="login-btn" class="auth-action open-auth-modal">Login</button>
-                    <button id="signup-btn" class="auth-action open-auth-modal">Sign Up</button>
-                `;
-                // Re-attach listeners for newly added open modal buttons
-                authControls.querySelector("#login-btn")?.addEventListener("click", openModal);
-                authControls.querySelector("#signup-btn")?.addEventListener("click", openModal);
-            }
-            console.log("Simulated Logout.");
-        }
+        // --- ACTUAL FIREBASE AUTHENTICATION LOGIC ---
 
         // Login form submission handler
-        loginForm?.addEventListener("submit", (e) => {
+        loginForm?.addEventListener("submit", async (e) => {
             e.preventDefault();
             if (loginErrorMessage) loginErrorMessage.textContent = ""; // Clear previous errors
+
             const email = loginForm.querySelector("#login-email")?.value;
             const password = loginForm.querySelector("#login-password")?.value;
 
-            if (email === "test@example.com" && password === "password") {
-                simulateLogin("TestUser", "Student"); // Simulate a successful login
-            } else {
-                if (loginErrorMessage) loginErrorMessage.textContent = "Invalid email or password.";
+            try {
+                await loginUser(email, password); // Call the Firebase login function from Auth.js
+                closeModal(); // Close modal on successful login
+                // UI will update via onAuthChange listener
+            } catch (error) {
+                console.error("Login failed:", error.message);
+                if (loginErrorMessage) loginErrorMessage.textContent = error.message; // Display Firebase error message
             }
         });
 
         // Signup form submission handler
-        signupForm?.addEventListener("submit", (e) => {
+        signupForm?.addEventListener("submit", async (e) => {
             e.preventDefault();
             if (signupErrorMessage) signupErrorMessage.textContent = ""; // Clear previous errors
+
             const username = signupForm.querySelector("#signup-username")?.value;
             const email = signupForm.querySelector("#signup-email")?.value;
             const password = signupForm.querySelector("#signup-password")?.value;
             const confirmPassword = signupForm.querySelector("#signup-confirm-password")?.value;
             const role = userRoleSelect?.value;
 
+            // Get sensitive ID based on role
+            let idType = '';
+            let plainTextId = '';
+            if (role === 'student') {
+                idType = 'studentId';
+                plainTextId = signupForm.querySelector("#student-id")?.value;
+            } else if (role === 'lawyer') {
+                idType = 'lawyerNumber';
+                plainTextId = signupForm.querySelector("#lawyer-number")?.value; // Get the new lawyer-number field
+            }
+
+            // Client-side validations (some are already handled by 'required' in HTML, but good to have JS checks too)
             if (!username || !email || !password || !confirmPassword || !role) {
                 if (signupErrorMessage) signupErrorMessage.textContent = "Please fill in all required fields.";
                 return;
             }
-
             if (password !== confirmPassword) {
                 if (signupErrorMessage) signupErrorMessage.textContent = "Passwords do not match.";
                 return;
@@ -182,15 +178,88 @@ document.addEventListener("DOMContentLoaded", () => {
                 if (signupErrorMessage) signupErrorMessage.textContent = "Password must be at least 6 characters.";
                 return;
             }
+            if ((role === 'student' || role === 'lawyer') && !plainTextId) {
+                if (signupErrorMessage) signupErrorMessage.textContent = `Please enter your ${idType === 'studentId' ? 'student ID' : 'lawyer number'}.`;
+                return;
+            }
 
-            simulateLogin(username, role); // Simulate a successful signup
-            console.log(`Simulated Signup: ${username}, ${email}, Role: ${role}`);
+
+            try {
+                // Call the Firebase registration function from Auth.js
+                // This function handles Firebase Auth user creation, Cloud Function call for hashing, and Firestore profile creation.
+                await registerUser(email, password, idType, plainTextId);
+                alert('Account created! Please log in with your new account.'); // Use alert for simplicity, consider better UX
+                signupForm.reset(); // Clear form fields
+                showForm("login"); // Switch to login form after successful signup
+            } catch (error) {
+                console.error("Signup failed:", error.message);
+                if (signupErrorMessage) signupErrorMessage.textContent = error.message; // Display Firebase error message
+            }
+        });
+
+
+        // --- Firebase Auth State Listener (updates UI when user logs in/out) ---
+        onAuthChange(async (user) => {
+            const authBtns = document.getElementById('auth-buttons'); // Assuming this is in your main HTML
+            const userInfo = document.getElementById('user-info');     // Assuming this is in your main HTML
+
+            if (!authBtns || !userInfo) {
+                console.warn("Auth UI control elements not found. 'auth-buttons' or 'user-info' might be missing in your main HTML.");
+                return;
+            }
+
+            if (user) {
+                // User is signed in. Update UI to show user info.
+                authBtns.classList.add('hidden');
+                userInfo.classList.remove('hidden');
+
+                // Pull custom data (username, role, etc.) from Firestore
+                // Note: We're not getting sensitiveIds here for security, only publicly displayable profile data
+                const userDocRef = doc(db, 'users', user.uid); // Need 'db' from firebase.js, might need to pass it or make it global/import it
+                const snap = await getDoc(userDocRef);
+                const data = snap.exists() ? snap.data() : {};
+
+                document.getElementById('user-name').textContent =
+                    data.username || user.email; // Display username or email
+
+                document.getElementById('user-role-badge').textContent =
+                    data.university || data.status || ''; // Adjust display as needed (e.g., role)
+
+                // Attach logout listener to the newly created logout button
+                const logoutBtn = userInfo.querySelector("#logout-btn"); // Assuming logout button is inside user-info
+                if (logoutBtn) {
+                    logoutBtn.removeEventListener("click", logoutUser); // Prevent duplicates
+                    logoutBtn.addEventListener("click", logoutUser);
+                }
+
+            } else {
+                // User is signed out. Update UI to show login/signup buttons.
+                authBtns.classList.remove('hidden');
+                userInfo.classList.add('hidden');
+                // Re-attach listeners for openAuthModalBtns if they are dynamically added/removed
+                attachOpenModalListeners();
+            }
+        });
+
+        // --- Global Logout Button Listener ---
+        // This is a redundant listener if onAuthChange properly handles the UI for logoutBtn,
+        // but can be kept for robustness if logoutBtn is outside 'user-info' container
+        // or if 'authControls' structure is very dynamic.
+        // For now, let's rely on the logoutBtn inside userInfo in the onAuthChange.
+        // If you have a separate, persistent logout button outside authControls, keep this.
+        document.addEventListener('click', e => {
+            if (e.target.id === 'logout-btn') {
+                logoutUser(); // Call the Firebase logout function from Auth.js
+            }
         });
 
         // Initial check for logout button (if user was already "logged in" from a previous session state)
+        // This part becomes less critical with the onAuthChange listener above.
+        // But ensures any pre-existing logout button has a listener.
         const currentLogoutBtn = authControls?.querySelector("#logout-btn");
         if (currentLogoutBtn) {
-            currentLogoutBtn.addEventListener("click", simulateLogout);
+            currentLogoutBtn.addEventListener("click", logoutUser);
         }
+
     }); // End of header:loaded event listener
 }); // End of DOMContentLoaded event listener
