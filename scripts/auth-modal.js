@@ -24,7 +24,7 @@ import {
 
 
 document.addEventListener("DOMContentLoaded", () => {
-    document.addEventListener("header:loaded", () => { // Ensures auth-modal.html content is in DOM
+    document.addEventListener("authModal:loaded", () => { // Corrected line
         // --- DOM References ---
         const authModal = document.getElementById("auth-modal");
         const closeAuthModalBtn = authModal?.querySelector(".close-auth-modal");
