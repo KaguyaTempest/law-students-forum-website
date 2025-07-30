@@ -8,7 +8,7 @@ import {
     loginUser,
     logoutUser,
     onAuthChange // Listener for Firebase Auth state changes
-} from './Auth.js'; // Corrected to relative path and assumed 'Auth.js' filename
+} from './auth.js'; // Corrected to relative path and assumed 'Auth.js' filename
 
 
 // IMPORTANT: You also need to import 'db' and 'getDoc' here for the onAuthChange listener
@@ -25,11 +25,13 @@ import {
 
 document.addEventListener("DOMContentLoaded", () => {
     // LISTEN FOR THE CORRECT EVENT: authModal:loaded
-    document.addEventListener("authModal:loaded", () => { // <--- THIS IS THE CRITICAL CHANGE!
+    document.addEventListener("authModal:loaded", () => {
+      console.log("auth-modal.js: Script is running, authModal:loaded event fired!"); // <--- ADD THIS LINE
         // --- DOM References ---
         const authModal = document.getElementById("auth-modal");
         const closeAuthModalBtn = authModal?.querySelector(".close-auth-modal");
         const openAuthModalBtns = document.querySelectorAll(".open-auth-modal"); // Login/Sign Up buttons in header
+          console.log("auth-modal.js: Found openAuthModalBtns:", openAuthModalBtns); // <--- ADD THIS LINE
 
         // Auth form toggles
         const showLoginBtn = authModal?.querySelector("#show-login");
