@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Legal Hangman: Judge's Verdict</title>
+    <!-- We will keep the CSS link as is for your project structure -->
     <link rel="stylesheet" href="/law-students-forum-website/games/hangman/hangman.css" />
     <link rel="preload" href="/law-students-forum-website/assets/sprites/judge-gavel-slam.png" as="image">
 </head>
@@ -18,7 +19,7 @@
                 <button data-difficulty="easy" data-time="600">Easy (10 mins)</button>
                 <button data-difficulty="medium" data-time="300">Medium (5 mins)</button>
                 <button data-difficulty="hard" data-time="180">Hard (3 mins)</button>
-                <button data-difficulty="insane" data-time="120">Insane (2 mins)</button>
+                <button data-difficulty="extreme" data-time="120">Extreme (2 mins)</button>
             </div>
         </div>
 
@@ -38,6 +39,10 @@
                         <div class="left-leg part"></div>
                         <div class="right-leg part"></div>
                     </div>
+                    <!-- The judge container is now inside the visual-area for better positioning control -->
+                    <div id="judge-container" class="judge-global-container hidden">
+                       <img src="/law-students-forum-website/assets/sprites/judge-idle.png" alt="Judge" id="judge-image">
+                    </div>
                 </div>
 
                 <div class="word-and-buttons-area">
@@ -48,19 +53,14 @@
             </div>
         </div>
 
-        <div id="judge-container" class="judge-global-container hidden">
-             <img src="/law-students-forum-website/assets/sprites/judge-idle.png" alt="Judge" id="judge-image">
-        </div>
-
-
         <div id="game-over-screen" class="game-section hidden">
             <h2 id="game-over-message"></h2>
             <p id="correct-word-display"></p>
             <button id="play-again-btn" class="button-primary">Play Again?</button>
         </div>
-
     </div>
 
+    <!-- The script link remains unchanged -->
     <script type="module" src="/law-students-forum-website/games/hangman/hangman.js"></script>
 </body>
 </html>

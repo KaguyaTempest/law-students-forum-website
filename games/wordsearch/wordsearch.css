@@ -1,0 +1,210 @@
+/* style.css */
+
+/* Add CSS Variables, mimicking the Sudoku game's structure */
+:root {
+    --primary-color: #2596be; /* A vibrant blue */
+    --primary-color-dark: #1e7a9b; /* Slightly darker for hover */
+    --primary-color-light: #4bb4d8; /* Lighter for lighter effects */
+    --text-color: #f1f1f1; /* Main text color */
+    --bg-color: #1a1a1a;
+    --grid-bg: rgba(255, 255, 255, 0.05);
+    --input-bg: rgba(255, 255, 255, 0.1);
+    --input-border: rgba(255, 255, 255, 0.2);
+    --disabled-input-bg: rgba(255, 255, 255, 0.2);
+    --disabled-input-text: #e2e8f0;
+    --accent-color: #c084fc; /* Purple for focus */
+    --dark-text-on-light-bg: #333; /* For text on light background */
+}
+
+body {
+    font-family: 'Inter', sans-serif;
+    background-color: var(--bg-color);
+    /* Using a placeholder image to match the Sudoku game's background style */
+    background-image: url('https://placehold.co/1920x1080/1a1a1a/e2e8f0?text=Legal+Background');
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed;
+    color: var(--text-color);
+}
+
+/* Style for the title card, directly inspired by your Sudoku code */
+.title-card {
+    background-color: rgba(0, 0, 0, 0.6); /* Semi-transparent black background */
+    padding: 20px 30px;
+    border-radius: 10px;
+    text-align: center;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+    backdrop-filter: blur(8px);
+    margin-bottom: 20px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    max-width: 600px;
+    width: 100%;
+}
+
+.game-title {
+    font-size: 2.5rem;
+    font-weight: bold;
+    color: var(--primary-color);
+    margin-bottom: 8px;
+}
+
+.game-tagline {
+    font-size: 1.1rem;
+    color: #a0aec0;
+    text-align: center;
+}
+
+/* Main game container layout */
+#game-container {
+    background-color: var(--grid-bg);
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(255,255,255,0.08);
+    backdrop-filter: blur(4px);
+    border: 1px solid var(--input-border);
+}
+
+/* Grid styling */
+.grid-container {
+    display: grid;
+    border: 2px solid var(--input-border);
+    background-color: rgba(255, 255, 255, 0.03);
+    touch-action: none; /* Prevent scrolling on touch */
+    border-radius: 6px;
+    overflow: hidden;
+}
+
+.grid-cell {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: clamp(0.75rem, 3vw, 1.25rem); /* Responsive font size */
+    font-weight: bold;
+    color: var(--text-color);
+    cursor: pointer;
+    user-select: none;
+    transition: background-color 0.2s, color 0.2s;
+    aspect-ratio: 1 / 1;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.grid-cell:hover:not(.selected):not(.found) {
+    background-color: rgba(255, 255, 255, 0.1);
+}
+
+.grid-cell.selected {
+    background-color: var(--accent-color);
+    color: #fff;
+}
+
+.grid-cell.found {
+    background-color: #86efac; /* A nice green for found words */
+    color: var(--dark-text-on-light-bg);
+}
+
+/* Word List and Controls Styling */
+.controls-container {
+    display: flex;
+    flex-direction: column;
+}
+
+.message-box {
+    min-height: 40px;
+    text-align: center;
+    font-size: 1.2rem;
+    font-weight: 600;
+    color: var(--primary-color-light);
+    background-color: var(--input-bg);
+    padding: 12px;
+    border-radius: 6px;
+    border: 1px solid var(--input-border);
+    backdrop-filter: blur(5px);
+    margin-bottom: 20px;
+}
+
+.word-list {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 8px;
+    font-size: 1rem;
+    font-weight: 500;
+}
+
+.word-item {
+    padding: 8px 12px;
+    border-radius: 6px;
+    background-color: rgba(255, 255, 255, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    transition: background-color 0.2s;
+}
+
+.word-item.found {
+    text-decoration: line-through;
+    color: #9ca3af;
+    background-color: rgba(255, 255, 255, 0.05);
+}
+
+/* Game Buttons, styled like the Sudoku game */
+.game-buttons {
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
+    margin-top: 2rem;
+}
+
+.game-btn {
+    padding: 12px 25px;
+    border-radius: 8px;
+    font-weight: 600;
+    cursor: pointer;
+    border: none;
+    transition: all 0.2s ease;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+}
+
+.game-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0,0,0,0.3);
+}
+
+.primary-btn {
+    background-color: var(--primary-color);
+    color: #fff;
+}
+
+.primary-btn:hover {
+    background-color: var(--primary-color-dark);
+}
+
+.secondary-btn {
+    background-color: #4a5568;
+    color: #fff;
+}
+
+.secondary-btn:hover {
+    background-color: #2d3748;
+}
+
+/* Media Queries for responsiveness, matching the Sudoku file */
+@media screen and (max-width: 768px) {
+    .game-title {
+        font-size: 2rem;
+    }
+    .game-tagline {
+        font-size: 0.9rem;
+    }
+    .message-box {
+        font-size: 1rem;
+    }
+    .word-list {
+        grid-template-columns: repeat(1, 1fr);
+    }
+    .game-buttons {
+        flex-direction: column;
+        gap: 10px;
+    }
+    .game-btn {
+        width: 100%;
+    }
+}
