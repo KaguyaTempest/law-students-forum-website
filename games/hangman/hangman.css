@@ -61,13 +61,11 @@ p {
 }
 
 /* --- Section Visibility --- */
-/* The game sections are still controlled by JS, but we ensure the hidden state */
 .game-section {
     display: none; /* Default hidden */
     animation: fadeIn 0.5s ease-out; /* Add fade-in animation */
-    /* Ensure it can overlay other elements if needed or is contained */
     position: relative;
-    z-index: 2; /* Game sections should generally be above the global judge image unless specified */
+    z-index: 2;
 }
 
 .game-section.active {
@@ -78,7 +76,6 @@ p {
     display: none;
 }
 
-/* Fade-in animation */
 @keyframes fadeIn {
     from { opacity: 0; transform: translateY(20px); }
     to { opacity: 1; transform: translateY(0); }
@@ -99,7 +96,6 @@ p {
     gap: 20px; /* Increased gap */
 }
 
-/* Reusable button style */
 .button-primary {
     background-color: var(--primary-color);
     color: var(--text-light);
@@ -126,8 +122,6 @@ p {
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
 }
 
-/* Apply reusable button style to difficulty buttons */
-/* Removed @extend as it's not plain CSS and manually copied properties */
 .button-group button {
     background-color: var(--primary-color);
     color: var(--text-light);
@@ -154,38 +148,36 @@ p {
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
 }
 
-
 /* --- Main Game Screen Layout --- */
 #game-screen {
     text-align: center;
     background-color: var(--bg-medium);
     border-radius: 10px;
     padding: 20px;
-    /* Ensure game-screen itself is not positioned absolutely, it's a block */
 }
 
 #game-header {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    margin-bottom: 30px; /* More space */
+    margin-bottom: 30px;
     padding-bottom: 20px;
     border-bottom: 1px solid var(--border-color);
 }
 
 .tagline {
     flex-grow: 1;
-    font-size: 1.4em; /* Larger tagline */
+    font-size: 1.4em;
     color: var(--text-light);
     font-style: italic;
     text-align: left;
-    padding-right: 15px; /* Space from timer */
+    padding-right: 15px;
 }
 
 .timer {
-    font-size: 1.8em; /* Larger timer */
+    font-size: 1.8em;
     font-weight: bold;
-    color: var(--accent-color); /* Red for urgency */
+    color: var(--accent-color);
     background-color: var(--bg-dark);
     padding: 8px 15px;
     border-radius: 5px;
@@ -198,7 +190,7 @@ p {
     flex-direction: row;
     justify-content: center;
     align-items: flex-start;
-    gap: 50px; /* Increased gap */
+    gap: 50px;
 }
 
 .visual-area {
@@ -207,14 +199,12 @@ p {
     align-items: center;
     gap: 20px;
     flex-shrink: 0;
-    position: relative; /* For judge z-index */
-    background-color: var(--bg-dark); /* Background for visual area */
+    position: relative; /* THIS IS THE KEY CHANGE. The judge is now positioned relative to this block. */
+    background-color: var(--bg-dark);
     border-radius: 10px;
     padding: 20px;
     box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.5);
     border: 1px solid var(--border-color);
-    /* Judge container will now be positioned relative to .game-wrapper */
-    /* So, visual-area will only contain hangman-drawing */
 }
 
 .word-and-buttons-area {
@@ -230,44 +220,31 @@ p {
 }
 
 /* --- Judge Image Styling (GLOBAL) --- */
-/* The judge-container is now outside of game-screen/game-over-screen */
-/* It needs to be positioned within game-wrapper and its visibility controlled by JS */
-/* --- Judge Image Styling (GLOBAL) --- */
 #judge-container {
-    position: absolute; /* Position relative to the game-wrapper */
-    top: 50%; /* Center vertically within the wrapper */
-    left: 50%; /* Center horizontally within the wrapper */
-    transform: translate(-50%, -50%); /* Adjust for its own size */
-    width: 200px; /* Larger judge container */
-    height: 250px;
+    /* The absolute positioning is now relative to the parent '.visual-area' */
+    position: absolute;
+    top: 0px; /* Position at the top */
+    right: -170px; /* Position to the right, outside of the visual-area */
+    width: 150px; /* Adjusted size to fit better */
+    height: auto;
     overflow: hidden;
-    border-bottom: 4px solid var(--border-color);
-    background-color: var(--bg-medium);
-    border-radius: 5px;
-    z-index: 5; /* Ensure it's above game sections when visible */
-    transition: opacity 0.5s ease-in-out; /* Smooth fade for container itself */
-    /* IMPORTANT: REMOVE THE LINE BELOW from your existing CSS */
-    /* display: none; */
+    z-index: 10; /* Ensure it's always on top of other elements */
+    transition: opacity 0.5s ease-in-out;
 }
 
-/* ADD THIS NEW RULE to your CSS */
-/* This ensures the container is hidden when the 'hidden' class is present */
 #judge-container.hidden {
     display: none;
 }
 
 #judge-container.active {
-    display: block; /* Show when active */
+    display: block;
 }
 
 #judge-image {
     width: 100%;
     height: 100%;
-    object-fit: contain; /* Ensures image fits without cropping */
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    image-rendering: pixelated; /* Maintain pixel art look */
+    object-fit: contain;
+    image-rendering: pixelated;
     image-rendering: -moz-crisp-edges;
     image-rendering: crisp-edges;
 }
@@ -275,21 +252,21 @@ p {
 /* --- Hangman Drawing --- */
 .hangman-figure {
     position: relative;
-    width: 220px; /* Slightly larger drawing area */
+    width: 220px;
     height: 270px;
-    margin: 20px auto 0; /* Adjusted margin */
-    border-bottom: 4px solid var(--text-light); /* Gallows base color */
-    z-index: 1; /* Keep hangman drawing within its visual-area */
+    margin: 20px auto 0;
+    border-bottom: 4px solid var(--text-light);
+    z-index: 20; /* Ensure the hangman drawing is above the judge */
 }
 
-/* Gallows vertical pole */
+/* ... (All the hangman-figure, rope, and body parts CSS remains the same) ... */
 .hangman-figure::before {
     content: "";
     position: absolute;
     top: 0;
     left: 50px;
-    width: 5px; /* Thicker pole */
-    height: 220px; /* Taller pole */
+    width: 5px;
+    height: 220px;
     background-color: var(--text-light);
     transform-origin: bottom;
     border-top-left-radius: 3px;
@@ -297,66 +274,60 @@ p {
     z-index: 2;
 }
 
-/* Gallows horizontal beam */
 .hangman-figure::after {
     content: "";
     position: absolute;
     top: 0;
     left: 50px;
-    width: 100px; /* Longer beam */
-    height: 5px; /* Thicker beam */
+    width: 100px;
+    height: 5px;
     background-color: var(--text-light);
     border-top-right-radius: 3px;
     border-bottom-right-radius: 3px;
     z-index: 2;
 }
 
-/* Rope - Now includes the head */
 .hangman-figure .rope {
     position: absolute;
     top: 0px;
-    left: 145px; /* Adjusted left position for new beam length */
-    width: 5px; /* Width of the rope itself */
-    height: 35px; /* Length of the rope itself */
+    left: 145px;
+    width: 5px;
+    height: 35px;
     background-color: var(--text-light);
     border-bottom-left-radius: 2px;
     border-bottom-right-radius: 2px;
     z-index: 3;
 }
 
-/* Create the head using a pseudo-element of the rope */
 .hangman-figure .rope::after {
     content: "";
     position: absolute;
-    top: 35px; /* Aligns below the 35px rope */
-    left: -20px; /* (45px head width - 5px rope width) / 2 = 20px offset to center head */
+    top: 35px;
+    left: -20px;
     border: 5px solid var(--text-light);
     border-radius: 50%;
-    width: 45px; /* Slightly larger head */
+    width: 45px;
     height: 45px;
     background-color: transparent;
     display: none;
 }
 
-/* --- Body Parts --- */
 .hangman-figure .part {
     position: absolute;
     background-color: var(--text-light);
     display: none;
-    border-radius: 3px; /* Slightly larger radius */
+    border-radius: 3px;
     z-index: 5;
 }
 
-/* Body (Torso) */
 .hangman-figure .body {
     width: 8px;
-    height: 70px; /* Longer body */
-    top: 80px; /* Adjusted to hang from the new combined rope+head height (35px rope + 45px head = 80px total length) */
-    left: 142px; /* Centered relative to rope */
+    height: 70px;
+    top: 80px;
+    left: 142px;
     border-radius: 4px;
 }
 
-/* Arms and Legs - Adjusted positions for larger body */
 .hangman-figure .left-arm {
     width: 5px;
     height: 40px;
@@ -378,7 +349,7 @@ p {
 .hangman-figure .left-leg {
     width: 5px;
     height: 50px;
-    top: 145px; /* Adjusted based on body height */
+    top: 145px;
     left: 135px;
     transform: rotate(-30deg);
     transform-origin: top right;
@@ -387,19 +358,16 @@ p {
 .hangman-figure .right-leg {
     width: 5px;
     height: 50px;
-    top: 145px; /* Adjusted based on body height */
+    top: 145px;
     left: 150px;
     transform: rotate(30deg);
     transform-origin: top left;
 }
 
-/* --- Step Classes to Reveal Body Parts --- */
-/* Ensure the rope itself is always visible after game starts */
 .hangman-figure .rope {
     display: block;
 }
 
-/* Step 1: Head (now ::after of rope) */
 .hangman-figure.step-1 .rope::after,
 .hangman-figure.step-2 .rope::after, .hangman-figure.step-2 .body,
 .hangman-figure.step-3 .rope::after, .hangman-figure.step-3 .body, .hangman-figure.step-3 .left-arm,
@@ -411,40 +379,40 @@ p {
 
 /* --- Game UI Elements (Word Display, Buttons, Hint) --- */
 .word-display {
-    font-family: 'Courier New', Courier, monospace; /* Monospace for word display */
-    font-size: 3.5em; /* Larger word display */
+    font-family: 'Courier New', Courier, monospace;
+    font-size: 3.5em;
     font-weight: bold;
-    letter-spacing: 5px; /* Wider spacing */
+    letter-spacing: 5px;
     margin-bottom: 30px;
     color: var(--text-light);
     padding: 10px;
     background-color: var(--bg-medium);
     border-radius: 8px;
     border: 1px solid var(--border-color);
-    min-height: 1.5em; /* Prevent layout shift if word is short */
+    min-height: 1.5em;
     display: flex;
     justify-content: center;
     align-items: center;
     flex-wrap: wrap;
-    word-break: break-all; /* For very long words if they don't wrap */
+    word-break: break-all;
 }
 
 .letter-buttons {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(45px, 1fr)); /* Larger buttons */
-    gap: 12px; /* Increased gap */
-    max-width: 600px; /* Constrain button width */
+    grid-template-columns: repeat(auto-fit, minmax(45px, 1fr));
+    gap: 12px;
+    max-width: 600px;
     width: 100%;
     margin: 20px auto;
 }
 
 .letter-buttons button {
-    background-color: var(--secondary-color); /* Button color */
+    background-color: var(--secondary-color);
     color: var(--text-light);
     border: 1px solid var(--primary-color-dark);
     border-radius: 6px;
-    padding: 15px 5px; /* Adjusted padding for better fit */
-    font-size: 1.3em; /* Larger font */
+    padding: 15px 5px;
+    font-size: 1.3em;
     font-weight: bold;
     cursor: pointer;
     transition: background-color 0.2s ease, transform 0.1s ease, box-shadow 0.2s ease;
@@ -461,7 +429,7 @@ p {
     background-color: var(--bg-dark);
     color: var(--border-color);
     cursor: not-allowed;
-    opacity: 0.6; /* Slightly less opaque than before */
+    opacity: 0.6;
     box-shadow: none;
     transform: none;
 }
@@ -473,8 +441,8 @@ p {
     padding: 15px;
     background-color: var(--bg-dark);
     border-radius: 8px;
-    border: 1px dashed var(--border-color); /* Dashed border for hint area */
-    min-height: 80px; /* Ensure space even if empty */
+    border: 1px dashed var(--border-color);
+    min-height: 80px;
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -487,14 +455,12 @@ p {
     font-weight: bold;
 }
 
-/* Colors for dynamic theme/hint text */
-.theme-hint .text-indigo-600 { /* Theme */
+.theme-hint .text-indigo-600 {
     color: var(--primary-color);
 }
-.theme-hint .text-red-600 { /* Hint */
+.theme-hint .text-red-600 {
     color: var(--accent-color);
 }
-
 
 /* --- Game Over Screen Styles --- */
 #game-over-screen {
@@ -503,17 +469,16 @@ p {
     border-radius: 12px;
     box-shadow: 0 8px 16px var(--shadow-color);
     text-align: center;
-    animation: fadeIn 0.7s ease-out; /* Fade in animation */
-    /* Ensure it overlays other content when active */
-    position: relative; /* Make it a positioning context for its children */
-    z-index: 3; /* Ensure it's above game-screen and judge-container when active */
+    animation: fadeIn 0.7s ease-out;
+    position: relative;
+    z-index: 3;
 }
 
 #game-over-message {
     font-size: 2.8em;
     font-weight: bold;
     margin-bottom: 20px;
-    color: var(--primary-color); /* Primary color for win/loss message */
+    color: var(--primary-color);
 }
 
 #correct-word-display {
@@ -525,10 +490,8 @@ p {
 }
 
 #play-again-btn {
-    /* Uses .button-primary styles */
     margin-top: 20px;
 }
-
 
 /* --- Responsive Adjustments --- */
 @media (max-width: 900px) {
@@ -540,14 +503,15 @@ p {
 
     .visual-area,
     .word-and-buttons-area {
-        width: 90%; /* Wider on smaller screens */
-        max-width: 500px; /* Constrain max width for content */
+        width: 90%;
+        max-width: 500px;
     }
 
-    /* Adjust global judge container position for smaller screens if needed */
     #judge-container {
-        /* You might want to adjust its top/transform for different screen sizes */
-        /* For example, if it's too high/low on small screens */
+        /* Re-position judge to be within the game-wrapper on small screens */
+        position: static;
+        margin: 20px auto;
+        /* No longer absolute, so it flows with the document */
     }
 }
 
@@ -580,8 +544,8 @@ p {
         gap: 10px;
     }
     .button-group button, .button-primary {
-        min-width: unset; /* Allow buttons to shrink */
-        width: 100%; /* Take full available width */
+        min-width: unset;
+        width: 100%;
         font-size: 1.1em;
         padding: 12px 20px;
     }
@@ -600,9 +564,6 @@ p {
     #judge-container {
         width: 150px;
         height: 180px;
-        /* Re-adjust position if needed for smaller judge size */
-        /* For example, if it looks off center: */
-        /* top: 50%; transform: translate(-50%, -50%); */
     }
     .hangman-figure {
         width: 180px;
@@ -617,7 +578,6 @@ p {
     .hangman-figure .right-arm { top: 70px; left: 115px; height: 35px; }
     .hangman-figure .left-leg { top: 110px; left: 100px; height: 45px; }
     .hangman-figure .right-leg { top: 110px; left: 115px; height: 45px; }
-
     #game-over-message {
         font-size: 2em;
     }
