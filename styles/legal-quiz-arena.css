@@ -1,132 +1,144 @@
 /* legal-quiz-arena.css */
 
-/* --- General Adjustments --- */
-/* Changing the primary color from purple to #2596be */
+/* --- CSS Variables for consistency across all games --- */
 :root {
-  --primary-color: #2596be; /* A vibrant blue */
-  --primary-color-dark: #1e7a9b; /* Slightly darker for hover */
-  --primary-color-light: #4bb4d8; /* Lighter for lighter effects */
+    --primary-color: #2596be; /* A vibrant blue */
+    --primary-color-dark: #1e7a9b; /* Slightly darker for hover */
+    --primary-color-light: #4bb4d8; /* Lighter for lighter effects */
+    --text-color: #f1f1f1; /* Main text color */
+    --bg-color: #1a1a1a;
+    --card-bg: rgba(255, 255, 255, 0.05);
+    --input-border: rgba(255, 255, 255, 0.2);
+    --accent-color: #c084fc; /* Purple for focus */
+    --dark-text-on-light-bg: #333; /* For text that needs to be dark */
 }
 
-/* Update any elements that were explicitly indigo-700 or similar */
+/* Apply the dark background and image to the body */
 body {
-  /* ... existing styles ... */
+    background-color: var(--bg-color);
+    background-image: url('https://placehold.co/1920x1080/1a1a1a/e2e8f0?text=Legal+Background');
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed;
+    color: var(--text-color);
+    font-family: 'Inter', sans-serif;
 }
 
-/* Update h1 color in quiz-arena.html context if it's not handled by Tailwind classes */
-/* If you want the h1 in quiz-arena.html to match the new primary color: */
-.bg-indigo-700 { /* This is from your HTML hero section */
-    background-color: var(--primary-color) !important; /* Override Tailwind */
+/* --- Title Card Section (Hero) --- */
+.title-card {
+    background-color: rgba(0, 0, 0, 0.6); /* Semi-transparent black background */
+    padding: 20px 30px;
+    border-radius: 10px;
+    text-align: center;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+    backdrop-filter: blur(8px); /* A stronger blur for better contrast */
+    margin-bottom: 20px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    max-width: 900px;
+    width: 100%;
+    margin-left: auto;
+    margin-right: auto;
 }
 
-.text-indigo-700 { /* For links in game cards */
-    color: var(--primary-color) !important;
+.game-title {
+    font-size: 2.5rem;
+    font-weight: bold;
+    color: var(--primary-color);
+    margin-bottom: 8px;
 }
 
+.game-tagline {
+    font-size: 1.1rem;
+    color: #a0aec0;
+    text-align: center;
+}
 
-/* --- Game Card Base Styles --- */
+/* --- Game Card Grid --- */
 .game-cards {
-    /* Existing grid gap and sm/lg cols are fine for responsive layout.
-       To enforce 2 columns consistently, you might adjust `lg:grid-cols-3`
-       to `lg:grid-cols-2` in quiz-arena.html, or rely on `sm:grid-cols-2`
-       for smaller screens and adjust larger screen behavior.
-       I'll keep the current HTML for now and assume the grid-cols will handle it.
-       If you explicitly want 2 columns on ALL sizes, change the grid-cols in HTML.
-    */
-    /* If you want a strict 2-column layout on larger screens, change lg:grid-cols-3 to lg:grid-cols-2 in your HTML */
+    max-width: 1200px;
+    margin: 0 auto;
 }
 
-.game-card {
-  background-color: #fff;
-  border-radius: 12px;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
-  padding: 24px;
-  display: flex;
-  flex-direction: column;
-  transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
-  border: 1px solid #e2e8f0;
+/* The card style is now identical to the academic-resources page but with dark theme colors */
+.resource-card {
+    background-color: var(--card-bg);
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    padding: 2rem;
+    text-align: center;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    cursor: pointer;
+    position: relative;
+    overflow: hidden;
+    backdrop-filter: blur(4px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
 }
 
-.game-card:hover {
-  transform: translateY(-5px);
-  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.12);
+.resource-card:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 12px 28px rgba(0, 0, 0, 0.2);
 }
 
-.game-card h2 {
-  color: #333;
-  margin-bottom: 8px;
+.resource-card h3 {
+    font-size: 1.6rem;
+    margin-bottom: 1rem;
+    color: var(--text-color);
 }
 
-.game-card h2 a {
-  color: var(--primary-color); /* Use the new primary color */
-  text-decoration: none;
+.resource-card p {
+    font-size: 1rem;
+    color: #94a3b8;
+    margin-bottom: 1.5rem;
 }
 
-.game-card h2 a:hover {
-  text-decoration: underline;
+/* Icons inside Cards */
+.resource-icon {
+    font-size: 3rem;
+    color: var(--primary-color);
+    margin-bottom: 1rem;
 }
 
-.game-card p {
-  flex: 1;
-  color: #666;
-  margin-bottom: 20px;
-  line-height: 1.6;
+/* The "Play Now" button, now with the new class */
+.resource-link {
+    display: inline-block;
+    margin-top: 1rem;
+    padding: 0.75rem 1.5rem;
+    border-radius: 999px;
+    background: var(--primary-color);
+    color: #fff;
+    font-weight: 600;
+    text-decoration: none;
+    transition: background-color 0.3s ease;
 }
 
-/* --- Play Button Styles --- */
-.play-btn {
-  display: block;
-  width: 100%;
-  padding: 12px 20px;
-  border-radius: 8px;
-  font-weight: 600;
-  text-align: center;
-  text-decoration: none;
-  transition: background-color 0.2s ease, transform 0.1s ease;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-}
-
-.game-card:not(.coming-soon) .play-btn {
-  background-color: var(--primary-color); /* Use the new primary color */
-  color: #fff;
-}
-
-.game-card:not(.coming-soon) .play-btn:hover {
-  background-color: var(--primary-color-dark); /* Darker shade on hover */
-  transform: translateY(-1px);
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
-}
-
-.game-card:not(.coming-soon) .play-btn:active {
-  background-color: #3e33c6; /* Use an appropriate active state color */
-  transform: translateY(0);
+.resource-link:hover {
+    background: var(--primary-color-dark);
 }
 
 /* --- Coming Soon Card Specific Styles --- */
-.game-card.coming-soon {
-  opacity: 0.7;
-  cursor: not-allowed;
-  pointer-events: none;
+.resource-card.coming-soon {
+    opacity: 0.6;
+    cursor: not-allowed;
+    pointer-events: none;
+    background-color: rgba(255, 255, 255, 0.03);
 }
 
-.game-card.coming-soon:hover {
-  transform: none;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+.resource-card.coming-soon:hover {
+    transform: none;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
 }
 
-.game-card.coming-soon .play-btn {
-  background-color: #cbd5e0;
-  color: #94a3b8;
-  cursor: not-allowed;
+.resource-card.coming-soon h3 {
+    color: #94a3b8;
 }
 
-.game-card.coming-soon .play-btn:hover {
-  background-color: #cbd5e0;
-  transform: none;
+.resource-card.coming-soon p {
+    color: #6b7280;
 }
 
-.game-card.coming-soon h2 a {
-  color: #666;
-  text-decoration: none;
-  pointer-events: none;
+.resource-card.coming-soon .resource-link {
+    background-color: #374151;
+    color: #9ca3af;
+    cursor: not-allowed;
 }
