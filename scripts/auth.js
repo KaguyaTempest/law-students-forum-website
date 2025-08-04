@@ -1,7 +1,7 @@
 // scripts/Auth.js
 
 // Imports from your local firebase.js file (now includes 'functions')
-import { auth, db, functions } from './firebase.js';
+import { auth, db, functions } from './firebase-config.js';
 
 // Imports for Firebase Authentication methods (keep these as they are)
 import {
