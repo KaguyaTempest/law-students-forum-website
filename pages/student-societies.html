@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student Societies - Law Students' Forum</title>
+    <link rel="stylesheet" href="styles/societies.css">
+</head>
+<body>
+
+    <header id="header-placeholder"></header>
+    <div id="auth-modal-placeholder"></div>
+
+    <main class="societies-page-content">
+        <section class="student-societies-hero">
+            <h1>Student Societies</h1>
+            <p>Explore the vibrant societies and clubs dedicated to law students, from professional development to the arts.</p>
+        </section>
+
+        <section class="societies-grid-section">
+            <div id="societies-container" class="societies-grid">
+                </div>
+        </section>
+    </main>
+
+    <template id="society-card-template">
+        <div class="society-card">
+            <img src="{{ imageSrc }}" alt="{{ societyName }}" class="society-image">
+            <div class="society-info">
+                <h3 class="society-name">{{ societyName }}</h3>
+                <p class="society-description">{{ description }}</p>
+                <div class="society-tags">
+                    </div>
+            </div>
+        </div>
+    </template>
+
+    <script type="module" src="scripts/load-header.js"></script>
+    <script type="module" src="scripts/auth-modal.js"></script>
+    <script type="module" src="scripts/societies.js"></script>
+</body>
+</html>
