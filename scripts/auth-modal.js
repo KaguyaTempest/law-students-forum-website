@@ -15,7 +15,7 @@ import {
 // to work correctly in auth-modal.js, as it directly accesses Firestore.
 import {
     db // Import db from your firebase.js
-} from './firebase.js'; // Ensure firebase.js is in the same 'scripts' folder
+} from './firebase-config.js'; // Ensure firebase.js is in the same 'scripts' folder
 
 import {
     doc, // Import doc and getDoc for Firestore operations
