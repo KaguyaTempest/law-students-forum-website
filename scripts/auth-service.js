@@ -26,14 +26,12 @@ const hashSensitiveIdCallable = httpsCallable(functions, 'hashSensitiveId');
  * Registers a new user with Firebase Auth and stores profile data in Firestore.
  * @param {string} email
  * @param {string} password
- * @param {string} username
- * @param {string} role
- * @param {string} idType - 'studentId' or 'lawyerNumber'
- * @param {string} plainTextSensitiveId
- * @param {object} profileData - Non-sensitive data like university, yearOfStudy, etc.
+ * @param {object} userData - An object containing all user data from the form.
  */
-export async function registerUser(email, password, username, role, idType, plainTextSensitiveId, profileData) {
+export async function registerUser(email, password, userData) {
     try {
+        const { username, role, idType, plainTextSensitiveId, profileData } = userData;
+
         const cred = await createUserWithEmailAndPassword(auth, email, password);
         console.log("Firebase Auth user created:", cred.user.uid);
 
@@ -96,5 +94,19 @@ export function onAuthChange(callback) {
     onAuthStateChanged(auth, callback);
 }
 
-// NOTE: We have not included the `verifySensitiveIdCallable` here, as it's an advanced
-// feature that you would typically call from an admin-only script.
+/**
+ * Retrieves a user's profile data from Firestore.
+ * @param {string} uid - The user's Firebase UID.
+ * @returns {Promise<object|null>} The user data object or null if not found.
+ */
+export async function getUserProfile(uid) {
+    try {
+        const userDocRef = doc(db, 'users', uid);
+        const snap = await getDoc(userDocRef);
+        return snap.exists() ? snap.data() : null;
+    } catch (err) {
+        console.error("Error getting user profile:", err);
+        return null;
+    }
+}
+
