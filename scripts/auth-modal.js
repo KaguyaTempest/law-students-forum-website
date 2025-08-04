@@ -8,7 +8,7 @@ import {
     loginUser,
     logoutUser,
     onAuthChange // Listener for Firebase Auth state changes
-} from './auth.js'; // Corrected to relative path and assumed 'Auth.js' filename
+} from './auth-service.js'; // Corrected to relative path and assumed 'Auth.js' filename
 
 
 // IMPORTANT: You also need to import 'db' and 'getDoc' here for the onAuthChange listener
