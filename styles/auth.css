@@ -210,6 +210,14 @@
     outline: 2px solid var(--link-color);
     outline-offset: 2px;
 }
+/* Utility classes for JS toggle logic */
+.hidden {
+    display: none !important;
+}
+
+.no-scroll {
+    overflow: hidden;
+}
 
 /* --- Responsive for small screens --- */
 @media (max-width: 480px) {
