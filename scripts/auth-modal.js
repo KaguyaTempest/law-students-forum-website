@@ -2,11 +2,11 @@ document.addEventListener("DOMContentLoaded", () => {
   const authModal = document.getElementById("auth-modal");
   const loginForm = document.getElementById("login-form");
   const signupForm = document.getElementById("signup-form");
-  const openLoginBtn = document.getElementById("open-login-modal");
-  const openSignupBtn = document.getElementById("open-signup-modal");
-  const closeModalBtn = document.getElementById("close-auth-modal");
-  const switchToSignupBtn = document.getElementById("switch-to-signup");
-  const switchToLoginBtn = document.getElementById("switch-to-login");
+  const openLoginBtn = document.getElementById("login-btn");      // was "open-login-modal"  
+  const openSignupBtn = document.getElementById("signup-btn");    // was "open-signup-modal"
+  const switchToSignupBtn = document.getElementById("show-signup"); // was "switch-to-signup"
+  const switchToLoginBtn = document.getElementById("show-login");   // was "switch-to-login"
+  const closeModalBtn = document.querySelector(".close-auth-modal"); // Use querySelector for class
 
   // Show modal
   function showModal(showLogin = true) {
