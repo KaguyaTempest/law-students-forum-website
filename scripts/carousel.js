@@ -1,37 +1,24 @@
 // scripts/carousel.js
-// This script contains a function to set up carousels. It's meant to be called
-// by another script after the carousel HTML has been added to the DOM.
-
-/**
- * Initializes the newsletter and articles carousels with infinite looping.
- * This function should be called after the carousel HTML has loaded.
- */
 export function initCarousels() {
-    // --- Helper function for setting up a single carousel ---
     function setupInfiniteCarousel(carouselSelector, leftArrowSelector, rightArrowSelector) {
         const carousel = document.querySelector(carouselSelector);
         const leftArrow = document.querySelector(leftArrowSelector);
         const rightArrow = document.querySelector(rightArrowSelector);
 
-        // This console.error will now only appear if the elements truly don't exist
-        // after the script has been called, indicating an HTML issue, not a timing issue.
         if (!carousel || !leftArrow || !rightArrow) {
             console.error(`Carousel elements not found for selectors: ${carouselSelector}. Please check your HTML.`);
             return;
         }
 
-        // Clone and prepend/append items to create the "infinite" loop effect.
+        // Clone items for infinite effect
         const numToClone = 3;
         const items = Array.from(carousel.children);
 
         for (let i = numToClone - 1; i >= 0; i--) {
-            const clone = items[items.length - 1 - i].cloneNode(true);
-            carousel.prepend(clone);
+            carousel.prepend(items[items.length - 1 - i].cloneNode(true));
         }
-
         for (let i = 0; i < numToClone; i++) {
-            const clone = items[i].cloneNode(true);
-            carousel.append(clone);
+            carousel.append(items[i].cloneNode(true));
         }
 
         let initialScrollOffset;
@@ -46,48 +33,71 @@ export function initCarousels() {
             const firstItem = carousel.firstElementChild;
             if (!firstItem) return 0;
             const style = window.getComputedStyle(firstItem);
-            return firstItem.offsetWidth + parseFloat(style.marginRight) + parseFloat(style.marginLeft) + parseFloat(getComputedStyle(carousel).gap || 0);
+            return firstItem.offsetWidth
+                + parseFloat(style.marginRight)
+                + parseFloat(style.marginLeft)
+                + parseFloat(getComputedStyle(carousel).gap || 0);
         };
 
         let cardWidth = getCardWidth();
-
         window.addEventListener('resize', () => {
             cardWidth = getCardWidth();
         });
 
-        leftArrow.addEventListener('click', () => {
-            carousel.scrollBy({ left: -cardWidth, behavior: 'smooth' });
-        });
-
-        rightArrow.addEventListener('click', () => {
-            carousel.scrollBy({ left: cardWidth, behavior: 'smooth' });
-        });
-
+        // ---- Infinite scroll fix ----
         function handleInfiniteScroll() {
             const currentScroll = carousel.scrollLeft;
             const maxScroll = carousel.scrollWidth - carousel.clientWidth;
 
-            if (currentScroll >= maxScroll - (numToClone * cardWidth) && currentScroll < maxScroll) {
+            if (currentScroll >= maxScroll - 10) {
                 carousel.scrollLeft = initialScrollOffset;
-            } else if (currentScroll <= initialScrollOffset) {
+            } else if (currentScroll <= 10) {
                 carousel.scrollLeft = maxScroll - (numToClone * cardWidth);
             }
         }
 
-        let isScrolling;
+        let scrollTimeout;
+        let isManualScroll = false;
+
         carousel.addEventListener('scroll', () => {
-            clearTimeout(isScrolling);
-            isScrolling = setTimeout(() => {
-                handleInfiniteScroll();
-            }, 50);
+            clearTimeout(scrollTimeout);
+            scrollTimeout = setTimeout(() => {
+                if (!isManualScroll) {
+                    handleInfiniteScroll();
+                }
+                isManualScroll = false;
+            }, 200); // increased debounce
         });
 
-        setInterval(() => {
+        // ---- Auto-scroll fix ----
+        let autoScrollInterval = setInterval(() => {
+            if (!isManualScroll) {
+                carousel.scrollBy({ left: cardWidth, behavior: 'smooth' });
+            }
+        }, 10000); // slower scroll
+
+        const resetAutoScroll = () => {
+            clearInterval(autoScrollInterval);
+            autoScrollInterval = setInterval(() => {
+                if (!isManualScroll) {
+                    carousel.scrollBy({ left: cardWidth, behavior: 'smooth' });
+                }
+            }, 10000);
+        };
+
+        leftArrow.addEventListener('click', () => {
+            isManualScroll = true;
+            carousel.scrollBy({ left: -cardWidth, behavior: 'smooth' });
+            resetAutoScroll();
+        });
+
+        rightArrow.addEventListener('click', () => {
+            isManualScroll = true;
             carousel.scrollBy({ left: cardWidth, behavior: 'smooth' });
-        }, 7000);
+            resetAutoScroll();
+        });
     }
 
-    // Call the setup function for both carousels
     setupInfiniteCarousel('.newsletter-carousel', '.newsletter-left-arrow', '.newsletter-right-arrow');
     setupInfiniteCarousel('.article-carousel', '.left-arrow', '.right-arrow');
 }
