@@ -1,4 +1,4 @@
-// scripts/auth-service.js - SECURE VERSION
+// scripts/auth-service.js - SECURE + VALIDATED VERSION
 
 import { auth, db, functions } from './firebase-config.js';
 import {
@@ -21,21 +21,59 @@ import {
 const hashSensitiveIdCallable = httpsCallable(functions, 'hashSensitiveId');
 
 /**
+ * Normalize email: lowercase + trim spaces
+ */
+function normalizeEmail(email) {
+    return email.trim().toLowerCase();
+}
+
+/**
+ * Validate password strength
+ * Requirements:
+ * - Min 8 chars
+ * - At least 1 uppercase, 1 lowercase, 1 number, 1 special char
+ */
+function validatePassword(password) {
+    const minLength = 8;
+    const hasUpper = /[A-Z]/.test(password);
+    const hasLower = /[a-z]/.test(password);
+    const hasNumber = /\d/.test(password);
+    const hasSpecial = /[!@#$%^&*(),.?":{}|<>]/.test(password);
+
+    return (
+        password.length >= minLength &&
+        hasUpper &&
+        hasLower &&
+        hasNumber &&
+        hasSpecial
+    );
+}
+
+/**
  * Registers a new user with Firebase Auth and stores profile data securely.
  */
 export async function registerUser(email, password, userData) {
     try {
+        // Normalize & validate input
+        const normalizedEmail = normalizeEmail(email);
+
+        if (!validatePassword(password)) {
+            throw new Error(
+                "Password must be at least 8 characters long and include uppercase, lowercase, number, and special character."
+            );
+        }
+
         const { username, role, idType, plainTextSensitiveId, profileData } = userData;
 
-        // Create Firebase Auth user (Firebase hashes password internally)
-        const cred = await createUserWithEmailAndPassword(auth, email, password);
+        // Create Firebase Auth user
+        const cred = await createUserWithEmailAndPassword(auth, normalizedEmail, password);
         const user = cred.user;
         console.log("Firebase Auth user created:", user.uid);
 
         // Prepare safe user profile object (NO sensitive IDs here)
         const userProfileData = {
             username,
-            email,
+            email: normalizedEmail,
             role,
             status:
                 role === 'student'
@@ -44,7 +82,7 @@ export async function registerUser(email, password, userData) {
                         ? 'lawyer'
                         : 'observer',
             createdAt: serverTimestamp(),
-            ...profileData // e.g., university, yearOfStudy, yearsExperience
+            ...profileData
         };
 
         // Store profile in Firestore
@@ -61,7 +99,6 @@ export async function registerUser(email, password, userData) {
                 console.log("Sensitive ID processed:", result.data.message);
             } catch (hashError) {
                 console.warn("ID hashing failed (non-critical):", hashError);
-                // Registration still succeeds even if hashing fails
             }
         }
 
@@ -77,7 +114,8 @@ export async function registerUser(email, password, userData) {
  */
 export async function loginUser(email, password) {
     try {
-        const userCredential = await signInWithEmailAndPassword(auth, email, password);
+        const normalizedEmail = normalizeEmail(email);
+        const userCredential = await signInWithEmailAndPassword(auth, normalizedEmail, password);
         return userCredential.user;
     } catch (error) {
         console.error("Login error:", error);
