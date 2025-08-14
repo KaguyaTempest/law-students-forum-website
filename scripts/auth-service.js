@@ -1,6 +1,4 @@
-// scripts/auth-service.js
-// This file is a pure service module that handles Firebase Authentication and Firestore logic.
-// It is imported by auth-modal.js.
+// scripts/auth-service.js - SECURE + VALIDATED VERSION
 
 import { auth, db, functions } from './firebase-config.js';
 import {
@@ -19,58 +17,109 @@ import {
     httpsCallable
 } from 'https://www.gstatic.com/firebasejs/10.12.2/firebase-functions.js';
 
-
+// Cloud Function for hashing sensitive IDs
 const hashSensitiveIdCallable = httpsCallable(functions, 'hashSensitiveId');
 
 /**
- * Registers a new user with Firebase Auth and stores profile data in Firestore.
- * @param {string} email
- * @param {string} password
- * @param {object} userData - An object containing all user data from the form.
+ * Normalize email: lowercase + trim spaces
+ */
+function normalizeEmail(email) {
+    return email.trim().toLowerCase();
+}
+
+/**
+ * Validate password strength
+ * Requirements:
+ * - Min 8 chars
+ * - At least 1 uppercase, 1 lowercase, 1 number, 1 special char
+ */
+function validatePassword(password) {
+    const minLength = 8;
+    const hasUpper = /[A-Z]/.test(password);
+    const hasLower = /[a-z]/.test(password);
+    const hasNumber = /\d/.test(password);
+    const hasSpecial = /[!@#$%^&*(),.?":{}|<>]/.test(password);
+
+    return (
+        password.length >= minLength &&
+        hasUpper &&
+        hasLower &&
+        hasNumber &&
+        hasSpecial
+    );
+}
+
+/**
+ * Registers a new user with Firebase Auth and stores profile data securely.
  */
 export async function registerUser(email, password, userData) {
     try {
+        // Normalize & validate input
+        const normalizedEmail = normalizeEmail(email);
+
+        if (!validatePassword(password)) {
+            throw new Error(
+                "Password must be at least 8 characters long and include uppercase, lowercase, number, and special character."
+            );
+        }
+
         const { username, role, idType, plainTextSensitiveId, profileData } = userData;
 
-        const cred = await createUserWithEmailAndPassword(auth, email, password);
-        console.log("Firebase Auth user created:", cred.user.uid);
+        // Create Firebase Auth user
+        const cred = await createUserWithEmailAndPassword(auth, normalizedEmail, password);
+        const user = cred.user;
+        console.log("Firebase Auth user created:", user.uid);
 
+        // Prepare safe user profile object (NO sensitive IDs here)
         const userProfileData = {
             username,
-            email,
+            email: normalizedEmail,
             role,
-            status: role === 'student' ? 'law_student' : role === 'lawyer' ? 'lawyer' : 'spectator',
+            status:
+                role === 'student'
+                    ? 'law_student'
+                    : role === 'lawyer'
+                        ? 'lawyer'
+                        : 'observer',
             createdAt: serverTimestamp(),
             ...profileData
         };
 
-        const userDocRef = doc(db, 'users', cred.user.uid);
-        await setDoc(userDocRef, userProfileData, { merge: true });
+        // Store profile in Firestore
+        await setDoc(doc(db, 'users', user.uid), userProfileData);
 
+        // Hash sensitive ID (if provided) via Cloud Function
         if (idType && plainTextSensitiveId) {
-            const hashResult = await hashSensitiveIdCallable({ idType, plainTextId: plainTextSensitiveId });
-            console.log("Sensitive ID hashing result:", hashResult.data.message);
+            try {
+                const result = await hashSensitiveIdCallable({
+                    userId: user.uid,
+                    idType,
+                    plainTextId: plainTextSensitiveId
+                });
+                console.log("Sensitive ID processed:", result.data.message);
+            } catch (hashError) {
+                console.warn("ID hashing failed (non-critical):", hashError);
+            }
         }
-        return cred.user;
 
-    } catch (err) {
-        console.error("Error during registration:", err);
-        throw err;
+        return user;
+    } catch (error) {
+        console.error("Registration error:", error);
+        throw error;
     }
 }
 
 /**
  * Logs a user in with Firebase Auth.
- * @param {string} email
- * @param {string} password
  */
 export async function loginUser(email, password) {
     try {
-        const userCredential = await signInWithEmailAndPassword(auth, email, password);
+        const normalizedEmail = normalizeEmail(email);
+        const userCredential = await signInWithEmailAndPassword(auth, normalizedEmail, password);
         return userCredential.user;
-    } catch (err) {
-        console.error("Error during login:", err);
-        throw err;
+    } catch (error) {
+        console.error("Login error:", error);
+        throw error;
     }
 }
 
@@ -80,33 +129,28 @@ export async function loginUser(email, password) {
 export async function logoutUser() {
     try {
         await signOut(auth);
-    } catch (err) {
-        console.error("Error during logout:", err);
-        throw err;
+    } catch (error) {
+        console.error("Logout error:", error);
+        throw error;
     }
 }
 
 /**
- * A reusable listener for Firebase Auth state changes.
- * @param {Function} callback - A function to be called with the user object or null.
+ * Listen for auth state changes.
  */
 export function onAuthChange(callback) {
-    onAuthStateChanged(auth, callback);
+    return onAuthStateChanged(auth, callback);
 }
 
 /**
- * Retrieves a user's profile data from Firestore.
- * @param {string} uid - The user's Firebase UID.
- * @returns {Promise<object|null>} The user data object or null if not found.
+ * Get user profile data from Firestore.
  */
 export async function getUserProfile(uid) {
     try {
-        const userDocRef = doc(db, 'users', uid);
-        const snap = await getDoc(userDocRef);
+        const snap = await getDoc(doc(db, 'users', uid));
         return snap.exists() ? snap.data() : null;
-    } catch (err) {
-        console.error("Error getting user profile:", err);
+    } catch (error) {
+        console.error("Error getting user profile:", error);
         return null;
     }
 }
-
