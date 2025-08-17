@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Legal Word Search</title>
+    <!-- Favicon link (you may need to update the path) -->
+    <link rel="icon" href="/assets/favicon.ico" type="image/x-icon" />
+
+    <!-- Link to the Tailwind CSS CDN for styling -->
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <!-- Link to your custom styles, inspired by your Sudoku game -->
+    <link rel="stylesheet" href="style.css">
+
+    <!-- Add your font link here, matching the Sudoku game's theme -->
+    <link href="https://fonts.googleapis.com/css2?family=Georgia:wght@400;700&display=swap" rel="stylesheet">
+    
+    <!-- These script tags are included based on your Sudoku example. -->
+    <!-- You should uncomment them and update paths if you want to integrate with your full website -->
+    <!-- <script type="module" src="/law-students-forum-website/scripts/load-header.js"></script> -->
+    <!-- <script type="module" src="/law-students-forum-website/scripts/auth-modal.js"></script> -->
+    <!-- <script type="module" src="/law-students-forum-website/scripts/loader.js"></script> -->
+</head>
+<body class="bg-gray-900 text-gray-100 min-h-screen font-sans">
+
+    <!-- Placeholder for your website's header -->
+    <!-- <div id="header-placeholder"></div> -->
+
+    <main class="flex flex-col items-center p-4 sm:p-8">
+        <!-- Title card, styled like the Sudoku game -->
+        <div class="title-card">
+            <h1 class="game-title">Legal Word Search</h1>
+            <p class="game-tagline">Locate the legal terms hidden in the grid below.</p>
+        </div>
+
+        <div id="game-container" class="w-full max-w-4xl flex flex-col lg:flex-row gap-8">
+            <!-- Word Search Grid -->
+            <div id="grid-container" class="grid-container w-full lg:w-3/5">
+                <!-- Grid cells will be generated here by JavaScript -->
+            </div>
+
+            <!-- Word List and Controls -->
+            <div class="controls-container w-full lg:w-2/5">
+                <!-- Message box for user feedback -->
+                <div id="message-box" class="message-box">
+                    <span id="message-text">Select letters to find a word!</span>
+                </div>
+                
+                <!-- Word list display -->
+                <div id="word-list" class="word-list">
+                    <!-- Word items will be generated here by JavaScript -->
+                </div>
+                
+                <!-- Game buttons, styled like the Sudoku game -->
+                <div class="game-buttons mt-8">
+                    <button id="new-game-btn" class="game-btn primary-btn">New Game</button>
+                    <button id="reset-selection-btn" class="game-btn secondary-btn">Reset</button>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- The game logic is in this separate JavaScript file -->
+    <script src="script.js"></script>
+</body>
+</html>

@@ -1,48 +1,91 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Legal Crossword</title>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Legal Crossword | Law Students Intellectual Forum</title>
+
+    <!-- Favicon and CSS links for consistent styling -->
     <link rel="icon" href="/law-students-forum-website/assets/favicon.ico" type="image/x-icon" />
     <link rel="stylesheet" href="/law-students-forum-website/styles/style.css" />
+    
+    <!-- Tailwind CSS for utility classes -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="/law-students-forum-website/games/crossword/crossword.css" />
 
-    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@3.4.1/dist/tailwind.min.css" rel="stylesheet" />
-
-    <link rel="stylesheet" href="crossword.css">
 </head>
-<body>
+<body class="font-inter bg-gray-950 text-gray-100 min-h-screen flex flex-col antialiased">
 
+    <!-- Header will be injected here -->
     <div id="header-placeholder"></div>
 
-    <main class="crossword-container">
-        <h1 class="game-title">Legal Crossword</h1>
-        <p class="game-tagline">Test your legal vocabulary across the grid!</p>
+    <main class="flex-1 container mx-auto px-4 py-8 flex flex-col items-center justify-center">
+        <!-- Game Title and Description -->
+        <section class="text-center mb-8">
+            <h1 class="text-4xl font-extrabold text-blue-500 tracking-tight">Legal Crossword</h1>
+            <p class="mt-2 text-lg text-gray-400 max-w-xl mx-auto">Test your legal vocabulary across the grid!</p>
+        </section>
 
-        <div class="crossword-game-area">
-            <div id="crossword-grid" class="crossword-grid">
+        <!-- Main Game Container -->
+        <div class="game-container bg-gray-800 rounded-xl shadow-2xl p-6 md:p-10 w-full max-w-6xl flex flex-col lg:flex-row gap-6 lg:gap-10">
+
+            <!-- Clue Sections -->
+            <div class="clue-sections flex-1 flex flex-col md:flex-row lg:flex-col gap-6 lg:gap-8">
+                <div id="across-clues" class="clue-list w-full bg-gray-700 p-4 rounded-lg shadow-inner flex-1">
+                    <h2 class="text-xl font-bold mb-3 text-white">Across</h2>
+                    <ul class="text-gray-300 space-y-2">
+                        <!-- Clues will be dynamically populated here by JS -->
+                    </ul>
+                </div>
+                <div id="down-clues" class="clue-list w-full bg-gray-700 p-4 rounded-lg shadow-inner flex-1">
+                    <h2 class="text-xl font-bold mb-3 text-white">Down</h2>
+                    <ul class="text-gray-300 space-y-2">
+                        <!-- Clues will be dynamically populated here by JS -->
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Crossword Grid and Controls -->
+            <div class="game-area flex-2 flex flex-col items-center">
+                
+                <!-- Timer and XP Display -->
+                <div class="flex items-center justify-between w-full p-2 mb-4 bg-gray-700 rounded-full shadow-md">
+                    <span id="timer" class="text-lg font-bold text-gray-300 px-4">00:00</span>
+                    <span id="xp-display" class="text-lg font-bold text-gray-300 px-4">XP: 0</span>
                 </div>
 
-            <div class="crossword-clues">
-                <div class="clue-section across-clues">
-                    <h2 class="clue-heading">Across</h2>
-                    <ol id="across-clues-list"></ol>
+                <!-- Crossword Grid -->
+                <div id="crossword-grid" class="flex items-center justify-center bg-gray-900 p-2 rounded-lg shadow-inner">
+                    <!-- The grid will be generated here by JavaScript -->
+                    <div class="text-center text-gray-500">Loading puzzle...</div>
                 </div>
-                <div class="clue-section down-clues">
-                    <h2 class="clue-heading">Down</h2>
-                    <ol id="down-clues-list"></ol>
+
+                <!-- Game Control Buttons -->
+                <div class="game-controls mt-6 flex flex-wrap gap-4 justify-center">
+                    <button id="check-puzzle-btn" class="px-6 py-2 rounded-full font-semibold transition-transform duration-200 transform hover:scale-105 bg-blue-600 hover:bg-blue-700 text-white shadow-lg">Check Puzzle</button>
+                    <button id="use-clue-btn" class="px-6 py-2 rounded-full font-semibold transition-transform duration-200 transform hover:scale-105 bg-purple-600 hover:bg-purple-700 text-white shadow-lg">Use Clue</button>
                 </div>
             </div>
         </div>
-
-        <div class="game-buttons">
-            <button id="check-crossword-btn" class="crossword-btn primary-btn">Check Puzzle</button>
-            <button id="clear-crossword-btn" class="crossword-btn secondary-btn">Clear Inputs</button>
-            </div>
     </main>
 
+    <!-- Game Over/Win Modal (Initially hidden) -->
+    <div id="game-modal" class="hidden fixed inset-0 bg-black bg-opacity-70 flex items-center justify-center p-4">
+        <div class="bg-gray-800 text-white rounded-xl shadow-2xl p-8 max-w-sm w-full text-center">
+            <h3 id="modal-title" class="text-2xl font-bold mb-4">You Win!</h3>
+            <p id="modal-message" class="text-gray-300 mb-6">Congratulations, you solved the puzzle!</p>
+            <button id="modal-close-btn" class="px-6 py-2 rounded-full font-semibold bg-blue-600 hover:bg-blue-700 transition-colors">Close</button>
+        </div>
+    </div>
+
+    <!-- Footer will be injected here -->
+    <footer>
+        <p class="text-gray-400 text-center py-4 text-sm">&copy; 2025 LAW STUDENTS INTELLECTUAL FORUM</p>
+    </footer>
+
+    <!-- Scripts to load header, auth, and the game logic -->
     <script type="module" src="/law-students-forum-website/scripts/load-header.js"></script>
     <script type="module" src="/law-students-forum-website/scripts/auth-modal.js"></script>
-    <script src="/law-students-forum-website/games/crossword/crossword.js"></script>
+    <script type="module" src="/law-students-forum-website/games/crossword/crossword.js"></script>
 </body>
 </html>
