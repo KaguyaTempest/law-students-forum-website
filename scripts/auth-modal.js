@@ -197,50 +197,62 @@ document.addEventListener("authModal:loaded", () => {
     const username = formData.get("signup-username");
     const role = formData.get("user-role");
 
-    // Basic validation (keeps it simple)
+    // 1️⃣ Validate passwords
     if (password !== confirmPassword) {
       signupError.textContent = "Passwords don't match!";
       return;
     }
-    if (password.length < 6) {
-      signupError.textContent = "Password must be at least 6 characters!";
+
+    if (!validatePasswordStrength(password)) {
+      signupError.textContent = "Password must be at least 8 characters and include uppercase, lowercase, number, and special character.";
       return;
     }
+
+    // 2️⃣ Check role selection
     if (!role) {
       signupError.textContent = "Please select your role!";
       return;
     }
 
-    // build userData object and role-specific checks
+    // 3️⃣ Build userData object
     const userData = { username, role, profileData: {} };
 
     if (role === "student") {
       const studentId = formData.get("student-id");
       const university = formData.get("student-university");
       const yearOfStudy = formData.get("student-year-of-study");
+
       if (!studentId || !university || !yearOfStudy) {
         signupError.textContent = "Please fill in all student fields!";
         return;
       }
+
       userData.idType = "student_id";
       userData.plainTextSensitiveId = studentId;
       userData.profileData = { university, yearOfStudy: parseInt(yearOfStudy, 10) };
+
     } else if (role === "lawyer") {
       const lawyerNumber = formData.get("lawyer-number");
       const yearsExperience = formData.get("lawyer-years-experience");
+
       if (!lawyerNumber || !yearsExperience) {
         signupError.textContent = "Please fill in all lawyer fields!";
         return;
       }
+
       userData.idType = "lawyer_id";
       userData.plainTextSensitiveId = lawyerNumber;
       userData.profileData = { yearsExperience: parseInt(yearsExperience, 10) };
     }
 
+    // 4️⃣ Sanitize profile data
+    userData.profileData = sanitizeProfileData(userData.profileData);
+
+    // 5️⃣ Call registerUser
     try {
       await registerUser(email, password, userData);
       hideModal();
-      // logged in state will be handled by onAuthChange below
+      // Success handled by onAuthChange (updates header)
     } catch (err) {
       console.error("Registration error:", err);
       signupError.textContent = getFirebaseErrorMessage(err?.code);
