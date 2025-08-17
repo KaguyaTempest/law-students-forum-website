@@ -1,264 +1,190 @@
 /* crossword.css */
 
-/* Define CSS Variables for consistent theming */
+/* --- CSS Variables for consistency across all games --- */
 :root {
     --primary-color: #2596be; /* A vibrant blue */
     --primary-color-dark: #1e7a9b; /* Slightly darker for hover */
     --primary-color-light: #4bb4d8; /* Lighter for lighter effects */
     --text-color: #f1f1f1; /* Main text color */
-    --bg-color: #1a1a1a; /* Dark background */
-    --grid-cell-bg: #fff; /* White background for crossword cells */
-    --grid-cell-border: #333; /* Dark border for cells */
-    --empty-cell-bg: #333; /* Background for unused cells */
-    --input-text-color: #000; /* Black text for input values */
-    --clue-text-color: #f1f1f1; /* Light text for clues */
-    --highlight-color: #ffd700; /* Gold for selected cell highlight */
-    --clue-highlight-bg: rgba(var(--primary-color-dark), 0.2); /* Highlight for active clue */
-    --button-primary-bg: var(--primary-color);
-    --button-primary-hover: var(--primary-color-dark);
-    --button-secondary-bg: #4a5568;
-    --button-secondary-hover: #2d3748;
+    --bg-color: #1a1a1a;
+    --card-bg: rgba(255, 255, 255, 0.05);
+    --input-border: rgba(255, 255, 255, 0.2);
+    --accent-color: #c084fc; /* Purple for focus */
+    --dark-text-on-light-bg: #333; /* For text that needs to be dark */
 }
 
+/* Base Body Styling */
 body {
     background-color: var(--bg-color);
-    background-image: url('/law-students-forum-website/assets/legal-bg.png'); /* Assuming same background image location */
+    background-image: url('https://placehold.co/1920x1080/1a1a1a/e2e8f0?text=Legal+Background');
     background-repeat: no-repeat;
-    background-size: 65%;
+    background-size: cover;
     background-position: center;
     background-attachment: fixed;
     color: var(--text-color);
-    font-family: 'Georgia', serif;
-    display: flex;
-    flex-direction: column;
-    min-height: 100vh;
+    font-family: 'Inter', sans-serif;
 }
 
-/* Ensure header is loaded correctly */
-#header-placeholder {
+/* --- Game Container & Clues --- */
+.game-container {
+    background-color: rgba(0, 0, 0, 0.6);
+    backdrop-filter: blur(8px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    max-width: 1200px;
     width: 100%;
 }
 
-.crossword-container {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    padding: 40px 20px;
-    flex: 1;
-    width: 100%;
-    max-width: 1200px; /* Wider container for crossword + clues */
-    margin: 0 auto;
-    gap: 25px;
+.clue-list h2 {
+    color: var(--primary-color-light);
+    font-size: 1.5rem;
 }
 
-.game-title {
-    font-size: 2.8rem;
-    font-weight: bold;
-    color: var(--primary-color);
-    margin-bottom: 8px;
-    text-align: center;
+.clue-list ul {
+    list-style: none;
+    padding: 0;
 }
 
-.game-tagline {
-    font-size: 1.2rem;
-    color: #a0aec0;
-    margin-bottom: 20px;
-    text-align: center;
+.clue-list li {
+    font-size: 0.9rem;
+    line-height: 1.5;
+    transition: color 0.3s ease;
 }
 
-.crossword-game-area {
-    display: flex;
-    flex-wrap: wrap; /* Allows wrapping on smaller screens */
-    gap: 30px;
-    justify-content: center;
-    align-items: flex-start; /* Align grid and clues to top */
-    width: 100%;
+.clue-list li.found {
+    text-decoration: line-through;
+    color: #4b5563; /* Gray out found clues */
 }
 
-/* Crossword Grid */
+/* --- Crossword Grid --- */
 #crossword-grid {
     display: grid;
-    /* Grid size will be dynamic, but setting a max-width for appearance */
-    max-width: 500px; /* Example max width for a 15x15 grid with 30px cells */
-    width: 100%;
-    aspect-ratio: 1 / 1; /* Keep it square */
-    border: 2px solid var(--grid-cell-border);
-    background-color: var(--grid-cell-bg); /* Default background for entire grid area */
-    box-shadow: 0 0 15px rgba(0,0,0,0.3);
+    border: 2px solid #374151;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
 }
 
-/* Individual Grid Cells */
-.crossword-cell {
-    width: 100%; /* Will be controlled by JS for grid-template-columns */
-    height: 100%; /* Will be controlled by JS for grid-template-columns */
+.grid-cell {
+    position: relative;
+    width: 40px;
+    height: 40px;
+    background-color: #2c2c2c;
+    border: 1px solid #374151;
     display: flex;
-    justify-content: center;
     align-items: center;
-    position: relative; /* For clue numbers */
-    box-sizing: border-box; /* Include padding/border in size */
-}
-
-.crossword-cell input {
-    width: 90%; /* Smaller than cell to show border */
-    height: 90%;
-    border: 1px solid var(--grid-cell-border);
-    text-align: center;
-    font-size: 1.3rem;
+    justify-content: center;
+    font-size: 1.5rem;
     font-weight: bold;
+    color: #f1f1f1;
     text-transform: uppercase;
-    background-color: var(--grid-cell-bg);
-    color: var(--input-text-color); /* Black text on white cells */
-    padding: 0;
-    margin: 0;
-    outline: none; /* Remove default outline */
+    cursor: pointer;
+    transition: background-color 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
 }
 
-.crossword-cell input:focus {
-    background-color: var(--highlight-color); /* Highlight color on focus */
-    border-color: var(--primary-color-dark);
+.grid-cell:not(.black-cell):hover,
+.grid-cell:not(.black-cell).selected {
+    background-color: #4b5563; /* Highlight on hover/select */
+    box-shadow: 0 0 8px var(--primary-color);
+    border-color: var(--primary-color);
 }
 
-/* Styling for cells that are part of the puzzle solution */
-.crossword-cell.playable input {
-    /* No additional styling needed here, default input style is fine */
+.grid-cell:not(.black-cell).active-word {
+    background-color: #374151; /* Darker background for the currently selected word */
 }
 
-/* Styling for cells that are NOT part of the puzzle (black squares) */
-.crossword-cell.empty {
-    background-color: var(--empty-cell-bg); /* Black/dark gray square */
-    border: 1px solid var(--empty-cell-bg); /* Match border to background */
+.grid-cell.black-cell {
+    background-color: #1a1a1a;
+    pointer-events: none;
+    border: none;
 }
 
-.crossword-cell.empty input {
-    display: none; /* Hide input field for empty cells */
-}
-
-/* Clue numbers inside cells */
-.clue-number {
+.grid-cell .number {
     position: absolute;
     top: 2px;
-    left: 2px;
-    font-size: 0.65rem;
-    font-weight: bold;
-    color: var(--input-text-color); /* Dark color for numbers on white cells */
-    line-height: 1; /* Adjust line height for placement */
+    left: 3px;
+    font-size: 0.7rem;
+    color: #a0aec0;
+    pointer-events: none;
 }
 
-
-/* Clue List Area */
-.crossword-clues {
-    flex: 1; /* Allows clue section to take remaining space */
-    min-width: 300px; /* Minimum width for clues */
-    background-color: var(--grid-bg); /* Consistent with other containers */
-    padding: 25px;
-    border-radius: 8px;
-    box-shadow: 0 0 15px rgba(0,0,0,0.2);
-    backdrop-filter: blur(4px);
-    border: 1px solid rgba(255,255,255,0.1);
+/* Feedback for incorrect letters (light mode) */
+.grid-cell.incorrect-light {
+    background-color: #fef2f2;
+    color: #ef4444;
+    border-color: #ef4444;
 }
 
-.clue-heading {
-    font-size: 1.8rem;
+/* Feedback for correct letters (light mode) */
+.grid-cell.correct-light {
+    background-color: #eff6ff;
+    color: #2563eb;
+    border-color: #2563eb;
+}
+
+/* Feedback for incorrect letters (dark mode) */
+.grid-cell.incorrect-dark {
+    background-color: #374151;
+    color: #ef4444;
+    border-color: #ef4444;
+    box-shadow: 0 0 8px #ef4444;
+}
+
+/* Feedback for correct letters (dark mode) */
+.grid-cell.correct-dark {
+    background-color: #374151;
     color: var(--primary-color-light);
-    margin-bottom: 15px;
-    border-bottom: 2px solid var(--primary-color-dark);
-    padding-bottom: 5px;
+    border-color: var(--primary-color-light);
+    box-shadow: 0 0 8px var(--primary-color-light);
 }
 
-.clue-section ol {
-    list-style: none; /* Remove default list style */
-    padding: 0;
-    margin: 0;
+/* The glow effect for correct letters */
+.grid-cell.correct-dark::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    box-shadow: 0 0 10px var(--primary-color-light);
+    border-radius: 4px;
+    z-index: -1;
+    animation: glow-pulse 1.5s infinite ease-in-out;
 }
 
-.clue-section li {
-    margin-bottom: 8px;
-    font-size: 1rem;
-    line-height: 1.4;
-    color: var(--clue-text-color);
-    cursor: pointer; /* Indicate it's clickable */
+@keyframes glow-pulse {
+    0%, 100% {
+        box-shadow: 0 0 5px var(--primary-color-light);
+    }
+    50% {
+        box-shadow: 0 0 15px var(--primary-color-light);
+    }
 }
 
-.clue-section li:hover {
-    color: var(--primary-color);
-}
-
-/* Highlight for the active clue */
-.clue-section li.active-clue {
-    background-color: var(--clue-highlight-bg);
-    border-left: 4px solid var(--primary-color);
-    padding-left: 5px;
-    font-weight: bold;
-    color: var(--primary-color);
-}
-
-
-/* Game Buttons (reusing styles from Sudoku) */
-.game-buttons {
-    margin-top: 25px;
-    display: flex;
-    gap: 20px;
-    justify-content: center;
-    width: 100%;
-}
-
-.crossword-btn { /* Changed from .sudoku-btn */
-    padding: 12px 25px;
-    border-radius: 8px;
-    font-weight: 600;
-    cursor: pointer;
-    border: none;
-    transition: all 0.2s ease;
-    box-shadow: 0 2px 4px rgba(0,0,0,0.2);
-}
-
-.crossword-btn:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 4px 8px rgba(0,0,0,0.3);
-}
-
-.primary-btn {
-    background-color: var(--button-primary-bg);
+/* --- Controls & Modals --- */
+.game-controls button {
+    background-color: var(--primary-color);
     color: #fff;
 }
 
-.primary-btn:hover {
-    background-color: var(--button-primary-hover);
+.game-controls button:hover {
+    background-color: var(--primary-color-dark);
 }
 
-.secondary-btn {
-    background-color: var(--button-secondary-bg);
-    color: #fff;
+.game-controls #use-clue-btn {
+    background-color: var(--accent-color);
 }
 
-.secondary-btn:hover {
-    background-color: var(--button-secondary-hover);
+.game-controls #use-clue-btn:hover {
+    background-color: #9333ea;
 }
 
+#game-modal {
+    z-index: 100;
+}
 
-/* Responsive Adjustments */
-@media screen and (max-width: 768px) {
-    .crossword-game-area {
-        flex-direction: column;
-        align-items: center;
-    }
-    #crossword-grid {
-        max-width: 95vw; /* Make grid take more width on smaller screens */
-        margin-bottom: 20px;
-    }
-    .crossword-clues {
-        min-width: unset; /* Remove min-width for mobile */
-        width: 95vw; /* Take full width on mobile */
-    }
-    .game-buttons {
-        flex-direction: column;
-        gap: 10px;
-    }
-    .game-title {
-        font-size: 2rem;
-    }
-    .game-tagline {
-        font-size: 0.9rem;
+/* Responsive grid cell sizing */
+@media (max-width: 768px) {
+    .grid-cell {
+        width: 30px;
+        height: 30px;
+        font-size: 1rem;
     }
 }
