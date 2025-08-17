@@ -1,314 +1,289 @@
 // scripts/auth-modal.js
-// Event-driven auth modal wiring (works with load-header.js events)
-// Uses auth-service module for real registration/login
-import { registerUser, loginUser, onAuthChange, logoutUser } from './auth-service.js';
+// Replaces previous DOMContentLoaded-based wiring with event-driven wiring
+(() => {
+  let modalReady = false;
+  let headerReady = false;
+  let pendingShow = null; // true => show login, false => show signup
 
-/*
-  Overview for a 12th-grader:
-  - load-header.js injects header.html and auth-modal.html later.
-  - We wait for those injections by listening to header:loaded and authModal:loaded events.
-  - When header loads, we attach navbar button listeners (#login-btn, #signup-btn).
-  - When modal loads, we attach modal internals (forms, tabs).
-  - If the user clicks navbar before modal is loaded, we remember their intent and open modal when ready.
-*/
+  // Local references (populated when modal is loaded)
+  let authModal, loginContainer, signupContainer,
+      loginForm, signupForm, switchToSignupBtn, switchToLoginBtn,
+      closeModalBtn, userRoleSelect, studentFields, lawyerFields,
+      loginError, signupError;
 
-let modalReady = false;
-let headerReady = false;
-let pendingShow = null; // null | true (login) | false (signup)
-
-// DOM refs (populated when authModal:loaded fires)
-let authModal, loginContainer, signupContainer, loginForm, signupForm;
-let switchToSignupBtn, switchToLoginBtn, closeModalBtn;
-let userRoleSelect, studentFields, lawyerFields;
-let loginError, signupError;
-
-// ---------- Utility helpers ----------
-function clearErrors() {
-  if (loginError) loginError.textContent = "";
-  if (signupError) signupError.textContent = "";
-}
-
-function hideRoleSpecificFields() {
-  studentFields?.classList.add("hidden");
-  lawyerFields?.classList.add("hidden");
-  studentFields?.querySelectorAll("input, select")?.forEach(i => i.removeAttribute("required"));
-  lawyerFields?.querySelectorAll("input, select")?.forEach(i => i.removeAttribute("required"));
-}
-
-function showRoleSpecificFields(role) {
-  hideRoleSpecificFields();
-  if (role === "student") {
-    studentFields?.classList.remove("hidden");
-    studentFields?.querySelectorAll("input, select")?.forEach(i => i.setAttribute("required", ""));
-  } else if (role === "lawyer") {
-    lawyerFields?.classList.remove("hidden");
-    lawyerFields?.querySelectorAll("input, select")?.forEach(i => i.setAttribute("required", ""));
-  }
-}
-
-// Show/hide modal. If modal not ready yet, queue the request.
-function showModal(showLogin = true) {
-  if (!modalReady) {
-    pendingShow = Boolean(showLogin);
-    return;
+  // Utility: clear errors and role fields
+  function clearErrors() {
+    if (loginError) loginError.textContent = "";
+    if (signupError) signupError.textContent = "";
   }
 
-  clearErrors();
-  authModal?.classList.remove("hidden");
-  authModal?.classList.add("show");
-  document.body.classList.add("no-scroll");
-
-  if (showLogin) {
-    loginContainer?.classList.remove("hidden");
-    signupContainer?.classList.add("hidden");
-    switchToLoginBtn?.classList.add("active");
-    switchToSignupBtn?.classList.remove("active");
-  } else {
-    signupContainer?.classList.remove("hidden");
-    loginContainer?.classList.add("hidden");
-    switchToSignupBtn?.classList.add("active");
-    switchToLoginBtn?.classList.remove("active");
+  function hideRoleSpecificFields() {
+    studentFields?.classList.add("hidden");
+    lawyerFields?.classList.add("hidden");
+    const studentInputs = studentFields?.querySelectorAll("input, select");
+    const lawyerInputs = lawyerFields?.querySelectorAll("input, select");
+    studentInputs?.forEach(i => i.removeAttribute("required"));
+    lawyerInputs?.forEach(i => i.removeAttribute("required"));
   }
-}
 
-function hideModal() {
-  if (!authModal) return;
-  authModal.classList.remove("show");
-  document.body.classList.remove("no-scroll");
-
-  // reset forms & UI
-  loginForm?.reset();
-  signupForm?.reset();
-  clearErrors();
-  hideRoleSpecificFields();
-
-  setTimeout(() => {
-    authModal.classList.add("hidden");
-  }, 300);
-}
-
-// map Firebase error codes to friendly messages
-function getFirebaseErrorMessage(code) {
-  switch (code) {
-    case 'auth/email-already-in-use': return 'This email is already registered. Please use a different email or try logging in.';
-    case 'auth/invalid-email': return 'Please enter a valid email address.';
-    case 'auth/weak-password': return 'Password is too weak. Please use at least 6 characters.';
-    case 'auth/user-not-found': return 'No account found with this email. Please check your email or sign up.';
-    case 'auth/wrong-password': return 'Incorrect password. Please try again.';
-    case 'auth/too-many-requests': return 'Too many failed attempts. Please try again later.';
-    default: return 'An error occurred. Please try again.';
+  function showRoleSpecificFields(role) {
+    hideRoleSpecificFields();
+    if (role === "student") {
+      studentFields?.classList.remove("hidden");
+      const studentInputs = studentFields?.querySelectorAll("input, select");
+      studentInputs?.forEach(i => i.setAttribute("required", ""));
+    } else if (role === "lawyer") {
+      lawyerFields?.classList.remove("hidden");
+      const lawyerInputs = lawyerFields?.querySelectorAll("input, select");
+      lawyerInputs?.forEach(i => i.setAttribute("required", ""));
+    }
   }
-}
 
-// ---------- Bind header navbar buttons ----------
-function bindHeaderButtons() {
-  const openLoginBtn = document.getElementById("login-btn");
-  const openSignupBtn = document.getElementById("signup-btn");
+  // Show modal (true => login, false => signup)
+  function showModal(showLogin = true) {
+    if (!authModal) {
+      // modal not yet ready; queue the request and return
+      pendingShow = Boolean(showLogin);
+      return;
+    }
 
-  // remove any existing handlers to avoid double-bind when UI is re-rendered
-  openLoginBtn?.replaceWith(openLoginBtn?.cloneNode(true));
-  openSignupBtn?.replaceWith(openSignupBtn?.cloneNode(true));
-
-  const refreshedLoginBtn = document.getElementById("login-btn");
-  const refreshedSignupBtn = document.getElementById("signup-btn");
-
-  refreshedLoginBtn?.addEventListener("click", (e) => {
-    e.preventDefault();
-    if (modalReady) showModal(true);
-    else pendingShow = true;
-  });
-
-  refreshedSignupBtn?.addEventListener("click", (e) => {
-    e.preventDefault();
-    if (modalReady) showModal(false);
-    else pendingShow = false;
-  });
-}
-
-// Listen for header injection (load-header.js dispatches 'header:loaded')
-document.addEventListener("header:loaded", () => {
-  headerReady = true;
-  bindHeaderButtons();
-  // If modal already loaded and we had a pending action, perform it
-  if (modalReady && pendingShow !== null) {
-    showModal(Boolean(pendingShow));
-    pendingShow = null;
-  }
-});
-
-// ---------- When modal HTML is injected ----------
-document.addEventListener("authModal:loaded", () => {
-  modalReady = true;
-
-  // grab modal elements now that modal exists
-  authModal = document.getElementById("auth-modal");
-  loginContainer = document.getElementById("login-form-container");
-  signupContainer = document.getElementById("signup-form-container");
-  loginForm = document.getElementById("login-form");
-  signupForm = document.getElementById("signup-form");
-  switchToSignupBtn = document.getElementById("show-signup");
-  switchToLoginBtn = document.getElementById("show-login");
-  closeModalBtn = document.querySelector(".close-auth-modal");
-  userRoleSelect = document.getElementById("user-role");
-  studentFields = document.getElementById("student-fields");
-  lawyerFields = document.getElementById("lawyer-fields");
-  loginError = document.getElementById("login-error-message");
-  signupError = document.getElementById("signup-error-message");
-
-  // safety logs (useful if something's missing)
-  if (!authModal) console.warn("[auth-modal] auth-modal element missing after authModal:loaded");
-  if (!loginForm || !signupForm) console.warn("[auth-modal] login/signup forms missing");
-
-  // Internal tab button behavior (swap forms; do not re-open modal)
-  switchToSignupBtn?.addEventListener("click", () => {
-    loginContainer?.classList.add("hidden");
-    signupContainer?.classList.remove("hidden");
-    switchToSignupBtn?.classList.add("active");
-    switchToLoginBtn?.classList.remove("active");
-  });
-
-  switchToLoginBtn?.addEventListener("click", () => {
-    signupContainer?.classList.add("hidden");
-    loginContainer?.classList.remove("hidden");
-    switchToLoginBtn?.classList.add("active");
-    switchToSignupBtn?.classList.remove("active");
-  });
-
-  // close modal
-  closeModalBtn?.addEventListener("click", hideModal);
-
-  // clicking outside modal content closes
-  authModal?.addEventListener("click", (e) => {
-    if (e.target === authModal) hideModal();
-  });
-
-  // role select
-  userRoleSelect?.addEventListener("change", (e) => showRoleSpecificFields(e.target.value));
-
-  // --------- Form submission handlers using auth-service ----------
-  signupForm?.addEventListener("submit", async (e) => {
-    e.preventDefault();
     clearErrors();
+    authModal.classList.remove("hidden");
+    authModal.classList.add("show");
+    document.body.classList.add("no-scroll");
 
-    const formData = new FormData(signupForm);
-    const email = formData.get("signup-email");
+    if (showLogin) {
+      loginContainer?.classList.remove("hidden");
+      signupContainer?.classList.add("hidden");
+      switchToLoginBtn?.classList.add("active");
+      switchToSignupBtn?.classList.remove("active");
+    } else {
+      signupContainer?.classList.remove("hidden");
+      loginContainer?.classList.add("hidden");
+      switchToSignupBtn?.classList.add("active");
+      switchToLoginBtn?.classList.remove("active");
+    }
+  }
+
+  function hideModal() {
+    if (!authModal) return;
+    authModal.classList.remove("show");
+    document.body.classList.remove("no-scroll");
+
+    // reset forms & state
+    loginForm?.reset();
+    signupForm?.reset();
+    clearErrors();
+    hideRoleSpecificFields();
+
+    setTimeout(() => {
+      authModal.classList.add("hidden");
+    }, 300);
+  }
+
+  // Signup validation (keeps your logic)
+  function validateSignupForm(formData) {
     const password = formData.get("signup-password");
     const confirmPassword = formData.get("signup-confirm-password");
+    const email = formData.get("signup-email");
     const username = formData.get("signup-username");
     const role = formData.get("user-role");
 
-    // Basic validation (keeps it simple)
-    if (password !== confirmPassword) {
-      signupError.textContent = "Passwords don't match!";
-      return;
-    }
-    if (password.length < 6) {
-      signupError.textContent = "Password must be at least 6 characters!";
-      return;
-    }
-    if (!role) {
-      signupError.textContent = "Please select your role!";
-      return;
-    }
-
-    // build userData object and role-specific checks
-    const userData = { username, role, profileData: {} };
+    if (!username || username.length < 3) return "Username must be at least 3 characters long";
+    if (!email || !email.includes("@")) return "Please enter a valid email address";
+    if (!password || password.length < 6) return "Password must be at least 6 characters long";
+    if (password !== confirmPassword) return "Passwords do not match";
+    if (!role) return "Please select your role";
 
     if (role === "student") {
       const studentId = formData.get("student-id");
       const university = formData.get("student-university");
       const yearOfStudy = formData.get("student-year-of-study");
-      if (!studentId || !university || !yearOfStudy) {
-        signupError.textContent = "Please fill in all student fields!";
-        return;
-      }
-      userData.idType = "student_id";
-      userData.plainTextSensitiveId = studentId;
-      userData.profileData = { university, yearOfStudy: parseInt(yearOfStudy, 10) };
+      if (!studentId) return "Student ID is required";
+      if (!university) return "Please select your university";
+      if (!yearOfStudy || yearOfStudy < 1 || yearOfStudy > 7) return "Please select a valid year of study (1-7)";
     } else if (role === "lawyer") {
-      const lawyerNumber = formData.get("lawyer-number");
       const yearsExperience = formData.get("lawyer-years-experience");
-      if (!lawyerNumber || !yearsExperience) {
-        signupError.textContent = "Please fill in all lawyer fields!";
-        return;
-      }
-      userData.idType = "lawyer_id";
-      userData.plainTextSensitiveId = lawyerNumber;
-      userData.profileData = { yearsExperience: parseInt(yearsExperience, 10) };
+      const lawyerNumber = formData.get("lawyer-number");
+      if (!lawyerNumber) return "Lawyer Bar Number/ID is required";
+      if (!yearsExperience || yearsExperience < 0) return "Please enter valid years of experience (0 or more)";
+      if (yearsExperience > 60) return "Years of experience seems too high. Please verify.";
     }
 
-    try {
-      await registerUser(email, password, userData);
-      hideModal();
-      // logged in state will be handled by onAuthChange below
-    } catch (err) {
-      console.error("Registration error:", err);
-      signupError.textContent = getFirebaseErrorMessage(err?.code);
-    }
-  });
+    return null;
+  }
 
-  loginForm?.addEventListener("submit", async (e) => {
+  // Default demo handlers (you can replace with real auth-service calls)
+  async function handleLogin(e) {
     e.preventDefault();
     clearErrors();
-
-    const formData = new FormData(loginForm);
-    const email = formData.get("login-email");
-    const password = formData.get("login-password");
-
+    const fd = new FormData(loginForm);
+    const email = fd.get("login-email");
+    const password = fd.get("login-password");
     if (!email || !password) {
-      loginError.textContent = "Please fill in all fields";
+      if (loginError) loginError.textContent = "Please fill in all fields";
       return;
     }
 
-    try {
-      await loginUser(email, password);
+    console.log("Login attempt (demo):", { email });
+    setTimeout(() => {
+      alert("Login successful! (Demo)");
       hideModal();
-      // logged-in UI update handled by onAuthChange
-    } catch (err) {
-      console.error("Login error:", err);
-      loginError.textContent = getFirebaseErrorMessage(err?.code);
+      updateAuthUI(true, { email });
+    }, 800);
+  }
+
+  async function handleSignup(e) {
+    e.preventDefault();
+    clearErrors();
+    const fd = new FormData(signupForm);
+    const validationError = validateSignupForm(fd);
+    if (validationError) {
+      if (signupError) signupError.textContent = validationError;
+      return;
+    }
+
+    const userData = {
+      username: fd.get("signup-username"),
+      email: fd.get("signup-email"),
+      role: fd.get("user-role")
+    };
+
+    if (userData.role === "student") {
+      userData.studentId = fd.get("student-id");
+      userData.university = fd.get("student-university");
+      userData.yearOfStudy = fd.get("student-year-of-study");
+    } else if (userData.role === "lawyer") {
+      userData.yearsExperience = fd.get("lawyer-years-experience");
+      userData.lawyerNumber = fd.get("lawyer-number");
+    }
+
+    console.log("Signup attempt (demo):", userData);
+    setTimeout(() => {
+      alert("Account created successfully! (Demo)");
+      hideModal();
+      updateAuthUI(true, userData);
+    }, 800);
+  }
+
+  function updateAuthUI(isLoggedIn, userData = null) {
+    const authControls = document.getElementById("auth-controls");
+    if (!authControls) return;
+    if (isLoggedIn && userData) {
+      authControls.innerHTML = `
+        <span class="user-greeting">Welcome, ${userData.username || userData.email}</span>
+        <button id="logout-btn" class="auth-action">Logout</button>
+      `;
+      document.getElementById("logout-btn")?.addEventListener("click", () => location.reload());
+    } else {
+      // fallback to default buttons if needed
+      authControls.innerHTML = `
+        <button id="login-btn" class="auth-action open-auth-modal">Login</button>
+        <button id="signup-btn" class="auth-action open-auth-modal">Sign Up</button>
+      `;
+      // Re-bind header buttons after replacing HTML
+      bindHeaderButtons();
+    }
+  }
+
+  // Bind header navbar buttons (called when header:loaded)
+  function bindHeaderButtons() {
+    const openLoginBtn = document.getElementById("login-btn");
+    const openSignupBtn = document.getElementById("signup-btn");
+
+    openLoginBtn?.addEventListener("click", (e) => {
+      e.preventDefault();
+      // If modal ready, show immediately; otherwise queue
+      if (modalReady) showModal(true);
+      else pendingShow = true;
+    });
+
+    openSignupBtn?.addEventListener("click", (e) => {
+      e.preventDefault();
+      if (modalReady) showModal(false);
+      else pendingShow = false;
+    });
+  }
+
+  // When header has been injected
+  document.addEventListener("header:loaded", () => {
+    headerReady = true;
+    bindHeaderButtons();
+    // If modal already loaded and a pending show was queued from header before modal load, handle it
+    if (modalReady && pendingShow !== null) {
+      showModal(Boolean(pendingShow));
+      pendingShow = null;
     }
   });
 
-  // If header already loaded and user clicked earlier, open modal now
-  if (headerReady && pendingShow !== null) {
-    showModal(Boolean(pendingShow));
-    pendingShow = null;
-  }
-});
+  // When modal has been injected
+  document.addEventListener("authModal:loaded", () => {
+    modalReady = true;
 
-// allow ESC to close if modal exists
-document.addEventListener("keydown", (e) => {
-  if (e.key === "Escape" && authModal && !authModal.classList.contains("hidden")) {
-    hideModal();
-  }
-});
+    // Query modal internals now that modal exists in DOM
+    authModal = document.getElementById("auth-modal");
+    loginContainer = document.getElementById("login-form-container");
+    signupContainer = document.getElementById("signup-form-container");
+    loginForm = document.getElementById("login-form");
+    signupForm = document.getElementById("signup-form");
+    switchToSignupBtn = document.getElementById("show-signup");
+    switchToLoginBtn = document.getElementById("show-login");
+    closeModalBtn = document.querySelector(".close-auth-modal");
+    userRoleSelect = document.getElementById("user-role");
+    studentFields = document.getElementById("student-fields");
+    lawyerFields = document.getElementById("lawyer-fields");
+    loginError = document.getElementById("login-error-message");
+    signupError = document.getElementById("signup-error-message");
 
-// ---------- Auth state handling (updates header controls) ----------
-onAuthChange((user) => {
-  const authControls = document.getElementById("auth-controls");
-  if (!authControls) return;
+    // Safety checks (log if required pieces are missing)
+    if (!authModal) console.warn("[auth-modal] auth-modal not found in DOM after authModal:loaded");
+    if (!loginContainer || !signupContainer) console.warn("[auth-modal] login/signup containers missing");
 
-  if (user) {
-    // show logged-in UI
-    authControls.innerHTML = `
-      <span class="user-greeting">Welcome, ${user.email}</span>
-      <button id="logout-btn" class="auth-action">Logout</button>
-    `;
-    document.getElementById("logout-btn")?.addEventListener("click", async () => {
-      try {
-        await logoutUser();
-      } catch (err) {
-        console.error("Logout error:", err);
-      }
+    // Internal tab swapping (does not re-open modal)
+    switchToSignupBtn?.addEventListener("click", () => {
+      loginContainer?.classList.add("hidden");
+      loginContainer?.classList.remove("active");
+      signupContainer?.classList.remove("hidden");
+      signupContainer?.classList.add("active");
+      switchToLoginBtn?.classList.remove("active");
+      switchToSignupBtn?.classList.add("active");
     });
-  } else {
-    // revert to login/signup buttons
-    authControls.innerHTML = `
-      <button id="login-btn" class="auth-action open-auth-modal">Login</button>
-      <button id="signup-btn" class="auth-action open-auth-modal">Sign Up</button>
-    `;
-    // rebind header buttons so they work again
-    bindHeaderButtons();
-  }
-});
+
+    switchToLoginBtn?.addEventListener("click", () => {
+      signupContainer?.classList.add("hidden");
+      signupContainer?.classList.remove("active");
+      loginContainer?.classList.remove("hidden");
+      loginContainer?.classList.add("active");
+      switchToSignupBtn?.classList.remove("active");
+      switchToLoginBtn?.classList.add("active");
+    });
+
+    // Close modal button
+    closeModalBtn?.addEventListener("click", hideModal);
+
+    // Click outside modal content closes modal
+    authModal?.addEventListener("click", (e) => {
+      if (e.target === authModal) hideModal();
+    });
+
+    // Role select
+    userRoleSelect?.addEventListener("change", (e) => showRoleSpecificFields(e.target.value));
+
+    // Form submit handlers
+    loginForm?.addEventListener("submit", handleLogin);
+    signupForm?.addEventListener("submit", handleSignup);
+
+    // If header was already loaded and a header click queued a pending show, open modal now
+    if (headerReady && pendingShow !== null) {
+      showModal(Boolean(pendingShow));
+      pendingShow = null;
+    }
+  });
+
+  // Also allow ESC to close modal if modal exists
+  document.addEventListener("keydown", (e) => {
+    if (e.key === "Escape" && authModal && !authModal.classList.contains("hidden")) {
+      hideModal();
+    }
+  });
+})();
