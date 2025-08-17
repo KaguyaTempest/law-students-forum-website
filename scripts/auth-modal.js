@@ -1,7 +1,5 @@
 // scripts/auth-modal.js
 // Replaces previous DOMContentLoaded-based wiring with event-driven wiring
-import { registerUser, loginUser, logoutUser } from './auth-service.js';
-
 (() => {
   let modalReady = false;
   let headerReady = false;
@@ -126,16 +124,15 @@ import { registerUser, loginUser, logoutUser } from './auth-service.js';
       if (loginError) loginError.textContent = "Please fill in all fields";
       return;
     }
-    
-    try {
-    const user = await loginUser(email, password); // real Firebase login
-    alert("Login successful!");
-    hideModal();
-    updateAuthUI(true, { email: user.email });
-  } catch (err) {
-    if (loginError) loginError.textContent = err.message;
+
+    console.log("Login attempt (demo):", { email });
+    setTimeout(() => {
+      alert("Login successful! (Demo)");
+      hideModal();
+      updateAuthUI(true, { email });
+    }, 800);
   }
-}
+
   async function handleSignup(e) {
     e.preventDefault();
     clearErrors();
@@ -146,26 +143,28 @@ import { registerUser, loginUser, logoutUser } from './auth-service.js';
       return;
     }
 
-    try {
-    const user = await registerUser(fd.get("signup-email"), fd.get("signup-password"), {
+    const userData = {
       username: fd.get("signup-username"),
-      role: fd.get("user-role"),
-      idType: fd.get("user-role") === "student" ? "studentId" : "lawyerNumber",
-      plainTextSensitiveId: fd.get("user-role") === "student" ? fd.get("student-id") : fd.get("lawyer-number"),
-      profileData: {
-        university: fd.get("student-university"),
-        yearOfStudy: fd.get("student-year-of-study"),
-        yearsExperience: fd.get("lawyer-years-experience")
-      }
-    });
+      email: fd.get("signup-email"),
+      role: fd.get("user-role")
+    };
 
-    alert("Account created successfully!");
-    hideModal();
-    updateAuthUI(true, { username: fd.get("signup-username"), email: user.email });
-  } catch (err) {
-    if (signupError) signupError.textContent = err.message;
+    if (userData.role === "student") {
+      userData.studentId = fd.get("student-id");
+      userData.university = fd.get("student-university");
+      userData.yearOfStudy = fd.get("student-year-of-study");
+    } else if (userData.role === "lawyer") {
+      userData.yearsExperience = fd.get("lawyer-years-experience");
+      userData.lawyerNumber = fd.get("lawyer-number");
+    }
+
+    console.log("Signup attempt (demo):", userData);
+    setTimeout(() => {
+      alert("Account created successfully! (Demo)");
+      hideModal();
+      updateAuthUI(true, userData);
+    }, 800);
   }
-}
 
   function updateAuthUI(isLoggedIn, userData = null) {
     const authControls = document.getElementById("auth-controls");
@@ -288,4 +287,3 @@ import { registerUser, loginUser, logoutUser } from './auth-service.js';
     }
   });
 })();
-
