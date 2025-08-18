@@ -14,16 +14,19 @@ import { registerUser, loginUser, logoutUser, onAuthChange, getUserProfile } fro
       closeModalBtn, userRoleSelect, studentFields, lawyerFields,
       loginError, signupError;
 
-  // Auth state listener
+  /**
+   * Initializes the Firebase Auth state listener.
+   * Updates the UI based on the user's login status.
+   */
   function initAuthStateListener() {
     onAuthChange(async (user) => {
       currentUser = user;
       if (user) {
         const profile = await getUserProfile(user.uid);
-        updateAuthUI(true, { 
-          email: user.email, 
+        updateAuthUI(true, {
+          email: user.email,
           username: profile?.username || user.email.split('@')[0],
-          ...profile 
+          ...profile
         });
       } else {
         updateAuthUI(false);
@@ -31,11 +34,19 @@ import { registerUser, loginUser, logoutUser, onAuthChange, getUserProfile } fro
     });
   }
 
+  /**
+   * Clears any error messages displayed in the modal.
+   */
   function clearErrors() {
     if (loginError) loginError.textContent = "";
     if (signupError) signupError.textContent = "";
   }
 
+  /**
+   * Displays an error message in a specified element.
+   * @param {HTMLElement} element - The element to display the error in.
+   * @param {string} message - The error message to display.
+   */
   function showError(element, message) {
     if (element) {
       element.textContent = message;
@@ -43,6 +54,9 @@ import { registerUser, loginUser, logoutUser, onAuthChange, getUserProfile } fro
     }
   }
 
+  /**
+   * Hides all role-specific input fields for students and lawyers.
+   */
   function hideRoleSpecificFields() {
     if (studentFields) {
       studentFields.classList.add("hidden");
@@ -52,7 +66,7 @@ import { registerUser, loginUser, logoutUser, onAuthChange, getUserProfile } fro
         input.value = "";
       });
     }
-    
+
     if (lawyerFields) {
       lawyerFields.classList.add("hidden");
       const inputs = lawyerFields.querySelectorAll("input, select");
@@ -63,9 +77,13 @@ import { registerUser, loginUser, logoutUser, onAuthChange, getUserProfile } fro
     }
   }
 
+  /**
+   * Shows the input fields specific to the selected user role.
+   * @param {string} role - The user role ("student" or "lawyer").
+   */
   function showRoleSpecificFields(role) {
     hideRoleSpecificFields();
-    
+
     if (role === "student" && studentFields) {
       studentFields.classList.remove("hidden");
       const inputs = studentFields.querySelectorAll("input, select");
@@ -77,6 +95,10 @@ import { registerUser, loginUser, logoutUser, onAuthChange, getUserProfile } fro
     }
   }
 
+  /**
+   * Displays the authentication modal.
+   * @param {boolean} showLogin - True to show the login form, false for the signup form.
+   */
   function showModal(showLogin = true) {
     if (!modalReady || !authModal) {
       pendingShow = Boolean(showLogin);
@@ -85,14 +107,14 @@ import { registerUser, loginUser, logoutUser, onAuthChange, getUserProfile } fro
 
     clearErrors();
     hideRoleSpecificFields();
-    
+
     // Show modal with proper display
     authModal.classList.remove("hidden");
     authModal.style.display = "flex";
     setTimeout(() => {
       authModal.classList.add("show");
     }, 10);
-    
+
     document.body.classList.add("no-scroll");
 
     // Show correct form
@@ -121,9 +143,12 @@ import { registerUser, loginUser, logoutUser, onAuthChange, getUserProfile } fro
     }
   }
 
+  /**
+   * Hides the authentication modal.
+   */
   function hideModal() {
     if (!authModal) return;
-    
+
     authModal.classList.remove("show");
     document.body.classList.remove("no-scroll");
 
@@ -139,6 +164,11 @@ import { registerUser, loginUser, logoutUser, onAuthChange, getUserProfile } fro
     }, 300);
   }
 
+  /**
+   * Validates the signup form data.
+   * @param {FormData} formData - The form data to validate.
+   * @returns {string|null} An error message if validation fails, otherwise null.
+   */
   function validateSignupForm(formData) {
     const password = formData.get("signup-password");
     const confirmPassword = formData.get("signup-confirm-password");
@@ -157,14 +187,14 @@ import { registerUser, loginUser, logoutUser, onAuthChange, getUserProfile } fro
       const studentId = formData.get("student-id");
       const university = formData.get("student-university");
       const yearOfStudy = formData.get("student-year-of-study");
-      
+
       if (!studentId || studentId.trim().length === 0) return "Student ID is required";
       if (!university) return "Please select your university";
       if (!yearOfStudy) return "Please select your year of study";
     } else if (role === "lawyer") {
       const yearsExperience = formData.get("lawyer-years-experience");
       const lawyerNumber = formData.get("lawyer-number");
-      
+
       if (!lawyerNumber || lawyerNumber.trim().length === 0) return "Lawyer Bar Number/ID is required";
       if (yearsExperience === null || yearsExperience === "" || yearsExperience < 0) {
         return "Please enter valid years of experience";
@@ -175,21 +205,25 @@ import { registerUser, loginUser, logoutUser, onAuthChange, getUserProfile } fro
     return null;
   }
 
+  /**
+   * Handles the login form submission.
+   * @param {Event} e - The form submission event.
+   */
   async function handleLogin(e) {
     e.preventDefault();
     clearErrors();
-    
+
     const submitBtn = loginForm.querySelector('button[type="submit"]');
     const originalText = submitBtn.textContent;
-    
+
     try {
       submitBtn.disabled = true;
       submitBtn.textContent = "Logging in...";
-      
+
       const formData = new FormData(loginForm);
       const email = formData.get("login-email");
       const password = formData.get("login-password");
-      
+
       if (!email || !password) {
         showError(loginError, "Please fill in all fields");
         return;
@@ -197,11 +231,11 @@ import { registerUser, loginUser, logoutUser, onAuthChange, getUserProfile } fro
 
       await loginUser(email, password);
       hideModal();
-      
+
     } catch (error) {
       console.error("Login error:", error);
       let errorMessage = "Login failed. Please try again.";
-      
+
       switch (error.code) {
         case 'auth/user-not-found':
           errorMessage = "No account found with this email address.";
@@ -219,7 +253,7 @@ import { registerUser, loginUser, logoutUser, onAuthChange, getUserProfile } fro
           errorMessage = "This account has been disabled.";
           break;
       }
-      
+
       showError(loginError, errorMessage);
     } finally {
       submitBtn.disabled = false;
@@ -227,20 +261,24 @@ import { registerUser, loginUser, logoutUser, onAuthChange, getUserProfile } fro
     }
   }
 
+  /**
+   * Handles the signup form submission.
+   * @param {Event} e - The form submission event.
+   */
   async function handleSignup(e) {
     e.preventDefault();
     clearErrors();
-    
+
     const submitBtn = signupForm.querySelector('button[type="submit"]');
     const originalText = submitBtn.textContent;
-    
+
     try {
       submitBtn.disabled = true;
       submitBtn.textContent = "Creating account...";
-      
+
       const formData = new FormData(signupForm);
       const validationError = validateSignupForm(formData);
-      
+
       if (validationError) {
         showError(signupError, validationError);
         return;
@@ -272,16 +310,16 @@ import { registerUser, loginUser, logoutUser, onAuthChange, getUserProfile } fro
 
       await registerUser(email, password, userData);
       hideModal();
-      
+
       // Show success message
       setTimeout(() => {
         alert("Account created successfully! Welcome to LSIF!");
       }, 500);
-      
+
     } catch (error) {
       console.error("Signup error:", error);
       let errorMessage = "Registration failed. Please try again.";
-      
+
       switch (error.code) {
         case 'auth/email-already-in-use':
           errorMessage = "An account with this email already exists.";
@@ -297,7 +335,7 @@ import { registerUser, loginUser, logoutUser, onAuthChange, getUserProfile } fro
           errorMessage = "Email/password accounts are not enabled.";
           break;
       }
-      
+
       showError(signupError, errorMessage);
     } finally {
       submitBtn.disabled = false;
@@ -305,35 +343,61 @@ import { registerUser, loginUser, logoutUser, onAuthChange, getUserProfile } fro
     }
   }
 
+  /**
+   * Updates the header UI based on the user's login status.
+   * This includes showing/hiding login/signup buttons, and displaying user info.
+   * @param {boolean} isLoggedIn - True if a user is logged in.
+   * @param {Object} userData - The user's profile data.
+   */
   function updateAuthUI(isLoggedIn, userData = null) {
-    const authControls = document.getElementById("auth-controls");
-    if (!authControls) return;
-    
+    const authControls = document.getElementById('auth-controls');
+    const userPanel = document.getElementById('user-info');
+    const welcomeMessage = document.getElementById('welcome-message');
+    const userDropdownToggle = document.getElementById('user-dropdown-toggle');
+    const userDropdown = document.getElementById('user-dropdown');
+
     if (isLoggedIn && userData) {
-      authControls.innerHTML = `
-        <span class="user-greeting">Welcome, ${userData.username || userData.email}</span>
-        <button id="logout-btn" class="auth-action">Logout</button>
-      `;
-      
-      const logoutBtn = document.getElementById("logout-btn");
+      if (authControls) authControls.classList.add('hidden');
+      if (userPanel) userPanel.classList.remove('hidden');
+      if (userDropdownToggle) userDropdownToggle.textContent = userData.username;
+
+      // Show the welcome popup message
+      if (welcomeMessage) {
+        welcomeMessage.textContent = `Welcome, ${userData.username}!`;
+        welcomeMessage.classList.add('show');
+        setTimeout(() => welcomeMessage.classList.remove('show'), 5000);
+      }
+
+      // Dropdown toggle
+      if (userDropdownToggle) {
+        userDropdownToggle.addEventListener('click', () => {
+          if (userDropdown) userDropdown.classList.toggle('hidden');
+        });
+      }
+
+      // Logout button inside dropdown
+      const logoutBtn = document.getElementById('logout-btn');
       if (logoutBtn) {
-        logoutBtn.addEventListener("click", async () => {
+        logoutBtn.addEventListener('click', async () => {
           try {
             await logoutUser();
+            if (userPanel) userPanel.classList.add('hidden');
+            if (authControls) authControls.classList.remove('hidden');
           } catch (error) {
-            console.error("Logout error:", error);
+            console.error('Logout error:', error);
           }
         });
       }
+
     } else {
-      authControls.innerHTML = `
-        <button id="login-btn" class="auth-action open-auth-modal">Login</button>
-        <button id="signup-btn" class="auth-action open-auth-modal">Sign Up</button>
-      `;
-      bindHeaderButtons();
+      if (authControls) authControls.classList.remove('hidden');
+      if (userPanel) userPanel.classList.add('hidden');
     }
   }
 
+  /**
+   * Binds the event listeners to the login and signup buttons in the header.
+   */
   function bindHeaderButtons() {
     const openLoginBtn = document.getElementById("login-btn");
     const openSignupBtn = document.getElementById("signup-btn");
@@ -341,16 +405,14 @@ import { registerUser, loginUser, logoutUser, onAuthChange, getUserProfile } fro
     if (openLoginBtn) {
       openLoginBtn.addEventListener("click", (e) => {
         e.preventDefault();
-        if (modalReady) showModal(true);
-        else pendingShow = true;
+        showModal(true);
       });
     }
 
     if (openSignupBtn) {
       openSignupBtn.addEventListener("click", (e) => {
         e.preventDefault();
-        if (modalReady) showModal(false);
-        else pendingShow = false;
+        showModal(false);
       });
     }
   }
@@ -359,7 +421,7 @@ import { registerUser, loginUser, logoutUser, onAuthChange, getUserProfile } fro
   document.addEventListener("header:loaded", () => {
     headerReady = true;
     bindHeaderButtons();
-    
+
     if (modalReady && pendingShow !== null) {
       showModal(Boolean(pendingShow));
       pendingShow = null;
@@ -446,7 +508,7 @@ import { registerUser, loginUser, logoutUser, onAuthChange, getUserProfile } fro
     if (loginForm) {
       loginForm.addEventListener("submit", handleLogin);
     }
-    
+
     if (signupForm) {
       signupForm.addEventListener("submit", handleSignup);
     }
@@ -465,6 +527,14 @@ import { registerUser, loginUser, logoutUser, onAuthChange, getUserProfile } fro
   document.addEventListener("keydown", (e) => {
     if (e.key === "Escape" && authModal && !authModal.classList.contains("hidden")) {
       hideModal();
+    }
+  });
+
+  // Re-bind buttons on DOMContentLoaded if header is not using custom event
+  document.addEventListener('DOMContentLoaded', () => {
+    if (!headerReady) {
+      bindHeaderButtons();
+      initAuthStateListener();
     }
   });
 })();
