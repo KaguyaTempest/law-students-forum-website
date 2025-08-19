@@ -294,15 +294,53 @@ footer {
     display: none !important;
 }
 
+/* Dark mode toggle */
+.mode-toggle {
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 5px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: transform 0.3s ease;
+}
+
+.mode-toggle:hover {
+    transform: scale(1.1);
+}
+
+.mode-toggle svg {
+    width: 24px; /* Adjust size of the moon/sun icon */
+    height: 24px; /* Adjust size of the moon/sun icon */
+    fill: var(--header-text); /* Inherit color from header */
+}
+
+
+/* Desktop nav toggle - hide by default */
+.nav-toggle {
+    display: none;
+}
+
 /* --- Mobile header (≤ 640px) --- */
 @media (max-width: 640px) {
     header {
         flex-wrap: wrap;
         padding: 10px 16px;
-        height: auto; /* Allow height to adjust */
+        height: auto;
+        position: relative;
     }
 
-    /* Hamburger button (will be added via JS/HTML, styling here) */
+    .header-left {
+        flex: 1;
+    }
+
+    .header-right {
+        order: 2;
+        gap: 10px;
+    }
+
+    /* Show hamburger button on mobile */
     .nav-toggle {
         display: inline-flex;
         flex-direction: column;
@@ -312,18 +350,19 @@ footer {
         background: transparent;
         border: none;
         cursor: pointer;
-        margin-left: auto;
+        order: 1;
     }
+
     .nav-toggle span {
         display: block;
         height: 3px;
         width: 100%;
-        background: #fff;
+        background: var(--header-text);
         border-radius: 2px;
         transition: transform 0.3s, opacity 0.3s;
     }
 
-    /* Rotate bars into an “X” when menu is open */
+    /* Rotate bars into an "X" when menu is open */
     header.nav-open .nav-toggle span:nth-child(1) {
         transform: translateY(9px) rotate(45deg);
     }
@@ -335,34 +374,61 @@ footer {
     }
 
     /* Hide the regular nav until toggled */
+    nav {
+        order: 3;
+        width: 100%;
+        margin-top: 10px;
+    }
+
     nav ul {
         display: none;
         flex-direction: column;
         gap: 0;
         width: 100%;
         background: var(--header-bg);
-        margin-top: 10px;
         border-radius: 6px;
         padding: 10px 0;
     }
+
     header.nav-open nav ul {
-        display: flex; /* show when menu open */
+        display: flex;
     }
+
     nav ul li {
         width: 100%;
         text-align: center;
     }
+
     nav ul li a {
         display: block;
         padding: 10px;
     }
 
-    .auth-buttons,
-    #user-info {
-        width: 100%;
+    .auth-buttons {
         justify-content: center;
-        margin-top: 10px;
-        padding-bottom: 5px;
+    }
+
+    .user-panel {
+        gap: 8px;
+    }
+
+    .user-name {
+        font-size: 0.85em;
+    }
+
+    .avatar {
+        height: 30px;
+        width: 30px;
+    }
+
+    .mode-toggle {
+        width: 35px;
+        height: 35px;
+    }
+
+    .mode-toggle svg {
+        width: 18px;
+        height: 18px;
     }
 }
 
