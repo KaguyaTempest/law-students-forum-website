@@ -1,329 +1,495 @@
-/* Profile System Additions for style.css */
+/* --- Global CSS Variables (Light Mode Default) --- */
+:root {
+    --bg-color: #f0f0f0; /* Light gray background */
+    --text-color-dark: #333;
+    --text-color-medium: #555;
+    --text-color-light: #666;
+    --header-bg: #4f606d; /* Dark gray header */
+    --header-text: #fff;
+    --link-color: #007bff;
+    --link-hover-color: #0056b3;
+    --button-bg-color: #4f606d;
+    --button-text-color: #fff;
+    --button-hover-bg-color: #37434c;
+    --card-bg-color: #fff;
+    --card-shadow: 2px 2px 5px rgba(0, 0, 0, 0.1);
+    --card-hover-shadow: 0 4px 12px rgba(0, 0, 0, 0.15); /* For guide card hover */
+    --card-border-color: #eee;
+    --heading-color: #333;
+    --border-color-light: #555; /* For section heading borders */
+    --auth-primary: #007bff;
+    --auth-secondary: #4f606d;
+    --auth-bg: #e6f0ff; /* For active auth button */
+    --error-color: #d93025;
+    --icon-bg-color: #ddd;
+    --icon-color: #555;
 
-/* Header right section container */
-.header-right {
+    /* Specifics for Newsletter cards */
+    --alert-bg: #ffe5e5;
+    --alert-border: #ff4c4c;
+    --notice-bg: #fff8e5;
+    --notice-border: #ffc107;
+    --update-bg: #e5f6ff;
+    --update-border: #17a2b8;
+    --commentary-bg: #e5ffe5;
+    --commentary-border: #28a745;
+
+    /* Featured Article Card */
+    --featured-card-border: gold;
+    --featured-card-bg: #fffbea;
+
+    /* Carousel Arrows */
+    --arrow-bg-color: rgba(0, 0, 0, 0.3);
+    --arrow-hover-bg-color: rgba(0, 0, 0, 0.5);
+    --arrow-icon-color: white;
+
+    /* Carousel Indicators */
+    --indicator-dot-color: rgba(0, 0, 0, 0.3);
+    --indicator-dot-active-color: rgba(0, 0, 0, 0.7);
+
+    /* Audio Card */
+    --audio-card-bg: #f9f9f9;
+    --audio-card-border: #004aad;
+}
+
+/* --- Dark Mode Variables --- */
+body.dark-mode {
+    --bg-color: #1a1a2e; /* Dark background from splash */
+    --text-color-dark: #e0e0e0; /* Light text */
+    --text-color-medium: #b0b3e6; /* Muted light text */
+    --text-color-light: #a0a3d6;
+    --header-bg: #0c0c1a; /* Even darker header */
+    --header-text: #fff;
+    --link-color: #8f94fb; /* Lighter blue/purple */
+    --link-hover-color: #4e54c8;
+    --button-bg-color: #4e54c8; /* Match splash primary */
+    --button-text-color: #fff;
+    --button-hover-bg-color: #373e9e;
+    --card-bg-color: #2c2c4d; /* Dark card background */
+    --card-shadow: 2px 2px 10px rgba(0, 0, 0, 0.4);
+    --card-hover-shadow: 0 4px 16px rgba(0, 0, 0, 0.6);
+    --card-border-color: #404060;
+    --heading-color: #8f94fb;
+    --border-color-light: #4e54c8;
+    --auth-primary: #8f94fb;
+    --auth-secondary: #4e54c8;
+    --auth-bg: #2d2d55;
+    --error-color: #ff6666;
+    --icon-bg-color: #404060;
+    --icon-color: #e0e0e0;
+
+    /* Specifics for Newsletter cards in dark mode - adjust as needed for contrast */
+    --alert-bg: #4d2b2b;
+    --alert-border: #ff4c4c;
+    --notice-bg: #4d432b;
+    --notice-border: #ffc107;
+    --update-bg: #2b3a4d;
+    --update-border: #17a2b8;
+    --commentary-bg: #2b4d2b;
+    --commentary-border: #28a745;
+
+    /* Featured Article Card */
+    --featured-card-border: #ffd700; /* Gold for dark mode */
+    --featured-card-bg: #3a3a5e; /* Darker background */
+
+    /* Carousel Arrows */
+    --arrow-bg-color: rgba(255, 255, 255, 0.15); /* Lighter transparency */
+    --arrow-hover-bg-color: rgba(255, 255, 255, 0.25);
+    --arrow-icon-color: #e0e0e0; /* Light icon */
+
+    /* Carousel Indicators */
+    --indicator-dot-color: rgba(255, 255, 255, 0.3);
+    --indicator-dot-active-color: rgba(255, 255, 255, 0.7);
+
+    /* Audio Card */
+    --audio-card-bg: #2c2c4d;
+    --audio-card-border: #8f94fb;
+}
+
+/* --- General Styles --- */
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; /* A common readable sans-serif */
+    margin: 0;
+    padding: 0;
+    line-height: 1.6;
+    background-color: var(--bg-color);
+    color: var(--text-color-dark);
+    transition: background-color 0.3s ease, color 0.3s ease; /* Smooth mode transition */
+}
+
+/* Typography Hierarchy */
+h1 { font-size: 2.2em; font-weight: 700; color: var(--heading-color); }
+h2 { font-size: 1.8em; font-weight: 600; color: var(--heading-color); }
+h3 { font-size: 1.4em; font-weight: 500; color: var(--heading-color); }
+p { font-size: 1em; line-height: 1.6; color: var(--text-color-medium); }
+
+/* Link Styling */
+a {
+    text-decoration: none;
+    color: var(--link-color);
+    transition: color 0.3s ease;
+}
+a:visited { color: var(--link-color); } /* Keep visited link color consistent */
+a:hover {
+    color: var(--link-hover-color);
+    text-decoration: underline;
+}
+a:focus {
+    outline: 2px solid var(--link-hover-color); /* Clear focus indicator */
+    outline-offset: 2px;
+}
+
+/* Header */
+header {
+    background-color: var(--header-bg);
+    color: var(--header-text);
+    padding: 0 20px;
     display: flex;
     align-items: center;
-    gap: 15px;
+    justify-content: space-between;
+    gap: 20px;
+    position: static;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+    height: 90px;
+    transition: background-color 0.3s ease, color 0.3s ease; /* Smooth mode transition */
 }
 
-/* Profile section (shown when logged in) */
-.profile-section {
-    position: relative;
-    display: none; /* Hidden by default */
+header .logo-link {
+    text-decoration: none;
+    margin-right: 20px;
+    display: flex;
+    align-items: center;
 }
 
-.profile-section.active,
-#user-info:not(.hidden) {
+header .header-logo {
+    max-height: 80px;
+    width: auto;
     display: block;
 }
 
-.profile-trigger {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    cursor: pointer;
-    padding: 5px 10px;
-    border-radius: 25px;
-    transition: background-color 0.3s ease;
-    border: none;
-    background: transparent;
-}
-
-.profile-trigger:hover {
-    background-color: rgba(255, 255, 255, 0.1);
-}
-
-/* Profile avatar in header */
-.profile-avatar {
-    width: 40px;
-    height: 40px;
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    background-color: var(--auth-primary);
-    color: white;
-    font-weight: bold;
-    font-size: 1.1em;
-    border: 2px solid rgba(255, 255, 255, 0.2);
-    overflow: hidden;
-}
-
-.profile-avatar img {
-    width: 100%;
-    height: 100%;
-    border-radius: 50%;
-    object-fit: cover;
-}
-
-/* Profile info next to avatar */
-.profile-info {
-    display: flex;
-    flex-direction: column;
-    text-align: left;
-    color: var(--header-text);
-}
-
-.profile-name {
-    font-weight: 600;
-    font-size: 0.9em;
+header h1 {
+    margin: 0;
+    font-size: 1.5em;
     line-height: 1.2;
-    margin: 0;
+    color: var(--header-text); /* Ensure header h1 is white/light */
 }
 
-.profile-role {
-    font-size: 0.75em;
-    opacity: 0.8;
-    text-transform: capitalize;
-    margin: 0;
+header h1 span {
+    display: block;
+    text-align: left;
 }
 
-/* Dropdown arrow */
-.dropdown-arrow {
-    width: 16px;
-    height: 16px;
+nav ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    height: 100%;
+    align-items: center;
+}
+
+nav ul li a {
+    text-decoration: none;
     color: var(--header-text);
-    transition: transform 0.3s ease;
+    font-weight: bold;
+    display: block;
+    padding: 10px 0;
+    transition: color 0.3s ease;
 }
 
-.profile-section.open .dropdown-arrow {
-    transform: rotate(180deg);
+nav ul li a:hover {
+    text-decoration: underline;
+    color: #fff; /* Always white on hover in header for visibility */
 }
 
-/* Profile dropdown menu */
-.profile-dropdown {
-    position: absolute;
-    top: 100%;
-    right: 0;
-    margin-top: 8px;
-    background: var(--card-bg-color);
-    border-radius: 8px;
-    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
-    min-width: 280px;
-    opacity: 0;
-    visibility: hidden;
-    transform: translateY(-10px);
-    transition: all 0.3s ease;
-    z-index: 1000;
-    border: 1px solid var(--card-border-color);
+nav ul li a:focus {
+    outline: 2px solid #fff;
+    outline-offset: 2px;
 }
 
-.profile-dropdown.show {
-    opacity: 1;
-    visibility: visible;
-    transform: translateY(0);
+nav ul li.about-link {
+    margin-left: auto;
 }
 
-/* Dropdown header */
-.dropdown-header {
-    padding: 16px;
-    border-bottom: 1px solid var(--card-border-color);
-    background: var(--bg-color);
-    border-radius: 8px 8px 0 0;
+.auth-buttons {
+    display: flex;
+    gap: 10px;
+    align-items: center;
 }
 
-.dropdown-user-info {
+.auth-action {
+    background-color: var(--auth-primary);
+    color: var(--button-text-color);
+    border: none;
+    padding: 8px 16px;
+    font-weight: bold;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 0.95em;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+.auth-action:hover {
+    background-color: var(--link-hover-color);
+    transform: scale(1.05);
+}
+.auth-action:focus {
+    outline: 2px solid var(--link-hover-color);
+    outline-offset: 2px;
+}
+
+
+/* User Panel (shows after login) */
+.user-panel {
     display: flex;
     align-items: center;
     gap: 12px;
+    color: var(--header-text);
 }
 
-.dropdown-avatar {
-    width: 50px;
-    height: 50px;
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    background-color: var(--auth-primary);
-    color: white;
+.user-name {
     font-weight: bold;
-    font-size: 1.3em;
-    overflow: hidden;
+    font-size: 0.95em;
 }
 
-.dropdown-avatar img {
-    width: 100%;
-    height: 100%;
+.user-badge {
+    background-color: var(--auth-primary);
+    padding: 4px 8px;
+    border-radius: 12px;
+    font-size: 0.75em;
+    color: var(--button-text-color);
+}
+
+.avatar {
+    height: 40px;
+    width: 40px;
     border-radius: 50%;
     object-fit: cover;
 }
 
-.dropdown-user-details h4 {
-    margin: 0;
-    color: var(--text-color-dark);
-    font-size: 1em;
-    font-weight: 600;
-}
-
-.dropdown-user-details p {
-    margin: 2px 0 0 0;
-    color: var(--text-color-light);
+.role-badge {
+    background-color: var(--auth-primary);
+    color: var(--button-text-color);
+    padding: 4px 8px;
+    border-radius: 12px;
     font-size: 0.85em;
 }
 
-/* Dropdown menu items */
-.dropdown-menu {
-    padding: 8px 0;
-}
-
-.dropdown-item {
-    display: flex;
-    align-items: center;
-    gap: 12px;
-    padding: 10px 16px;
-    color: var(--text-color-dark);
-    text-decoration: none;
-    transition: background-color 0.2s ease;
-    border: none;
-    background: none;
-    width: 100%;
-    text-align: left;
-    cursor: pointer;
+/* Footer */
+footer {
+    text-align: center;
+    padding: 20px 0;
+    margin-top: 30px;
+    background-color: var(--header-bg); /* Use header background for consistency */
+    color: var(--header-text);
     font-size: 0.9em;
+    box-shadow: 0 -2px 5px rgba(0, 0, 0, 0.2);
+    transition: background-color 0.3s ease, color 0.3s ease;
 }
 
-.dropdown-item:hover {
-    background-color: var(--icon-bg-color);
-    text-decoration: none;
-    color: var(--text-color-dark);
+/* Utility */
+.hidden {
+    display: none !important;
 }
 
-.dropdown-item svg {
-    width: 18px;
-    height: 18px;
-    color: var(--icon-color);
-    flex-shrink: 0;
-}
-
-/* Icon container for items with badges */
-.dropdown-item-icon {
-    position: relative;
-    display: flex;
-    align-items: center;
-}
-
-/* Notification badges */
-.notification-badge {
-    position: absolute;
-    top: -5px;
-    right: -5px;
-    background: var(--error-color);
-    color: white;
-    border-radius: 50%;
-    width: 16px;
-    height: 16px;
+/* Dark mode toggle */
+.mode-toggle {
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 5px;
     display: flex;
     align-items: center;
     justify-content: center;
-    font-size: 0.7em;
-    font-weight: bold;
-    min-width: 16px;
+    transition: transform 0.3s ease;
 }
 
-/* Dropdown divider */
-.dropdown-divider {
-    height: 1px;
-    background-color: var(--card-border-color);
-    margin: 5px 0;
+.mode-toggle:hover {
+    transform: scale(1.1);
 }
 
-/* Logout button styling */
-.dropdown-item.logout {
-    color: var(--error-color);
+.mode-toggle svg {
+    width: 24px; /* Adjust size of the moon/sun icon */
+    height: 24px; /* Adjust size of the moon/sun icon */
+    fill: var(--header-text); /* Inherit color from header */
 }
 
-.dropdown-item.logout:hover {
-    background-color: rgba(220, 53, 69, 0.1);
-    color: var(--error-color);
+
+/* Desktop nav toggle - hide by default */
+.nav-toggle {
+    display: none;
 }
 
-.dropdown-item.logout svg {
-    color: var(--error-color);
-}
+/* --- Mobile header (≤ 640px) --- */
+@media (max-width: 640px) {
+    header {
+        flex-wrap: wrap;
+        padding: 10px 16px;
+        height: auto;
+        position: relative;
+    }
 
-/* Welcome popup animation */
-.welcome-popup {
-    background: var(--auth-primary);
-    color: white;
-    padding: 8px 12px;
-    border-radius: 4px;
-    font-size: 0.8em;
-    position: absolute;
-    top: -40px;
-    right: 0;
-    opacity: 0;
-    transform: translateY(10px);
-    transition: all 0.3s ease;
-    white-space: nowrap;
-    z-index: 1001;
-}
+    .header-left {
+        flex: 1;
+    }
 
-.welcome-popup.show {
-    opacity: 1;
-    transform: translateY(0);
-}
-
-.welcome-popup::after {
-    content: '';
-    position: absolute;
-    top: 100%;
-    right: 20px;
-    border-left: 5px solid transparent;
-    border-right: 5px solid transparent;
-    border-top: 5px solid var(--auth-primary);
-}
-
-/* Mobile responsive adjustments */
-@media (max-width: 768px) {
     .header-right {
+        order: 2;
         gap: 10px;
     }
-    
-    .profile-info {
-        display: none; /* Hide name/role on mobile to save space */
+
+    /* Show hamburger button on mobile */
+    .nav-toggle {
+        display: inline-flex;
+        flex-direction: column;
+        justify-content: space-between;
+        width: 28px;
+        height: 22px;
+        background: transparent;
+        border: none;
+        cursor: pointer;
+        order: 1;
     }
 
-    .profile-avatar {
+    .nav-toggle span {
+        display: block;
+        height: 3px;
+        width: 100%;
+        background: var(--header-text);
+        border-radius: 2px;
+        transition: transform 0.3s, opacity 0.3s;
+    }
+
+    /* Rotate bars into an "X" when menu is open */
+    header.nav-open .nav-toggle span:nth-child(1) {
+        transform: translateY(9px) rotate(45deg);
+    }
+    header.nav-open .nav-toggle span:nth-child(2) {
+        opacity: 0;
+    }
+    header.nav-open .nav-toggle span:nth-child(3) {
+        transform: translateY(-9px) rotate(-45deg);
+    }
+
+    /* Hide the regular nav until toggled */
+    nav {
+        order: 3;
+        width: 100%;
+        margin-top: 10px;
+    }
+
+    nav ul {
+        display: none;
+        flex-direction: column;
+        gap: 0;
+        width: 100%;
+        background: var(--header-bg);
+        border-radius: 6px;
+        padding: 10px 0;
+    }
+
+    header.nav-open nav ul {
+        display: flex;
+    }
+
+    nav ul li {
+        width: 100%;
+        text-align: center;
+    }
+
+    nav ul li a {
+        display: block;
+        padding: 10px;
+    }
+
+    .auth-buttons {
+        justify-content: center;
+    }
+
+    .user-panel {
+        gap: 8px;
+    }
+
+    .user-name {
+        font-size: 0.85em;
+    }
+
+    .avatar {
+        height: 30px;
+        width: 30px;
+    }
+
+    .mode-toggle {
         width: 35px;
         height: 35px;
-        font-size: 1em;
     }
 
-    .profile-dropdown {
-        right: -10px;
-        min-width: 250px;
-        max-width: calc(100vw - 40px);
-    }
-    
-    .dropdown-header {
-        padding: 12px;
-    }
-    
-    .dropdown-avatar {
-        width: 40px;
-        height: 40px;
-        font-size: 1.1em;
-    }
-    
-    .dropdown-user-details h4 {
-        font-size: 0.9em;
-    }
-    
-    .dropdown-user-details p {
-        font-size: 0.8em;
-    }
-    
-    .dropdown-item {
-        padding: 12px 16px;
-        font-size: 0.85em;
+    .mode-toggle svg {
+        width: 18px;
+        height: 18px;
     }
 }
 
-@media (max-width: 480px) {
-    .profile-dropdown {
-        right: -15px;
-        min-width: 220px;
+/* --- Mobile / Tablet Responsiveness for Homepage Content --- */
+@media (max-width: 900px) {
+    .homepage-main {
+        grid-template-columns: 1fr; /* Single column layout for smaller screens */
+        padding: 15px; /* Adjust main padding */
+    }
+
+    /* All main sections stack */
+    .student-articles-section,
+    .campus-guides-section,
+    .moot-court-section,
+    .about-section,
+    .contact-section,
+    .newsletter-section {
+        margin-bottom: 15px; /* Reduce margin between stacked sections */
+    }
+
+    /* Override span for about and contact to be single column */
+    .top-about,
+    .contact-section {
+        grid-column: 1 / -1; /* Ensure they correctly span the single column */
+    }
+
+    /* Adjust padding within cards for smaller screens */
+    .student-articles-section,
+    .campus-guides-section,
+    .moot-court-section,
+    .about-section,
+    .contact-section,
+    .newsletter-section {
+        padding: 15px;
+    }
+
+    /* Carousel specific adjustments for mobile */
+    .article-carousel,
+    .newsletter-carousel {
+        padding: 10px; /* Reduce padding for smaller screens */
+    }
+
+    .article-carousel > .article-card,
+    .newsletter-carousel > .newsletter-article {
+        flex: 0 0 calc(100% - 20px); /* Adjust width to fit with reduced gap */
+        max-width: calc(100% - 20px);
+        margin-right: 20px; /* Explicit margin for better scroll snapping */
+    }
+
+    .carousel-arrow {
+        height: 40px; /* Smaller arrows */
+        width: 40px; /* Smaller arrows */
+        font-size: 1.5em;
+        padding: 0; /* Remove padding */
+    }
+    .carousel-arrow svg {
+        width: 20px; /* Smaller SVG icons */
+        height: 20px;
+    }
+
+    .newsletter-theme {
+        font-size: 0.95em; /* Slightly smaller for mobile */
     }
 }
