@@ -5,7 +5,6 @@ import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/fireba
 import { getStorage } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-storage.js";
 import { getAuth } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
 import { getFirestore } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
-// --- NEW IMPORT FOR CLOUD FUNCTIONS ---
 import { getFunctions } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-functions.js";
 
 
@@ -27,6 +26,6 @@ const app = initializeApp(firebaseConfig);
 export const storage = getStorage(app);
 export const auth = getAuth(app);
 export const db = getFirestore(app); // This is correctly Firestore
+export const functions = getFunctions(app, 'africa-south1'); // Match your region
 
-// --- NEW EXPORT FOR CLOUD FUNCTIONS (specify your region) ---
-export const functions = getFunctions(app, 'us-central1');
+export default app;
