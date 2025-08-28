@@ -1,0 +1,418 @@
+/* styles/poetry-guild.css */
+
+.poetry-guild-main {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 2rem;
+}
+
+.society-hero {
+    text-align: center;
+    padding: 3rem 0;
+    background: linear-gradient(135deg, #8a0026, #b8002e);
+    color: white;
+    border-radius: 12px;
+    margin-bottom: 3rem;
+}
+
+.hero-content {
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+.society-logo {
+    width: 120px;
+    height: 120px;
+    border-radius: 50%;
+    margin-bottom: 1rem;
+    border: 4px solid rgba(255, 255, 255, 0.3);
+}
+
+.society-hero h1 {
+    font-size: 2.5rem;
+    margin-bottom: 1rem;
+    color: white;
+}
+
+.society-hero p {
+    font-size: 1.2rem;
+    color: rgba(255, 255, 255, 0.9);
+    max-width: 600px;
+    margin: 0 auto;
+    line-height: 1.6;
+}
+
+/* About Section */
+.society-about {
+    margin-bottom: 3rem;
+    text-align: center;
+}
+
+.society-about h2 {
+    color: var(--heading-color);
+    margin-bottom: 1.5rem;
+    font-size: 2rem;
+}
+
+.society-about > p {
+    font-size: 1.1rem;
+    line-height: 1.7;
+    color: var(--text-color-medium);
+    max-width: 800px;
+    margin: 0 auto 2rem;
+}
+
+.guild-features {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 2rem;
+    margin-top: 2rem;
+}
+
+.feature {
+    background: var(--card-bg-color);
+    padding: 2rem;
+    border-radius: 12px;
+    box-shadow: var(--card-shadow);
+    border: 1px solid var(--card-border-color);
+    text-align: center;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.feature:hover {
+    transform: translateY(-5px);
+    box-shadow: var(--card-hover-shadow);
+}
+
+.feature h3 {
+    color: var(--heading-color);
+    margin-bottom: 1rem;
+    font-size: 1.3rem;
+}
+
+.feature p {
+    color: var(--text-color-medium);
+    line-height: 1.6;
+}
+
+/* Submission Section */
+.submission-section {
+    background: var(--card-bg-color);
+    padding: 3rem;
+    border-radius: 12px;
+    margin-bottom: 3rem;
+    box-shadow: var(--card-shadow);
+    border: 1px solid var(--card-border-color);
+}
+
+.submission-section h2 {
+    color: var(--heading-color);
+    text-align: center;
+    margin-bottom: 2rem;
+    font-size: 2rem;
+}
+
+.auth-message {
+    text-align: center;
+    padding: 2rem;
+    background: var(--notice-bg);
+    border: 2px solid var(--notice-border);
+    border-radius: 8px;
+    margin-bottom: 2rem;
+}
+
+.auth-message a {
+    color: var(--link-color);
+    font-weight: bold;
+    text-decoration: underline;
+}
+
+.submission-form {
+    max-width: 600px;
+    margin: 0 auto;
+}
+
+.form-group {
+    margin-bottom: 1.5rem;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 0.5rem;
+    font-weight: 600;
+    color: var(--text-color-dark);
+}
+
+.form-group input,
+.form-group select,
+.form-group textarea {
+    width: 100%;
+    padding: 0.75rem;
+    border: 2px solid var(--card-border-color);
+    border-radius: 8px;
+    font-size: 1rem;
+    font-family: inherit;
+    background: var(--card-bg-color);
+    color: var(--text-color-dark);
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.form-group input:focus,
+.form-group select:focus,
+.form-group textarea:focus {
+    outline: none;
+    border-color: var(--link-color);
+    box-shadow: 0 0 0 3px rgba(0, 123, 255, 0.1);
+}
+
+.form-group textarea {
+    resize: vertical;
+    min-height: 120px;
+}
+
+.file-help {
+    display: block;
+    margin-top: 0.25rem;
+    color: var(--text-color-light);
+    font-size: 0.9rem;
+}
+
+.checkbox-group label {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.5rem;
+    cursor: pointer;
+}
+
+.checkbox-group input[type="checkbox"] {
+    width: auto;
+    margin: 0;
+    flex-shrink: 0;
+    margin-top: 0.25rem;
+}
+
+.submit-btn {
+    background: linear-gradient(135deg, #8a0026, #b8002e);
+    color: white;
+    border: none;
+    padding: 1rem 2rem;
+    font-size: 1.1rem;
+    font-weight: 600;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    display: block;
+    margin: 2rem auto 0;
+}
+
+.submit-btn:hover {
+    background: linear-gradient(135deg, #6d001d, #9a0024);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(138, 0, 38, 0.3);
+}
+
+.submit-btn:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+    transform: none;
+    box-shadow: none;
+}
+
+/* Recent Works Section */
+.recent-works {
+    margin-bottom: 3rem;
+}
+
+.recent-works h2 {
+    color: var(--heading-color);
+    text-align: center;
+    margin-bottom: 2rem;
+    font-size: 2rem;
+}
+
+.works-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 2rem;
+}
+
+.work-card {
+    background: var(--card-bg-color);
+    padding: 2rem;
+    border-radius: 12px;
+    box-shadow: var(--card-shadow);
+    border: 1px solid var(--card-border-color);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.work-card:hover {
+    transform: translateY(-3px);
+    box-shadow: var(--card-hover-shadow);
+}
+
+.work-card h3 {
+    color: var(--heading-color);
+    margin-bottom: 0.5rem;
+    font-size: 1.3rem;
+}
+
+.work-meta {
+    display: flex;
+    gap: 1rem;
+    margin-bottom: 1rem;
+    font-size: 0.9rem;
+    color: var(--text-color-light);
+}
+
+.work-type {
+    background: var(--notice-bg);
+    color: var(--notice-border);
+    padding: 0.25rem 0.75rem;
+    border-radius: 12px;
+    font-weight: 600;
+    text-transform: uppercase;
+    font-size: 0.75rem;
+}
+
+.work-preview {
+    color: var(--text-color-medium);
+    line-height: 1.6;
+    margin-bottom: 1rem;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 4;
+    overflow: hidden;
+}
+
+.work-author {
+    font-style: italic;
+    color: var(--text-color-light);
+    margin-bottom: 0.5rem;
+}
+
+.read-more {
+    color: var(--link-color);
+    text-decoration: none;
+    font-weight: 600;
+    cursor: pointer;
+    transition: color 0.3s ease;
+}
+
+.read-more:hover {
+    color: var(--link-hover-color);
+    text-decoration: underline;
+}
+
+.loading-message {
+    text-align: center;
+    color: var(--text-color-light);
+    font-style: italic;
+    grid-column: 1 / -1;
+    padding: 3rem;
+}
+
+/* Executive Committee */
+.executive-committee {
+    background: var(--card-bg-color);
+    padding: 3rem;
+    border-radius: 12px;
+    box-shadow: var(--card-shadow);
+    border: 1px solid var(--card-border-color);
+}
+
+.executive-committee h2 {
+    color: var(--heading-color);
+    text-align: center;
+    margin-bottom: 2rem;
+    font-size: 2rem;
+}
+
+.committee-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 2rem;
+}
+
+.committee-member {
+    text-align: center;
+    padding: 2rem;
+    background: var(--bg-color);
+    border-radius: 12px;
+    border: 1px solid var(--card-border-color);
+    transition: transform 0.3s ease;
+}
+
+.committee-member:hover {
+    transform: translateY(-3px);
+}
+
+.member-photo {
+    width: 120px;
+    height: 120px;
+    border-radius: 50%;
+    margin: 0 auto 1rem;
+    display: block;
+    border: 3px solid var(--card-border-color);
+}
+
+.committee-member h3 {
+    color: var(--heading-color);
+    margin-bottom: 0.5rem;
+    font-size: 1.2rem;
+}
+
+.member-name {
+    color: var(--text-color-medium);
+    font-weight: 600;
+    margin-bottom: 0.5rem;
+    font-style: italic;
+}
+
+.member-role {
+    color: var(--text-color-light);
+    font-size: 0.9rem;
+    line-height: 1.4;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .poetry-guild-main {
+        padding: 1rem;
+    }
+    
+    .society-hero {
+        padding: 2rem 1rem;
+        margin-bottom: 2rem;
+    }
+    
+    .society-hero h1 {
+        font-size: 2rem;
+    }
+    
+    .society-logo {
+        width: 80px;
+        height: 80px;
+    }
+    
+    .guild-features {
+        grid-template-columns: 1fr;
+        gap: 1.5rem;
+    }
+    
+    .submission-section {
+        padding: 2rem 1rem;
+    }
+    
+    .works-grid {
+        grid-template-columns: 1fr;
+        gap: 1.5rem;
+    }
+    
+    .committee-grid {
+        grid-template-columns: 1fr;
+    }
+    
+    .executive-committee {
+        padding: 2rem 1rem;
+    }
+}
