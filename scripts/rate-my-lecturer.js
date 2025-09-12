@@ -55,24 +55,6 @@ const staticLecturers = [
     sprite: fixPath("assets/sprites/kanyangarara.png"),
     avgRating: 0,
     numRatings: 0
-  },
-  {
-    id: "james-tsabora",
-    name: "James Tsabora",
-    university: "UZ",
-    modules: ["Criminal Law"],
-    sprite: fixPath("assets/sprites/j-tsabora"),
-    avgRating: 0,
-    numRatings: 0
-  },
-  {
-    id: "rodgers-matsikidze",
-    name: "Rodgers Matsikidze",
-    university: "UZ",
-    module: ["Civil Procedure Lower Courts"],
-    sprite: fixPath("assets/sprites/r-matsikidze"),
-    avgRatings: 0,
-    numRatings: 0
   }
 ];
 
