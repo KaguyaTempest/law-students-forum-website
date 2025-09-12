@@ -1,0 +1,461 @@
+/* styles/lsif-society.css */
+
+.lsif-main {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 2rem;
+}
+
+.society-hero {
+    text-align: center;
+    padding: 4rem 2rem;
+    background: linear-gradient(135deg, #1a365d, #2c5282);
+    color: white;
+    border-radius: 16px;
+    margin-bottom: 4rem;
+    box-shadow: 0 10px 30px rgba(26, 54, 93, 0.3);
+}
+
+.hero-content {
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+.society-logo {
+    width: 140px;
+    height: 140px;
+    border-radius: 50%;
+    margin-bottom: 1.5rem;
+    border: 5px solid rgba(255, 255, 255, 0.3);
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+}
+
+.society-hero h1 {
+    font-size: 3rem;
+    margin-bottom: 1rem;
+    color: white;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+}
+
+.tagline {
+    font-size: 1.4rem;
+    font-style: italic;
+    color: #bee3f8;
+    margin-bottom: 1.5rem;
+    font-weight: 300;
+}
+
+.society-hero p:last-child {
+    font-size: 1.2rem;
+    color: rgba(255, 255, 255, 0.9);
+    max-width: 700px;
+    margin: 0 auto;
+    line-height: 1.6;
+}
+
+/* Mission Section */
+.mission-vision {
+    margin-bottom: 4rem;
+}
+
+.mission-card {
+    background: var(--card-bg-color);
+    padding: 3rem;
+    border-radius: 16px;
+    box-shadow: var(--card-shadow);
+    border: 1px solid var(--card-border-color);
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+}
+
+.mission-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 4px;
+    background: linear-gradient(90deg, #1a365d, #2c5282, #3182ce);
+}
+
+.mission-card h2 {
+    color: var(--heading-color);
+    margin-bottom: 1.5rem;
+    font-size: 2.2rem;
+}
+
+.mission-card p {
+    font-size: 1.2rem;
+    line-height: 1.7;
+    color: var(--text-color-medium);
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+/* Why Join Section */
+.why-join {
+    margin-bottom: 4rem;
+    text-align: center;
+}
+
+.why-join h2 {
+    color: var(--heading-color);
+    margin-bottom: 1rem;
+    font-size: 2.2rem;
+}
+
+.why-join > p {
+    font-size: 1.2rem;
+    color: var(--text-color-medium);
+    margin-bottom: 2.5rem;
+}
+
+.benefits-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 2rem;
+}
+
+.benefit-item {
+    background: var(--card-bg-color);
+    padding: 2.5rem;
+    border-radius: 16px;
+    box-shadow: var(--card-shadow);
+    border: 1px solid var(--card-border-color);
+    text-align: center;
+    transition: all 0.3s ease;
+    position: relative;
+}
+
+.benefit-item:hover {
+    transform: translateY(-8px);
+    box-shadow: var(--card-hover-shadow);
+}
+
+.benefit-icon {
+    font-size: 3rem;
+    margin-bottom: 1.5rem;
+    display: block;
+}
+
+.benefit-item p {
+    color: var(--text-color-medium);
+    line-height: 1.6;
+    font-size: 1.1rem;
+}
+
+/* Executive Committee */
+.executive-committee {
+    background: var(--card-bg-color);
+    padding: 4rem;
+    border-radius: 16px;
+    margin-bottom: 4rem;
+    box-shadow: var(--card-shadow);
+    border: 1px solid var(--card-border-color);
+}
+
+.executive-committee h2 {
+    color: var(--heading-color);
+    text-align: center;
+    margin-bottom: 3rem;
+    font-size: 2.5rem;
+    position: relative;
+}
+
+.executive-committee h2::after {
+    content: '';
+    position: absolute;
+    bottom: -1rem;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 100px;
+    height: 3px;
+    background: linear-gradient(90deg, #1a365d, #2c5282);
+    border-radius: 2px;
+}
+
+.committee-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 2.5rem;
+}
+
+.committee-member {
+    background: var(--bg-color);
+    padding: 2.5rem;
+    border-radius: 16px;
+    border: 1px solid var(--card-border-color);
+    text-align: center;
+    transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden;
+}
+
+.committee-member::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 3px;
+    background: linear-gradient(90deg, #1a365d, #2c5282);
+    transform: translateX(-100%);
+    transition: transform 0.3s ease;
+}
+
+.committee-member:hover::before {
+    transform: translateX(0);
+}
+
+.committee-member:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 25px rgba(26, 54, 93, 0.15);
+}
+
+.member-photo {
+    width: 120px;
+    height: 120px;
+    border-radius: 50%;
+    margin: 0 auto 1.5rem;
+    display: block;
+    border: 4px solid var(--card-border-color);
+    transition: all 0.3s ease;
+}
+
+.committee-member:hover .member-photo {
+    border-color: #2c5282;
+    transform: scale(1.05);
+}
+
+.committee-member h3 {
+    color: var(--heading-color);
+    margin-bottom: 0.5rem;
+    font-size: 1.3rem;
+    font-weight: 600;
+}
+
+.member-name {
+    color: #2c5282;
+    font-weight: 700;
+    margin-bottom: 1rem;
+    font-size: 1.1rem;
+}
+
+.member-role {
+    color: var(--text-color-light);
+    font-size: 0.95rem;
+    line-height: 1.5;
+    font-style: italic;
+}
+
+/* Activities Section */
+.activities-section {
+    margin-bottom: 4rem;
+}
+
+.activities-section h2 {
+    color: var(--heading-color);
+    text-align: center;
+    margin-bottom: 3rem;
+    font-size: 2.2rem;
+}
+
+.activities-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 2rem;
+}
+
+.activity-card {
+    background: var(--card-bg-color);
+    padding: 2.5rem;
+    border-radius: 16px;
+    box-shadow: var(--card-shadow);
+    border: 1px solid var(--card-border-color);
+    transition: all 0.3s ease;
+    text-align: center;
+}
+
+.activity-card:hover {
+    transform: translateY(-5px);
+    box-shadow: var(--card-hover-shadow);
+}
+
+.activity-card h3 {
+    color: var(--heading-color);
+    margin-bottom: 1rem;
+    font-size: 1.4rem;
+}
+
+.activity-card p {
+    color: var(--text-color-medium);
+    line-height: 1.6;
+}
+
+/* Social Media Section */
+.social-media {
+    background: var(--card-bg-color);
+    padding: 3rem;
+    border-radius: 16px;
+    margin-bottom: 4rem;
+    box-shadow: var(--card-shadow);
+    border: 1px solid var(--card-border-color);
+    text-align: center;
+}
+
+.social-media h2 {
+    color: var(--heading-color);
+    margin-bottom: 2rem;
+    font-size: 2rem;
+}
+
+.social-links {
+    display: flex;
+    justify-content: center;
+    gap: 2rem;
+    flex-wrap: wrap;
+}
+
+.social-link {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    padding: 1rem 2rem;
+    border-radius: 50px;
+    text-decoration: none;
+    transition: all 0.3s ease;
+    font-weight: 600;
+}
+
+.social-link.linkedin {
+    background: #0077b5;
+    color: white;
+}
+
+.social-link.instagram {
+    background: linear-gradient(45deg, #f09433, #e6683c, #dc2743, #cc2366, #bc1888);
+    color: white;
+}
+
+.social-link:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+}
+
+.social-icon {
+    font-size: 1.5rem;
+}
+
+/* CTA Section */
+.join-cta {
+    background: linear-gradient(135deg, #1a365d, #2c5282);
+    padding: 4rem;
+    border-radius: 16px;
+    text-align: center;
+    color: white;
+    margin-bottom: 2rem;
+}
+
+.cta-content h2 {
+    font-size: 2.5rem;
+    margin-bottom: 1rem;
+    color: white;
+}
+
+.cta-content p {
+    font-size: 1.2rem;
+    margin-bottom: 2rem;
+    color: rgba(255, 255, 255, 0.9);
+    max-width: 600px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.cta-button {
+    background: white;
+    color: #1a365d;
+    border: none;
+    padding: 1.25rem 3rem;
+    font-size: 1.2rem;
+    font-weight: 700;
+    border-radius: 50px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.cta-button:hover {
+    background: #f7fafc;
+    transform: translateY(-2px);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .lsif-main {
+        padding: 1rem;
+    }
+    
+    .society-hero {
+        padding: 3rem 1.5rem;
+        margin-bottom: 3rem;
+    }
+    
+    .society-hero h1 {
+        font-size: 2.2rem;
+    }
+    
+    .tagline {
+        font-size: 1.1rem;
+    }
+    
+    .society-logo {
+        width: 100px;
+        height: 100px;
+    }
+    
+    .mission-card,
+    .executive-committee,
+    .social-media,
+    .join-cta {
+        padding: 2rem 1.5rem;
+        margin-bottom: 2rem;
+    }
+    
+    .benefits-grid,
+    .activities-grid {
+        grid-template-columns: 1fr;
+        gap: 1.5rem;
+    }
+    
+    .committee-grid {
+        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+        gap: 2rem;
+    }
+    
+    .committee-member {
+        padding: 2rem;
+    }
+    
+    .social-links {
+        flex-direction: column;
+        align-items: center;
+    }
+    
+    .social-link {
+        width: 100%;
+        max-width: 300px;
+        justify-content: center;
+    }
+    
+    .cta-content h2 {
+        font-size: 2rem;
+    }
+    
+    .cta-button {
+        padding: 1rem 2rem;
+        font-size: 1rem;
+    }
+}

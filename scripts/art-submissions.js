@@ -251,60 +251,97 @@ function openArtworkModal(artwork) {
         <p><strong>Medium:</strong> ${artwork.medium.replace('-', ' ')}</p>
         <p><strong>Artist:</strong> ${artwork.authorName}</p>
         ${artwork.dimensions ? `<p><strong>Dimensions:</strong> ${artwork.dimensions}</p>` : ''}
-        ${artwork.year ? `<p><strong>Year Created:</strong> ${artwork.year}</p>` : ''}
-        ${artwork.description ? `<p><strong>Artist Statement:</strong> ${artwork.description}</p>` : ''}
+        ${artwork.year ? `<p><strong>Year:</strong> ${artwork.year}</p>` : ''}
+        ${artwork.description ? `<p><strong>Description:</strong> ${artwork.description}</p>` : ''}
     `;
     
-    // Display modal
-    modal.style.display = 'flex';
-    
-    // Add event listener to close modal
-    modal.querySelector('.close-btn').addEventListener('click', () => {
-        modal.style.display = 'none';
-    });
-    
-    // Close modal if user clicks outside of it
-    window.addEventListener('click', (event) => {
-        if (event.target === modal) {
-            modal.style.display = 'none';
-        }
-    });
+    modal.style.display = 'block';
+    document.body.style.overflow = 'hidden';
 }
 
-// Helper function to create the modal structure
+// Create artwork modal
 function createArtworkModal() {
     const modal = document.createElement('div');
     modal.id = 'artwork-modal';
-    modal.className = 'modal';
+    modal.className = 'artwork-modal';
     
     modal.innerHTML = `
         <div class="modal-content">
-            <span class="close-btn">&times;</span>
-            <img class="modal-image" src="" alt="Artwork">
+            <button class="modal-close">&times;</button>
+            <img src="" alt="" class="modal-image">
             <div class="modal-info"></div>
         </div>
     `;
     
+    // Close modal handlers
+    const closeBtn = modal.querySelector('.modal-close');
+    closeBtn.addEventListener('click', closeArtworkModal);
+    
+    modal.addEventListener('click', (e) => {
+        if (e.target === modal) {
+            closeArtworkModal();
+        }
+    });
+    
+    // Keyboard close
+    document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape' && modal.style.display === 'block') {
+            closeArtworkModal();
+        }
+    });
+    
     return modal;
 }
 
-// Filter button event listeners
-filterButtons.forEach(button => {
-    button.addEventListener('click', (e) => {
-        // Remove active class from all buttons
-        filterButtons.forEach(btn => btn.classList.remove('active'));
-        // Add active class to clicked button
-        e.target.classList.add('active');
-        
-        const filterMedium = e.target.dataset.medium;
-        loadGallery(filterMedium);
-    });
-});
+// Close artwork modal
+function closeArtworkModal() {
+    const modal = document.getElementById('artwork-modal');
+    if (modal) {
+        modal.style.display = 'none';
+        document.body.style.overflow = 'auto';
+    }
+}
 
-// Initial gallery load
+// Filter functionality
+function setupFilters() {
+    filterButtons.forEach(button => {
+        button.addEventListener('click', () => {
+            // Update active button
+            filterButtons.forEach(btn => btn.classList.remove('active'));
+            button.classList.add('active');
+            
+            // Filter artworks
+            const medium = button.dataset.medium;
+            if (medium === 'all') {
+                displayArtworks(allArtworks);
+            } else {
+                const filteredArtworks = allArtworks.filter(artwork => artwork.medium === medium);
+                displayArtworks(filteredArtworks);
+            }
+        });
+    });
+}
+
+// Initialize page
 document.addEventListener('DOMContentLoaded', () => {
-    // Check auth state to determine if gallery should load
-    if (auth.currentUser) {
+    // Set up auth modal triggers
+    const authLinks = document.querySelectorAll('.open-auth-modal');
+    authLinks.forEach(link => {
+        link.addEventListener('click', (e) => {
+            e.preventDefault();
+            // Trigger auth modal - this should be handled by your existing auth modal script
+            const authModal = document.getElementById('auth-modal');
+            if (authModal) {
+                authModal.style.display = 'flex';
+            }
+        });
+    });
+    
+    // Setup filter buttons
+    setupFilters();
+    
+    // If user is already logged in, load gallery
+    if (currentUser) {
         loadGallery();
     }
 });
