@@ -14,7 +14,7 @@ import { registerUser, loginUser, logoutUser, onAuthChange, getUserProfile } fro
       closeModalBtn, userRoleSelect, studentFields, lawyerFields,
       loginError, signupError;
 
-  // Profile elements
+  // Profile elements (NEW)
   let authControls, userInfo, profileTrigger, profileDropdown,
       userAvatar, userName, userRole, dropdownAvatar, dropdownName,
       dropdownEmail, dropdownRoleDetail, logoutBtn;
@@ -27,7 +27,9 @@ import { registerUser, loginUser, logoutUser, onAuthChange, getUserProfile } fro
     onAuthChange(async (user) => {
       currentUser = user;
       if (user) {
+        // Fetch the user's profile data from Firestore
         const profile = await getUserProfile(user.uid);
+        // Pass the profile data to the UI update function
         updateAuthUI(true, {
           email: user.email,
           username: profile?.username || user.email.split('@')[0],
