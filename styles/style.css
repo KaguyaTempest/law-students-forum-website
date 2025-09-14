@@ -493,3 +493,16 @@ footer {
         font-size: 0.95em; /* Slightly smaller for mobile */
     }
 }
+/* In styles/main.css */
+.user-info .user-role {
+    font-size: 0.85rem;
+    color: #acd8ff; /* A subtle gray for light mode */
+    margin-top: -3px;
+    transition: color 0.3s ease;
+}
+
+@media (prefers-color-scheme: dark) {
+    .user-info .user-role {
+        color: #adb5bd; /* A lighter gray for dark mode */
+    }
+}
