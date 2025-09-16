@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Law School Poets Guild - Student Societies</title>
+    <link rel="stylesheet" href="/law-students-forum-website/styles/style.css">
+    <link rel="stylesheet" href="/law-students-forum-website/styles/societies.css">
+    <link rel="stylesheet" href="/law-students-forum-website/styles/poetry-guild.css">
+    <link rel="stylesheet" href="../styles/auth.css">
+</head>
+<body>
+    <div id="header-placeholder"></div>
+    <div id="auth-modal-placeholder"></div>
+
+    <main class="poetry-guild-main">
+        <section class="society-hero">
+            <div class="hero-content">
+                <img src="/law-students-forum-website/assets/poetry.png" alt="Poetry Guild" class="society-logo">
+                <h1>The Law School Poets Guild</h1>
+                <p>An unrestricted platform for law students to explore their passion for poetry, short stories, and creative writing.</p>
+            </div>
+        </section>
+
+        <section class="society-about">
+            <h2>About the Guild</h2>
+            <p>The Law School Poets Guild provides a creative sanctuary for law students to express their artistic side through verse and prose. We believe that poetry and legal studies complement each other beautifully - both require precision with language, an understanding of rhythm, and the ability to convey complex emotions and ideas.</p>
+            
+            <div class="guild-features">
+                <div class="feature">
+                    <h3>🎭 Open Expression</h3>
+                    <p>Share your poetry, short stories, and creative writing without restriction</p>
+                </div>
+                <div class="feature">
+                    <h3>📚 Workshops</h3>
+                    <p>Participate in writing workshops and poetry readings</p>
+                </div>
+                <div class="feature">
+                    <h3>🏆 Competitions</h3>
+                    <p>Compete in monthly poetry contests and writing challenges</p>
+                </div>
+                <div class="feature">
+                    <h3>🤝 Community</h3>
+                    <p>Connect with fellow creative minds in the legal field</p>
+                </div>
+            </div>
+        </section>
+
+        <section class="submission-section">
+            <h2>Submit Your Work</h2>
+            <div class="submission-form-container">
+                <div id="auth-required" class="auth-message" style="display: none;">
+                    <p>Please <a href="#" class="open-auth-modal">log in</a> to submit your creative work.</p>
+                </div>
+                
+                <form id="poetry-submission-form" class="submission-form" style="display: none;">
+                    <div class="form-group">
+                        <label for="work-title">Title *</label>
+                        <input type="text" id="work-title" name="title" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="work-type">Type of Work *</label>
+                        <select id="work-type" name="type" required>
+                            <option value="">Select type...</option>
+                            <option value="poem">Poem</option>
+                            <option value="short-story">Short Story</option>
+                            <option value="prose">Prose</option>
+                            <option value="other">Other Creative Writing</option>
+                        </select>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="work-content">Content</label>
+                        <textarea id="work-content" name="content" rows="10" placeholder="Paste your work here, or upload a file below..."></textarea>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="work-file">Or Upload File</label>
+                        <input type="file" id="work-file" name="file" accept=".txt,.doc,.docx,.pdf">
+                        <small class="file-help">Accepted formats: .txt, .doc, .docx, .pdf (Max 5MB)</small>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="work-description">Description (Optional)</label>
+                        <textarea id="work-description" name="description" rows="3" placeholder="Brief description or author's note..."></textarea>
+                    </div>
+                    
+                    <div class="form-group checkbox-group">
+                        <label>
+                            <input type="checkbox" id="allow-anonymous" name="anonymous">
+                            Submit anonymously
+                        </label>
+                    </div>
+                    
+                    <div class="form-group checkbox-group">
+                        <label>
+                            <input type="checkbox" id="accept-terms" name="terms" required>
+                            I agree that my submission follows community guidelines and is my original work
+                        </label>
+                    </div>
+                    
+                    <button type="submit" class="submit-btn">Submit Work</button>
+                </form>
+            </div>
+        </section>
+
+        <section class="recent-works">
+            <h2>Recent Submissions</h2>
+            <div id="works-container" class="works-grid">
+                <p class="loading-message">Loading recent works...</p>
+            </div>
+        </section>
+
+        <section class="executive-committee">
+            <h2>Executive Committee</h2>
+            <div class="committee-grid">
+                <div class="committee-member">
+                    <img src="https://placehold.co/150x150/8a0026/ffffff?text=President" alt="President" class="member-photo">
+                    <h3>President</h3>
+                    <p class="member-name">[Position Available]</p>
+                    <p class="member-role">Leading creative initiatives and guild activities</p>
+                </div>
+                
+                <div class="committee-member">
+                    <img src="https://placehold.co/150x150/8a0026/ffffff?text=VP" alt="Vice President" class="member-photo">
+                    <h3>Vice President</h3>
+                    <p class="member-name">[Position Available]</p>
+                    <p class="member-role">Supporting guild operations and workshops</p>
+                </div>
+                
+                <div class="committee-member">
+                    <img src="https://placehold.co/150x150/8a0026/ffffff?text=Secretary" alt="Secretary" class="member-photo">
+                    <h3>Secretary</h3>
+                    <p class="member-name">[Position Available]</p>
+                    <p class="member-role">Managing submissions and communications</p>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="site-footer">
+        © 2025 Law Students Intellectual Forum
+    </footer>
+
+    <script type="module" src="/law-students-forum-website/scripts/load-header.js"></script>
+    <script type="module" src="/law-students-forum-website/scripts/auth-modal.js"></script>
+    <script type="module" src="/law-students-forum-website/scripts/poetry-submissions.js"></script>
+</body>
+</html>

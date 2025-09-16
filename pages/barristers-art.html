@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Barristers' Palette & Brush Society - Student Societies</title>
+    <link rel="stylesheet" href="/law-students-forum-website/styles/style.css">
+    <link rel="stylesheet" href="/law-students-forum-website/styles/societies.css">
+    <link rel="stylesheet" href="/law-students-forum-website/styles/visual-art.css">
+</head>
+<body>
+    <div id="header-placeholder"></div>
+    <div id="auth-modal-placeholder"></div>
+
+    <main class="visual-art-main">
+        <section class="society-hero">
+            <div class="society-features">
+                <div class="feature">
+                    <h3>🎨 Multi-Media Expression</h3>
+                    <p>Paint, draw, photograph, or create digital art - all forms welcome</p>
+                </div>
+                <div class="feature">
+                    <h3>🖼️ Exhibitions</h3>
+                    <p>Regular showcases of student artwork and collaborative projects</p>
+                </div>
+                <div class="feature">
+                    <h3>🏆 Competitions</h3>
+                    <p>Monthly art challenges and annual law-themed art contests</p>
+                </div>
+                <div class="feature">
+                    <h3>🎭 Workshops</h3>
+                    <p>Learn new techniques and explore different artistic mediums</p>
+                </div>
+            </div>
+        </section>
+
+        <section class="submission-section">
+            <h2>Submit Your Artwork</h2>
+            <div class="submission-form-container">
+                <div id="auth-required" class="auth-message" style="display: none;">
+                    <p>Please <a href="#" class="open-auth-modal">log in</a> to submit your artwork.</p>
+                </div>
+                
+                <form id="art-submission-form" class="submission-form" style="display: none;">
+                    <div class="form-group">
+                        <label for="artwork-title">Title *</label>
+                        <input type="text" id="artwork-title" name="title" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="art-medium">Medium *</label>
+                        <select id="art-medium" name="medium" required>
+                            <option value="">Select medium...</option>
+                            <option value="painting">Painting</option>
+                            <option value="drawing">Drawing</option>
+                            <option value="digital-art">Digital Art</option>
+                            <option value="photography">Photography</option>
+                            <option value="mixed-media">Mixed Media</option>
+                            <option value="sculpture">Sculpture</option>
+                            <option value="other">Other</option>
+                        </select>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="artwork-file">Upload Artwork *</label>
+                        <input type="file" id="artwork-file" name="file" accept="image/*,.pdf" required>
+                        <small class="file-help">Accepted formats: JPG, PNG, GIF, PDF (Max 10MB)</small>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="artwork-dimensions">Dimensions</label>
+                        <input type="text" id="artwork-dimensions" name="dimensions" placeholder="e.g., 24x36 inches, A4, Digital">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="artwork-description">Artist Statement (Optional)</label>
+                        <textarea id="artwork-description" name="description" rows="4" placeholder="Describe your inspiration, technique, or meaning behind the work..."></textarea>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="creation-year">Year Created</label>
+                        <input type="number" id="creation-year" name="year" min="2020" max="2030" placeholder="2025">
+                    </div>
+                    
+                    <div class="form-group checkbox-group">
+                        <label>
+                            <input type="checkbox" id="allow-anonymous-art" name="anonymous">
+                            Submit anonymously
+                        </label>
+                    </div>
+                    
+                    <div class="form-group checkbox-group">
+                        <label>
+                            <input type="checkbox" id="accept-art-terms" name="terms" required>
+                            I confirm this is my original artwork and I have rights to share it
+                        </label>
+                    </div>
+                    
+                    <button type="submit" class="submit-btn">Submit Artwork</button>
+                </form>
+            </div>
+        </section>
+
+        <section class="art-gallery">
+            <h2>Student Gallery</h2>
+            <div class="gallery-filters">
+                <button class="filter-btn active" data-medium="all">All</button>
+                <button class="filter-btn" data-medium="painting">Painting</button>
+                <button class="filter-btn" data-medium="drawing">Drawing</button>
+                <button class="filter-btn" data-medium="digital-art">Digital Art</button>
+                <button class="filter-btn" data-medium="photography">Photography</button>
+            </div>
+            <div id="gallery-container" class="gallery-grid">
+                <p class="loading-message">Loading student artwork...</p>
+            </div>
+        </section>
+
+        <section class="executive-committee">
+            <h2>Executive Committee</h2>
+            <div class="committee-grid">
+                <div class="committee-member">
+                    <img src="https://placehold.co/150x150/4a5568/ffffff?text=President" alt="President" class="member-photo">
+                    <h3>President</h3>
+                    <p class="member-name">[Position Available]</p>
+                    <p class="member-role">Leading artistic initiatives and gallery curation</p>
+                </div>
+                
+                <div class="committee-member">
+                    <img src="https://placehold.co/150x150/4a5568/ffffff?text=VP" alt="Vice President" class="member-photo">
+                    <h3>Vice President</h3>
+                    <p class="member-name">[Position Available]</p>
+                    <p class="member-role">Coordinating workshops and exhibitions</p>
+                </div>
+                
+                <div class="committee-member">
+                    <img src="https://placehold.co/150x150/4a5568/ffffff?text=Secretary" alt="Secretary" class="member-photo">
+                    <h3>Secretary</h3>
+                    <p class="member-name">[Position Available]</p>
+                    <p class="member-role">Managing submissions and society communications</p>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="site-footer">
+        © 2025 Law Students Intellectual Forum
+    </footer>
+
+    <script type="module" src="/law-students-forum-website/scripts/load-header.js"></script>
+    <script type="module" src="/law-students-forum-website/scripts/auth-modal.js"></script>
+    <script type="module" src="/law-students-forum-website/scripts/art-submissions.js"></script>
+</body>
+</html> class="hero-content">
+                <img src="/law-students-forum-website/assets/visual-art.png" alt="Visual Art Society" class="society-logo">
+                <h1>The Barristers' Palette & Brush Society</h1>
+                <p>An outlet for law students to explore visual art in any form, from painting and drawing to digital art and photography.</p>
+            </div>
+        </section>
+
+        <section class="society-about">
+            <h2>About the Society</h2>
+            <p>The Barristers' Palette & Brush Society celebrates the visual arts within the legal community. We believe that artistic expression enhances critical thinking, creativity, and provides a balanced perspective that enriches the study of law.</p>
+            
+            <div

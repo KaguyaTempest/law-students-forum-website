@@ -19,6 +19,8 @@ import { registerUser, loginUser, logoutUser, onAuthChange, getUserProfile } fro
       userAvatar, userName, userRole, dropdownAvatar, dropdownName,
       dropdownEmail, dropdownRoleDetail, logoutBtn;
 
+  // Function definitions... (The functions below this point are correct)
+
   /**
    * Initializes the Firebase Auth state listener.
    * Updates the UI based on the user's login status.
@@ -27,6 +29,7 @@ import { registerUser, loginUser, logoutUser, onAuthChange, getUserProfile } fro
     onAuthChange(async (user) => {
       currentUser = user;
       if (user) {
+        // User is logged in, fetch profile and update UI
         const profile = await getUserProfile(user.uid);
         updateAuthUI(true, {
           email: user.email,
@@ -34,6 +37,7 @@ import { registerUser, loginUser, logoutUser, onAuthChange, getUserProfile } fro
           ...profile
         });
       } else {
+        // User is logged out, show the auth buttons
         updateAuthUI(false);
       }
     });
@@ -90,9 +94,10 @@ import { registerUser, loginUser, logoutUser, onAuthChange, getUserProfile } fro
    * Sets up the profile dropdown functionality
    */
   function initializeProfileDropdown() {
+    // Corrected event listener for profile trigger
     if (profileTrigger) {
-      profileTrigger.addEventListener('click', (e) => {
-        e.stopPropagation();
+      profileTrigger.addEventListener("click", (e) => {
+        e.stopPropagation(); // Prevents the window click from closing it immediately
         toggleProfileDropdown();
       });
     }
