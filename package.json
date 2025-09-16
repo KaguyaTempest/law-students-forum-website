@@ -16,8 +16,5 @@
     "url": "https://github.com/KaguyaTempest/law-students-forum-website/issues"
   },
   "homepage": "https://github.com/KaguyaTempest/law-students-forum-website#readme",
-  "description": "",
-  "dependencies": {
-    "firebase-admin": "^13.5.0"
-  }
+  "description": ""
 }
