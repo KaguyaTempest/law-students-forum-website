@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>LSIF Admin Dashboard</title>
+  <link rel="stylesheet" href="styles/admin.css" />
+</head>
+<body>
+  <div id="admin-dashboard" class="hidden">
+    <h1>Admin Dashboard</h1>
+
+    <section id="poem-submissions">
+      <h2>Pending Poems</h2>
+      <div id="poem-list"></div>
+    </section>
+
+    <section id="art-submissions">
+      <h2>Pending Art</h2>
+      <div id="art-list"></div>
+    </section>
+
+    <section id="ratings-moderation">
+      <h2>Lecturer Ratings</h2>
+      <div id="ratings-list"></div>
+    </section>
+
+    <section id="comment-moderation">
+      <h2>Article Comments</h2>
+      <div id="comments-list"></div>
+    </section>
+  </div>
+
+  <script type="module" src="scripts/admin.js"></script>
+</body>
+</html>

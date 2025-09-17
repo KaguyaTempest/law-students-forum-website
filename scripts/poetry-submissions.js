@@ -193,43 +193,92 @@ async function loadRecentWorks() {
 
 // Create work card element
 function createWorkCard(work, id) {
-    const card = document.createElement('div');
-    card.className = 'work-card';
+    const card = document.createElement('div');
+    card.className = 'work-card';
+    
+    const formatDate = (timestamp) => {
+        if (!timestamp) return 'Recently';
+        const date = timestamp.toDate ? timestamp.toDate() : new Date(timestamp);
+        return date.toLocaleDateString('en-US', { 
+            year: 'numeric', 
+            month: 'short', 
+            day: 'numeric' 
+        });
+    };
+    
+    const preview = work.hasFile ? 
+        `<p class="work-preview"><em>File: ${work.fileName}</em></p>` :
+        `<p class="work-preview">${work.content.substring(0, 150)}${work.content.length > 150 ? '...' : ''}</p>`;
+    
+    card.innerHTML = `
+        <h3>${work.title}</h3>
+        <div class="work-meta">
+            <span class="work-type">${work.type.replace('-', ' ')}</span>
+            <span>${formatDate(work.timestamp)}</span>
+        </div>
+        <p class="work-author">by ${work.authorName}</p>
+        ${preview}
+        ${work.description ? `<p class="work-description">${work.description}</p>` : ''}
+    `;
+
+    const readMoreLink = document.createElement('a');
+    readMoreLink.href = '#';
+    readMoreLink.className = 'read-more';
+    readMoreLink.textContent = 'Read More';
     
-    const formatDate = (timestamp) => {
-        if (!timestamp) return 'Recently';
-        const date = timestamp.toDate ? timestamp.toDate() : new Date(timestamp);
-        return date.toLocaleDateString('en-US', { 
-            year: 'numeric', 
-            month: 'short', 
-            day: 'numeric' 
-        });
-    };
-    
-    const preview = work.hasFile ? 
-        `<p class="work-preview"><em>File: ${work.fileName}</em></p>` :
-        `<p class="work-preview">${work.content.substring(0, 150)}${work.content.length > 150 ? '...' : ''}</p>`;
-    
-    card.innerHTML = `
-        <h3>${work.title}</h3>
-        <div class="work-meta">
-            <span class="work-type">${work.type.replace('-', ' ')}</span>
-            <span>${formatDate(work.timestamp)}</span>
-        </div>
-        <p class="work-author">by ${work.authorName}</p>
-        ${preview}
-        ${work.description ? `<p class="work-description">${work.description}</p>` : ''}
-        <a href="#" class="read-more" onclick="viewWork('${id}')">Read More</a>
-    `;
-    
-    return card;
+    // Add event listener to the "Read More" link
+    readMoreLink.addEventListener('click', (e) => {
+        e.preventDefault();
+        viewWork(work); // Pass the entire work object
+    });
+
+    card.appendChild(readMoreLink);
+    return card;
 }
 
-// View full work (placeholder for modal or separate page)
-window.viewWork = function(workId) {
-    // For now, just show an alert. Later, implement a modal or navigate to full view
-    alert('Full work viewing will be implemented in the next phase.');
-};
+// View full work in a modal
+function viewWork(work) {
+    const modal = document.getElementById('full-poem-modal');
+    const modalTitle = document.getElementById('modal-title');
+    const modalAuthor = document.getElementById('modal-author');
+    const modalContent = document.getElementById('modal-content');
+    const modalReactions = {
+        lightbulb: document.getElementById('reaction-lightbulb'),
+        fire: document.getElementById('reaction-fire'),
+        tear: document.getElementById('reaction-tear')
+    };
+
+    // Populate the modal with the poem's data
+    modalTitle.textContent = work.title;
+    modalAuthor.textContent = `by ${work.authorName}`;
+    
+    // The content is a string with line breaks (\n). 
+    // We use textContent to prevent HTML injection attacks.
+    modalContent.textContent = work.content; 
+    
+    // Check if the reactions property exists and update the counts
+    if (work.reactions) {
+        modalReactions.lightbulb.textContent = work.reactions['💡'] || 0;
+        modalReactions.fire.textContent = work.reactions['🔥'] || 0;
+        modalReactions.tear.textContent = work.reactions['😢'] || 0;
+    }
+
+    // Display the modal
+    modal.style.display = 'flex';
+    
+    // Get the close button and set up event listeners
+    const closeBtn = modal.querySelector('.close-btn');
+    closeBtn.onclick = () => {
+        modal.style.display = 'none';
+    };
+
+    // Close the modal if the user clicks outside of it
+    window.onclick = (event) => {
+        if (event.target === modal) {
+            modal.style.display = 'none';
+        }
+    };
+}
 
 // Initialize page
 document.addEventListener('DOMContentLoaded', () => {
