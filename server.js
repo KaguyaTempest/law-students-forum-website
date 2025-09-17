@@ -1,24 +1,28 @@
 const express = require('express');
-const serveStatic = require('serve-static');
 const path = require('path');
 
 const app = express();
 const PORT = 5000;
 
-// Serve static files from the root directory
-app.use(serveStatic('.', {
-  index: ['index.html'],
-  setHeaders: (res) => {
-    // Disable caching to ensure updates are visible to users
-    res.setHeader('Cache-Control', 'no-cache, no-store, must-revalidate');
-    res.setHeader('Pragma', 'no-cache');
-    res.setHeader('Expires', '0');
-  }
-}));
+// Disable caching to ensure updates are visible to users
+app.use((req, res, next) => {
+  res.setHeader('Cache-Control', 'no-cache, no-store, must-revalidate');
+  res.setHeader('Pragma', 'no-cache');
+  res.setHeader('Expires', '0');
+  next();
+});
 
-// Handle client-side routing - serve index.html for all routes
+// Health check endpoint
+app.get('/healthz', (req, res) => {
+  res.status(200).json({ status: 'ok', message: 'Law Students Forum server is running' });
+});
+
+// Serve static files from the root directory
+app.use(express.static('.'));
+
+// Handle all other routes by serving index.html (for client-side routing)
 app.get('*', (req, res) => {
-  res.sendFile(path.resolve('./index.html'));
+  res.sendFile(path.join(__dirname, 'index.html'));
 });
 
 app.listen(PORT, '0.0.0.0', () => {

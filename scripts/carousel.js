@@ -98,6 +98,6 @@ export function initCarousels() {
         });
     }
 
-    setupInfiniteCarousel('.newsletter-carousel', '.newsletter-left-arrow', '.newsletter-right-arrow');
-    setupInfiniteCarousel('.article-carousel', '.left-arrow', '.right-arrow');
+    setupInfiniteCarousel('.newsletter-carousel', '.newsletter-carousel-arrow.left-arrow', '.newsletter-carousel-arrow.right-arrow');
+    setupInfiniteCarousel('.article-carousel', '.left-arrow:not(.newsletter-carousel-arrow)', '.right-arrow:not(.newsletter-carousel-arrow)');
 }
