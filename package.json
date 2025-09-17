@@ -1,8 +1,9 @@
 {
   "name": "law-students-intellectual-forum-launch",
   "version": "1.0.0",
-  "main": "script.js",
+  "main": "server.js",
   "scripts": {
+    "start": "node server.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
@@ -16,5 +17,9 @@
     "url": "https://github.com/KaguyaTempest/law-students-forum-website/issues"
   },
   "homepage": "https://github.com/KaguyaTempest/law-students-forum-website#readme",
-  "description": ""
+  "description": "",
+  "dependencies": {
+    "express": "^5.1.0",
+    "serve-static": "^2.2.0"
+  }
 }
