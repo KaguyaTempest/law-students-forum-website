@@ -166,6 +166,7 @@ async function loadRecentWorks() {
     try {
         const q = query(
             collection(db, 'poetry-submissions'),
+            where('status', '==', 'approved'), // Add this line to filter by status
             orderBy('timestamp', 'desc'),
             limit(6)
         );
