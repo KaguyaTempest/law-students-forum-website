@@ -205,11 +205,18 @@
     padding-top: 15px;
     border-top: 1px solid #e1e5e9;
     animation: slideDown 0.3s ease;
+    opacity: 1;
+    visibility: visible;
+    max-height: 300px;
+    transition: all 0.3s ease;
 }
 
 #student-fields.hidden,
 #lawyer-fields.hidden {
-    display: none;
+    display: none !important;
+    opacity: 0;
+    visibility: hidden;
+    max-height: 0;
 }
 
 /* Error message styling */
