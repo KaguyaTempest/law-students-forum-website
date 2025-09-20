@@ -154,9 +154,9 @@
 }
 
 .available {
-    background: var(--commentary-bg);
-    color: var(--commentary-border);
-    border: 1px solid var(--commentary-border);
+    background: var(--success-bg, #e6f9ec);
+    color: var(--success-border, #2e7d32);
+    border: 1px solid var(--success-border, #2e7d32);
 }
 
 .semester-info {
