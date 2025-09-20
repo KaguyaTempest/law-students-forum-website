@@ -1,5 +1,5 @@
 <header>
-  <a href="/law-students-forum-website/index.html" class="logo-link">
+ <a href="/law-students-forum-website/index.html" class="logo-link">
     <img src="/law-students-forum-website/assets/scales-of-justice.png" alt="LSIF logo" class="header-logo">
   </a>
   <h1>
@@ -66,3 +66,62 @@
     </div>
   </div>
 </header>
+
+<script>
+// Universal header path resolver
+(function() {
+    // Determine the base path based on current location
+    function getBasePath() {
+        const currentPath = window.location.pathname;
+        
+        // If we're in root directory (index.html or just /)
+        if (currentPath === '/' || currentPath === '/index.html' || currentPath.endsWith('/index.html')) {
+            return '';
+        }
+        
+        // If we're in a subdirectory (pages/)
+        if (currentPath.includes('/pages/')) {
+            return '../';
+        }
+        
+        // If we're deeper (like pages/articles/)
+        const depth = (currentPath.match(/\//g) || []).length - 1;
+        return '../'.repeat(depth);
+    }
+    
+    // Set up all the navigation links
+    function setupNavigation() {
+        const basePath = getBasePath();
+        
+        // Logo and home link
+        const logoLink = document.getElementById('logo-link');
+        const headerLogo = document.getElementById('header-logo');
+        
+        if (logoLink) logoLink.href = basePath + 'index.html';
+        if (headerLogo) headerLogo.src = basePath + 'assets/scales-of-justice.png';
+        
+        // Navigation links
+        const navLinks = {
+            'nav-student-articles': 'pages/student-articles.html',
+            'nav-academic-resources': 'pages/academic-resources.html',
+            'nav-campus-guides': 'pages/campus-guides.html',
+            'nav-moot-court': 'pages/moot-court-guide.html',
+            'nav-about': 'pages/about.html'
+        };
+        
+        Object.keys(navLinks).forEach(id => {
+            const element = document.getElementById(id);
+            if (element) {
+                element.href = basePath + navLinks[id];
+            }
+        });
+    }
+    
+    // Initialize when DOM is ready
+    if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', setupNavigation);
+    } else {
+        setupNavigation();
+    }
+})();
+</script>
