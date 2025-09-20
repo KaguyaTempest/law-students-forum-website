@@ -1,98 +1,9 @@
-<<<<<<<< HEAD:styles/artcle.css
-/* article.css */
 
-.article-page-main {
-    display: grid;
-    grid-template-columns: 2fr 1fr; /* Main content takes 2/3, sidebar 1/3 */
-    gap: 30px;
-    padding: 20px;
-    max-width: 1200px;
-    margin: 0 auto;
-}
-
-.article-content {
-    background-color: #fff;
-    padding: 30px;
-    border-radius: 8px;
-    box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.1);
-}
-
-.article-title {
-    color: #333;
-    margin-top: 0;
-    margin-bottom: 15px;
-    font-size: 2.2em;
-}
-
-.article-meta {
-    color: #777;
-    font-size: 0.9em;
-    margin-bottom: 20px;
-}
-
-.article-meta span {
-    margin-right: 15px;
-}
-
-.article-banner {
-    width: 100%;
-    height: auto;
-    border-radius: 5px;
-    margin-bottom: 25px;
-    display: block;
-}
-
-.article-body {
-    color: #555;
-    line-height: 1.7;
-    font-size: 1.1em;
-    margin-bottom: 30px;
-}
-
-.article-body p {
-    margin-bottom: 15px;
-}
-
-.article-body h2,
-.article-body h3 {
-    color: #333;
-    margin-top: 25px;
-    margin-bottom: 10px;
-}
-
-.article-body ul,
-.article-body ol {
-    padding-left: 25px;
-    margin-bottom: 15px;
-}
-
-.article-body li {
-    margin-bottom: 8px;
-}
-
-.article-topics {
-    color: #777;
-    font-size: 0.9em;
-    margin-bottom: 20px;
-}
-
-.article-topics span {
-    font-weight: bold;
-    margin-right: 5px;
-}
-
-.article-topics span:not(:first-child) {
-    background-color: #f0f0f0;
-    color: #555;
-    padding: 5px 8px;
-    border-radius: 3px;
-    margin-left: 5px;
-========
 /* --------------------------------------------------
-   LSIF • Article Layout & Styling (Semantic Version)
+   LSIF • Article Layout & Styling (Enhanced Version)
    -------------------------------------------------- */
 
-/* 🌐 Variables (Fallbacks) */
+/* 🌐 Variables */
 :root {
   --primary-color: #1e3a8a;
   --accent-color:  #f59e0b;
@@ -102,6 +13,19 @@
   --radius-lg:     1rem;
   --shadow-sm:     0 1px 3px rgba(0,0,0,.06);
   --shadow-md:     0 6px 12px rgba(0,0,0,.08);
+  --shadow-lg:     0 10px 25px rgba(0,0,0,.15);
+  
+  /* University Colors */
+  --uz-color: #003366;
+  --msu-color: #8B0000;
+  --zegu-color: #2E8B57;
+  --gzu-color: #4B0082;
+  --default-uni-color: #6c757d;
+  
+  /* Role Colors */
+  --lawyer-bg: #dc3545;
+  --student-bg: #007bff;
+  --observer-bg: #6c757d;
 }
 
 @media (prefers-color-scheme: dark) {
@@ -111,6 +35,7 @@
     --text-color:    #f3f4f6;
     --shadow-sm:     0 1px 3px rgba(0,0,0,.6);
     --shadow-md:     0 6px 12px rgba(0,0,0,.7);
+    --shadow-lg:     0 10px 25px rgba(0,0,0,.8);
   }
 }
 
@@ -122,468 +47,495 @@ body.article-page {
   line-height: 1.7;
 }
 
-/* 📰 Article Main Block */
-.article-main {
+/* 📰 Article Main Layout */
+.article-page-main {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 2rem;
+  padding: 2rem;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+@media (min-width: 1024px) {
+  .article-page-main {
+    grid-template-columns: 2fr 1fr;
+    gap: 3rem;
+  }
+}
+
+/* 📝 Article Content Block */
+.article-content {
   background: var(--surface-color);
-  box-shadow: var(--shadow-sm);
+  box-shadow: var(--shadow-md);
   border-radius: var(--radius-lg);
-  padding: 2.5rem 2rem 3rem;
-  margin: 3rem auto 4rem;
-  max-width: 48rem; /* ~768px */
-  font-size: 1rem;
-}
-
-/* 🖼️ Cover Image */
-.article-cover {
-  width: 100%;
-  height: auto;
-  object-fit: cover;
-  border-radius: var(--radius-lg);
-  margin-bottom: 1.5rem;
-}
-
-/* 📝 Headings */
-.article-title {
-  font-size: 2rem;
-  font-weight: 700;
-  margin-bottom: 0.75rem;
-  color: var(--primary-color);
-}
-
-.article-subtitle {
-  font-size: 1.125rem;
-  font-style: italic;
-  margin-bottom: 1.5rem;
-}
-
-.article-meta {
-  font-size: 0.95rem;
-  opacity: 0.75;
+  padding: 3rem 2.5rem;
   margin-bottom: 2rem;
 }
 
-.article-main h2 {
-  font-size: 1.5rem;
+/* 🖼️ Article Elements */
+.article-title {
+  font-size: 2.5rem;
+  font-weight: 800;
+  margin-bottom: 1rem;
+  color: var(--primary-color);
+  line-height: 1.2;
+}
+
+.article-meta {
+  display: flex;
+  gap: 1.5rem;
+  margin-bottom: 2rem;
+  padding-bottom: 1rem;
+  border-bottom: 2px solid #e5e7eb;
+  font-size: 0.95rem;
+  color: #6b7280;
+}
+
+.article-meta span {
   font-weight: 600;
-  margin: 2.25rem 0 0.75rem;
 }
 
-.article-main h3 {
-  font-size: 1.25rem;
+.article-banner {
+  width: 100%;
+  height: auto;
+  max-height: 400px;
+  object-fit: cover;
+  border-radius: var(--radius-lg);
+  margin-bottom: 2rem;
+  box-shadow: var(--shadow-sm);
+}
+
+.article-body {
+  font-size: 1.1rem;
+  line-height: 1.8;
+  margin-bottom: 2rem;
+}
+
+.article-body p {
+  margin-bottom: 1.5rem;
+}
+
+.article-body h2 {
+  font-size: 1.75rem;
+  font-weight: 700;
+  margin: 2.5rem 0 1rem;
+  color: var(--primary-color);
+}
+
+.article-body h3 {
+  font-size: 1.4rem;
   font-weight: 600;
-  margin: 1.75rem 0 0.5rem;
+  margin: 2rem 0 0.75rem;
+  color: var(--text-color);
 }
 
-/* 🧾 Paragraphs & Lists */
-.article-main p {
-  margin-bottom: 1.25rem;
+.article-body ul, .article-body ol {
+  padding-left: 2rem;
+  margin-bottom: 1.5rem;
 }
 
-.article-main ul,
-.article-main ol {
-  padding-left: 1.5rem;
-  margin-bottom: 1.25rem;
-}
-
-.article-main li {
+.article-body li {
   margin-bottom: 0.5rem;
 }
 
-/* 🔗 Inline Links */
-.article-main a {
+.article-body a {
   color: var(--accent-color);
   font-weight: 600;
   text-decoration: underline;
 }
 
-.article-main a:hover {
+.article-body a:hover {
   text-decoration-thickness: 2px;
 }
 
-/* 📚 References */
-.reference {
-  font-size: 0.9rem;
-  opacity: 0.85;
-  margin-bottom: 0.5rem;
+.article-topics {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-bottom: 2rem;
+  padding-top: 1rem;
+  border-top: 1px solid #e5e7eb;
 }
 
-/* 🦶 Footer */
-.site-footer {
-  text-align: center;
+.article-topics span:first-child {
+  font-weight: 700;
+  color: var(--text-color);
+  margin-right: 0.5rem;
+}
+
+.article-topics span:not(:first-child) {
+  background: linear-gradient(135deg, var(--primary-color), var(--accent-color));
+  color: white;
+  padding: 0.25rem 0.75rem;
+  border-radius: 1rem;
   font-size: 0.85rem;
-  opacity: 0.7;
-  padding: 2rem 0;
+  font-weight: 600;
 }
 
-/* 🗨️ Comments */
-.comments-section {
-  max-width: 48rem;
-  margin: 0 auto;
-  padding: 3rem 2rem;
-}
-
-/* 📱 Responsive */
-@media (max-width: 640px) {
-  .article-main {
-    padding: 2rem 1.25rem 2.5rem;
-  }
-  .article-title {
-    font-size: 1.75rem;
-  }
->>>>>>>> 02d0d546db2c5b78beb3e1dd705e1fc16a16de8a:styles/article.css
-}
-
-/* Comment Section */
-/* Forum Aesthetic: Comment Section */
+/* 🗨️ Enhanced Comment Section */
 .comment-section {
-  margin-top: 40px;
-  background: #fff;
-  border-radius: 8px;
-  padding: 20px;
-  box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.05);
+  background: var(--surface-color);
+  border-radius: var(--radius-lg);
+  padding: 2.5rem;
+  margin-top: 3rem;
+  box-shadow: var(--shadow-md);
 }
 
 .section-heading {
-  font-size: 1.3em;
-  margin-bottom: 15px;
-  color: #4f606d;
-  border-bottom: 2px solid #ccc;
-  padding-bottom: 5px;
+  font-size: 2rem;
+  font-weight: 700;
+  color: var(--primary-color);
+  margin-bottom: 2rem;
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
 }
 
-.comment-form textarea {
+.section-heading::before {
+  content: "💬";
+  font-size: 1.5rem;
+}
+
+/* Comment Form Styling */
+.comment-form-container {
+  margin-bottom: 2.5rem;
+}
+
+.comment-form-container h3 {
+  font-size: 1.5rem;
+  font-weight: 600;
+  margin-bottom: 1rem;
+  color: var(--text-color);
+}
+
+#comment-auth-message {
+  background: linear-gradient(135deg, #eff6ff, #dbeafe);
+  border: 2px solid #3b82f6;
+  border-radius: 0.75rem;
+  padding: 1.5rem;
+  margin-bottom: 1.5rem;
+  font-weight: 500;
+  color: #1e40af;
+  text-align: center;
+}
+
+#comment-auth-message a {
+  color: #1d4ed8;
+  font-weight: 700;
+  text-decoration: underline;
+}
+
+.comment-form {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.comment-input {
   width: 100%;
-  padding: 10px;
-  border: 1px solid #ccc;
-  border-radius: 6px;
-  resize: vertical;
+  padding: 1rem 1.25rem;
+  border: 2px solid #e5e7eb;
+  border-radius: 0.75rem;
   font-family: inherit;
-  margin-bottom: 10px;
+  font-size: 1rem;
+  line-height: 1.6;
+  resize: vertical;
+  min-height: 120px;
+  transition: border-color 0.3s ease, box-shadow 0.3s ease;
 }
 
-.comment-form button {
-  background-color: #007bff;
+.comment-input:focus {
+  outline: none;
+  border-color: var(--primary-color);
+  box-shadow: 0 0 0 3px rgba(30, 58, 138, 0.1);
+}
+
+.comment-submit-btn {
+  background: linear-gradient(135deg, var(--primary-color), #2563eb);
   color: white;
-  padding: 10px 16px;
-  font-weight: bold;
   border: none;
-  border-radius: 6px;
+  padding: 0.875rem 2rem;
+  border-radius: 0.75rem;
+  font-weight: 600;
+  font-size: 1rem;
   cursor: pointer;
-  transition: background-color 0.3s;
+  transition: all 0.3s ease;
+  align-self: flex-start;
 }
 
-.comment-form button:hover {
-  background-color: #0056b3;
+.comment-submit-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-lg);
 }
 
-.comment-login-prompt {
+.comment-submit-btn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+  transform: none;
+}
+
+/* Comments List */
+.comments-list {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.no-comments-message {
+  text-align: center;
+  color: #6b7280;
   font-style: italic;
-  font-size: 0.95em;
-  color: #555;
+  padding: 2rem;
+  background: #f9fafb;
+  border-radius: 0.75rem;
+  border: 2px dashed #d1d5db;
 }
 
-.comment-login-prompt a {
-  color: #007bff;
-  font-weight: bold;
-  text-decoration: none;
-}
-
+/* Individual Comment Card */
 .forum-comment {
-  margin-bottom: 15px;
-  padding: 12px;
-  background-color: #f9f9f9;
-  border-left: 4px solid #4f606d;
-  border-radius: 6px;
+  background: #ffffff;
+  border-radius: 1rem;
+  padding: 1.5rem;
+  box-shadow: var(--shadow-sm);
+  border: 1px solid #e5e7eb;
+  transition: all 0.3s ease;
+  position: relative;
 }
 
+.forum-comment:hover {
+  box-shadow: var(--shadow-md);
+  transform: translateY(-1px);
+}
+
+/* Comment Header with University Integration */
 .comment-header {
   display: flex;
-  justify-content: space-between;
-  font-size: 0.9em;
-  color: #555;
-  margin-bottom: 6px;
+  align-items: center;
+  gap: 1rem;
+  margin-bottom: 1rem;
+  flex-wrap: wrap;
+}
+
+.comment-user-avatar {
+  width: 45px;
+  height: 45px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 700;
+  font-size: 1.1rem;
+  color: white;
+  flex-shrink: 0;
+  background: var(--primary-color);
+}
+
+.comment-user-info {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+  flex-grow: 1;
 }
 
 .comment-user {
-  font-weight: bold;
-  color: #333;
+  font-weight: 700;
+  font-size: 1.1rem;
+  color: var(--text-color);
 }
 
-.comment-text {
-  font-size: 1em;
-  color: #444;
-  line-height: 1.5;
+.comment-user-details {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  flex-wrap: wrap;
 }
 
-.no-comments {
+.comment-time {
+  font-size: 0.85rem;
+  color: #6b7280;
   font-style: italic;
-  color: #777;
-  margin-bottom: 10px;
 }
 
-.comment-section h2,
-.comment-section h3 {
-    color: #333;
-    margin-bottom: 15px;
+/* University Logo Badge */
+.university-badge {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  background: white;
+  border: 2px solid;
+  border-radius: 1.5rem;
+  padding: 0.25rem 0.75rem;
+  font-size: 0.8rem;
+  font-weight: 600;
 }
 
-.comments-container {
-    margin-bottom: 20px;
+.university-badge.uz { border-color: var(--uz-color); color: var(--uz-color); }
+.university-badge.msu { border-color: var(--msu-color); color: var(--msu-color); }
+.university-badge.zegu { border-color: var(--zegu-color); color: var(--zegu-color); }
+.university-badge.gzu { border-color: var(--gzu-color); color: var(--gzu-color); }
+.university-badge.default { border-color: var(--default-uni-color); color: var(--default-uni-color); }
+
+.university-logo {
+  width: 20px;
+  height: 20px;
+  object-fit: contain;
+  border-radius: 3px;
 }
 
-.comment {
-    padding: 15px;
-    border: 1px solid #ddd;
-    border-radius: 5px;
-    margin-bottom: 15px;
+/* Role Badge */
+.user-badge {
+  padding: 0.375rem 0.75rem;
+  border-radius: 1rem;
+  font-size: 0.75rem;
+  font-weight: 700;
+  color: white;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
 }
 
-.comment-author {
-    font-weight: bold;
-    margin-bottom: 5px;
-    color: #007bff;
+.role-student { background: var(--student-bg); }
+.role-observer { background: var(--observer-bg); }
+
+/* Enhanced Lawyer Badge with Experience */
+.role-lawyer {
+  background: linear-gradient(135deg, var(--lawyer-bg), #b91c2c);
+  position: relative;
+  padding-right: 2.5rem;
 }
 
-.comment-date {
-    font-size: 0.8em;
-    color: #777;
-    margin-left: 10px;
+.lawyer-experience {
+  position: absolute;
+  right: 0.5rem;
+  top: 50%;
+  transform: translateY(-50%);
+  background: rgba(255,255,255,0.2);
+  border-radius: 0.375rem;
+  padding: 0.125rem 0.375rem;
+  font-size: 0.65rem;
+  font-weight: 900;
 }
 
+/* Comment Text */
 .comment-text {
-    color: #555;
-    line-height: 1.6;
+  font-size: 1rem;
+  line-height: 1.7;
+  color: var(--text-color);
+  margin-bottom: 1rem;
+  padding-left: 0.5rem;
 }
 
-.comment-form input[type="text"],
-.comment-form textarea {
-    width: calc(100% - 22px);
-    padding: 10px;
-    margin-bottom: 10px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-}
-
-/* Forum Aesthetic: Reaction Section */
-.reaction-section {
-  margin-top: 30px;
-  background: #fff;
-  border-radius: 8px;
-  padding: 20px;
-  box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.05);
-}
-
+/* Reaction Bar */
 .reaction-bar {
   display: flex;
-  justify-content: space-around;
-  flex-wrap: wrap;
-  gap: 12px;
-  margin-top: 10px;
+  gap: 0.75rem;
+  margin-top: 1rem;
+  padding-top: 1rem;
+  border-top: 1px solid #e5e7eb;
 }
 
-.reaction-button {
-  font-size: 1.5em;
-  padding: 8px 16px;
-  border: none;
-  border-radius: 10px;
-  background: #f0f0f0;
+.reaction-btn {
+  display: flex;
+  align-items: center;
+  gap: 0.375rem;
+  padding: 0.5rem 0.875rem;
+  background: #f3f4f6;
+  border: 1px solid #d1d5db;
+  border-radius: 1.5rem;
+  font-size: 0.9rem;
   cursor: pointer;
-  box-shadow: 0 1px 4px rgba(0,0,0,0.1);
-  transition: transform 0.1s ease;
-  position: relative;
+  transition: all 0.2s ease;
+  color: var(--text-color);
 }
 
-.reaction-button:hover {
-  transform: scale(1.15);
-  background: #e6e6e6;
+.reaction-btn:hover {
+  background: #e5e7eb;
+  transform: scale(1.05);
 }
 
-.reaction-button .count {
-  font-size: 0.8em;
-  position: absolute;
-  top: -8px;
-  right: -8px;
-  background: #007bff;
-  color: #fff;
-  padding: 2px 6px;
-  border-radius: 50%;
-  box-shadow: 0 1px 4px rgba(0,0,0,0.2);
+.reaction-count {
+  font-weight: 600;
+  color: var(--primary-color);
 }
 
-.user-badge {
-  display: inline-block;
-  margin-left: 10px;
-  padding: 2px 8px;
-  border-radius: 12px;
-  font-size: 0.8em;
-  color: #fff;
-  vertical-align: middle;
-}
-
-.role-student {
-  background-color: #007bff;
-}
-
-.role-lawyer {
-  background-color: #28a745;
-}
-
-.role-observer {
-  background-color: #6c757d;
-}
-
+/* Delete Button */
 .delete-comment-btn {
-  margin-top: 8px;
-  background-color: #dc3545;
-  color: #fff;
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  background: var(--lawyer-bg);
+  color: white;
   border: none;
-  padding: 5px 12px;
-  border-radius: 6px;
+  padding: 0.375rem 0.75rem;
+  border-radius: 0.5rem;
+  font-size: 0.75rem;
+  font-weight: 600;
   cursor: pointer;
-  font-size: 0.85em;
+  opacity: 0.8;
+  transition: opacity 0.2s ease;
 }
 
 .delete-comment-btn:hover {
-  background-color: #c82333;
-}
-/* =========================================================
-   Forum ✨ Enhanced Comment & Reaction Styling
-   (overrides plain defaults)
-   ========================================================= */
-
-/* 1️⃣ Comment Box ------------------------------------------------ */
-.comment-form textarea {
-  width: 100%;
-  padding: 12px 14px;
-  border: 1px solid #d0d7de;
-  border-radius: 8px;
-  background: #fefefe;
-  font-family: inherit;
-  font-size: 0.95rem;
-  line-height: 1.4;
-  transition: border-color 0.25s ease;
-}
-.comment-form textarea:focus {
-  outline: none;
-  border-color: #2d6cff;
-  box-shadow: 0 0 0 3px rgba(45,108,255,0.15);
+  opacity: 1;
 }
 
-.comment-form button {
-  display: inline-flex;
-  align-items: center;
-  gap: 6px;
-  background: linear-gradient(90deg,#2d6cff,#4bbdff);
-  color: #fff;
-  padding: 10px 20px;
-  font-weight: 600;
-  font-size: 0.95rem;
-  border: none;
-  border-radius: 8px;
-  cursor: pointer;
-  transition: transform 0.15s ease, box-shadow 0.15s ease;
-}
-.comment-form button:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 6px 12px rgba(45,108,255,0.35);
-}
-
-/* 2️⃣ Individual Comment Card ----------------------------------- */
-.forum-comment {
-  position: relative;
-  padding: 18px 20px 14px;
-  margin-bottom: 18px;
-  background: #ffffff;
-  border-radius: 10px;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.05);
-  border-left: 4px solid #2d6cff;
-}
-.forum-comment:hover {
-  box-shadow: 0 4px 16px rgba(0,0,0,0.08);
-}
-
-.comment-header {
+/* Sidebar */
+.article-sidebar {
   display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  gap: 8px;
-  margin-bottom: 6px;
-  font-size: 0.85rem;
-  color: #556;
-}
-.comment-user { font-weight: 600; color: #222; }
-.comment-time { font-style: italic; }
-
-.comment-text {
-  font-size: 1rem;
-  color: #333;
-  line-height: 1.55;
-  margin-bottom: 6px;
+  flex-direction: column;
+  gap: 2rem;
 }
 
-/* Role badges */
-.user-badge {
-  padding: 2px 8px;
-  border-radius: 12px;
-  font-size: 0.75rem;
-  font-weight: 600;
-  color: #fff;
-}
-.role-student  { background:#0069ff; }
-.role-lawyer   { background:#28a745; }
-.role-observer { background:#6c757d; }
-
-/* Admin delete button */
-.delete-comment-btn {
-  position: absolute;
-  top: 10px;
-  right: 10px;
-  background:#dc3545;
-  color:#fff;
-  border:none;
-  padding:4px 10px;
-  font-size:0.75rem;
-  border-radius:6px;
-  cursor:pointer;
-  opacity:0.85;
-  transition:opacity 0.2s ease;
-}
-.delete-comment-btn:hover { opacity:1; }
-
-/* 3️⃣ Reaction Bar ---------------------------------------------- */
-.reaction-bar {
-  display: flex;
-  gap: 10px;
-  margin-top: 8px;
-}
-.reaction-btn {
-  display: inline-flex;
-  align-items: center;
-  gap: 4px;
-  font-size: 1rem;
-  padding: 6px 12px;
-  background:#f1f4ff;
-  border:1px solid #cfd8ff;
-  border-radius: 8px;
-  cursor:pointer;
-  transition: background 0.15s ease, transform 0.1s ease;
-}
-.reaction-btn span { font-weight:600; }
-
-.reaction-btn:hover {
-  background:#e4eaff;
-  transform: scale(1.08);
-}
-.reaction-btn:active { transform: scale(0.96); }
-
-/* 4️⃣ Responsive tweaks ----------------------------------------- */
-@media (max-width: 640px) {
-  .reaction-btn { font-size: 0.9rem; padding:6px 10px; }
-  .forum-comment { padding:14px 16px; }
+.you-may-like, .popular-articles {
+  background: var(--surface-color);
+  border-radius: var(--radius-lg);
+  padding: 2rem;
+  box-shadow: var(--shadow-sm);
 }
 
-.reaction-bar { margin-top: .5rem; display:flex; gap:.5rem; }
-.reaction-btn { background:#f3f3f3; border:1px solid #ccc; border-radius:6px;
-                padding:.2rem .5rem; cursor:pointer; font-size:.9rem; }
-.reaction-btn span { margin-left:2px; font-weight:600; }
+.you-may-like h2, .popular-articles h2 {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: var(--primary-color);
+  margin-bottom: 1.5rem;
+}
 
+/* Footer */
+footer {
+  text-align: center;
+  font-size: 0.9rem;
+  color: #6b7280;
+  padding: 3rem 0;
+  margin-top: 4rem;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .article-page-main {
+    grid-template-columns: 1fr;
+    padding: 1rem;
+  }
+  
+  .article-content, .comment-section {
+    padding: 2rem 1.5rem;
+  }
+  
+  .article-title {
+    font-size: 2rem;
+  }
+  
+  .comment-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.75rem;
+  }
+  
+  .comment-user-details {
+    width: 100%;
+    justify-content: space-between;
+  }
+  
+  .reaction-bar {
+    flex-wrap: wrap;
+  }
+}
