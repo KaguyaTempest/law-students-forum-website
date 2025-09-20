@@ -1,0 +1,47 @@
+/* Past Papers Grid Layout */
+.papers-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 2rem;
+    padding: 2rem;
+}
+
+.paper-card {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    text-decoration: none;
+    background: var(--card-bg-color);
+    border-radius: 1rem;
+    box-shadow: var(--card-shadow);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    padding: 1rem;
+}
+
+.paper-card:hover {
+    transform: translateY(-5px);
+    box-shadow: var(--card-hover-shadow);
+}
+
+.paper-cover {
+    width: 100%;
+    height: auto;
+    border-radius: 0.5rem;
+    object-fit: contain;
+    margin-bottom: 1rem;
+    border: 1px solid var(--card-border-color);
+}
+
+.paper-title {
+    color: var(--text-color-dark);
+    font-size: 1.1rem;
+    font-weight: 500;
+}
+
+@media (max-width: 600px) {
+    .papers-grid {
+        gap: 1rem;
+        padding: 1rem;
+    }
+}
