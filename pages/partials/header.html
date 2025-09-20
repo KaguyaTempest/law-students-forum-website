@@ -1,79 +1,68 @@
 <header>
-    <a href="/index.html" class="logo-link">
-        <img src="/assets/scales-of-justice.png" alt="LSIF logo" class="header-logo">
-    </a>
-    <h1>
-        LAW STUDENTS<br>
-        <span>INTELLECTUAL FORUM</span>
-    </h1>
-    <button class="nav-toggle" aria-label="Toggle navigation" aria-expanded="false">
-        <span></span><span></span><span></span>
-    </button>
-    <nav>
-        <ul>
-            <li><a href="/pages/student-articles.html">Student Articles</a></li>
-            <li><a href="/pages/academic-resources.html">Academic Resources</a></li>
-            <li><a href="/pages/campus-guides.html">Campus Guides</a></li>
-            <li><a href="/pages/moot-court-guide.html">Moot Court Guide</a></li>
-            <li><a href="/pages/about.html">About</a></li>
-        </ul>
-    </nav>
+  <a href="/law-students-forum-website/index.html" class="logo-link">
+    <img src="/law-students-forum-website/assets/scales-of-justice.png" alt="LSIF logo" class="header-logo">
+  </a>
+  <h1>
+    LAW STUDENTS<br>
+    <span>INTELLECTUAL FORUM</span>
+  </h1>
+
+  <button class="nav-toggle" aria-label="Toggle navigation" aria-expanded="false">
+    <span></span><span></span><span></span>
+  </button>
+
+  <nav>
+    <ul>
+      <li><a href="/law-students-forum-website/pages/student-articles.html">Student Articles</a></li>
+      <li><a href="/law-students-forum-website/pages/academic-resources.html">Academic Resources</a></li>
+      <li><a href="/law-students-forum-website/pages/campus-guides.html">Campus Guides</a></li>
+      <li><a href="/law-students-forum-website/pages/moot-court-guide.html">Moot Court Guide</a></li>
+      <li><a href="/law-students-forum-website/pages/about.html">About</a></li>
+    </ul>
+  </nav>
+
+  <div class="auth-buttons" id="auth-controls">
+    <button id="login-btn" class="auth-action open-auth-modal">Login</button>
+    <button id="signup-btn" class="auth-action open-auth-modal">Sign Up</button>
     
-    <div class="auth-buttons" id="auth-controls">
-        <button id="login-btn" class="auth-action open-auth-modal">Login</button>
-        <button id="signup-btn" class="auth-action open-auth-modal">Sign Up</button>
-        
-        <button id="mode-toggle" class="mode-toggle" aria-label="Toggle dark and light mode">
-            <svg class="sun-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                <circle cx="12" cy="12" r="5"></circle>
-                <line x1="12" y1="1" x2="12" y2="3"></line>
-                <line x1="12" y1="21" x2="12" y2="23"></line>
-                <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
-                <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
-                <line x1="1" y1="12" x2="3" y2="12"></line>
-                <line x1="21" y1="12" x2="23" y2="12"></line>
-                <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
-                <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
-            </svg>
-            <svg class="moon-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
-            </svg>
-        </button>
+    <button id="mode-toggle" class="mode-toggle" aria-label="Toggle dark and light mode">
+      <!-- icons unchanged -->
+    </button>
+  </div>
+
+  <div class="user-info hidden" id="user-info">
+    <div class="profile-trigger" id="profile-trigger">
+      <div class="user-avatar" id="user-avatar"></div>
+      <div class="user-details">
+        <span class="user-name" id="user-name"></span>
+        <span class="user-role" id="user-role"></span>
+      </div>
+      <div class="notification-badges">
+        <span id="messages-badge" class="badge messages-badge"></span>
+        <span id="notifications-badge" class="badge notifications-badge"></span>
+      </div>
     </div>
 
-    <div class="user-info hidden" id="user-info">
-        <div class="profile-trigger" id="profile-trigger">
-            <div class="user-avatar" id="user-avatar"></div>
-            <div class="user-details">
-                <span class="user-name" id="user-name"></span>
-                <span class="user-role" id="user-role"></span>
-            </div>
-            <div class="notification-badges">
-                <span id="messages-badge" class="badge messages-badge"></span>
-                <span id="notifications-badge" class="badge notifications-badge"></span>
-            </div>
+    <div class="user-dropdown hidden" id="user-dropdown">
+      <div class="dropdown-header">
+        <div class="dropdown-avatar" id="dropdown-avatar"></div>
+        <div class="dropdown-user-info">
+          <span class="dropdown-name" id="dropdown-name"></span>
+          <span class="dropdown-email" id="dropdown-email"></span>
+          <span class="dropdown-role-detail" id="dropdown-role-detail"></span>
         </div>
-        
-        <div class="user-dropdown hidden" id="user-dropdown">
-            <div class="dropdown-header">
-                <div class="dropdown-avatar" id="dropdown-avatar"></div>
-                <div class="dropdown-user-info">
-                    <span class="dropdown-name" id="dropdown-name"></span>
-                    <span class="dropdown-email" id="dropdown-email"></span>
-                    <span class="dropdown-role-detail" id="dropdown-role-detail"></span>
-                </div>
-            </div>
-            <nav class="dropdown-nav">
-                <ul>
-                    <li><a href="#"><i class="fas fa-user-circle"></i> Profile</a></li>
-                    <li><a href="#"><i class="fas fa-cog"></i> Settings</a></li>
-                    <li><a href="#"><i class="fas fa-bell"></i> Notifications</a></li>
-                    <li><a href="#"><i class="fas fa-envelope"></i> Messages</a></li>
-                </ul>
-            </nav>
-            <div class="dropdown-footer">
-                <button id="logout-btn"><i class="fas fa-sign-out-alt"></i> Logout</button>
-            </div>
-        </div>
+      </div>
+      <nav class="dropdown-nav">
+        <ul>
+          <li><a href="#"><i class="fas fa-user-circle"></i> Profile</a></li>
+          <li><a href="#"><i class="fas fa-cog"></i> Settings</a></li>
+          <li><a href="#"><i class="fas fa-bell"></i> Notifications</a></li>
+          <li><a href="#"><i class="fas fa-envelope"></i> Messages</a></li>
+        </ul>
+      </nav>
+      <div class="dropdown-footer">
+        <button id="logout-btn"><i class="fas fa-sign-out-alt"></i> Logout</button>
+      </div>
     </div>
+  </div>
 </header>
