@@ -1,0 +1,432 @@
+
+/* Newsletter Magazine Styles */
+
+.magazine-main {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 2rem;
+    font-family: 'Times New Roman', serif;
+    background: var(--bg-color);
+    color: var(--text-color-dark);
+}
+
+/* Magazine Header */
+.magazine-header {
+    text-align: center;
+    border-bottom: 3px double var(--border-color-light);
+    padding-bottom: 2rem;
+    margin-bottom: 2rem;
+}
+
+.magazine-masthead {
+    background: linear-gradient(135deg, #8a0026, #b8002e);
+    color: white;
+    padding: 2rem;
+    border-radius: 8px;
+    position: relative;
+}
+
+.magazine-title {
+    font-size: 3rem;
+    font-weight: bold;
+    letter-spacing: 4px;
+    margin: 0;
+    text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+}
+
+.magazine-date {
+    font-size: 1.2rem;
+    margin: 0.5rem 0;
+    opacity: 0.9;
+}
+
+.magazine-theme {
+    font-style: italic;
+    font-size: 1rem;
+    opacity: 0.8;
+}
+
+/* Featured Banner */
+.featured-banner {
+    background: linear-gradient(45deg, #f8f9fa, #e9ecef);
+    border: 2px solid var(--card-border-color);
+    border-radius: 8px;
+    padding: 2rem;
+    margin-bottom: 2rem;
+    position: relative;
+    overflow: hidden;
+}
+
+.featured-banner::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 6px;
+    height: 100%;
+    background: #8a0026;
+}
+
+.featured-label {
+    background: #8a0026;
+    color: white;
+    padding: 0.25rem 0.75rem;
+    font-size: 0.8rem;
+    font-weight: bold;
+    letter-spacing: 1px;
+    border-radius: 4px;
+    display: inline-block;
+    margin-bottom: 1rem;
+}
+
+.featured-content h2 {
+    font-size: 1.8rem;
+    margin: 0.5rem 0;
+    color: var(--heading-color);
+}
+
+.featured-content p {
+    font-size: 1.1rem;
+    color: var(--text-color-medium);
+    margin: 0;
+}
+
+/* Magazine Grid Layout */
+.magazine-grid {
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+    gap: 3rem;
+    margin-bottom: 3rem;
+}
+
+/* Left Column Styles */
+.left-column {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+}
+
+.section-title {
+    font-size: 1.5rem;
+    color: var(--heading-color);
+    border-bottom: 2px solid var(--border-color-light);
+    padding-bottom: 0.5rem;
+    margin-bottom: 1.5rem;
+    position: relative;
+}
+
+.section-title::after {
+    content: '';
+    position: absolute;
+    bottom: -2px;
+    left: 0;
+    width: 50px;
+    height: 2px;
+    background: #8a0026;
+}
+
+.news-section {
+    background: var(--card-bg-color);
+    padding: 2rem;
+    border-radius: 8px;
+    box-shadow: var(--card-shadow);
+    border: 1px solid var(--card-border-color);
+}
+
+.news-article {
+    margin-bottom: 2rem;
+    padding-bottom: 1.5rem;
+    border-bottom: 1px dotted var(--border-color-light);
+}
+
+.news-article:last-child {
+    border-bottom: none;
+    margin-bottom: 0;
+}
+
+.news-article.primary {
+    background: rgba(138, 0, 38, 0.05);
+    padding: 1.5rem;
+    border-radius: 6px;
+    border: 1px solid rgba(138, 0, 38, 0.2);
+}
+
+.article-header {
+    margin-bottom: 1rem;
+}
+
+.article-category {
+    display: inline-block;
+    padding: 0.25rem 0.75rem;
+    font-size: 0.7rem;
+    font-weight: bold;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    border-radius: 12px;
+    margin-bottom: 0.5rem;
+}
+
+.article-category.societies { background: #e3f2fd; color: #1976d2; }
+.article-category.tech { background: #f3e5f5; color: #7b1fa2; }
+.article-category.entertainment { background: #e8f5e8; color: #388e3c; }
+.article-category.creative { background: #fff3e0; color: #f57c00; }
+
+.article-header h4 {
+    font-size: 1.3rem;
+    margin: 0;
+    color: var(--heading-color);
+    line-height: 1.3;
+}
+
+.article-list {
+    margin: 1rem 0;
+    padding-left: 1.5rem;
+}
+
+.article-list li {
+    margin-bottom: 0.5rem;
+    color: var(--text-color-medium);
+}
+
+/* Right Column Styles */
+.right-column {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+}
+
+.creative-section {
+    background: var(--card-bg-color);
+    padding: 1.5rem;
+    border-radius: 8px;
+    box-shadow: var(--card-shadow);
+    border: 1px solid var(--card-border-color);
+}
+
+.creative-intro {
+    margin-bottom: 1.5rem;
+    padding-bottom: 1rem;
+    border-bottom: 1px dotted var(--border-color-light);
+}
+
+.poems-container h5 {
+    color: var(--heading-color);
+    margin-bottom: 1rem;
+    font-size: 1.1rem;
+}
+
+.featured-poems {
+    margin-bottom: 1rem;
+}
+
+.poem-preview {
+    background: rgba(138, 0, 38, 0.05);
+    border-left: 3px solid #8a0026;
+    padding: 1rem;
+    margin-bottom: 1rem;
+    border-radius: 4px;
+}
+
+.poem-preview h6 {
+    margin: 0 0 0.5rem 0;
+    color: var(--heading-color);
+    font-size: 1rem;
+}
+
+.poem-preview .poem-excerpt {
+    font-style: italic;
+    color: var(--text-color-medium);
+    font-size: 0.9rem;
+    line-height: 1.4;
+    margin-bottom: 0.5rem;
+}
+
+.poem-preview .poem-author {
+    font-size: 0.8rem;
+    color: var(--text-color-light);
+    text-align: right;
+}
+
+.loading-poems {
+    text-align: center;
+    color: var(--text-color-light);
+    font-style: italic;
+    padding: 2rem;
+}
+
+.view-all-link {
+    color: #8a0026;
+    text-decoration: none;
+    font-weight: bold;
+    font-size: 0.9rem;
+    display: inline-block;
+    transition: color 0.3s ease;
+}
+
+.view-all-link:hover {
+    color: #b8002e;
+    text-decoration: underline;
+}
+
+/* Sidebar Boxes */
+.legal-literacy-box,
+.student-voice-box,
+.whats-new-box {
+    background: var(--card-bg-color);
+    padding: 1.5rem;
+    border-radius: 8px;
+    box-shadow: var(--card-shadow);
+    border: 1px solid var(--card-border-color);
+}
+
+.legal-literacy-box {
+    background: linear-gradient(135deg, #f8f9fa, #e3f2fd);
+    border-left: 4px solid #1976d2;
+}
+
+.student-voice-box {
+    background: linear-gradient(135deg, #f3e5f5, #fce4ec);
+    border-left: 4px solid #7b1fa2;
+}
+
+.whats-new-box {
+    background: linear-gradient(135deg, #e8f5e8, #f1f8e9);
+    border-left: 4px solid #388e3c;
+}
+
+.legal-literacy-box h4,
+.student-voice-box h4,
+.whats-new-box h4 {
+    margin-top: 0;
+    color: var(--heading-color);
+    font-size: 1.1rem;
+}
+
+.legal-literacy-box ul,
+.whats-new-box ul {
+    margin: 1rem 0 0 0;
+    padding-left: 1.5rem;
+}
+
+.legal-literacy-box li,
+.whats-new-box li {
+    margin-bottom: 0.5rem;
+    color: var(--text-color-medium);
+    font-size: 0.9rem;
+}
+
+.student-voice-box blockquote {
+    font-style: italic;
+    margin: 1rem 0;
+    padding-left: 1rem;
+    border-left: 3px solid #7b1fa2;
+    color: var(--text-color-medium);
+}
+
+.submit-voice-btn,
+.contact-btn {
+    background: linear-gradient(135deg, #8a0026, #b8002e);
+    color: white;
+    padding: 0.5rem 1rem;
+    border: none;
+    border-radius: 4px;
+    text-decoration: none;
+    font-size: 0.9rem;
+    font-weight: bold;
+    display: inline-block;
+    transition: all 0.3s ease;
+    cursor: pointer;
+}
+
+.submit-voice-btn:hover,
+.contact-btn:hover {
+    background: linear-gradient(135deg, #6d001d, #9a0024);
+    transform: translateY(-1px);
+}
+
+/* Magazine Footer */
+.magazine-footer {
+    background: var(--card-bg-color);
+    border-top: 3px double var(--border-color-light);
+    padding: 2rem;
+    border-radius: 8px;
+    margin-top: 2rem;
+}
+
+.footer-content {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 2rem;
+    align-items: center;
+}
+
+.contact-section h4 {
+    margin-top: 0;
+    color: var(--heading-color);
+}
+
+.magazine-info {
+    text-align: right;
+    color: var(--text-color-light);
+    font-size: 0.9rem;
+}
+
+.magazine-info p {
+    margin: 0.25rem 0;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .magazine-main {
+        padding: 1rem;
+    }
+    
+    .magazine-title {
+        font-size: 2rem;
+        letter-spacing: 2px;
+    }
+    
+    .magazine-grid {
+        grid-template-columns: 1fr;
+        gap: 2rem;
+    }
+    
+    .footer-content {
+        grid-template-columns: 1fr;
+        gap: 1rem;
+        text-align: center;
+    }
+    
+    .magazine-info {
+        text-align: center;
+    }
+}
+
+/* Dark Mode Adjustments */
+@media (prefers-color-scheme: dark) {
+    .featured-banner {
+        background: linear-gradient(45deg, #2c2c4d, #404060);
+    }
+    
+    .legal-literacy-box {
+        background: linear-gradient(135deg, #2c2c4d, #334155);
+    }
+    
+    .student-voice-box {
+        background: linear-gradient(135deg, #2d2d55, #374151);
+    }
+    
+    .whats-new-box {
+        background: linear-gradient(135deg, #2b4d2b, #365835);
+    }
+    
+    .poem-preview {
+        background: rgba(143, 148, 251, 0.1);
+        border-left-color: #8f94fb;
+    }
+    
+    .news-article.primary {
+        background: rgba(143, 148, 251, 0.1);
+        border-color: rgba(143, 148, 251, 0.3);
+    }
+}

@@ -1,0 +1,264 @@
+
+/* Semester Page Styles */
+
+.semester-main {
+    padding: 2rem;
+    max-width: 1200px;
+    margin: 0 auto;
+    min-height: 100vh;
+}
+
+.semester-header {
+    margin-bottom: 3rem;
+    padding: 2rem;
+    background: linear-gradient(135deg, var(--card-bg-color), var(--bg-color));
+    border-radius: 1rem;
+    box-shadow: var(--card-shadow);
+}
+
+.breadcrumb {
+    margin-bottom: 1rem;
+    font-size: 0.9rem;
+}
+
+.breadcrumb a {
+    color: var(--link-color);
+    text-decoration: none;
+    transition: color 0.3s ease;
+}
+
+.breadcrumb a:hover {
+    color: var(--link-hover-color);
+    text-decoration: underline;
+}
+
+.breadcrumb span {
+    color: var(--text-color-medium);
+    margin: 0 0.5rem;
+}
+
+.semester-header h1 {
+    font-size: 2.2rem;
+    color: var(--heading-color);
+    margin-bottom: 0.5rem;
+    font-weight: 700;
+}
+
+.semester-header p {
+    font-size: 1.1rem;
+    color: var(--text-color-medium);
+    line-height: 1.6;
+}
+
+.modules-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+    gap: 2rem;
+    margin-bottom: 3rem;
+}
+
+.module-card {
+    background: var(--card-bg-color);
+    border-radius: 1.5rem;
+    padding: 2rem;
+    box-shadow: var(--card-shadow);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    border-left: 4px solid var(--link-color);
+}
+
+.module-card:hover {
+    transform: translateY(-5px);
+    box-shadow: var(--card-hover-shadow);
+}
+
+.module-header {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    margin-bottom: 1rem;
+    flex-wrap: wrap;
+}
+
+.module-icon {
+    font-size: 2.5rem;
+    flex-shrink: 0;
+}
+
+.module-header h3 {
+    flex: 1;
+    font-size: 1.4rem;
+    color: var(--heading-color);
+    font-weight: 600;
+    margin: 0;
+    min-width: 200px;
+}
+
+.module-code {
+    background: var(--link-color);
+    color: white;
+    padding: 0.25rem 0.75rem;
+    border-radius: 1rem;
+    font-size: 0.85rem;
+    font-weight: 600;
+    flex-shrink: 0;
+}
+
+.module-description {
+    color: var(--text-color-medium);
+    line-height: 1.6;
+    margin-bottom: 1.5rem;
+}
+
+.module-resources {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+}
+
+.resource-item {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    padding: 0.75rem;
+    background: var(--bg-color);
+    border-radius: 0.5rem;
+    transition: background-color 0.3s ease;
+}
+
+.resource-item:hover {
+    background: var(--icon-bg-color);
+}
+
+.resource-icon {
+    font-size: 1.2rem;
+    flex-shrink: 0;
+}
+
+.resource-item span:nth-child(2) {
+    flex: 1;
+    color: var(--text-color-dark);
+    font-weight: 500;
+}
+
+.resource-status {
+    font-size: 0.85rem;
+    padding: 0.25rem 0.5rem;
+    border-radius: 0.5rem;
+    font-weight: 600;
+}
+
+.coming-soon {
+    background: var(--notice-bg);
+    color: var(--notice-border);
+    border: 1px solid var(--notice-border);
+}
+
+.available {
+    background: var(--commentary-bg);
+    color: var(--commentary-border);
+    border: 1px solid var(--commentary-border);
+}
+
+.semester-info {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 2rem;
+    margin-top: 3rem;
+}
+
+.info-card {
+    background: var(--card-bg-color);
+    padding: 1.5rem;
+    border-radius: 1rem;
+    box-shadow: var(--card-shadow);
+}
+
+.info-card h4 {
+    color: var(--heading-color);
+    margin-bottom: 1rem;
+    font-size: 1.2rem;
+    font-weight: 600;
+}
+
+.info-card ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.info-card li {
+    padding: 0.5rem 0;
+    border-bottom: 1px solid var(--card-border-color);
+    color: var(--text-color-medium);
+    line-height: 1.5;
+}
+
+.info-card li:last-child {
+    border-bottom: none;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .semester-main {
+        padding: 1rem;
+    }
+    
+    .semester-header {
+        padding: 1.5rem;
+        margin-bottom: 2rem;
+    }
+    
+    .semester-header h1 {
+        font-size: 1.8rem;
+    }
+    
+    .modules-grid {
+        grid-template-columns: 1fr;
+        gap: 1.5rem;
+    }
+    
+    .module-card {
+        padding: 1.5rem;
+    }
+    
+    .module-header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 0.5rem;
+    }
+    
+    .module-header h3 {
+        font-size: 1.2rem;
+        min-width: auto;
+    }
+    
+    .module-icon {
+        font-size: 2rem;
+    }
+    
+    .semester-info {
+        grid-template-columns: 1fr;
+        gap: 1rem;
+    }
+    
+    .info-card {
+        padding: 1rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .module-header {
+        text-align: center;
+    }
+    
+    .resource-item {
+        padding: 0.5rem;
+        flex-wrap: wrap;
+        gap: 0.5rem;
+    }
+    
+    .resource-status {
+        width: 100%;
+        text-align: center;
+    }
+}

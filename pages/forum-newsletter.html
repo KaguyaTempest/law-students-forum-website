@@ -1,109 +1,157 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Forum Newsletter - LSIF</title>
-  <link rel="stylesheet" href="styles/style.css" />
-  <link rel="stylesheet" href="/law-students-forum-website/styles/auth.css" />
-  <link rel="icon" href="assets/favicon.ico" type="image/x-icon" />
+  <title>LSIF Magazine - LSIF</title>
+  <link rel="stylesheet" href="../styles/style.css" />
+  <link rel="stylesheet" href="../styles/newsletter-magazine.css" />
+  <link rel="stylesheet" href="../styles/auth.css" />
+  <link rel="icon" href="../assets/favicon.ico" type="image/x-icon" />
 </head>
 <body>
   <div id="header-placeholder"></div>
+  <div id="auth-modal-placeholder"></div>
 
-  <main class="homepage-main">
-    <section class="newsletter-section">
-      <h2>Forum Newsletter: August 2025 Edition</h2>
-      <p><em>Theme: New Beginnings & New Voices</em></p>
+  <main class="magazine-main">
+    <!-- Magazine Header -->
+    <header class="magazine-header">
+      <div class="magazine-masthead">
+        <h1 class="magazine-title">LSIF MAGAZINE</h1>
+        <div class="magazine-date">August 2025 Edition</div>
+        <div class="magazine-theme">New Beginnings & New Voices</div>
+      </div>
+    </header>
 
-      <article class="newsletter-article alert">
-        <h3>🎓 Semester Opening & Graduation</h3>
-        <p>Schools reopen on <strong>1 September 2025</strong>, marking the beginning of Semester 1 for new law students enrolling this year. The LSIF welcomes all first-years as they begin their legal journey.</p>
-        <p>Last week also saw the <strong>graduation ceremony</strong> for the Class of 2025. Congratulations to all graduates on their remarkable achievements and resilience throughout their studies!</p>
-      </article>
-
-      <article class="newsletter-article notice">
-        <h3>🏛️ Student Societies Go Live</h3>
-        <p>Our website now highlights active student societies, including:</p>
-        <ul>
-          <li><strong>ZILSA</strong> – Zimbabwe Law Students Association</li>
-          <li><strong>Moot Society</strong> – Advocacy, training, and competitions</li>
-          <li><strong>LSIF</strong> – Your intellectual hub</li>
-        </ul>
-        <p>Find out what each society offers and how you can get involved!</p>
-      </article>
-
-      <article class="newsletter-article commentary">
-        <h3>🎨 Poems & Art Submissions</h3>
-        <p>LSIF is not only about law, but also about <strong>student creativity</strong>. You can now upload your poems and artworks to our platform and share them with the community.</p>
-        <p>This new feature celebrates the diversity of thought and talent among law students.</p>
-      </article>
-
-      <article class="newsletter-article update">
-        <h3>👥 User Accounts Go Live</h3>
-        <p>Registered users can now:</p>
-        <ul>
-          <li>Sign up and create a profile</li>
-          <li>Comment on articles</li>
-          <li>Rate lecturers</li>
-          <li>Engage more deeply with the LSIF community</li>
-        </ul>
-        <p>Join today and take full advantage of these new interactive features!</p>
-      </article>
-
-      <article class="newsletter-article notice">
-        <h3>🎮 Games for Legal Minds</h3>
-        <p>We’ve added a fun section to test your skills and relax between classes! Available now:</p>
-        <ul>
-          <li>🧩 Sudoku</li>
-          <li>📝 Crossword</li>
-          <li>🔍 Wordsearch</li>
-          <li>🎭 Hangman</li>
-        </ul>
-        <p>More challenges (with XP and rewards) are coming soon—stay tuned!</p>
-      </article>
-
-      <article class="newsletter-article">
-        <h3>🎓 Legal Literacy Nugget</h3>
-        <p><strong>Your Rights on Arrest:</strong></p>
-        <ul>
-          <li>You must be informed promptly of the reason for your arrest (s50(1)(a))</li>
-          <li>You have the right to remain silent and to legal representation (s50(1)(b)(c))</li>
-          <li>You must be brought before a court within 48 hours (s50(2))</li>
-        </ul>
-      </article>
-
-      <article class="newsletter-article">
-        <h3>💬 Student Voice</h3>
-        <p>What gives you hope this new semester?</p>
-        <blockquote>“The chance to start fresh, meet new people, and grow as a law student.”</blockquote>
-        <p><a href="#" class="button">Submit your voice</a></p>
-      </article>
-
-      <article class="newsletter-article update">
-        <h3>✨ What’s New on the Website</h3>
-        <ul>
-          <li>Student Societies section (ZILSA, Moot Society, LSIF)</li>
-          <li>Poems & Art upload feature</li>
-          <li>User sign-up, comments, and lecturer ratings</li>
-          <li>Games: Sudoku, Crossword, Wordsearch, Hangman</li>
-        </ul>
-      </article>
-
-      <article class="newsletter-article">
-        <h3>✉️ Stay Engaged</h3>
-        <p>Want to contribute to the next newsletter or submit an article idea? Reach out below:</p>
-        <a href="mailto:info@lsif.uz.ac.zw" class="button">Email Us</a>
-      </article>
+    <!-- Featured Article Banner -->
+    <section class="featured-banner">
+      <div class="featured-content">
+        <span class="featured-label">FEATURED STORY</span>
+        <h2>🎓 New Semester Opening & Class of 2025 Graduation</h2>
+        <p>Schools reopen on 1 September 2025, welcoming new law students as we celebrate our graduating class.</p>
+      </div>
     </section>
+
+    <!-- Main Content Grid -->
+    <div class="magazine-grid">
+      <!-- Left Column -->
+      <div class="left-column">
+        <!-- News Articles -->
+        <section class="news-section">
+          <h3 class="section-title">Campus News</h3>
+          
+          <article class="news-article primary">
+            <div class="article-header">
+              <span class="article-category societies">SOCIETIES</span>
+              <h4>🏛️ Student Societies Go Live</h4>
+            </div>
+            <p>Our website now highlights active student societies:</p>
+            <ul class="article-list">
+              <li><strong>ZILSA</strong> – Zimbabwe Law Students Association</li>
+              <li><strong>Moot Society</strong> – Advocacy, training, and competitions</li>
+              <li><strong>LSIF</strong> – Your intellectual hub</li>
+            </ul>
+          </article>
+
+          <article class="news-article">
+            <div class="article-header">
+              <span class="article-category tech">PLATFORM</span>
+              <h4>👥 User Accounts Go Live</h4>
+            </div>
+            <p>Registered users can now:</p>
+            <ul class="article-list">
+              <li>Sign up and create a profile</li>
+              <li>Comment on articles</li>
+              <li>Rate lecturers</li>
+              <li>Engage more deeply with the LSIF community</li>
+            </ul>
+          </article>
+
+          <article class="news-article">
+            <div class="article-header">
+              <span class="article-category entertainment">GAMES</span>
+              <h4>🎮 Games for Legal Minds</h4>
+            </div>
+            <p>New challenges available: Sudoku, Crossword, Wordsearch, and Hangman. More rewards coming soon!</p>
+          </article>
+        </section>
+
+        <!-- Legal Literacy Box -->
+        <aside class="legal-literacy-box">
+          <h4>📚 Legal Literacy Nugget</h4>
+          <h5>Your Rights on Arrest:</h5>
+          <ul>
+            <li>Informed promptly of arrest reason (s50(1)(a))</li>
+            <li>Right to remain silent & legal representation (s50(1)(b)(c))</li>
+            <li>Brought before court within 48 hours (s50(2))</li>
+          </ul>
+        </aside>
+      </div>
+
+      <!-- Right Column -->
+      <div class="right-column">
+        <!-- Creative Corner -->
+        <section class="creative-section">
+          <h3 class="section-title">Creative Corner</h3>
+          
+          <div class="creative-intro">
+            <div class="article-header">
+              <span class="article-category creative">ARTS</span>
+              <h4>🎨 Poems & Art Submissions</h4>
+            </div>
+            <p>LSIF celebrates student creativity. Upload your poems and artworks to share with our community.</p>
+          </div>
+
+          <!-- Dynamic Poems Container -->
+          <div class="poems-container">
+            <h5>Recent Poetry</h5>
+            <div id="featured-poems" class="featured-poems">
+              <div class="loading-poems">Loading featured poems...</div>
+            </div>
+            <a href="../pages/poets-guild.html" class="view-all-link">View All Poems →</a>
+          </div>
+        </section>
+
+        <!-- Student Voice -->
+        <aside class="student-voice-box">
+          <h4>💬 Student Voice</h4>
+          <p><em>"What gives you hope this new semester?"</em></p>
+          <blockquote>"The chance to start fresh, meet new people, and grow as a law student."</blockquote>
+          <a href="#" class="submit-voice-btn">Submit Your Voice</a>
+        </aside>
+
+        <aside class="whats-new-box">
+          <h4>✨ What's New on the Website</h4>
+          <ul>
+            <li>Student Societies section</li>
+            <li>Poems & Art upload feature</li>
+            <li>User accounts & lecturer ratings</li>
+            <li>Interactive games suite</li>
+          </ul>
+        </aside>
+      </div>
+    </div>
+
+    <!-- Bottom Section -->
+    <footer class="magazine-footer">
+      <div class="footer-content">
+        <div class="contact-section">
+          <h4>✉️ Stay Engaged</h4>
+          <p>Contribute to the next edition or submit article ideas:</p>
+          <a href="mailto:info@lsif.uz.ac.zw" class="contact-btn">Email Us</a>
+        </div>
+        <div class="magazine-info">          <p>&copy; 2025 LAW STUDENTS INTELLECTUAL FORUM</p>
+          <p>Published monthly • LSIF Magazine</p>
+        </div>
+      </div>
+    </footer>
   </main>
 
-  <footer>
-    <p>&copy; 2025 LAW STUDENTS INTELLECTUAL FORUM</p>
-  </footer>
-  <script type="module" src="scripts/auth.js"></script>
-  <script type="module" src="/law-students-forum-website/scripts/load-header.js"></script>
-  <script type="module" src="/law-students-forum-website/scripts/auth-modal.js"></script>
-  <script type="module" src="scripts/home.js"></script>
+  <script type="module" src="../scripts/load-header.js"></script>
+  <script type="module" src="../scripts/auth-modal.js"></script>
+  <script type="module" src="../scripts/auth.js"></script>
+  <script type="module" src="../scripts/home.js"></script>
+  <script type="module" src="../scripts/newsletter-magazine.js"></script>
 </body>
 </html>
