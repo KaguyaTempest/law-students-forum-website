@@ -1,6 +1,6 @@
 <header>
-    <a href="#" class="logo-link" id="logo-link">
-        <img src="#" alt="LSIF logo" class="header-logo" id="header-logo">
+    <a href="/index.html" class="logo-link">
+        <img src="/assets/scales-of-justice.png" alt="LSIF logo" class="header-logo">
     </a>
     <h1>
         LAW STUDENTS<br>
@@ -11,11 +11,11 @@
     </button>
     <nav>
         <ul>
-            <li><a href="#" id="nav-student-articles">Student Articles</a></li>
-            <li><a href="#" id="nav-academic-resources">Academic Resources</a></li>
-            <li><a href="#" id="nav-campus-guides">Campus Guides</a></li>
-            <li><a href="#" id="nav-moot-court">Moot Court Guide</a></li>
-            <li><a href="#" id="nav-about">About</a></li>
+            <li><a href="/pages/student-articles.html">Student Articles</a></li>
+            <li><a href="/pages/academic-resources.html">Academic Resources</a></li>
+            <li><a href="/pages/campus-guides.html">Campus Guides</a></li>
+            <li><a href="/pages/moot-court-guide.html">Moot Court Guide</a></li>
+            <li><a href="/pages/about.html">About</a></li>
         </ul>
     </nav>
     
@@ -77,62 +77,3 @@
         </div>
     </div>
 </header>
-
-<script>
-// Universal header path resolver
-(function() {
-    // Determine the base path based on current location
-    function getBasePath() {
-        const currentPath = window.location.pathname;
-        
-        // If we're in root directory (index.html or just /)
-        if (currentPath === '/' || currentPath === '/index.html' || currentPath.endsWith('/index.html')) {
-            return '';
-        }
-        
-        // If we're in a subdirectory (pages/)
-        if (currentPath.includes('/pages/')) {
-            return '../';
-        }
-        
-        // If we're deeper (like pages/articles/)
-        const depth = (currentPath.match(/\//g) || []).length - 1;
-        return '../'.repeat(depth);
-    }
-    
-    // Set up all the navigation links
-    function setupNavigation() {
-        const basePath = getBasePath();
-        
-        // Logo and home link
-        const logoLink = document.getElementById('logo-link');
-        const headerLogo = document.getElementById('header-logo');
-        
-        if (logoLink) logoLink.href = basePath + 'index.html';
-        if (headerLogo) headerLogo.src = basePath + 'assets/scales-of-justice.png';
-        
-        // Navigation links
-        const navLinks = {
-            'nav-student-articles': 'pages/student-articles.html',
-            'nav-academic-resources': 'pages/academic-resources.html',
-            'nav-campus-guides': 'pages/campus-guides.html',
-            'nav-moot-court': 'pages/moot-court-guide.html',
-            'nav-about': 'pages/about.html'
-        };
-        
-        Object.keys(navLinks).forEach(id => {
-            const element = document.getElementById(id);
-            if (element) {
-                element.href = basePath + navLinks[id];
-            }
-        });
-    }
-    
-    // Initialize when DOM is ready
-    if (document.readyState === 'loading') {
-        document.addEventListener('DOMContentLoaded', setupNavigation);
-    } else {
-        setupNavigation();
-    }
-})();
-</script>
