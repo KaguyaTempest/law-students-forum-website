@@ -295,8 +295,6 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     });
     
-    // If user is already logged in, load works
-    if (currentUser) {
-        loadRecentWorks();
-    }
+    // Load recent works when the page loads, regardless of auth state
+    loadRecentWorks();
 });
