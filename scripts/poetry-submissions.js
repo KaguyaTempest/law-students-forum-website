@@ -356,3 +356,33 @@ console.log('Testing Firebase connection...');
 console.log('Auth:', auth);
 console.log('DB:', db);
 console.log('Storage:', storage);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
