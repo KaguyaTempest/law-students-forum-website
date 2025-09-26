@@ -186,7 +186,9 @@ async function handleSubmission(e) {
 }
 
 // Load and display recent works
+// Replace your loadRecentWorks function with this comprehensive debug version
 async function loadRecentWorks() {
+    console.log('=== COMPREHENSIVE DEBUG START ===');
     console.log('Loading recent works...');
     
     if (!worksContainer) {
@@ -195,38 +197,184 @@ async function loadRecentWorks() {
     }
     
     try {
-        // First, let's try to get all documents without filtering by status
-        console.log('Querying Firestore...');
-        const q = query(
-            collection(db, 'poetry-submissions'),
-            orderBy('timestamp', 'desc'),
-            limit(10) // Increased limit for testing
-        );
+        // Test 1: Basic collection reference
+        console.log('Test 1: Testing basic collection reference...');
+        const collectionRef = collection(db, 'poetry-submissions');
+        console.log('Collection reference created:', collectionRef);
         
-        const querySnapshot = await getDocs(q);
-        console.log('Query completed. Documents found:', querySnapshot.size);
+        // Test 2: Simple getDocs without any query constraints
+        console.log('Test 2: Simple getDocs without constraints...');
+        const basicSnapshot = await getDocs(collectionRef);
+        console.log('Basic snapshot size:', basicSnapshot.size);
+        console.log('Basic snapshot empty:', basicSnapshot.empty);
         
-        if (querySnapshot.empty) {
-            console.log('No documents found in collection');
-            worksContainer.innerHTML = '<p class="loading-message">No submissions yet. Be the first to share your creative work!</p>';
-            return;
-        }
-        
-        worksContainer.innerHTML = '';
-        let displayedCount = 0;
-        
-        querySnapshot.forEach((doc) => {
-            const work = doc.data();
-            console.log('Processing work:', {
-                id: doc.id,
-                title: work.title,
-                status: work.status,
-                hasContent: !!work.content,
-                hasFile: work.hasFile
+        if (basicSnapshot.size > 0) {
+            console.log('SUCCESS: Documents found with basic query!');
+            
+            // Log all document data
+            basicSnapshot.forEach((doc, index) => {
+                const data = doc.data();
+                console.log(`Document ${index + 1} (ID: ${doc.id}):`, {
+                    title: data.title,
+                    type: data.type,
+                    authorName: data.authorName,
+                    timestamp: data.timestamp,
+                    hasContent: !!data.content,
+                    hasFile: data.hasFile,
+                    status: data.status,
+                    allFields: Object.keys(data)
+                });
             });
             
-            // For debugging, show all works regardless of status
+            // Test 3: Try query with limit only (no ordering)
+            console.log('Test 3: Query with limit only...');
+            const limitQuery = query(collectionRef, limit(10));
+            const limitSnapshot = await getDocs(limitQuery);
+            console.log('Limit query snapshot size:', limitSnapshot.size);
+            
+            // Test 4: Try query with ordering (this might fail if timestamp field issues)
+            console.log('Test 4: Query with ordering...');
+            try {
+                const orderedQuery = query(
+                    collectionRef, 
+                    orderBy('timestamp', 'desc'),
+                    limit(10)
+                );
+                const orderedSnapshot = await getDocs(orderedQuery);
+                console.log('Ordered query snapshot size:', orderedSnapshot.size);
+                
+                // Use the ordered results if available, otherwise use basic results
+                const finalSnapshot = orderedSnapshot.size > 0 ? orderedSnapshot : basicSnapshot;
+                displayWorks(finalSnapshot);
+                
+            } catch (orderError) {
+                console.error('Ordering failed:', orderError);
+                console.log('Using basic results without ordering');
+                displayWorks(basicSnapshot);
+            }
+            
+        } else {
+            console.log('PROBLEM: No documents found with basic query');
+            
+            // Test 5: Check if collection exists by trying to create a test document
+            console.log('Test 5: Collection might not exist or be empty');
+            
+            // List all collections to see what exists
+            console.log('Available collections in your database:');
+            // Note: We can't list collections from client-side, but we can check our specific one
+            
+            worksContainer.innerHTML = '<p class="loading-message">No poetry submissions found. The collection appears to be empty.</p>';
+        }
+        
+    } catch (error) {
+        console.error('=== ERROR DETAILS ===');
+        console.error('Error type:', error.constructor.name);
+        console.error('Error code:', error.code);
+        console.error('Error message:', error.message);
+        console.error('Full error:', error);
+        
+        if (error.code === 'permission-denied') {
+            console.error('PERMISSION DENIED: Check your Firestore security rules');
+            worksContainer.innerHTML = '<p class="loading-message">Permission denied. Security rules may be blocking access.</p>';
+        } else if (error.code === 'unavailable') {
+            console.error('FIRESTORE UNAVAILABLE: Network or service issue');
+            worksContainer.innerHTML = '<p class="loading-message">Firestore service unavailable. Check your internet connection.</p>';
+        } else {
+            console.error('UNKNOWN ERROR: Check console for details');
+            worksContainer.innerHTML = '<p class="loading-message">Unexpected error loading submissions. Check browser console.</p>';
+        }
+    }
+    
+    console.log('=== COMPREHENSIVE DEBUG END ===');
+}
+
+// Helper function to display works
+function displayWorks(snapshot) {
+    console.log('Displaying works...');
+    worksContainer.innerHTML = '';
+    
+    if (snapshot.empty) {
+        worksContainer.innerHTML = '<p class="loading-message">No submissions to display.</p>';
+        return;
+    }
+    
+    let displayCount = 0;
+    snapshot.forEach((doc) => {
+        const work = doc.data();
+        try {
             const workCard = createWorkCard(work, doc.id);
+            worksContainer.appendChild(workCard);
+            displayCount++;
+        } catch (cardError) {
+            console.error('Error creating card for document:', doc.id, cardError);
+        }
+    });
+    
+    console.log(`Successfully displayed ${displayCount} works`);
+}
+
+// Also update your createWorkCard to handle missing data better
+function createWorkCard(work, id) {
+    const card = document.createElement('div');
+    card.className = 'work-card';
+    
+    // Safely handle all the data fields
+    const title = work.title || 'Untitled';
+    const type = work.type || 'unknown';
+    const authorName = work.authorName || 'Unknown Author';
+    const content = work.content || '';
+    const description = work.description || '';
+    const hasFile = work.hasFile || false;
+    const fileName = work.fileName || 'Unknown file';
+    
+    const formatDate = (timestamp) => {
+        if (!timestamp) return 'Recently';
+        try {
+            const date = timestamp.toDate ? timestamp.toDate() : new Date(timestamp);
+            return date.toLocaleDateString('en-US', { 
+                year: 'numeric', 
+                month: 'short', 
+                day: 'numeric' 
+            });
+        } catch (e) {
+            console.error('Date formatting error:', e);
+            return 'Recently';
+        }
+    };
+    
+    const preview = hasFile ? 
+        `<p class="work-preview"><em>📄 File: ${fileName}</em></p>` :
+        `<p class="work-preview">${content.substring(0, 150)}${content.length > 150 ? '...' : ''}</p>`;
+    
+    card.innerHTML = `
+        <h3>${title}</h3>
+        <div class="work-meta">
+            <span class="work-type">${type.replace('-', ' ')}</span>
+            <span>${formatDate(work.timestamp)}</span>
+        </div>
+        <p class="work-author">by ${authorName}</p>
+        ${preview}
+        ${description ? `<p class="work-description">${description}</p>` : ''}
+    `;
+
+    // Only add read more link if there's content to show
+    if (content && !hasFile) {
+        const readMoreLink = document.createElement('a');
+        readMoreLink.href = '#';
+        readMoreLink.className = 'read-more';
+        readMoreLink.textContent = 'Read More';
+        
+        readMoreLink.addEventListener('click', (e) => {
+            e.preventDefault();
+            viewWork(work);
+        });
+
+        card.appendChild(readMoreLink);
+    }
+    
+    return card;
+}    
+                const workCard = createWorkCard(work, doc.id);
             worksContainer.appendChild(workCard);
             displayedCount++;
         });
@@ -356,33 +504,3 @@ console.log('Testing Firebase connection...');
 console.log('Auth:', auth);
 console.log('DB:', db);
 console.log('Storage:', storage);
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
