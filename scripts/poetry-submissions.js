@@ -189,7 +189,6 @@ async function handleSubmission(e) {
 // Replace your loadRecentWorks function with this comprehensive debug version
 async function loadRecentWorks() {
     console.log('=== COMPREHENSIVE DEBUG START ===');
-    console.log('Loading recent works...');
     
     if (!worksContainer) {
         console.error('Works container not found');
