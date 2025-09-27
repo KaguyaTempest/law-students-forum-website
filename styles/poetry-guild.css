@@ -157,6 +157,18 @@
     transition: border-color 0.3s ease, box-shadow 0.3s ease;
 }
 
+.form-group input[type="file"] {
+    border: 2px dashed var(--card-border-color);
+    padding: 1rem;
+    cursor: pointer;
+    transition: border-color 0.3s ease, background-color 0.3s ease;
+}
+
+.form-group input[type="file"]:hover {
+    border-color: var(--link-color);
+    background-color: rgba(0, 123, 255, 0.05);
+}
+
 .form-group input:focus,
 .form-group select:focus,
 .form-group textarea:focus {
@@ -232,22 +244,25 @@
 
 .works-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-    gap: 2rem;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 1.5rem;
+    align-items: stretch;
 }
 
 .work-card {
     background: var(--card-bg-color);
     padding: 2rem;
     border-radius: 12px;
-    box-shadow: var(--card-shadow);
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
     border: 1px solid var(--card-border-color);
     transition: transform 0.3s ease, box-shadow 0.3s ease;
+    display: flex;
+    flex-direction: column;
 }
 
 .work-card:hover {
     transform: translateY(-3px);
-    box-shadow: var(--card-hover-shadow);
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
 }
 
 .work-card h3 {
@@ -265,13 +280,39 @@
 }
 
 .work-type {
-    background: var(--notice-bg);
-    color: var(--notice-border);
     padding: 0.25rem 0.75rem;
     border-radius: 12px;
     font-weight: 600;
     text-transform: uppercase;
     font-size: 0.75rem;
+}
+
+.work-type.poem {
+    background: #f5e6ff;
+    color: #6a00a3;
+}
+
+.work-type.short-story {
+    background: #e6f7ff;
+    color: #004a80;
+}
+
+.work-type.prose {
+    background: #fff3e6;
+    color: #804600;
+}
+
+.work-type.other {
+    background: #f0f0f0;
+    color: #444;
+}
+
+.empty-message {
+    text-align: center;
+    padding: 3rem;
+    color: var(--text-color-light);
+    font-style: italic;
+    grid-column: 1 / -1;
 }
 
 .work-preview {
@@ -346,13 +387,24 @@
     transform: translateY(-3px);
 }
 
-.member-photo {
-    width: 120px;
-    height: 120px;
+.committee-member img {
+    width: 150px;
+    height: 150px;
     border-radius: 50%;
+    object-fit: cover;
+    border: 3px solid var(--card-border-color);
     margin: 0 auto 1rem;
     display: block;
+}
+
+.member-photo {
+    width: 150px;
+    height: 150px;
+    border-radius: 50%;
+    object-fit: cover;
     border: 3px solid var(--card-border-color);
+    margin: 0 auto 1rem;
+    display: block;
 }
 
 .committee-member h3 {
@@ -372,6 +424,62 @@
     color: var(--text-color-light);
     font-size: 0.9rem;
     line-height: 1.4;
+}
+
+/* Modal Styles */
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 1000;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.6);
+    justify-content: center;
+    align-items: center;
+}
+
+.modal-content {
+    max-width: 700px;
+    margin: 5% auto;
+    padding: 2rem;
+    background: var(--card-bg-color);
+    border-radius: 12px;
+    box-shadow: var(--card-shadow);
+    max-height: 80vh;
+    overflow-y: auto;
+    position: relative;
+}
+
+.modal .close {
+    cursor: pointer;
+    float: right;
+    font-size: 1.5rem;
+    color: var(--text-color-light);
+    transition: color 0.3s ease;
+}
+
+.modal .close:hover {
+    color: var(--text-color-dark);
+}
+
+#modal-body {
+    white-space: pre-wrap;
+    line-height: 1.7;
+    color: var(--text-color-medium);
+    margin-top: 1rem;
+}
+
+#modal-author {
+    font-style: italic;
+    color: var(--text-color-light);
+    margin: 0.5rem 0;
+}
+
+#modal-type {
+    display: inline-block;
+    margin-bottom: 1rem;
 }
 
 /* Responsive Design */
@@ -414,6 +522,24 @@
     
     .executive-committee {
         padding: 2rem 1rem;
+    }
+    
+    .modal-content {
+        margin: 2% auto;
+        padding: 1.5rem;
+        max-height: 90vh;
+        width: 90%;
+        max-width: none;
+    }
+}
+
+@media (max-width: 600px) {
+    .committee-grid {
+        grid-template-columns: 1fr;
+    }
+    
+    .works-grid {
+        grid-template-columns: 1fr;
     }
 }
 /* Loading and Error States */

@@ -171,7 +171,8 @@ async function handleSubmission(e) {
             contentTextarea.placeholder = 'Paste your work here, or upload a file below...';
         }
         
-        alert('Your work has been submitted successfully!');
+        // Show confirmation message
+        showConfirmationMessage('Your work has been submitted successfully!');
         
         // Reload recent works
         await loadRecentWorks();
@@ -265,7 +266,12 @@ function displayWorks(snapshot) {
     worksContainer.innerHTML = '';
 
     if (snapshot.empty) {
-        worksContainer.innerHTML = '<p class="loading-message">No submissions to display.</p>';
+        worksContainer.innerHTML = `
+            <div class="empty-message">
+                <p>No poetry submissions yet.</p>
+                <p>Be the first to share your creative work!</p>
+            </div>
+        `;
         return;
     }
 
@@ -299,7 +305,7 @@ function createWorkCard(work, id) {
     
     // Safely handle all the data fields
     const title = work.title || 'Untitled';
-    const type = work.type || 'unknown';
+    const type = work.type || 'other';
     const authorName = work.authorName || 'Unknown Author';
     const content = work.content || '';
     const description = work.description || '';
@@ -328,7 +334,7 @@ function createWorkCard(work, id) {
     card.innerHTML = `
         <h3>${title}</h3>
         <div class="work-meta">
-            <span class="work-type">${type.replace('-', ' ')}</span>
+            <span class="work-type ${type.toLowerCase().replace('-', '-')}">${type.replace('-', ' ')}</span>
             <span>${formatDate(work.timestamp)}</span>
         </div>
         <p class="work-author">by ${authorName}</p>
@@ -336,12 +342,12 @@ function createWorkCard(work, id) {
         ${description ? `<p class="work-description">${description}</p>` : ''}
     `;
 
-    // Only add read more link if there's content to show
-    if (content && !hasFile) {
+    // Add read more link for content or file viewing
+    if ((content && !hasFile) || hasFile) {
         const readMoreLink = document.createElement('a');
         readMoreLink.href = '#';
         readMoreLink.className = 'read-more';
-        readMoreLink.textContent = 'Read More';
+        readMoreLink.textContent = hasFile ? 'View File' : 'Read More';
         
         readMoreLink.addEventListener('click', (e) => {
             e.preventDefault();
@@ -352,10 +358,77 @@ function createWorkCard(work, id) {
     }
     
     return card;
+}
+
+// Function to view work in modal
+function viewWork(work) {
+    const modal = document.getElementById('work-modal');
+    if (!modal) return;
+
+    document.getElementById('modal-title').textContent = work.title || 'Untitled';
+    document.getElementById('modal-author').textContent = `by ${work.authorName || 'Unknown'}`;
+    
+    const typeBadge = document.getElementById('modal-type');
+    typeBadge.textContent = work.type || 'Other';
+    typeBadge.className = `work-type ${work.type?.toLowerCase().replace(' ', '-').replace('-', '-') || 'other'}`;
+
+    const modalBody = document.getElementById('modal-body');
+    if (work.hasFile) {
+        modalBody.innerHTML = `<em>📄 File: ${work.fileName || 'Unknown file'}</em><br><br>This is a file submission. <a href="${work.fileURL}" target="_blank">Click here to open the file</a>.`;
+    } else {
+        modalBody.innerHTML = work.content || '<em>No content available</em>';
+    }
+
+    modal.style.display = 'flex';
+
+    // Close modal handlers
+    const closeBtn = modal.querySelector('.close');
+    closeBtn.onclick = () => modal.style.display = 'none';
+    
+    window.onclick = (e) => { 
+        if (e.target === modal) modal.style.display = 'none'; 
+    };
 }    
 
 // Make loadRecentWorks globally accessible for retry button
 window.loadRecentWorks = loadRecentWorks;
+
+// Show confirmation message
+function showConfirmationMessage(message) {
+    // Remove existing message if any
+    const existingMessage = document.querySelector('.confirmation-message');
+    if (existingMessage) {
+        existingMessage.remove();
+    }
+    
+    // Create new confirmation message
+    const confirmationDiv = document.createElement('div');
+    confirmationDiv.className = 'confirmation-message';
+    confirmationDiv.style.cssText = `
+        background: #d4edda;
+        color: #155724;
+        padding: 1rem;
+        border: 1px solid #c3e6cb;
+        border-radius: 8px;
+        margin-top: 1rem;
+        text-align: center;
+        font-weight: 600;
+    `;
+    confirmationDiv.textContent = message;
+    
+    // Insert after the form
+    const form = document.getElementById('poetry-submission-form');
+    if (form) {
+        form.parentNode.insertBefore(confirmationDiv, form.nextSibling);
+        
+        // Remove message after 5 seconds
+        setTimeout(() => {
+            if (confirmationDiv.parentNode) {
+                confirmationDiv.remove();
+            }
+        }, 5000);
+    }
+}
 
 // Initialize page
 document.addEventListener('DOMContentLoaded', () => {
