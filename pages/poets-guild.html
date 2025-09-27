@@ -147,20 +147,15 @@
     <script type="module" src="/law-students-forum-website/scripts/auth-modal.js"></script>
     <script type="module" src="/law-students-forum-website/scripts/poetry-submissions.js"></script>
 
-    <div id="full-poem-modal" class="modal">
-    <div class="modal-content">
-        <span class="close-btn">&times;</span>
-        <h2 id="modal-title"></h2>
-        <p id="modal-author" class="work-author"></p>
-        <hr>
-        <div id="modal-content" class="poem-content"></div>
-        <div class="reactions">
-            <span class="reaction-item"><span id="reaction-lightbulb">0</span> 💡</span>
-            <span class="reaction-item"><span id="reaction-fire">0</span> 🔥</span>
-            <span class="reaction-item"><span id="reaction-tear">0</span> 😢</span>
+    <div id="work-modal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h2 id="modal-title"></h2>
+            <p id="modal-author"></p>
+            <span id="modal-type" class="work-type"></span>
+            <div id="modal-body"></div>
         </div>
     </div>
-</div>
 
 </body>
 </html>
