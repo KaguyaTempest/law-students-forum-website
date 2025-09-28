@@ -148,6 +148,7 @@ async function handleSubmission(e) {
         }
 
         showConfirmationMessage('Your work has been submitted successfully!');
+
         await loadRecentWorks();
 
     } catch (error) {
@@ -185,8 +186,59 @@ async function loadRecentWorks() {
             worksContainer.appendChild(workCard);
         });
     } catch (error) {
-        console.error('Error loading works:', error);
-        worksContainer.innerHTML = '<p class="loading-message">Error loading submissions. Try again later.</p>';
+        console.error('Error loading submissions:', error);
+
+        let errorMessage = 'Error loading submissions.';
+        if (error.code === 'permission-denied') {
+            errorMessage = 'Permission denied. Please check Firebase security rules.';
+        } else if (error.code === 'unavailable') {
+            errorMessage = 'Firebase service unavailable. Please try again later.';
+        }
+
+        worksContainer.innerHTML = `
+            <div class="error-state">
+                <p>${errorMessage}</p>
+                <button onclick="loadRecentWorks()" class="retry-btn">Try Again</button>
+            </div>
+        `;
+    }
+}
+
+// Helper function to display works
+function displayWorks(snapshot) {
+    console.log('Displaying works...');
+    worksContainer.innerHTML = '';
+
+    if (snapshot.empty) {
+        worksContainer.innerHTML = `
+            <div class="empty-message">
+                <p>No poetry submissions yet.</p>
+                <p>Be the first to share your creative work!</p>
+            </div>
+        `;
+        return;
+    }
+
+    const worksGrid = document.createElement('div');
+    worksGrid.className = 'works-grid';
+
+    let displayCount = 0;
+    snapshot.forEach((doc) => {
+        const work = doc.data();
+        try {
+            const workCard = createWorkCard(work, doc.id);
+            worksGrid.appendChild(workCard);
+            displayCount++;
+        } catch (cardError) {
+            console.error('Error creating card for document:', doc.id, cardError);
+        }
+    });
+
+    if (displayCount === 0) {
+        worksContainer.innerHTML = '<p class="loading-message">No valid submissions found.</p>';
+    } else {
+        worksContainer.appendChild(worksGrid);
+        console.log(`Successfully displayed ${displayCount} works`);
     }
 }
 
@@ -194,7 +246,15 @@ async function loadRecentWorks() {
 function createWorkCard(work, id) {
     const card = document.createElement('div');
     card.className = 'work-card';
-
+    
+    // Safely handle all the data fields
+    const title = work.title || 'Untitled';
+    const type = work.type || 'other';
+    const authorName = work.authorName || 'Unknown Author';
+    const content = work.content || '';
+    const description = work.description || '';
+    const hasFile = work.hasFile || false;
+    const fileName = work.fileName || 'Unknown file';
     const formatDate = (timestamp) => {
         if (!timestamp) return 'Recently';
         const date = timestamp.toDate ? timestamp.toDate() : new Date(timestamp);
@@ -209,6 +269,7 @@ function createWorkCard(work, id) {
         <h3>${work.title}</h3>
         <div class="work-meta">
             <span class="work-type">${work.type.replace('-', ' ')}</span>
+
             <span>${formatDate(work.timestamp)}</span>
         </div>
         <p class="work-author">by ${work.authorName}</p>
@@ -225,12 +286,50 @@ window.viewWork = function(workId) {
     alert('Full work viewing will be implemented in the next phase.');
 };
 
+
 // Simple confirmation message (temporary)
 function showConfirmationMessage(msg) {
     alert(msg);
 }
 
-// Init
+// Show confirmation message
+function showConfirmationMessage(message) {
+    // Remove existing message if any
+    const existingMessage = document.querySelector('.confirmation-message');
+    if (existingMessage) {
+        existingMessage.remove();
+    }
+    
+    // Create new confirmation message
+    const confirmationDiv = document.createElement('div');
+    confirmationDiv.className = 'confirmation-message';
+    confirmationDiv.style.cssText = `
+        background: #d4edda;
+        color: #155724;
+        padding: 1rem;
+        border: 1px solid #c3e6cb;
+        border-radius: 8px;
+        margin-top: 1rem;
+        text-align: center;
+        font-weight: 600;
+    `;
+    confirmationDiv.textContent = message;
+    
+    // Insert after the form
+    const form = document.getElementById('poetry-submission-form');
+    if (form) {
+        form.parentNode.insertBefore(confirmationDiv, form.nextSibling);
+        
+        // Remove message after 5 seconds
+        setTimeout(() => {
+            if (confirmationDiv.parentNode) {
+                confirmationDiv.remove();
+            }
+        }, 5000);
+    }
+}
+
+// Initialize page
 document.addEventListener('DOMContentLoaded', () => {
     const authLinks = document.querySelectorAll('.open-auth-modal');
     authLinks.forEach(link => {
