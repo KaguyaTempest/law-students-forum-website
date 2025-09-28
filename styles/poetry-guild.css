@@ -1,61 +1,15 @@
-/* * Merged Styles for Poetry Guild Website
- * Consolidates all rules, ensures variable usage for theming, 
- * and includes new features like University Badges and robust Modal styling.
- */
+/* styles/poetry-guild.css */
 
-/* --- Default Variables (Light Mode) --- */
-:root {
-    --bg-color: #f5f5f5;
-    --text-color-dark: #333333;
-    --text-color-medium: #555555;
-    --text-color-light: #888888;
-    --heading-color: #2c3e50;
-    --link-color: #007bff;
-    --link-hover-color: #0056b3;
-    --card-bg-color: #ffffff;
-    --card-border-color: #e0e0e0;
-    --card-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
-    --card-hover-shadow: 0 6px 18px rgba(0, 0, 0, 0.1);
-    --notice-bg: #f0f8ff;
-    --notice-border: #b3d9ff;
-    
-    /* Primary Guild Color Palette */
-    --guild-primary-dark: #8a0026;
-    --guild-primary-light: #b8002e;
-}
-
-/* --- Dark Mode Overrides (from File 1) --- */
-@media (prefers-color-scheme: dark) {
-    :root {
-        --bg-color: #121212;
-        --text-color-dark: #e0e0e0;
-        --text-color-medium: #b0b0b0;
-        --text-color-light: #888888;
-        --heading-color: #ffffff;
-        --link-color: #66b2ff;
-        --link-hover-color: #3399ff;
-        --card-bg-color: #1e1e1e;
-        --card-border-color: #333333;
-        --card-shadow: 0 2px 6px rgba(0, 0, 0, 0.5);
-        --card-hover-shadow: 0 4px 12px rgba(0, 0, 0, 0.7);
-        --notice-bg: #1a1a1a;
-        --notice-border: #444444;
-    }
-}
-
-/* --- Global Layout --- */
 .poetry-guild-main {
     max-width: 1200px;
     margin: 0 auto;
     padding: 2rem;
-    font-family: 'Inter', sans-serif;
 }
 
-/* --- Society Hero Section --- */
 .society-hero {
     text-align: center;
     padding: 3rem 0;
-    background: linear-gradient(135deg, var(--guild-primary-dark), var(--guild-primary-light));
+    background: linear-gradient(135deg, #8a0026, #b8002e);
     color: white;
     border-radius: 12px;
     margin-bottom: 3rem;
@@ -88,7 +42,7 @@
     line-height: 1.6;
 }
 
-/* --- About Section & Features --- */
+/* About Section */
 .society-about {
     margin-bottom: 3rem;
     text-align: center;
@@ -141,7 +95,7 @@
     line-height: 1.6;
 }
 
-/* --- Submission Section --- */
+/* Submission Section */
 .submission-section {
     background: var(--card-bg-color);
     padding: 3rem;
@@ -204,8 +158,6 @@
 }
 
 .form-group input[type="file"] {
-    /* Unique file input styling from File 1 */
-
     border: 2px dashed var(--card-border-color);
     padding: 1rem;
     cursor: pointer;
@@ -252,7 +204,7 @@
 }
 
 .submit-btn {
-    background: linear-gradient(135deg, var(--guild-primary-dark), var(--guild-primary-light));
+    background: linear-gradient(135deg, #8a0026, #b8002e);
     color: white;
     border: none;
     padding: 1rem 2rem;
@@ -278,7 +230,7 @@
     box-shadow: none;
 }
 
-/* --- Recent Works Section --- */
+/* Recent Works Section */
 .recent-works {
     margin-bottom: 3rem;
 }
@@ -291,10 +243,9 @@
 }
 
 .works-grid {
-    /* Used File 2's structure (auto-fill, minmax 300px) for slightly wider cards and better filling */
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-    gap: 2rem;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 1.5rem;
     align-items: stretch;
 }
 
@@ -302,9 +253,7 @@
     background: var(--card-bg-color);
     padding: 2rem;
     border-radius: 12px;
-    /* Used File 2's box-shadow variable for better theme compatibility */
-    box-shadow: var(--card-shadow); 
-
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
     border: 1px solid var(--card-border-color);
     transition: transform 0.3s ease, box-shadow 0.3s ease;
     display: flex;
@@ -338,8 +287,6 @@
     font-size: 0.75rem;
 }
 
-/* Specific Work Type Colors (from File 1) */
-
 .work-type.poem {
     background: #f5e6ff;
     color: #6a00a3;
@@ -368,7 +315,6 @@
     grid-column: 1 / -1;
 }
 
-
 .work-preview {
     color: var(--text-color-medium);
     line-height: 1.6;
@@ -377,7 +323,6 @@
     -webkit-box-orient: vertical;
     -webkit-line-clamp: 4;
     overflow: hidden;
-    flex-grow: 1; /* Allows it to take up available space in the flex container */
 }
 
 .work-author {
@@ -392,8 +337,6 @@
     font-weight: 600;
     cursor: pointer;
     transition: color 0.3s ease;
-    margin-top: auto; /* Pushes to the bottom of the card */
-    display: inline-block;
 }
 
 .read-more:hover {
@@ -401,14 +344,21 @@
     text-decoration: underline;
 }
 
-/* --- Executive Committee --- */
+.loading-message {
+    text-align: center;
+    color: var(--text-color-light);
+    font-style: italic;
+    grid-column: 1 / -1;
+    padding: 3rem;
+}
+
+/* Executive Committee */
 .executive-committee {
     background: var(--card-bg-color);
     padding: 3rem;
     border-radius: 12px;
     box-shadow: var(--card-shadow);
     border: 1px solid var(--card-border-color);
-    margin-bottom: 3rem; /* Added margin for spacing */
 }
 
 .executive-committee h2 {
@@ -437,16 +387,9 @@
     transform: translateY(-3px);
 }
 
-
-/* Standardized on .member-photo selector */
-.member-photo {
-    width: 120px;
-    height: 120px;
-
 .committee-member img {
     width: 150px;
     height: 150px;
-
     border-radius: 50%;
     object-fit: cover;
     border: 3px solid var(--card-border-color);
@@ -482,7 +425,6 @@
     font-size: 0.9rem;
     line-height: 1.4;
 }
-
 
 /* Modal Styles */
 .modal {
@@ -607,156 +549,6 @@
     color: var(--text-color-light);
 }
 
-/* --- NEW: University Badge Styling (from File 2) --- */
-.university-badge {
-    display: inline-flex;
-    align-items: center;
-    padding: 0.25rem 0.6rem;
-    border-radius: 1rem;
-    font-size: 0.85rem;
-    font-weight: bold;
-    margin-bottom: 0.5rem;
-    margin-right: 0.5rem;
-    transition: all 0.3s ease;
-    border: 1px solid transparent;
-}
-
-.university-logo {
-    width: 16px;
-    height: 16px;
-    margin-right: 6px;
-    border-radius: 2px;
-    vertical-align: middle;
-}
-
-.university-logo-badge {
-    display: inline-block;
-    margin-right: 0.5rem;
-    cursor: pointer;
-}
-
-.university-badge:hover {
-    transform: translateY(-1px);
-    box-shadow: 0 2px 6px rgba(0,0,0,0.15) !important;
-}
-
-/* Dark mode adjustments for badges */
-@media (prefers-color-scheme: dark) {
-    .university-badge {
-        box-shadow: 0 1px 3px rgba(255,255,255,0.1);
-    }
-
-    .university-badge:hover {
-        box-shadow: 0 2px 6px rgba(255,255,255,0.2) !important;
-    }
-}
-
-/* --- Modal Styles (Merged and variable-compatible) --- */
-.modal {
-    display: none; 
-    position: fixed; 
-    z-index: 1000; 
-    left: 0;
-    top: 0;
-    width: 100%; 
-    height: 100%; 
-    /* Combined backgrounds (File 2 opacity, File 1 color format) */
-    background: rgba(0, 0, 0, 0.8);
-    justify-content: center;
-    align-items: center;
-    /* Added overflow from File 2 for better scrolling */
-    overflow: auto; 
-    padding: 20px;
-}
-
-.modal-content {
-    max-width: 700px;
-    /* Used File 1's margin/padding structure but added max-height/overflow from File 1 */
-    margin: 5% auto; 
-    padding: 2rem;
-    background: var(--card-bg-color); /* Uses variable from File 1 */
-    border-radius: 12px;
-    box-shadow: var(--card-shadow);
-    max-height: 80vh;
-    overflow-y: auto;
-    position: relative;
-    border: 1px solid var(--card-border-color);
-}
-
-/* Renamed to .close-btn (File 2) but kept styling clean (File 1) */
-.close-btn { 
-    cursor: pointer;
-    float: right;
-    font-size: 1.5rem;
-    color: var(--text-color-light);
-    transition: color 0.3s ease;
-    font-weight: bold; /* Added from File 2 */
-}
-
-.close-btn:hover,
-.close-btn:focus {
-    color: var(--text-color-dark);
-    text-decoration: none;
-}
-
-/* Standardized on .modal-body class name */
-.modal-body { 
-    white-space: pre-wrap;
-    line-height: 1.7;
-    color: var(--text-color-medium);
-    margin-top: 1rem;
-    font-family: inherit;
-}
-
-/* Standardized on .modal-author class name */
-.modal-author {
-    font-style: italic;
-    color: var(--text-color-light);
-    margin: 0.5rem 0;
-}
-
-/* Kept #modal-type from File 1 if still used in markup */
-#modal-type {
-    display: inline-block;
-    margin-bottom: 1rem;
-}
-
-/* New: Modal Reactions (from File 2) */
-.modal-reactions {
-    margin-top: 20px;
-    font-size: 1.2em;
-    border-top: 1px solid var(--card-border-color);
-    padding-top: 15px;
-}
-
-.reaction-item {
-    margin-right: 20px;
-    cursor: pointer; /* Changed from default to pointer for interaction */
-    display: inline-flex;
-    align-items: center;
-    color: var(--text-color-medium);
-    transition: color 0.3s ease;
-}
-
-.reaction-item:hover {
-    color: var(--link-color);
-}
-
-.reaction-item span {
-    margin-left: 5px;
-    font-weight: 600;
-}
-
-
-/* --- Loading and Error States (from File 1) --- */
-.loading-message, .no-submissions, .error-state, .empty-message {
-    text-align: center;
-    padding: 3rem 2rem;
-    color: var(--text-color-light);
-    font-style: italic;
-    grid-column: 1 / -1; /* Ensures it spans the grid */
-}
-
 .no-submissions, .error-state {
     background: var(--card-bg-color);
     border-radius: 12px;
@@ -775,7 +567,7 @@
 }
 
 .retry-btn {
-    background: var(--guild-primary-dark);
+    background: #8a0026;
     color: white;
     border: none;
     padding: 0.8rem 1.5rem;
@@ -787,69 +579,98 @@
 }
 
 .retry-btn:hover {
-    background: var(--guild-primary-light);
+    background: #b8002e;
 }
 
-
-/* --- Responsive Design (Combined and Cleaned) --- */
-@media (max-width: 768px) {
-    .poetry-guild-main {
-        padding: 1rem;
-    }
-    
-    .society-hero {
-        padding: 2rem 1rem;
-        margin-bottom: 2rem;
-    }
-    
-    .society-hero h1 {
-        font-size: 2rem;
-    }
-    
-    .society-logo {
-        width: 80px;
-        height: 80px;
-    }
-    
-    .guild-features {
-        grid-template-columns: 1fr;
-        gap: 1.5rem;
-    }
-    
-    .submission-section {
-        padding: 2rem 1rem;
-    }
-    
-    .works-grid {
-        grid-template-columns: 1fr;
-        gap: 1.5rem;
-    }
-    
-    .committee-grid {
-        grid-template-columns: 1fr;
-    }
-    
-    .executive-committee {
-        padding: 2rem 1rem;
-    }
-    
-    .modal-content {
-        /* From File 1, adjusted for smaller screens */
-        margin: 2% auto;
-        padding: 1.5rem;
-        max-height: 90vh;
-        width: 90%;
-        max-width: none;
+/* Dark Mode */
+@media (prefers-color-scheme: dark) {
+    :root {
+        --bg-color: #121212;
+        --text-color-dark: #e0e0e0;
+        --text-color-medium: #b0b0b0;
+        --text-color-light: #888888;
+        --heading-color: #ffffff;
+        --link-color: #66b2ff;
+        --link-hover-color: #3399ff;
+        --card-bg-color: #1e1e1e;
+        --card-border-color: #333333;
+        --card-shadow: 0 2px 6px rgba(0, 0, 0, 0.5);
+        --card-hover-shadow: 0 4px 12px rgba(0, 0, 0, 0.7);
+        --notice-bg: #1a1a1a;
+        --notice-border: #444444;
     }
 }
+/* Modal Styles */
+.modal {
+    display: none; /* Hidden by default */
+    position: fixed; /* Stay in place */
+    z-index: 100; /* Sit on top */
+    left: 0;
+    top: 0;
+    width: 100%; /* Full width */
+    height: 100%; /* Full height */
+    overflow: auto; /* Enable scroll if needed */
+    background-color: rgba(0,0,0,0.8); /* Black w/ opacity */
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+}
 
+.modal-content {
+    background-color: #fefefe;
+    margin: auto;
+    padding: 20px;
+    border: 1px solid #888;
+    width: 80%; /* Could be adjusted */
+    max-width: 700px;
+    box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2), 0 6px 20px 0 rgba(0,0,0,0.19);
+    position: relative;
+    border-radius: 10px;
+}
+
+.close-btn {
+    color: #aaa;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+}
+
+.close-btn:hover,
+.close-btn:focus {
+    color: #000;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+.modal-body {
+    white-space: pre-wrap; /* Preserves line breaks from the database */
+    font-family: inherit;
+    line-height: 1.6;
+    margin-top: 20px;
+}
+
+.modal-author {
+    font-style: italic;
+    color: #555;
+    margin-bottom: 10px;
+}
+
+.modal-reactions {
+    margin-top: 20px;
+    font-size: 1.2em;
+}
+
+.reaction-item {
+    margin-right: 20px;
+    cursor: default;
+}
+.reaction-item span {
+    margin-left: 5px;
+    font-weight: 600;
+}
+/* Responsive Modal */
 @media (max-width: 600px) {
-    /* Kept redundant grid single-column settings for clarity on mobile override */
-    .committee-grid {
-        grid-template-columns: 1fr;
-    }
-    
-    .works-grid {
-        grid-template-columns: 1fr;
+    .modal-content {
+        width: 95%;
     }
 }
