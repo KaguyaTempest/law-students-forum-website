@@ -1,24 +1,12 @@
-// scripts/poetry-submissions.js - Debug Version
+// scripts/poetry-submissions.js - Merged Version
+import { createUniversityBadge, getUniversityTheme } from './university-themes.js';
 import { auth, db, storage } from './firebase-config.js';
+import { onAuthStateChanged } from 'https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js';
 import { 
-    onAuthStateChanged 
-} from 'https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js';
-import { 
-    collection, 
-    addDoc, 
-    query, 
-    orderBy, 
-    limit, 
-    getDocs, 
-    serverTimestamp,
-    doc,
-    getDoc
+    collection, addDoc, query, orderBy, limit, getDocs, serverTimestamp,
+    doc, getDoc
 } from 'https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js';
-import { 
-    ref, 
-    uploadBytes, 
-    getDownloadURL 
-} from 'https://www.gstatic.com/firebasejs/10.12.2/firebase-storage.js';
+import { ref, uploadBytes, getDownloadURL } from 'https://www.gstatic.com/firebasejs/10.12.2/firebase-storage.js';
 
 let currentUser = null;
 
@@ -27,7 +15,7 @@ const authRequired = document.getElementById('auth-required');
 const submissionForm = document.getElementById('poetry-submission-form');
 const worksContainer = document.getElementById('works-container');
 
-// Add debug logging
+// Debug log
 console.log('Poetry submissions script loaded');
 console.log('DOM elements found:', {
     authRequired: !!authRequired,
@@ -40,8 +28,7 @@ onAuthStateChanged(auth, (user) => {
     console.log('Auth state changed:', user ? 'User logged in' : 'No user');
     currentUser = user;
     updateUI();
-    // Load recent works regardless of auth state
-    loadRecentWorks();
+    loadRecentWorks(); // Always show works regardless of auth
 });
 
 // Update UI based on auth state
@@ -59,15 +46,15 @@ function updateUI() {
 // Setup submission form
 function setupSubmissionForm() {
     if (!submissionForm) return;
-    
-    // Remove existing event listeners to prevent duplicates
+
+    // Avoid duplicate listeners
     submissionForm.removeEventListener('submit', handleSubmission);
     submissionForm.addEventListener('submit', handleSubmission);
-    
-    // File input change handler
+
+    // File input handler
     const fileInput = document.getElementById('work-file');
     const contentTextarea = document.getElementById('work-content');
-    
+
     if (fileInput && contentTextarea) {
         fileInput.addEventListener('change', (e) => {
             if (e.target.files.length > 0) {
@@ -85,17 +72,17 @@ function setupSubmissionForm() {
 async function handleSubmission(e) {
     e.preventDefault();
     console.log('Form submission started');
-    
+
     if (!currentUser) {
         alert('Please log in to submit your work.');
         return;
     }
-    
+
     const submitBtn = e.target.querySelector('.submit-btn');
     const originalText = submitBtn.textContent;
     submitBtn.textContent = 'Submitting...';
     submitBtn.disabled = true;
-    
+
     try {
         const formData = new FormData(e.target);
         const title = formData.get('title').trim();
@@ -104,28 +91,20 @@ async function handleSubmission(e) {
         const description = formData.get('description').trim();
         const isAnonymous = formData.get('anonymous') === 'on';
         const file = formData.get('file');
-        
-        console.log('Form data:', { title, type, content: content.substring(0, 50) + '...', isAnonymous });
-        
+
+        console.log('Form data:', { title, type, contentPreview: content.substring(0, 50), isAnonymous });
+
         // Validation
-        if (!title || !type) {
-            throw new Error('Please fill in all required fields.');
-        }
-        
-        if (!content && (!file || file.size === 0)) {
-            throw new Error('Please provide content either by typing or uploading a file.');
-        }
-        
-        if (file && file.size > 5 * 1024 * 1024) { // 5MB limit
-            throw new Error('File size must be less than 5MB.');
-        }
-        
-        // Get user profile for author info
+        if (!title || !type) throw new Error('Please fill in all required fields.');
+        if (!content && (!file || file.size === 0)) throw new Error('Please provide content or upload a file.');
+        if (file && file.size > 5 * 1024 * 1024) throw new Error('File size must be less than 5MB.');
+
+        // User profile
         const userDocRef = doc(db, 'users', currentUser.uid);
         const userDoc = await getDoc(userDocRef);
         const userData = userDoc.exists() ? userDoc.data() : {};
-        
-        // Prepare submission data
+
+        // Submission data
         const submissionData = {
             title,
             type,
@@ -135,19 +114,18 @@ async function handleSubmission(e) {
             authorUniversity: isAnonymous ? '' : (userData.university || ''),
             isAnonymous,
             timestamp: serverTimestamp(),
-            status: 'approved', // Change to 'approved' for immediate visibility
+            status: 'approved', // auto-approve for now
             likes: 0,
             views: 0
         };
-        
-        // Handle file upload or text content
+
+        // File or text
         if (file && file.size > 0) {
             console.log('Uploading file:', file.name);
-            // Upload file to Firebase Storage
             const fileRef = ref(storage, `poetry-submissions/${Date.now()}_${file.name}`);
             const uploadResult = await uploadBytes(fileRef, file);
             const fileURL = await getDownloadURL(uploadResult.ref);
-            
+
             submissionData.fileURL = fileURL;
             submissionData.fileName = file.name;
             submissionData.fileType = file.type;
@@ -156,13 +134,11 @@ async function handleSubmission(e) {
             submissionData.content = content;
             submissionData.hasFile = false;
         }
-        
-        console.log('Submitting data to Firestore:', submissionData);
-        
-        // Add to Firestore
+
+        // Save to Firestore
         const docRef = await addDoc(collection(db, 'poetry-submissions'), submissionData);
         console.log('Document written with ID: ', docRef.id);
-        
+
         // Reset form
         e.target.reset();
         const contentTextarea = document.getElementById('work-content');
@@ -170,13 +146,11 @@ async function handleSubmission(e) {
             contentTextarea.disabled = false;
             contentTextarea.placeholder = 'Paste your work here, or upload a file below...';
         }
-        
-        // Show confirmation message
+
         showConfirmationMessage('Your work has been submitted successfully!');
-        
-        // Reload recent works
+
         await loadRecentWorks();
-        
+
     } catch (error) {
         console.error('Error submitting work:', error);
         alert(`Error: ${error.message}`);
@@ -188,59 +162,29 @@ async function handleSubmission(e) {
 
 // Load and display recent works
 async function loadRecentWorks() {
-    console.log('Loading recent works...');
-
-    if (!worksContainer) {
-        console.error('Works container not found');
-        return;
-    }
+    if (!worksContainer) return;
 
     worksContainer.innerHTML = '<p class="loading-message">Loading poetry submissions...</p>';
 
     try {
-        const collectionRef = collection(db, 'poetry-submissions');
-        console.log('Collection reference created');
+        const q = query(
+            collection(db, 'poetry-submissions'),
+            orderBy('timestamp', 'desc'),
+            limit(6)
+        );
 
-        let snapshot;
-
-        try {
-            // First try with ordering by timestamp
-            console.log('Attempting ordered query...');
-            const orderedQuery = query(
-                collectionRef, 
-                orderBy('timestamp', 'desc'),
-                limit(20)
-            );
-            snapshot = await getDocs(orderedQuery);
-            console.log('Ordered query successful, found:', snapshot.size, 'documents');
-        } catch (orderError) {
-            console.log('Ordered query failed, trying basic query...', orderError.message);
-            // Fallback to basic query without ordering
-            const basicQuery = query(collectionRef, limit(20));
-            snapshot = await getDocs(basicQuery);
-            console.log('Basic query successful, found:', snapshot.size, 'documents');
-        }
-
+        const snapshot = await getDocs(q);
         if (snapshot.empty) {
-            console.log('No documents found in collection');
-            worksContainer.innerHTML = `
-                <div class="no-submissions">
-                    <p>No poetry submissions yet.</p>
-                    <p>Be the first to share your creative work!</p>
-                </div>
-            `;
+            worksContainer.innerHTML = '<p class="loading-message">No submissions yet. Be the first!</p>';
             return;
         }
 
-        // Log what we found
-        console.log(`Found ${snapshot.size} documents:`);
-        snapshot.forEach((doc, index) => {
-            const data = doc.data();
-            console.log(`${index + 1}. ${data.title} by ${data.authorName}`);
+        worksContainer.innerHTML = '';
+        snapshot.forEach((docSnap) => {
+            const work = docSnap.data();
+            const workCard = createWorkCard(work, docSnap.id);
+            worksContainer.appendChild(workCard);
         });
-
-        displayWorks(snapshot);
-
     } catch (error) {
         console.error('Error loading submissions:', error);
 
@@ -298,7 +242,7 @@ function displayWorks(snapshot) {
     }
 }
 
-// Also update your createWorkCard to handle missing data better
+// Create work card
 function createWorkCard(work, id) {
     const card = document.createElement('div');
     card.className = 'work-card';
@@ -311,87 +255,42 @@ function createWorkCard(work, id) {
     const description = work.description || '';
     const hasFile = work.hasFile || false;
     const fileName = work.fileName || 'Unknown file';
-    
     const formatDate = (timestamp) => {
         if (!timestamp) return 'Recently';
-        try {
-            const date = timestamp.toDate ? timestamp.toDate() : new Date(timestamp);
-            return date.toLocaleDateString('en-US', { 
-                year: 'numeric', 
-                month: 'short', 
-                day: 'numeric' 
-            });
-        } catch (e) {
-            console.error('Date formatting error:', e);
-            return 'Recently';
-        }
+        const date = timestamp.toDate ? timestamp.toDate() : new Date(timestamp);
+        return date.toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: 'numeric' });
     };
-    
-    const preview = hasFile ? 
-        `<p class="work-preview"><em>📄 File: ${fileName}</em></p>` :
-        `<p class="work-preview">${content.substring(0, 150)}${content.length > 150 ? '...' : ''}</p>`;
-    
+
+    const preview = work.hasFile
+        ? `<p class="work-preview"><em>File: ${work.fileName}</em></p>`
+        : `<p class="work-preview">${work.content?.substring(0, 150) || ''}${work.content?.length > 150 ? '...' : ''}</p>`;
+
     card.innerHTML = `
-        <h3>${title}</h3>
+        <h3>${work.title}</h3>
         <div class="work-meta">
-            <span class="work-type ${type.toLowerCase().replace('-', '-')}">${type.replace('-', ' ')}</span>
+            <span class="work-type">${work.type.replace('-', ' ')}</span>
+
             <span>${formatDate(work.timestamp)}</span>
         </div>
-        <p class="work-author">by ${authorName}</p>
+        <p class="work-author">by ${work.authorName}</p>
         ${preview}
-        ${description ? `<p class="work-description">${description}</p>` : ''}
+        ${work.description ? `<p class="work-description">${work.description}</p>` : ''}
+        <a href="#" class="read-more" onclick="viewWork('${id}')">Read More</a>
     `;
 
-    // Add read more link for content or file viewing
-    if ((content && !hasFile) || hasFile) {
-        const readMoreLink = document.createElement('a');
-        readMoreLink.href = '#';
-        readMoreLink.className = 'read-more';
-        readMoreLink.textContent = hasFile ? 'View File' : 'Read More';
-        
-        readMoreLink.addEventListener('click', (e) => {
-            e.preventDefault();
-            viewWork(work);
-        });
-
-        card.appendChild(readMoreLink);
-    }
-    
     return card;
 }
 
-// Function to view work in modal
-function viewWork(work) {
-    const modal = document.getElementById('work-modal');
-    if (!modal) return;
+// View full work placeholder
+window.viewWork = function(workId) {
+    alert('Full work viewing will be implemented in the next phase.');
+};
 
-    document.getElementById('modal-title').textContent = work.title || 'Untitled';
-    document.getElementById('modal-author').textContent = `by ${work.authorName || 'Unknown'}`;
-    
-    const typeBadge = document.getElementById('modal-type');
-    typeBadge.textContent = work.type || 'Other';
-    typeBadge.className = `work-type ${work.type?.toLowerCase().replace(' ', '-').replace('-', '-') || 'other'}`;
 
-    const modalBody = document.getElementById('modal-body');
-    if (work.hasFile) {
-        modalBody.innerHTML = `<em>📄 File: ${work.fileName || 'Unknown file'}</em><br><br>This is a file submission. <a href="${work.fileURL}" target="_blank">Click here to open the file</a>.`;
-    } else {
-        modalBody.innerHTML = work.content || '<em>No content available</em>';
-    }
-
-    modal.style.display = 'flex';
-
-    // Close modal handlers
-    const closeBtn = modal.querySelector('.close');
-    closeBtn.onclick = () => modal.style.display = 'none';
-    
-    window.onclick = (e) => { 
-        if (e.target === modal) modal.style.display = 'none'; 
-    };
-}    
-
-// Make loadRecentWorks globally accessible for retry button
-window.loadRecentWorks = loadRecentWorks;
+// Simple confirmation message (temporary)
+function showConfirmationMessage(msg) {
+    alert(msg);
+}
 
 // Show confirmation message
 function showConfirmationMessage(message) {
@@ -432,29 +331,14 @@ function showConfirmationMessage(message) {
 
 // Initialize page
 document.addEventListener('DOMContentLoaded', () => {
-    console.log('DOM Content Loaded');
-    
-    // Set up auth modal triggers
     const authLinks = document.querySelectorAll('.open-auth-modal');
     authLinks.forEach(link => {
         link.addEventListener('click', (e) => {
             e.preventDefault();
             const authModal = document.getElementById('auth-modal');
-            if (authModal) {
-                authModal.style.display = 'flex';
-            }
+            if (authModal) authModal.style.display = 'flex';
         });
     });
-    
-    // Load recent works when the page loads
-    setTimeout(() => {
-        console.log('Loading works after timeout');
-        loadRecentWorks();
-    }, 1000);
-});
 
-// Test Firebase connection
-console.log('Testing Firebase connection...');
-console.log('Auth:', auth);
-console.log('DB:', db);
-console.log('Storage:', storage);
+    if (currentUser) loadRecentWorks();
+});
