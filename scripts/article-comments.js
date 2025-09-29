@@ -17,18 +17,6 @@ import {
 import { onAuthStateChanged } from 'https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js';
 import { getUserProfile } from './auth-service.js';
 
-// Placeholder for university theme data. In a real app, this would be fetched or configured.
-const universityThemes = {
-  "University of Example": { primary: "#003366", neutral: "#FFFFFF", accent: "#FFCC00" },
-  "Another University": { primary: "#660000", neutral: "#EEEEEE", accent: "#CC9900" },
-  "Tech Institute": { primary: "#1a237e", neutral: "#e3f2fd", accent: "#4caf50" }
-};
-
-function getUniversityTheme(universityName) {
-  return universityThemes[universityName] || { primary: "#607d8b", neutral: "#ECEFF1", accent: "#78909c" }; // Default theme
-}
-
-
 class ArticleComments {
   constructor() {
     this.currentUser = null;
@@ -148,7 +136,8 @@ class ArticleComments {
         userId: this.currentUser.uid,
         username: this.userProfile.username || 'Anonymous',
         userRole: this.userProfile.role || 'observer',
-        userUniversity: this.userProfile.university || '',
+        userUniversity: this.userProfile.profileData?.university || this.userProfile.university || '',
+        yearsExperience: this.userProfile.profileData?.yearsExperience || null,
         text: text,
         timestamp: serverTimestamp(),
         reactions: {
@@ -215,16 +204,26 @@ class ArticleComments {
   renderComment(comment) {
     const timestamp = comment.timestamp?.toDate ? comment.timestamp.toDate() : new Date();
     const formattedTime = this.formatTimestamp(timestamp);
-    const userBadge = this.getUserBadge(comment.userRole, comment.userUniversity);
-    
+    const userBadge = this.getUserBadge(comment.userRole, comment.userUniversity, comment.yearsExperience);
+    const universityBadge = this.getUniversityBadge(comment.userUniversity);
+    const userAvatar = this.generateUserAvatar(comment.username);
+
     const reactions = comment.reactions || { likes: 0, hearts: 0, thumbsUp: 0 };
 
     return `
       <div class="forum-comment" data-comment-id="${comment.id}">
         <div class="comment-header">
-          <span class="comment-user">${this.escapeHtml(comment.username)}</span>
-          ${userBadge}
-          <span class="comment-time">${formattedTime}</span>
+          <div class="comment-user-avatar" style="background-color: ${userAvatar.color}">
+            ${userAvatar.initials}
+          </div>
+          <div class="comment-user-info">
+            <div class="comment-user">${this.escapeHtml(comment.username)}</div>
+            <div class="comment-user-details">
+              ${universityBadge}
+              ${userBadge}
+              <span class="comment-time">${formattedTime}</span>
+            </div>
+          </div>
         </div>
         <div class="comment-text">${this.escapeHtml(comment.text)}</div>
         <div class="reaction-bar">
@@ -245,32 +244,58 @@ class ArticleComments {
     `;
   }
 
-  getUserBadge(role, university) {
-    let badges = '';
-
-    // Role badge
+  getUserBadge(role, university, yearsExperience) {
     switch (role) {
       case 'student':
-        badges += `<span class="user-badge role-student">Law Student</span>`;
-        break;
+        return `<span class="user-badge role-student">Law Student</span>`;
       case 'lawyer':
-        badges += `<span class="user-badge role-lawyer">Legal Practitioner</span>`;
-        break;
+        const experienceText = yearsExperience ? `<span class="lawyer-experience">${yearsExperience}y</span>` : '';
+        return `<span class="user-badge role-lawyer">Legal Practitioner${experienceText}</span>`;
       case 'observer':
-        badges += `<span class="user-badge role-observer">Observer</span>`;
-        break;
+        return `<span class="user-badge role-observer">Observer</span>`;
       default:
-        badges += `<span class="user-badge role-observer">Member</span>`;
+        return `<span class="user-badge role-observer">Member</span>`;
+    }
+  }
+
+  getUniversityBadge(university) {
+    const universityMap = {
+      'UZ': { name: 'University of Zimbabwe', logo: '/law-students-forum-website/assets/university-logos/uz-logo.png', class: 'uz' },
+      'MSU': { name: 'Midlands State University', logo: '/law-students-forum-website/assets/university-logos/msu-logo.png', class: 'msu' },
+      'ZEGU': { name: 'Zimbabwe Ezekiel Guti University', logo: '/law-students-forum-website/assets/university-logos/zegu-logo.png', class: 'zegu' },
+      'GZU': { name: 'Great Zimbabwe University', logo: '/law-students-forum-website/assets/university-logos/gzu-logo.png', class: 'gzu' },
+    };
+
+    if (university && universityMap[university]) {
+      const uni = universityMap[university];
+      return `
+        <div class="university-badge ${uni.class}">
+          <img src="${uni.logo}" alt="${uni.name}" class="university-logo" onerror="this.style.display='none'">
+          <span>${university}</span>
+        </div>
+      `;
     }
 
-    // University badge with theme
-    if (university) {
-      const theme = getUniversityTheme(university);
-      const isDarkMode = window.matchMedia('(prefers-color-scheme: dark)').matches;
-      badges += `<span class="university-badge" style="background-color: ${theme.primary}; color: ${theme.neutral}; border-color: ${theme.accent};">${university}</span>`;
-    }
+    return `<div class="university-badge default"><span>University</span></div>`;
+  }
 
-    return badges;
+  generateUserAvatar(username) {
+    if (!username) return { initials: '??', color: '#6b7280' };
+
+    const initials = username.split(' ')
+                            .map(n => n[0])
+                            .join('')
+                            .toUpperCase()
+                            .slice(0, 2);
+
+    const colors = ['#1e3a8a', '#dc2626', '#059669', '#7c3aed', '#ea580c', '#0891b2'];
+    let hash = 0;
+    for (let i = 0; i < username.length; i++) {
+      hash = username.charCodeAt(i) + ((hash << 5) - hash);
+    }
+    const color = colors[Math.abs(hash) % colors.length];
+
+    return { initials, color };
   }
 
   addReactionListeners() {
