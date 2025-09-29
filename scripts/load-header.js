@@ -5,9 +5,6 @@
 // • Keeps hamburger toggle and highlights active nav links
 // ---------------------------------------------------------------------
 
-// Load header and initialize any header-specific functionality
-import { initializeThemeSystem, applyThemesToExistingContent } from './theme-utilities.js';
-
 const HEADER_URL = new URL("../pages/partials/header.html", import.meta.url).href;
 const MODAL_URL = new URL("../pages/partials/auth-modal.html", import.meta.url).href;
 
@@ -107,7 +104,7 @@ async function insertModal() {
 // Run both header and modal insertion once DOM is ready
 // Ensure modal insertion happens *after* header insertion
 if (document.readyState === "loading") {
-    document.addEventListener("DOMContentLoaded", async () => {
+    document.addEventListener("DOMContentLoaded", () => {
         insertHeader()
             .then(() => insertModal()) // Ensure insertModal is called after insertHeader resolves
             .catch(err => console.error("Error in loading sequence:", err));
