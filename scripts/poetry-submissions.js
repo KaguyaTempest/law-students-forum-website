@@ -242,10 +242,31 @@ function displayWorks(snapshot) {
     }
 }
 
+// --- NEW HELPER FUNCTION: getWorkTypeData ---
+/**
+ * Maps the raw Firestore work type string to a readable label and returns the CSS class name.
+ * @param {string} type - The raw type string (e.g., 'short-story').
+ * @returns {{label: string, className: string}} 
+ */
+function getWorkTypeData(type) {
+    const typeMap = {
+        'poem': { label: 'POETRY', className: 'tag-poem' },
+        'short-story': { label: 'SHORT STORY', className: 'tag-short-story' },
+        'prose': { label: 'PROSE', className: 'tag-prose' },
+        'other': { label: 'CREATIVE WRITING', className: 'tag-creative-writing' },
+    };
+    
+    // Fallback logic to prevent errors
+    const data = typeMap[type] || { label: type.toUpperCase(), className: `tag-${type.replace(/[^a-z0-9]/gi, '-').toLowerCase()}` };
+    return data;
+}
+// --- END NEW HELPER FUNCTION ---
+
 // Create work card
 function createWorkCard(work, id) {
     const card = document.createElement('div');
-    card.className = 'work-card';
+    // We will add the university color marker class here soon
+    card.className = 'work-card'; 
     
     // Safely handle all the data fields
     const title = work.title || 'Untitled';
@@ -255,11 +276,32 @@ function createWorkCard(work, id) {
     const description = work.description || '';
     const hasFile = work.hasFile || false;
     const fileName = work.fileName || 'Unknown file';
+    
+    // --- UPDATED formatDate function for robustness ---
     const formatDate = (timestamp) => {
         if (!timestamp) return 'Recently';
-        const date = timestamp.toDate ? timestamp.toDate() : new Date(timestamp);
+        
+        let date;
+        
+        if (timestamp.toDate) {
+            // Case 1: Firestore Timestamp Object
+            date = timestamp.toDate();
+        } else {
+            // Case 2: Static Date String (from bulk uploads)
+            date = new Date(timestamp); 
+        }
+
+        if (isNaN(date.getTime())) {
+            console.warn('Could not parse timestamp:', timestamp);
+            return 'Date Unknown';
+        }
+
         return date.toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: 'numeric' });
     };
+    // --- END UPDATED formatDate function ---
+
+    // Get the type data for label and color class
+    const typeData = getWorkTypeData(type); // <--- Use the work.type variable
 
     const preview = work.hasFile
         ? `<p class="work-preview"><em>File: ${work.fileName}</em></p>`
@@ -268,7 +310,7 @@ function createWorkCard(work, id) {
     card.innerHTML = `
         <h3>${work.title}</h3>
         <div class="work-meta">
-            <span class="work-type">${work.type.replace('-', ' ')}</span>
+            <span class="work-type ${typeData.className}">${typeData.label}</span>
 
             <span>${formatDate(work.timestamp)}</span>
         </div>
@@ -341,4 +383,4 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     if (currentUser) loadRecentWorks();
-});
+});pe

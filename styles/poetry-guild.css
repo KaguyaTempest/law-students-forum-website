@@ -853,3 +853,32 @@
         grid-template-columns: 1fr;
     }
 }
+/* Custom Tag Colors for Poetry Guild */
+
+/* Base style for all tags (adjust this if needed) */
+.work-type {
+    display: inline-block;
+    padding: 3px 8px;
+    margin-right: 5px;
+    border-radius: 4px;
+    font-size: 0.75rem;
+    font-weight: 700;
+    letter-spacing: 0.5px;
+    color: white; /* Text color is always white for contrast */
+}
+
+/* 1. POETRY (Red) */
+.tag-poem {
+    background-color: #C0392B; /* Deep Red */
+}
+
+/* 2. SHORT STORY (Dark Blue) */
+.tag-short-story {
+    background-color: #2C3E50; /* Dark Slate Blue */
+}
+
+/* 3. CREATIVE WRITING (Purple) */
+.tag-creative-writing {
+    background-color: #8E44AD; /* Amethyst Purple */
+}
+}
