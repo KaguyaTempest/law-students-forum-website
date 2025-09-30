@@ -356,7 +356,9 @@ function displayWorks(snapshot) {
     }
 }
 
+
 // Helper function to display individual work cards (replaces previous implementation)
+
 function createWorkCard(work, id) {
     const card = document.createElement('div');
     card.className = 'work-card';
@@ -376,8 +378,14 @@ function createWorkCard(work, id) {
 
     const formatDate = (timestamp) => {
         if (!timestamp) return 'Recently';
+        // FIX: Check if the timestamp object has the .toDate() method,
+        // which ensures it's a valid Firestore Timestamp object, not a pending one.
+        if (typeof timestamp !== 'object' || !timestamp.toDate) {
+             return 'Pending...'; // Or 'Recently' if you prefer
+        }
+        
         try {
-            const date = timestamp.toDate ? timestamp.toDate() : new Date(timestamp);
+            const date = timestamp.toDate();
             return date.toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: 'numeric' });
         } catch (e) {
             console.error('Date formatting error:', e);
