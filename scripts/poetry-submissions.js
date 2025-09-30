@@ -356,8 +356,9 @@ function displayWorks(snapshot) {
     }
 }
 
+
 // Helper function to display individual work cards (replaces previous implementation)
-// Helper function to display individual work cards (replaces previous implementation)
+
 function createWorkCard(work, id) {
     const card = document.createElement('div');
     card.className = 'work-card';
