@@ -248,22 +248,67 @@ import { registerUser, loginUser, logoutUser, onAuthChange, getUserProfile } fro
   /**
    * Shows the input fields specific to the selected user role.
    */
-  function showRoleSpecificFields(role) {
-    console.log('Showing role specific fields for:', role);
-    hideRoleSpecificFields();
+  /**
+ * Shows the input fields specific to the selected user role.
+ * Fixed version that properly handles display toggling
+ */
+function showRoleSpecificFields(role) {
+  console.log('Showing role specific fields for:', role);
+  hideRoleSpecificFields();
 
-    if (role === "student" && studentFields) {
-      studentFields.classList.remove("hidden");
-      const inputs = studentFields.querySelectorAll("input, select");
-      inputs.forEach(input => input.setAttribute("required", ""));
-      console.log('Student fields shown');
-    } else if (role === "lawyer" && lawyerFields) {
-      lawyerFields.classList.remove("hidden");
-      const inputs = lawyerFields.querySelectorAll("input, select");
-      inputs.forEach(input => input.setAttribute("required", ""));
-      console.log('Lawyer fields shown');
-    }
+  if (role === "student" && studentFields) {
+    // Remove hidden class and set display
+    studentFields.classList.remove("hidden");
+    studentFields.style.display = "flex";
+    
+    // Make fields required
+    const inputs = studentFields.querySelectorAll("input, select");
+    inputs.forEach(input => {
+      input.setAttribute("required", "");
+    });
+    console.log('Student fields shown');
+    
+  } else if (role === "lawyer" && lawyerFields) {
+    // Remove hidden class and set display
+    lawyerFields.classList.remove("hidden");
+    lawyerFields.style.display = "flex";
+    
+    // Make fields required
+    const inputs = lawyerFields.querySelectorAll("input, select");
+    inputs.forEach(input => {
+      input.setAttribute("required", "");
+    });
+    console.log('Lawyer fields shown');
   }
+}
+
+/**
+ * Hides all role-specific input fields for students and lawyers.
+ * Fixed version that properly handles display toggling
+ */
+function hideRoleSpecificFields() {
+  if (studentFields) {
+    studentFields.classList.add("hidden");
+    studentFields.style.display = "none";
+    
+    const inputs = studentFields.querySelectorAll("input, select");
+    inputs.forEach(input => {
+      input.removeAttribute("required");
+      input.value = "";
+    });
+  }
+
+  if (lawyerFields) {
+    lawyerFields.classList.add("hidden");
+    lawyerFields.style.display = "none";
+    
+    const inputs = lawyerFields.querySelectorAll("input, select");
+    inputs.forEach(input => {
+      input.removeAttribute("required");
+      input.value = "";
+    });
+  }
+}
 
   /**
    * Displays the authentication modal.

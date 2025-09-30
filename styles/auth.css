@@ -195,7 +195,7 @@
     outline-offset: 2px;
 }
 
-/* Role-specific fields */
+/* Role-specific fields - FIXED VERSION */
 #student-fields,
 #lawyer-fields {
     display: flex;
@@ -207,16 +207,32 @@
     animation: slideDown 0.3s ease;
     opacity: 1;
     visibility: visible;
-    max-height: 300px;
+    max-height: 500px;
+    overflow: visible;
     transition: all 0.3s ease;
 }
 
+/* REMOVED !important - this was preventing JavaScript from working */
 #student-fields.hidden,
 #lawyer-fields.hidden {
-    display: none !important;
+    display: none;
     opacity: 0;
     visibility: hidden;
     max-height: 0;
+    overflow: hidden;
+}
+
+@keyframes slideDown {
+    from {
+        opacity: 0;
+        max-height: 0;
+        transform: translateY(-10px);
+    }
+    to {
+        opacity: 1;
+        max-height: 500px;
+        transform: translateY(0);
+    }
 }
 
 /* Error message styling */
