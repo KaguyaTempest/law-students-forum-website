@@ -54,54 +54,80 @@
                 </div>
                 
                 <form id="poetry-submission-form" class="submission-form" style="display: none;">
-                    <div class="form-group">
-                        <label for="work-title">Title *</label>
-                        <input type="text" id="work-title" name="title" required>
-                    </div>
-                    
-                    <div class="form-group">
-                        <label for="work-type">Type of Work *</label>
-                        <select id="work-type" name="type" required>
-                            <option value="">Select type...</option>
-                            <option value="poem">Poem</option>
-                            <option value="short-story">Short Story</option>
-                            <option value="prose">Prose</option>
-                            <option value="other">Other Creative Writing</option>
-                        </select>
-                    </div>
-                    
-                    <div class="form-group">
-                        <label for="work-content">Content</label>
-                        <textarea id="work-content" name="content" rows="10" placeholder="Paste your work here, or upload a file below..."></textarea>
-                    </div>
-                    
-                    <div class="form-group">
-                        <label for="work-file">Or Upload File</label>
-                        <input type="file" id="work-file" name="file" accept=".txt,.doc,.docx,.pdf">
-                        <small class="file-help">Accepted formats: .txt, .doc, .docx, .pdf (Max 5MB)</small>
-                    </div>
-                    
-                    <div class="form-group">
-                        <label for="work-description">Description (Optional)</label>
-                        <textarea id="work-description" name="description" rows="3" placeholder="Brief description or author's note..."></textarea>
-                    </div>
-                    
-                    <div class="form-group checkbox-group">
-                        <label>
-                            <input type="checkbox" id="allow-anonymous" name="anonymous">
-                            Submit anonymously
-                        </label>
-                    </div>
-                    
-                    <div class="form-group checkbox-group">
-                        <label>
-                            <input type="checkbox" id="accept-terms" name="terms" required>
-                            I agree that my submission follows community guidelines and is my original work
-                        </label>
-                    </div>
-                    
-                    <button type="submit" class="submit-btn">Submit Work</button>
-                </form>
+    <div class="form-group">
+        <label for="work-title">Title *</label>
+        <input type="text" id="work-title" name="title" required>
+    </div>
+
+    <div class="form-group">
+        <label for="work-type">Type of Work *</label>
+        <select id="work-type" name="type" required>
+            <option value="">Select type...</option>
+            <option value="poem">Poem</option>
+            <option value="short-story">Short Story</option>
+            <option value="prose">Prose</option>
+            <option value="other">Other Creative Writing</option>
+        </select>
+    </div>
+
+    <div class="form-group">
+        <label for="work-content">Content</label>
+        <textarea id="work-content" name="content" rows="10" placeholder="Paste your work here, or upload a file below..."></textarea>
+    </div>
+
+    <div class="form-group">
+        <label for="work-file">Or Upload File</label>
+        <input type="file" id="work-file" name="file" accept=".txt,.doc,.docx,.pdf">
+        <small class="file-help">Accepted formats: .txt, .doc, .docx, .pdf (Max 5MB)</small>
+    </div>
+
+    <!-- NEW: Theme chooser -->
+    <div class="form-group">
+        <label for="theme-color">Choose a theme color (optional)</label>
+        <select id="theme-color" name="themeColor">
+            <option value="">— Select theme —</option>
+            <option value="theme-rose">Rose</option>
+            <option value="theme-ocean">Ocean</option>
+            <option value="theme-sunset">Sunset</option>
+            <option value="theme-forest">Forest</option>
+            <option value="theme-monochrome">Monochrome</option>
+        </select>
+        <small class="file-help">If you upload a background image, the image will take precedence over the theme color.</small>
+    </div>
+
+    <!-- NEW: Background image upload -->
+    <div class="form-group">
+        <label for="background-image">Background image for this poem (optional)</label>
+        <input type="file" id="background-image" name="backgroundImage" accept="image/*">
+        <small class="file-help">Upload an image to use as the poem card & modal background (Max 3MB). If provided, it will override the theme color.</small>
+        <div id="background-preview" style="margin-top:0.75rem; display:none;">
+            <img id="background-preview-img" src="" alt="Background preview" style="max-width:180px; max-height:120px; border-radius:8px; border:1px solid var(--card-border-color);">
+            <button id="remove-background-preview" type="button" style="display:inline-block; margin-left:0.5rem;" class="retry-btn">Remove</button>
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label for="work-description">Description (Optional)</label>
+        <textarea id="work-description" name="description" rows="3" placeholder="Brief description or author's note..."></textarea>
+    </div>
+
+    <div class="form-group checkbox-group">
+        <label>
+            <input type="checkbox" id="allow-anonymous" name="anonymous">
+            Submit anonymously
+        </label>
+    </div>
+
+    <div class="form-group checkbox-group">
+        <label>
+            <input type="checkbox" id="accept-terms" name="terms" required>
+            I agree that my submission follows community guidelines and is my original work
+        </label>
+    </div>
+
+    <button type="submit" class="submit-btn">Submit Work</button>
+</form>
+
             </div>
         </section>
 

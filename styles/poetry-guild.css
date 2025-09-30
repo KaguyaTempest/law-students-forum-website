@@ -287,6 +287,96 @@
     font-size: 0.75rem;
 }
 
+/* ------------------------------
+   Poem themes & background image support
+   ------------------------------ */
+
+.work-card {
+    position: relative;
+    overflow: hidden;
+    color: inherit; /* allow themes to control color */
+    transition: transform 0.28s ease, box-shadow 0.28s ease, background 0.28s ease;
+}
+
+/* overlay to improve readability when using background images */
+.work-card .card-overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(180deg, rgba(0,0,0,0.18) 0%, rgba(0,0,0,0.35) 100%);
+    pointer-events: none;
+    mix-blend-mode: multiply;
+}
+
+/* content needs to be above overlay */
+.work-card .card-content {
+    position: relative;
+    z-index: 2;
+}
+
+/* preset theme palettes */
+.theme-rose {
+    background: linear-gradient(135deg, #8a0026 0%, #b8002e 100%);
+    color: #fff;
+}
+
+.theme-ocean {
+    background: linear-gradient(135deg, #005f73 0%, #0a9396 100%);
+    color: #fff;
+}
+
+.theme-sunset {
+    background: linear-gradient(135deg, #ff9e00 0%, #ff5400 100%);
+    color: #fff;
+}
+
+.theme-forest {
+    background: linear-gradient(135deg, #064e3b 0%, #15803d 100%);
+    color: #fff;
+}
+
+.theme-monochrome {
+    background: linear-gradient(135deg, #f5f7fa 0%, #d6d8db 100%);
+    color: #111;
+}
+
+/* If a background image is used, make card lightly translucent so overlay shows */
+.work-card.bg-image {
+    background-size: cover !important;
+    background-position: center center !important;
+    color: #fff;
+    border: 0;
+}
+
+/* Slight visual polish */
+.work-card .work-meta,
+.work-card .work-author,
+.work-card h3,
+.work-card .work-preview,
+.work-card .work-description {
+    position: relative;
+    z-index: 3;
+}
+
+/* Modal - allow background image or themed background */
+.modal .modal-content.bg-image {
+    background-size: cover;
+    background-position: center center;
+    color: #fff;
+    border: none;
+    background-blend-mode: multiply;
+}
+
+/* If modal uses theme classes, make text visible */
+.modal .modal-content.theme-monochrome {
+    color: #111;
+}
+
+/* small responsive tweak for preview image in form */
+#background-preview-img {
+    display: block;
+    object-fit: cover;
+}
+
 .work-type.poem {
     background: #f5e6ff;
     color: #6a00a3;
