@@ -707,57 +707,12 @@ import { registerUser, loginUser, logoutUser, onAuthChange, getUserProfile } fro
     });
 
     // Role selection - this is crucial for showing role-specific fields
-    // ==========================================================
-// DECLARATION AND INITIALIZATION SECTION
-// These variables MUST be defined at the start of your script.
-// ==========================================================
-const userRoleSelect = document.getElementById("user-role");
-const studentFields = document.getElementById("student-fields");
-const lawyerFields = document.getElementById("lawyer-fields");
-
-// You should also define your toggling function (if it's not already defined)
-function showRoleSpecificFields(role) {
-    if (studentFields && lawyerFields) {
-        if (role === 'student') {
-            // SHOW student fields, HIDE lawyer fields
-            studentFields.classList.remove("hidden"); 
-            lawyerFields.classList.add("hidden");
-        } else if (role === 'lawyer') {
-            // HIDE student fields, SHOW lawyer fields
-            studentFields.classList.add("hidden"); 
-            lawyerFields.classList.remove("hidden");
-        } else {
-            // HIDE both for 'observer' or 'Select your role'
-            studentFields.classList.add("hidden");
-            lawyerFields.classList.add("hidden");
-        }
+    if (userRoleSelect) {
+      userRoleSelect.addEventListener("change", (e) => {
+        console.log('Role changed to:', e.target.value);
+        showRoleSpecificFields(e.target.value);
+      });
     }
-}
-
-
-// ==========================================================
-// EVENT LISTENER SECTION
-// ==========================================================
-if (userRoleSelect) {
-    console.log('Role selector found, attaching listener...');
-    
-    // Attach the listener
-    userRoleSelect.addEventListener("change", (e) => {
-        const selectedRole = e.target.value;
-        
-        // This log should now work every time you change the role
-        console.log('Role changed to:', selectedRole); 
-        
-        // This is the function call that removes the CSS .hidden class
-        showRoleSpecificFields(selectedRole); 
-    });
-    
-    // ⚠️ IMPORTANT: Run the function once on load 
-    // to ensure fields are hidden if a role is pre-selected (though usually not the case)
-    showRoleSpecificFields(userRoleSelect.value);
-} else {
-    console.error("Error: Could not find element with ID 'user-role'. Check auth-modal.html.");
-}
 
     // Form submissions
     if (loginForm) {
