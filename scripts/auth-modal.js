@@ -248,22 +248,67 @@ import { registerUser, loginUser, logoutUser, onAuthChange, getUserProfile } fro
   /**
    * Shows the input fields specific to the selected user role.
    */
-  function showRoleSpecificFields(role) {
-    console.log('Showing role specific fields for:', role);
-    hideRoleSpecificFields();
+  /**
+ * Shows the input fields specific to the selected user role.
+ * Fixed version that properly handles display toggling
+ */
+function showRoleSpecificFields(role) {
+  console.log('Showing role specific fields for:', role);
+  hideRoleSpecificFields();
 
-    if (role === "student" && studentFields) {
-      studentFields.classList.remove("hidden");
-      const inputs = studentFields.querySelectorAll("input, select");
-      inputs.forEach(input => input.setAttribute("required", ""));
-      console.log('Student fields shown');
-    } else if (role === "lawyer" && lawyerFields) {
-      lawyerFields.classList.remove("hidden");
-      const inputs = lawyerFields.querySelectorAll("input, select");
-      inputs.forEach(input => input.setAttribute("required", ""));
-      console.log('Lawyer fields shown');
-    }
+  if (role === "student" && studentFields) {
+    // Remove hidden class and set display
+    studentFields.classList.remove("hidden");
+    studentFields.style.display = "flex";
+    
+    // Make fields required
+    const inputs = studentFields.querySelectorAll("input, select");
+    inputs.forEach(input => {
+      input.setAttribute("required", "");
+    });
+    console.log('Student fields shown');
+    
+  } else if (role === "lawyer" && lawyerFields) {
+    // Remove hidden class and set display
+    lawyerFields.classList.remove("hidden");
+    lawyerFields.style.display = "flex";
+    
+    // Make fields required
+    const inputs = lawyerFields.querySelectorAll("input, select");
+    inputs.forEach(input => {
+      input.setAttribute("required", "");
+    });
+    console.log('Lawyer fields shown');
   }
+}
+
+/**
+ * Hides all role-specific input fields for students and lawyers.
+ * Fixed version that properly handles display toggling
+ */
+function hideRoleSpecificFields() {
+  if (studentFields) {
+    studentFields.classList.add("hidden");
+    studentFields.style.display = "none";
+    
+    const inputs = studentFields.querySelectorAll("input, select");
+    inputs.forEach(input => {
+      input.removeAttribute("required");
+      input.value = "";
+    });
+  }
+
+  if (lawyerFields) {
+    lawyerFields.classList.add("hidden");
+    lawyerFields.style.display = "none";
+    
+    const inputs = lawyerFields.querySelectorAll("input, select");
+    inputs.forEach(input => {
+      input.removeAttribute("required");
+      input.value = "";
+    });
+  }
+}
 
   /**
    * Displays the authentication modal.
@@ -707,57 +752,12 @@ import { registerUser, loginUser, logoutUser, onAuthChange, getUserProfile } fro
     });
 
     // Role selection - this is crucial for showing role-specific fields
-    // ==========================================================
-// DECLARATION AND INITIALIZATION SECTION
-// These variables MUST be defined at the start of your script.
-// ==========================================================
-const userRoleSelect = document.getElementById("user-role");
-const studentFields = document.getElementById("student-fields");
-const lawyerFields = document.getElementById("lawyer-fields");
-
-// You should also define your toggling function (if it's not already defined)
-function showRoleSpecificFields(role) {
-    if (studentFields && lawyerFields) {
-        if (role === 'student') {
-            // SHOW student fields, HIDE lawyer fields
-            studentFields.classList.remove("hidden"); 
-            lawyerFields.classList.add("hidden");
-        } else if (role === 'lawyer') {
-            // HIDE student fields, SHOW lawyer fields
-            studentFields.classList.add("hidden"); 
-            lawyerFields.classList.remove("hidden");
-        } else {
-            // HIDE both for 'observer' or 'Select your role'
-            studentFields.classList.add("hidden");
-            lawyerFields.classList.add("hidden");
-        }
+    if (userRoleSelect) {
+      userRoleSelect.addEventListener("change", (e) => {
+        console.log('Role changed to:', e.target.value);
+        showRoleSpecificFields(e.target.value);
+      });
     }
-}
-
-
-// ==========================================================
-// EVENT LISTENER SECTION
-// ==========================================================
-if (userRoleSelect) {
-    console.log('Role selector found, attaching listener...');
-    
-    // Attach the listener
-    userRoleSelect.addEventListener("change", (e) => {
-        const selectedRole = e.target.value;
-        
-        // This log should now work every time you change the role
-        console.log('Role changed to:', selectedRole); 
-        
-        // This is the function call that removes the CSS .hidden class
-        showRoleSpecificFields(selectedRole); 
-    });
-    
-    // ⚠️ IMPORTANT: Run the function once on load 
-    // to ensure fields are hidden if a role is pre-selected (though usually not the case)
-    showRoleSpecificFields(userRoleSelect.value);
-} else {
-    console.error("Error: Could not find element with ID 'user-role'. Check auth-modal.html.");
-}
 
     // Form submissions
     if (loginForm) {
