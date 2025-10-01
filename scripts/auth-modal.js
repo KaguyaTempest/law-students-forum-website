@@ -226,25 +226,28 @@ import { registerUser, loginUser, logoutUser, onAuthChange, getUserProfile } fro
    * Hides all role-specific input fields for students and lawyers.
    */
   function hideRoleSpecificFields() {
-    if (studentFields) {
-      studentFields.classList.add("hidden");
-      const inputs = studentFields.querySelectorAll("input, select");
-      inputs.forEach(input => {
-        input.removeAttribute("required");
-        input.value = "";
-      });
-    }
-
-    if (lawyerFields) {
-      lawyerFields.classList.add("hidden");
-      const inputs = lawyerFields.querySelectorAll("input, select");
-      inputs.forEach(input => {
-        input.removeAttribute("required");
-        input.value = "";
-      });
-    }
+  if (studentFields) {
+    studentFields.classList.add("hidden");
+    studentFields.style.display = "none";
+    
+    const inputs = studentFields.querySelectorAll("input, select");
+    inputs.forEach(input => {
+      input.removeAttribute("required");
+      input.value = "";
+    });
   }
 
+  if (lawyerFields) {
+    lawyerFields.classList.add("hidden");
+    lawyerFields.style.display = "none";
+    
+    const inputs = lawyerFields.querySelectorAll("input, select");
+    inputs.forEach(input => {
+      input.removeAttribute("required");
+      input.value = "";
+    });
+  }
+}
   /**
    * Shows the input fields specific to the selected user role.
    */
