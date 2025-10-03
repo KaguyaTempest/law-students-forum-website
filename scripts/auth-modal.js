@@ -237,18 +237,32 @@ import { registerUser, loginUser, logoutUser, onAuthChange, getUserProfile } fro
    * Shows the input fields specific to the selected user role.
    */
   function showRoleSpecificFields(role) {
+    console.log("showRoleSpecificFields called with role:", role);
+    console.log("studentFields element:", studentFields);
+    console.log("lawyerFields element:", lawyerFields);
+    
     hideRoleSpecificFields();
 
     if (role === "student" && studentFields) {
+      console.log("Showing student fields");
       studentFields.classList.remove("hidden");
       studentFields.style.display = "flex";
+      studentFields.style.flexDirection = "column";
       const inputs = studentFields.querySelectorAll("input, select");
       inputs.forEach(input => input.setAttribute("required", ""));
+      console.log("Student fields display:", studentFields.style.display);
+      console.log("Student fields classes:", studentFields.className);
     } else if (role === "lawyer" && lawyerFields) {
+      console.log("Showing lawyer fields");
       lawyerFields.classList.remove("hidden");
       lawyerFields.style.display = "flex";
+      lawyerFields.style.flexDirection = "column";
       const inputs = lawyerFields.querySelectorAll("input, select");
       inputs.forEach(input => input.setAttribute("required", ""));
+      console.log("Lawyer fields display:", lawyerFields.style.display);
+      console.log("Lawyer fields classes:", lawyerFields.className);
+    } else {
+      console.log("No matching role or elements not found");
     }
   }
 
