@@ -1,4 +1,3 @@
-
 // scripts/auth-modal.js
 // Enhanced Firebase Auth integration with profile dropdown system
 import { registerUser, loginUser, logoutUser, onAuthChange, getUserProfile } from './auth-service.js';
@@ -15,7 +14,7 @@ import { registerUser, loginUser, logoutUser, onAuthChange, getUserProfile } fro
       closeModalBtn, userRoleSelect, studentFields, lawyerFields,
       loginError, signupError;
 
-  // Profile elements
+  // Profile elements (NEW)
   let authControls, userInfo, profileTrigger, profileDropdown,
       userAvatar, userName, userRole, dropdownAvatar, dropdownName,
       dropdownEmail, dropdownRoleDetail, logoutBtn;
@@ -28,15 +27,15 @@ import { registerUser, loginUser, logoutUser, onAuthChange, getUserProfile } fro
     onAuthChange(async (user) => {
       currentUser = user;
       if (user) {
-        // User is logged in, fetch profile and update UI
+        // Fetch the user's profile data from Firestore
         const profile = await getUserProfile(user.uid);
+        // Pass the profile data to the UI update function
         updateAuthUI(true, {
           email: user.email,
           username: profile?.username || user.email.split('@')[0],
           ...profile
         });
       } else {
-        // User is logged out, show the auth buttons
         updateAuthUI(false);
       }
     });
@@ -94,7 +93,7 @@ import { registerUser, loginUser, logoutUser, onAuthChange, getUserProfile } fro
    */
   function initializeProfileDropdown() {
     if (profileTrigger) {
-      profileTrigger.addEventListener("click", (e) => {
+      profileTrigger.addEventListener('click', (e) => {
         e.stopPropagation();
         toggleProfileDropdown();
       });
@@ -162,6 +161,7 @@ import { registerUser, loginUser, logoutUser, onAuthChange, getUserProfile } fro
    * Shows a welcome/farewell message
    */
   function showWelcomeMessage(message, isWelcome = true) {
+    // Create or find welcome popup element
     let welcomePopup = document.getElementById('welcome-popup');
     if (!welcomePopup) {
       welcomePopup = document.createElement('div');
@@ -175,21 +175,13 @@ import { registerUser, loginUser, logoutUser, onAuthChange, getUserProfile } fro
     welcomePopup.style.top = '20px';
     welcomePopup.style.right = '20px';
     welcomePopup.style.zIndex = '1001';
-    welcomePopup.style.background = isWelcome ? '#28a745' : '#dc3545';
-    welcomePopup.style.color = 'white';
-    welcomePopup.style.padding = '10px 20px';
-    welcomePopup.style.borderRadius = '5px';
-    welcomePopup.style.transform = 'translateX(100%)';
-    welcomePopup.style.transition = 'transform 0.3s ease';
     
     // Show the popup
-    setTimeout(() => {
-      welcomePopup.style.transform = 'translateX(0)';
-    }, 100);
+    welcomePopup.classList.add('show');
     
     // Auto-hide after 4 seconds
     setTimeout(() => {
-      welcomePopup.style.transform = 'translateX(100%)';
+      welcomePopup.classList.remove('show');
       setTimeout(() => {
         if (welcomePopup.parentNode) {
           welcomePopup.parentNode.removeChild(welcomePopup);
@@ -202,14 +194,8 @@ import { registerUser, loginUser, logoutUser, onAuthChange, getUserProfile } fro
    * Clears any error messages displayed in the modal.
    */
   function clearErrors() {
-    if (loginError) {
-      loginError.textContent = "";
-      loginError.style.display = 'none';
-    }
-    if (signupError) {
-      signupError.textContent = "";
-      signupError.style.display = 'none';
-    }
+    if (loginError) loginError.textContent = "";
+    if (signupError) signupError.textContent = "";
   }
 
   /**
@@ -228,6 +214,7 @@ import { registerUser, loginUser, logoutUser, onAuthChange, getUserProfile } fro
   function hideRoleSpecificFields() {
     if (studentFields) {
       studentFields.classList.add("hidden");
+      studentFields.style.display = "none";
       const inputs = studentFields.querySelectorAll("input, select");
       inputs.forEach(input => {
         input.removeAttribute("required");
@@ -237,6 +224,7 @@ import { registerUser, loginUser, logoutUser, onAuthChange, getUserProfile } fro
 
     if (lawyerFields) {
       lawyerFields.classList.add("hidden");
+      lawyerFields.style.display = "none";
       const inputs = lawyerFields.querySelectorAll("input, select");
       inputs.forEach(input => {
         input.removeAttribute("required");
@@ -248,67 +236,21 @@ import { registerUser, loginUser, logoutUser, onAuthChange, getUserProfile } fro
   /**
    * Shows the input fields specific to the selected user role.
    */
-  /**
- * Shows the input fields specific to the selected user role.
- * Fixed version that properly handles display toggling
- */
-function showRoleSpecificFields(role) {
-  console.log('Showing role specific fields for:', role);
-  hideRoleSpecificFields();
+  function showRoleSpecificFields(role) {
+    hideRoleSpecificFields();
 
-  if (role === "student" && studentFields) {
-    // Remove hidden class and set display
-    studentFields.classList.remove("hidden");
-    studentFields.style.display = "flex";
-    
-    // Make fields required
-    const inputs = studentFields.querySelectorAll("input, select");
-    inputs.forEach(input => {
-      input.setAttribute("required", "");
-    });
-    console.log('Student fields shown');
-    
-  } else if (role === "lawyer" && lawyerFields) {
-    // Remove hidden class and set display
-    lawyerFields.classList.remove("hidden");
-    lawyerFields.style.display = "flex";
-    
-    // Make fields required
-    const inputs = lawyerFields.querySelectorAll("input, select");
-    inputs.forEach(input => {
-      input.setAttribute("required", "");
-    });
-    console.log('Lawyer fields shown');
+    if (role === "student" && studentFields) {
+      studentFields.classList.remove("hidden");
+      studentFields.style.display = "flex";
+      const inputs = studentFields.querySelectorAll("input, select");
+      inputs.forEach(input => input.setAttribute("required", ""));
+    } else if (role === "lawyer" && lawyerFields) {
+      lawyerFields.classList.remove("hidden");
+      lawyerFields.style.display = "flex";
+      const inputs = lawyerFields.querySelectorAll("input, select");
+      inputs.forEach(input => input.setAttribute("required", ""));
+    }
   }
-}
-
-/**
- * Hides all role-specific input fields for students and lawyers.
- * Fixed version that properly handles display toggling
- */
-function hideRoleSpecificFields() {
-  if (studentFields) {
-    studentFields.classList.add("hidden");
-    studentFields.style.display = "none";
-    
-    const inputs = studentFields.querySelectorAll("input, select");
-    inputs.forEach(input => {
-      input.removeAttribute("required");
-      input.value = "";
-    });
-  }
-
-  if (lawyerFields) {
-    lawyerFields.classList.add("hidden");
-    lawyerFields.style.display = "none";
-    
-    const inputs = lawyerFields.querySelectorAll("input, select");
-    inputs.forEach(input => {
-      input.removeAttribute("required");
-      input.value = "";
-    });
-  }
-}
 
   /**
    * Displays the authentication modal.
@@ -321,7 +263,7 @@ function hideRoleSpecificFields() {
 
     clearErrors();
     hideRoleSpecificFields();
-    closeProfileDropdown();
+    closeProfileDropdown(); // Close profile dropdown if open
 
     // Show modal with proper display
     authModal.classList.remove("hidden");
@@ -558,11 +500,7 @@ function hideRoleSpecificFields() {
    * Updates the header UI based on the user's login status.
    */
   function updateAuthUI(isLoggedIn, userData = null) {
-    console.log('Updating auth UI:', isLoggedIn, userData);
-    if (!authControls || !userInfo) {
-      console.warn('Auth controls or user info elements not found');
-      return;
-    }
+    if (!authControls || !userInfo) return;
 
     if (isLoggedIn && userData) {
       // Hide auth buttons, show profile
@@ -579,6 +517,7 @@ function hideRoleSpecificFields() {
       if (userAvatar) {
         userAvatar.textContent = initials;
         userAvatar.style.backgroundColor = avatarColor;
+        // Check if user has profile image
         if (userData.profileImage) {
           const img = document.createElement('img');
           img.src = userData.profileImage;
@@ -611,8 +550,8 @@ function hideRoleSpecificFields() {
       // Update notification badges (mock data for now)
       const messagesBadge = document.getElementById('messages-badge');
       const notificationsBadge = document.getElementById('notifications-badge');
-      if (messagesBadge) messagesBadge.textContent = '3';
-      if (notificationsBadge) notificationsBadge.textContent = '5';
+      if (messagesBadge) messagesBadge.textContent = '3'; // Mock data
+      if (notificationsBadge) notificationsBadge.textContent = '5'; // Mock data
 
     } else {
       // Show auth buttons, hide profile
@@ -631,23 +570,15 @@ function hideRoleSpecificFields() {
     const openSignupBtn = document.getElementById("signup-btn");
 
     if (openLoginBtn) {
-      // Remove any existing listeners
-      openLoginBtn.replaceWith(openLoginBtn.cloneNode(true));
-      const newLoginBtn = document.getElementById("login-btn");
-      newLoginBtn.addEventListener("click", (e) => {
+      openLoginBtn.addEventListener("click", (e) => {
         e.preventDefault();
-        console.log('Login button clicked');
         showModal(true);
       });
     }
 
     if (openSignupBtn) {
-      // Remove any existing listeners
-      openSignupBtn.replaceWith(openSignupBtn.cloneNode(true));
-      const newSignupBtn = document.getElementById("signup-btn");
-      newSignupBtn.addEventListener("click", (e) => {
+      openSignupBtn.addEventListener("click", (e) => {
         e.preventDefault();
-        console.log('Signup button clicked');
         showModal(false);
       });
     }
@@ -655,7 +586,6 @@ function hideRoleSpecificFields() {
 
   // Header loaded event
   document.addEventListener("header:loaded", () => {
-    console.log('Header loaded event received');
     headerReady = true;
     
     // Get header elements
@@ -683,7 +613,6 @@ function hideRoleSpecificFields() {
 
   // Modal loaded event
   document.addEventListener("authModal:loaded", () => {
-    console.log('Auth modal loaded event received');
     modalReady = true;
 
     // Get modal elements
@@ -751,12 +680,16 @@ function hideRoleSpecificFields() {
       if (e.target === authModal) hideModal();
     });
 
-    // Role selection - this is crucial for showing role-specific fields
+    // Role selection
     if (userRoleSelect) {
       userRoleSelect.addEventListener("change", (e) => {
-        console.log('Role changed to:', e.target.value);
+        console.log("Role selected:", e.target.value);
+        console.log("Student fields element:", studentFields);
+        console.log("Lawyer fields element:", lawyerFields);
         showRoleSpecificFields(e.target.value);
       });
+    } else {
+      console.error("User role select element not found!");
     }
 
     // Form submissions
@@ -787,12 +720,9 @@ function hideRoleSpecificFields() {
 
   // Re-bind buttons on DOMContentLoaded if header is not using custom event
   document.addEventListener('DOMContentLoaded', () => {
-    console.log('DOM content loaded');
     if (!headerReady) {
-      setTimeout(() => {
-        bindHeaderButtons();
-        initAuthStateListener();
-      }, 1000);
+      bindHeaderButtons();
+      initAuthStateListener();
     }
   });
 })();
