@@ -1,0 +1,400 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Submit Article | Law Students Intellectual Forum</title>
+  <link rel="icon" href="/law-students-forum-website/assets/favicon.ico" />
+  <link rel="stylesheet" href="/law-students-forum-website/styles/style.css" />
+  <link rel="stylesheet" href="/law-students-forum-website/styles/auth.css" />
+  <style>
+    .submission-container {
+      max-width: 900px;
+      margin: 2rem auto;
+      padding: 2rem;
+      background: white;
+      border-radius: 1rem;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    }
+
+    .submission-header {
+      text-align: center;
+      margin-bottom: 2.5rem;
+    }
+
+    .submission-header h1 {
+      font-size: 2.5rem;
+      color: #1e3a8a;
+      margin-bottom: 0.5rem;
+    }
+
+    .submission-header p {
+      color: #6b7280;
+      font-size: 1.1rem;
+    }
+
+    .form-section {
+      margin-bottom: 2rem;
+    }
+
+    .form-section h2 {
+      font-size: 1.5rem;
+      color: #1e3a8a;
+      margin-bottom: 1rem;
+      border-bottom: 2px solid #e5e7eb;
+      padding-bottom: 0.5rem;
+    }
+
+    .form-group {
+      margin-bottom: 1.5rem;
+    }
+
+    .form-group label {
+      display: block;
+      font-weight: 600;
+      margin-bottom: 0.5rem;
+      color: #374151;
+    }
+
+    .form-group input,
+    .form-group textarea,
+    .form-group select {
+      width: 100%;
+      padding: 0.75rem 1rem;
+      border: 2px solid #e5e7eb;
+      border-radius: 0.5rem;
+      font-family: inherit;
+      font-size: 1rem;
+      transition: border-color 0.3s;
+    }
+
+    .form-group input:focus,
+    .form-group textarea:focus,
+    .form-group select:focus {
+      outline: none;
+      border-color: #1e3a8a;
+    }
+
+    .form-group textarea {
+      min-height: 150px;
+      resize: vertical;
+      line-height: 1.6;
+    }
+
+    .form-group small {
+      display: block;
+      margin-top: 0.25rem;
+      color: #6b7280;
+      font-size: 0.875rem;
+    }
+
+    .content-sections {
+      margin-top: 1.5rem;
+    }
+
+    .content-section-item {
+      background: #f9fafb;
+      padding: 1.5rem;
+      border-radius: 0.5rem;
+      margin-bottom: 1rem;
+      border: 1px solid #e5e7eb;
+    }
+
+    .content-section-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 1rem;
+    }
+
+    .section-number {
+      background: #1e3a8a;
+      color: white;
+      padding: 0.25rem 0.75rem;
+      border-radius: 0.5rem;
+      font-weight: 600;
+    }
+
+    .remove-section-btn {
+      background: #dc2626;
+      color: white;
+      border: none;
+      padding: 0.5rem 1rem;
+      border-radius: 0.5rem;
+      cursor: pointer;
+      font-weight: 600;
+    }
+
+    .add-section-btn {
+      background: #059669;
+      color: white;
+      border: none;
+      padding: 0.75rem 1.5rem;
+      border-radius: 0.5rem;
+      cursor: pointer;
+      font-weight: 600;
+      margin-top: 1rem;
+    }
+
+    .topics-input {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+      margin-top: 0.5rem;
+    }
+
+    .topic-tag {
+      background: #1e3a8a;
+      color: white;
+      padding: 0.375rem 0.75rem;
+      border-radius: 1rem;
+      font-size: 0.875rem;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .remove-topic {
+      cursor: pointer;
+      font-weight: 700;
+    }
+
+    .submit-btn {
+      width: 100%;
+      background: linear-gradient(135deg, #1e3a8a, #2563eb);
+      color: white;
+      border: none;
+      padding: 1rem 2rem;
+      border-radius: 0.75rem;
+      font-size: 1.1rem;
+      font-weight: 700;
+      cursor: pointer;
+      transition: transform 0.2s;
+    }
+
+    .submit-btn:hover {
+      transform: translateY(-2px);
+    }
+
+    .submit-btn:disabled {
+      opacity: 0.6;
+      cursor: not-allowed;
+      transform: none;
+    }
+
+    .guidelines {
+      background: #eff6ff;
+      border: 2px solid #3b82f6;
+      border-radius: 0.75rem;
+      padding: 1.5rem;
+      margin-bottom: 2rem;
+    }
+
+    .guidelines h3 {
+      color: #1e40af;
+      margin-bottom: 0.75rem;
+    }
+
+    .guidelines ul {
+      margin-left: 1.5rem;
+      color: #1e40af;
+    }
+
+    .image-upload-area {
+      border: 2px dashed #cbd5e1;
+      border-radius: 0.5rem;
+      padding: 2rem;
+      text-align: center;
+      cursor: pointer;
+      transition: all 0.3s;
+    }
+
+    .image-upload-area:hover {
+      border-color: #1e3a8a;
+      background: #f8fafc;
+    }
+
+    .image-preview {
+      margin-top: 1rem;
+      max-width: 100%;
+      max-height: 300px;
+      border-radius: 0.5rem;
+      display: none;
+    }
+
+    .success-message {
+      background: #d1fae5;
+      border: 2px solid #059669;
+      color: #065f46;
+      padding: 1.5rem;
+      border-radius: 0.75rem;
+      text-align: center;
+      margin-bottom: 2rem;
+      display: none;
+    }
+  </style>
+</head>
+
+<body>
+  <div id="header-placeholder"></div>
+
+  <main class="submission-container">
+    <div class="submission-header">
+      <h1>Submit Your Article</h1>
+      <p>Share your legal insights and analyses with the community</p>
+    </div>
+
+    <div class="success-message" id="success-message">
+      <h3>🎉 Article Submitted Successfully!</h3>
+      <p>Your article will be reviewed and published soon.</p>
+    </div>
+
+    <div class="guidelines">
+      <h3>📋 Submission Guidelines</h3>
+      <ul>
+        <li>Articles should be original and well-researched</li>
+        <li>Minimum length: 1000 words</li>
+        <li>Include proper citations and references</li>
+        <li>Use clear, professional language</li>
+        <li>Add relevant topics/tags for better discoverability</li>
+      </ul>
+    </div>
+
+    <form id="article-submission-form">
+      <!-- Basic Information -->
+      <div class="form-section">
+        <h2>Basic Information</h2>
+        
+        <div class="form-group">
+          <label for="article-title">Article Title *</label>
+          <input type="text" id="article-title" required 
+                 placeholder="Enter a compelling title for your article">
+          <small>Keep it concise and descriptive (max 100 characters)</small>
+        </div>
+
+        <div class="form-group">
+          <label for="article-subtitle">Subtitle</label>
+          <input type="text" id="article-subtitle" 
+                 placeholder="Optional subtitle or tagline">
+          <small>A brief description that appears under the title</small>
+        </div>
+
+        <div class="form-group">
+          <label for="article-author">Author Name *</label>
+          <input type="text" id="article-author" required 
+                 placeholder="Your full name">
+        </div>
+      </div>
+
+      <!-- Banner Image -->
+      <div class="form-section">
+        <h2>Banner Image</h2>
+        
+        <div class="form-group">
+          <label>Upload Banner Image (Optional)</label>
+          <div class="image-upload-area" id="image-upload-area">
+            <p>📁 Click to upload or drag and drop</p>
+            <small>Recommended size: 1200x600px, Max: 5MB</small>
+            <input type="file" id="banner-image" accept="image/*" style="display:none;">
+          </div>
+          <img id="image-preview" class="image-preview" alt="Preview">
+        </div>
+      </div>
+
+      <!-- Introduction -->
+      <div class="form-section">
+        <h2>Introduction</h2>
+        
+        <div class="form-group">
+          <label for="intro-paragraph">Lead Paragraph *</label>
+          <textarea id="intro-paragraph" required 
+                    placeholder="Write an engaging opening paragraph that hooks the reader..."></textarea>
+          <small>This paragraph will have a drop cap and special styling</small>
+        </div>
+
+        <div class="form-group">
+          <label for="intro-text">Additional Introduction Text</label>
+          <textarea id="intro-text" 
+                    placeholder="Continue your introduction..."></textarea>
+        </div>
+      </div>
+
+      <!-- Article Sections -->
+      <div class="form-section">
+        <h2>Article Content</h2>
+        <p style="color: #6b7280; margin-bottom: 1rem;">
+          Structure your article into sections with headings and content
+        </p>
+        
+        <div id="content-sections-container">
+          <!-- Sections will be added dynamically -->
+        </div>
+        
+        <button type="button" class="add-section-btn" id="add-section-btn">
+          + Add Section
+        </button>
+      </div>
+
+      <!-- Conclusion -->
+      <div class="form-section">
+        <h2>Conclusion</h2>
+        
+        <div class="form-group">
+          <label for="conclusion-heading">Conclusion Heading</label>
+          <input type="text" id="conclusion-heading" 
+                 placeholder="e.g., 'Final Thoughts' or 'Looking Forward'">
+        </div>
+
+        <div class="form-group">
+          <label for="conclusion-text">Conclusion Content *</label>
+          <textarea id="conclusion-text" required 
+                    placeholder="Summarize your key points and provide final insights..."></textarea>
+        </div>
+      </div>
+
+      <!-- References -->
+      <div class="form-section">
+        <h2>References</h2>
+        
+        <div class="form-group">
+          <label for="references">References & Citations</label>
+          <textarea id="references" 
+                    placeholder="List your references and citations here. Each on a new line."></textarea>
+          <small>Format: [1] Author. (Year). Title. Source.</small>
+        </div>
+      </div>
+
+      <!-- Topics/Tags -->
+      <div class="form-section">
+        <h2>Topics & Tags</h2>
+        
+        <div class="form-group">
+          <label for="topic-input">Add Topics *</label>
+          <div style="display: flex; gap: 0.5rem;">
+            <input type="text" id="topic-input" 
+                   placeholder="Enter a topic and press Enter">
+            <button type="button" id="add-topic-btn" 
+                    style="padding: 0.75rem 1.5rem; background: #1e3a8a; color: white; border: none; border-radius: 0.5rem; cursor: pointer;">
+              Add
+            </button>
+          </div>
+          <div class="topics-input" id="topics-container"></div>
+          <small>Add at least 3 relevant topics for better discoverability</small>
+        </div>
+      </div>
+
+      <!-- Submit -->
+      <button type="submit" class="submit-btn" id="submit-btn">
+        Submit Article for Review
+      </button>
+    </form>
+  </main>
+
+  <footer style="text-align: center; padding: 2rem; color: #6b7280;">
+    © 2025 Law Students Intellectual Forum
+  </footer>
+
+  <script type="module" src="/law-students-forum-website/scripts/load-header.js"></script>
+  <script type="module" src="/law-students-forum-website/scripts/article-submission.js"></script>
+</body>
+</html>

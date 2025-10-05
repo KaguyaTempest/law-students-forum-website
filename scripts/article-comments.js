@@ -1,5 +1,5 @@
 // scripts/article-comments.js
-// Real-time commenting system with Firebase integration
+// Fixed real-time commenting system with Firebase integration
 import { auth, db } from './firebase-config.js';
 import { 
   collection, 
@@ -11,8 +11,7 @@ import {
   deleteDoc, 
   doc,
   updateDoc,
-  increment,
-  getDoc
+  increment
 } from 'https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js';
 import { onAuthStateChanged } from 'https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js';
 import { getUserProfile } from './auth-service.js';
@@ -33,10 +32,13 @@ class ArticleComments {
   }
 
   init() {
-    // Get article ID from the page
+    // Get article ID from the page URL
     this.articleId = this.getArticleId();
+    
+    console.log('Article ID detected:', this.articleId); // Debug log
+    
     if (!this.articleId) {
-      console.warn('No article ID found');
+      console.warn('No article ID found - comments disabled');
       return;
     }
 
@@ -56,7 +58,17 @@ class ArticleComments {
     onAuthStateChanged(auth, async (user) => {
       this.currentUser = user;
       if (user) {
-        this.userProfile = await getUserProfile(user.uid);
+        try {
+          this.userProfile = await getUserProfile(user.uid);
+          console.log('User profile loaded:', this.userProfile); // Debug log
+        } catch (error) {
+          console.error('Error loading user profile:', error);
+          this.userProfile = {
+            username: user.email || 'Anonymous',
+            role: 'observer',
+            university: ''
+          };
+        }
       } else {
         this.userProfile = null;
       }
@@ -72,7 +84,6 @@ class ArticleComments {
     if (this.loginToCommentBtn) {
       this.loginToCommentBtn.addEventListener('click', (e) => {
         e.preventDefault();
-        // Trigger auth modal (assuming it exists globally)
         const event = new CustomEvent('show-auth-modal', { detail: { showLogin: true } });
         document.dispatchEvent(event);
       });
@@ -83,16 +94,23 @@ class ArticleComments {
   }
 
   getArticleId() {
-    // Try to get from data attribute first
+    // Extract article ID from URL path
+    const path = window.location.pathname;
+    
+    // Pattern: /articles/article-name.html
+    const match = path.match(/\/articles\/([^\/]+)\.html$/);
+    
+    if (match && match[1]) {
+      return match[1];
+    }
+    
+    // Fallback: try data attribute
     const main = document.querySelector('main[data-article-id]');
     if (main) {
       return main.getAttribute('data-article-id');
     }
-
-    // Fallback to URL path
-    const path = window.location.pathname;
-    const matches = path.match(/\/articles\/([^\/]+)\.html?$/);
-    return matches ? matches[1] : null;
+    
+    return null;
   }
 
   updateCommentForm() {
@@ -130,29 +148,37 @@ class ArticleComments {
       submitBtn.disabled = true;
       submitBtn.textContent = 'Posting...';
 
+      console.log('Posting comment for article:', this.articleId); // Debug log
+
       // Add comment to Firestore
-      await addDoc(collection(db, 'comments'), {
+      const commentData = {
         articleId: this.articleId,
         userId: this.currentUser.uid,
-        username: this.userProfile.username || 'Anonymous',
+        username: this.userProfile.username || this.currentUser.email || 'Anonymous',
         userRole: this.userProfile.role || 'observer',
-        userUniversity: this.userProfile.profileData?.university || this.userProfile.university || '',
-        yearsExperience: this.userProfile.profileData?.yearsExperience || null,
+        userUniversity: this.userProfile.university || '',
+        yearsExperience: this.userProfile.yearsExperience || null,
         text: text,
         timestamp: serverTimestamp(),
         reactions: {
           likes: 0,
           hearts: 0,
-          thumbsUp: 0
+          celebrations: 0
         }
-      });
+      };
+
+      console.log('Comment data:', commentData); // Debug log
+
+      await addDoc(collection(db, 'comments'), commentData);
 
       // Clear the form
       this.commentTextarea.value = '';
       
+      console.log('Comment posted successfully!'); // Debug log
+      
     } catch (error) {
       console.error('Error posting comment:', error);
-      alert('Failed to post comment. Please try again.');
+      alert('Failed to post comment: ' + error.message);
     } finally {
       submitBtn.disabled = false;
       submitBtn.textContent = originalText;
@@ -162,7 +188,9 @@ class ArticleComments {
   loadComments() {
     if (!this.articleId) return;
 
-    // Create query for comments on this article
+    console.log('Loading comments for article:', this.articleId); // Debug log
+
+    // Create query for all comments
     const commentsQuery = query(
       collection(db, 'comments'),
       orderBy('timestamp', 'desc')
@@ -181,7 +209,10 @@ class ArticleComments {
         }
       });
 
+      console.log('Loaded comments:', comments.length); // Debug log
       this.renderComments(comments);
+    }, (error) => {
+      console.error('Error loading comments:', error);
     });
   }
 
@@ -204,11 +235,11 @@ class ArticleComments {
   renderComment(comment) {
     const timestamp = comment.timestamp?.toDate ? comment.timestamp.toDate() : new Date();
     const formattedTime = this.formatTimestamp(timestamp);
-    const userBadge = this.getUserBadge(comment.userRole, comment.userUniversity, comment.yearsExperience);
+    const userBadge = this.getUserBadge(comment.userRole, comment.yearsExperience);
     const universityBadge = this.getUniversityBadge(comment.userUniversity);
     const userAvatar = this.generateUserAvatar(comment.username);
 
-    const reactions = comment.reactions || { likes: 0, hearts: 0, thumbsUp: 0 };
+    const reactions = comment.reactions || { likes: 0, hearts: 0, celebrations: 0 };
 
     return `
       <div class="forum-comment" data-comment-id="${comment.id}">
@@ -233,24 +264,24 @@ class ArticleComments {
           <button class="reaction-btn" data-reaction="hearts" data-comment-id="${comment.id}">
             ❤️ <span class="reaction-count">${reactions.hearts || 0}</span>
           </button>
-          <button class="reaction-btn" data-reaction="thumbsUp" data-comment-id="${comment.id}">
-            🎉 <span class="reaction-count">${reactions.thumbsUp || 0}</span>
+          <button class="reaction-btn" data-reaction="celebrations" data-comment-id="${comment.id}">
+            🎉 <span class="reaction-count">${reactions.celebrations || 0}</span>
           </button>
         </div>
-        ${this.currentUser && (this.currentUser.uid === comment.userId || this.isAdmin()) ? 
+        ${this.canDeleteComment(comment) ? 
           `<button class="delete-comment-btn" data-comment-id="${comment.id}">Delete</button>` : 
           ''}
       </div>
     `;
   }
 
-  getUserBadge(role, university, yearsExperience) {
+  getUserBadge(role, yearsExperience) {
     switch (role) {
       case 'student':
         return `<span class="user-badge role-student">Law Student</span>`;
       case 'lawyer':
         const experienceText = yearsExperience ? `<span class="lawyer-experience">${yearsExperience}y</span>` : '';
-        return `<span class="user-badge role-lawyer">Legal Practitioner${experienceText}</span>`;
+        return `<span class="user-badge role-lawyer">Legal Practitioner ${experienceText}</span>`;
       case 'observer':
         return `<span class="user-badge role-observer">Observer</span>`;
       default:
@@ -260,23 +291,22 @@ class ArticleComments {
 
   getUniversityBadge(university) {
     const universityMap = {
-      'UZ': { name: 'University of Zimbabwe', logo: '/law-students-forum-website/assets/university-logos/uz-logo.png', class: 'uz' },
-      'MSU': { name: 'Midlands State University', logo: '/law-students-forum-website/assets/university-logos/msu-logo.png', class: 'msu' },
-      'ZEGU': { name: 'Zimbabwe Ezekiel Guti University', logo: '/law-students-forum-website/assets/university-logos/zegu-logo.png', class: 'zegu' },
-      'GZU': { name: 'Great Zimbabwe University', logo: '/law-students-forum-website/assets/university-logos/gzu-logo.png', class: 'gzu' },
+      'UZ': { name: 'University of Zimbabwe', class: 'uz' },
+      'MSU': { name: 'Midlands State University', class: 'msu' },
+      'ZEGU': { name: 'Zimbabwe Ezekiel Guti University', class: 'zegu' },
+      'GZU': { name: 'Great Zimbabwe University', class: 'gzu' },
     };
 
     if (university && universityMap[university]) {
       const uni = universityMap[university];
       return `
         <div class="university-badge ${uni.class}">
-          <img src="${uni.logo}" alt="${uni.name}" class="university-logo" onerror="this.style.display='none'">
           <span>${university}</span>
         </div>
       `;
     }
 
-    return `<div class="university-badge default"><span>University</span></div>`;
+    return '';
   }
 
   generateUserAvatar(username) {
@@ -331,13 +361,6 @@ class ArticleComments {
         [`reactions.${reactionType}`]: increment(1)
       });
 
-      // Update button UI immediately (optimistic update)
-      const countSpan = btn.querySelector('.reaction-count');
-      if (countSpan) {
-        const currentCount = parseInt(countSpan.textContent) || 0;
-        countSpan.textContent = currentCount + 1;
-      }
-
       // Disable button temporarily to prevent spam
       btn.disabled = true;
       setTimeout(() => {
@@ -346,6 +369,7 @@ class ArticleComments {
 
     } catch (error) {
       console.error('Error adding reaction:', error);
+      alert('Failed to add reaction');
     }
   }
 
@@ -361,10 +385,23 @@ class ArticleComments {
 
     try {
       await deleteDoc(doc(db, 'comments', commentId));
+      console.log('Comment deleted successfully');
     } catch (error) {
       console.error('Error deleting comment:', error);
-      alert('Failed to delete comment. Please try again.');
+      alert('Failed to delete comment');
     }
+  }
+
+  canDeleteComment(comment) {
+    if (!this.currentUser) return false;
+    
+    // User can delete their own comments
+    if (this.currentUser.uid === comment.userId) return true;
+    
+    // Admin can delete any comment (if you implement admin check)
+    // return this.userProfile?.isAdmin;
+    
+    return false;
   }
 
   formatTimestamp(date) {
@@ -377,11 +414,11 @@ class ArticleComments {
     if (diffInMinutes < 1) {
       return 'Just now';
     } else if (diffInMinutes < 60) {
-      return `${diffInMinutes} minutes ago`;
+      return `${diffInMinutes} min${diffInMinutes > 1 ? 's' : ''} ago`;
     } else if (diffInHours < 24) {
-      return `${diffInHours} hours ago`;
+      return `${diffInHours} hour${diffInHours > 1 ? 's' : ''} ago`;
     } else if (diffInDays < 7) {
-      return `${diffInDays} days ago`;
+      return `${diffInDays} day${diffInDays > 1 ? 's' : ''} ago`;
     } else {
       return date.toLocaleDateString();
     }
@@ -393,11 +430,6 @@ class ArticleComments {
     return div.innerHTML;
   }
 
-  isAdmin() {
-    // Check if current user is admin - you can implement this based on your user roles
-    return this.userProfile && this.userProfile.role === 'admin';
-  }
-
   destroy() {
     if (this.unsubscribeComments) {
       this.unsubscribeComments();
@@ -406,17 +438,17 @@ class ArticleComments {
 }
 
 // Initialize comments system when DOM is loaded
-document.addEventListener('DOMContentLoaded', () => {
-  // Only initialize on article pages
-  if (document.querySelector('.article-main') || document.querySelector('.comments-section')) {
+if (document.readyState === 'loading') {
+  document.addEventListener('DOMContentLoaded', () => {
+    if (document.getElementById('comments')) {
+      new ArticleComments();
+    }
+  });
+} else {
+  // DOM already loaded
+  if (document.getElementById('comments')) {
     new ArticleComments();
   }
-});
+}
 
-// Listen for auth modal show requests
-document.addEventListener('show-auth-modal', (e) => {
-  // This assumes your auth modal system can handle this event
-  if (typeof showAuthModal === 'function') {
-    showAuthModal(e.detail.showLogin ? 'login' : 'signup');
-  }
-});
+export default ArticleComments;
