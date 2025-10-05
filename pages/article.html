@@ -3,85 +3,83 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Article ‑ LAW STUDENTS INTELLECTUAL FORUM</title>
+  <title>Article | LSIF</title>
 
-  <link rel="icon" href="favicon.ico" type="image/x-icon">
-  <link rel="stylesheet" href="../style.css" />
-  <link rel="stylesheet" href="../article.css" />
+  <link rel="icon" href="/law-students-forum-website/assets/favicon.ico" />
+  <link rel="stylesheet" href="/law-students-forum-website/styles/style.css" />
+  <link rel="stylesheet" href="/law-students-forum-website/styles/auth.css" />
+  <link rel="stylesheet" href="/law-students-forum-website/styles/article.css" />
 </head>
 
-<body>
+<body class="article-page">
   <div id="header-placeholder"></div>
 
-  <!-- ①  Splash screen -->
-  <div id="splash"> 
-    <div class="splash-inner">
-      <img src="assets/forum-logo.png" alt="Forum logo" class="splash-logo" />
-      <p class="splash-tag">Sponsored by <span>KT Industries</span></p>
-      <p id="splash-message" class="splash-message">Loading…</p>
-    </div>
-  </div>
-
-  <!-- ⑤  Accessibility: give the main region a landmark -->
-  <main class="article-page-main" role="main">
+  <main class="article-page-main">
     <article class="article-content">
-      <h1 class="article-title">[Article Title]</h1>
-
-      <div class="article-meta">
-        <span class="article-date">Published: [Date]</span>
-        <span class="article-author">Author: [Author]</span>
+      <!-- Content will be dynamically loaded here -->
+      <div class="article-body">
+        <!-- Dynamic content sections -->
       </div>
-
-      <!-- ③  Banner gets hidden when the JSON has no image -->
-      <img src="" alt="" class="article-banner" style="display:none;" />
-
-      <div class="article-body">[Article Body Content Here]</div>
-
-      <div class="article-topics">
-        <span>Topics:</span>
-        <!-- Tags load here -->
-      </div>
-
-      <!-- (existing) comments & reactions -->
-      <section class="comment-section">
-        <h2 class="section-heading">💬 Comments</h2>
-        <div class="comments-container"></div>
-        <div class="comment-form"></div>
-      </section>
-
-      <section class="reaction-section">
-        <h2 class="section-heading">📊 Reactions</h2>
-      </section>
     </article>
 
     <aside class="article-sidebar">
-      <section class="you-may-like">
-        <h2>You May Also Like</h2>
-        <div class="related-articles"></div>
+      <section class="related-content">
+        <h2>Related Articles</h2>
+        <div id="related-articles">
+          <!-- Related articles will be loaded dynamically -->
+        </div>
       </section>
 
       <section class="popular-articles">
-        <h2>Popular Articles</h2>
-        <div class="popular-articles-list"></div>
+        <h2>Popular This Week</h2>
+        <div class="popular-list">
+          <div class="popular-item">
+            <span class="popular-rank">1</span>
+            <p>Understanding Constitutional Interpretation</p>
+          </div>
+          <div class="popular-item">
+            <span class="popular-rank">2</span>
+            <p>Moot Court Competition Tips</p>
+          </div>
+          <div class="popular-item">
+            <span class="popular-rank">3</span>
+            <p>Career Paths for Law Graduates</p>
+          </div>
+        </div>
       </section>
     </aside>
   </main>
 
-  <footer>
-    <p>&copy; 2025 LAW STUDENTS INTELLECTUAL FORUM</p>
+  <!-- Comments Section -->
+  <section id="comments" class="comments-section">
+    <h2>Comments</h2>
+    <div id="comment-form-container" class="comment-form-container">
+      <h3>Join the Discussion</h3>
+      <p id="comment-auth-message">
+        You must be logged in to leave a comment. 
+        <a href="#" id="login-to-comment-btn">Login here</a>
+      </p>
+      <form id="comment-form" class="comment-form hidden">
+        <textarea id="comment-text" class="comment-input" rows="4" 
+                  placeholder="Share your thoughts..." required></textarea>
+        <button type="submit" class="comment-submit-btn">Post Comment</button>
+      </form>
+    </div>
+    <div id="comments-list" class="comments-list">
+      <p class="no-comments-message">No comments yet. Be the first to share your thoughts!</p>
+    </div>
+  </section>
+
+  <footer class="site-footer">
+    © 2025 Law Students Intellectual Forum
   </footer>
 
-  <!-- Scripts -->
-  <script type="module" src="../scripts/auth.js></script>
+  <div id="auth-modal-placeholder"></div>
 
-  <script type="module" src="../scripts/load-splash.js"></script>
-
-  <script type="module" src="../scripts/loader.jsript>
   <script type="module" src="/law-students-forum-website/scripts/load-header.js"></script>
   <script type="module" src="/law-students-forum-website/scripts/auth-modal.js"></script>
-  <script type="module" src="../scripts/article.js"></script>
-  <script type="module" src="../scripts/comment.js"></script>
-  <script type="module" src="../home.js"></script>
-  <script type="module" src="../scripts/reaction.js"></script>
+  <script type="module" src="/law-students-forum-website/scripts/dynamic-article-loader.js"></script>
+  <script type="module" src="/law-students-forum-website/scripts/article-comments.js"></script>
 </body>
 </html>
+
