@@ -1,7 +1,6 @@
 // scripts/auth-modal.js
 // Enhanced Firebase Auth integration with profile dropdown system
-// NOTE: This version automatically selects 'student' role on signup 
-// and pre-fills the required hidden fields with default values.
+// NOTE: This version implements a two-phase signup flow for optional data entry.
 
 import { registerUser, loginUser, logoutUser, onAuthChange, getUserProfile } from './auth-service.js';
 
@@ -10,6 +9,7 @@ import { registerUser, loginUser, logoutUser, onAuthChange, getUserProfile } fro
     let headerReady = false;
     let pendingShow = null;
     let currentUser = null;
+    let signupPhase = 1; // 1: Initial (basic data only), 2: Final (full data)
 
     // Modal elements
     let authModal, loginContainer, signupContainer,
@@ -17,7 +17,7 @@ import { registerUser, loginUser, logoutUser, onAuthChange, getUserProfile } fro
         closeModalBtn, userRoleSelect, studentFields, lawyerFields,
         loginError, signupError;
 
-    // Profile elements
+    // Profile elements (omitted for brevity)
     let authControls, userInfo, profileTrigger, profileDropdown,
         userAvatar, userName, userRole, dropdownAvatar, dropdownName,
         dropdownEmail, dropdownRoleDetail, logoutBtn;
@@ -199,8 +199,7 @@ import { registerUser, loginUser, logoutUser, onAuthChange, getUserProfile } fro
     }
 
     /**
-     * Hides all role-specific input fields for students and lawyers.
-     * Used for resetting the form.
+     * Hides and clears all role-specific input fields.
      */
     function hideRoleSpecificFields() {
         if (studentFields) {
@@ -223,46 +222,77 @@ import { registerUser, loginUser, logoutUser, onAuthChange, getUserProfile } fro
     }
 
     /**
-     * NEW FUNCTION: Pre-fills role-specific fields with required defaults to pass validation.
-     * The role is automatically set to 'student' for the sign-up process.
+     * Reveals the role-specific fields and removes mock data.
+     * Called in Phase 1 to prepare the form for manual input.
      */
-    function prefillRoleFields() {
-        const role = "student"; // Hardcoded default role
-        
+    function revealRoleFields(role) {
+        hideRoleSpecificFields(); // Start clean
+
         // 1. Force-select the role
         if (userRoleSelect) {
              userRoleSelect.value = role;
         }
 
-        // 2. Prefill Student Fields (The new default role)
-        if (studentFields) {
-            // Set required defaults (UZ, Part 3, Mock ID)
-            document.getElementById("student-id").value = generateMockId(); 
-            document.getElementById("student-university").value = "UZ"; 
-            document.getElementById("student-year-of-study").value = "3"; 
+        if (role === "student" && studentFields) {
+            // Clear the mock data
+            document.getElementById("student-id").value = ""; 
+            document.getElementById("student-university").value = ""; 
+            document.getElementById("student-year-of-study").value = ""; 
 
-            // Ensure the inputs are marked as required to pass browser/js validation
+            // Make fields required and visible
             studentFields.querySelectorAll("input, select").forEach(input => {
                 input.setAttribute("required", "true");
             });
-            // Ensure the container is "visible" in the DOM for FormData collection
             studentFields.classList.remove("hidden");
-        }
-        
-        // 3. Prefill Lawyer Fields for safety, but ensure they are hidden and NOT required
-        if (lawyerFields) {
-            document.getElementById("lawyer-years-experience").value = "5"; // Default 5 years experience
-            document.getElementById("lawyer-number").value = generateMockId(); 
+        } else if (role === "lawyer" && lawyerFields) {
+            // Clear the mock data (optional, but good practice)
+            document.getElementById("lawyer-years-experience").value = ""; 
+            document.getElementById("lawyer-number").value = ""; 
             
-            // Explicitly hide the lawyer fields and remove the required attribute
-            lawyerFields.classList.add("hidden");
+            // Make fields required and visible
             lawyerFields.querySelectorAll("input, select").forEach(input => {
-                input.removeAttribute("required");
+                input.setAttribute("required", "true");
             });
+            lawyerFields.classList.remove("hidden");
         }
     }
     
-    // The previous showRoleSpecificFields function is now obsolete and removed.
+    /**
+     * Pre-fills role-specific fields with required defaults to pass validation silently.
+     * Called in Phase 2 only if the user submits without interacting with the revealed fields.
+     */
+    function prefillRoleFields() {
+        const role = userRoleSelect?.value || "student";
+        
+        // 1. Force-select the role (ensure it's not the initial empty value)
+        if (userRoleSelect && userRoleSelect.value === "") {
+             userRoleSelect.value = "student";
+        }
+
+        // 2. Prefill Student Fields
+        if (studentFields && role === "student") {
+            // Check if fields are empty (meaning the user didn't fill them)
+            if (!document.getElementById("student-id").value) {
+                document.getElementById("student-id").value = generateMockId(); 
+            }
+            if (!document.getElementById("student-university").value) {
+                document.getElementById("student-university").value = "UZ"; 
+            }
+            if (!document.getElementById("student-year-of-study").value) {
+                document.getElementById("student-year-of-study").value = "3"; 
+            }
+        }
+        
+        // 3. Prefill Lawyer Fields
+        if (lawyerFields && role === "lawyer") {
+            if (!document.getElementById("lawyer-years-experience").value) {
+                 document.getElementById("lawyer-years-experience").value = "5"; 
+            }
+            if (!document.getElementById("lawyer-number").value) {
+                 document.getElementById("lawyer-number").value = generateMockId(); 
+            }
+        }
+    }
 
     /**
      * Displays the authentication modal. (omitted for brevity, assume it is correct)
@@ -276,6 +306,7 @@ import { registerUser, loginUser, logoutUser, onAuthChange, getUserProfile } fro
         clearErrors();
         hideRoleSpecificFields(); // Reset all form fields
         closeProfileDropdown(); 
+        signupPhase = 1; // Reset phase on modal open
 
         authModal.classList.remove("hidden");
         authModal.style.display = "flex";
@@ -325,6 +356,7 @@ import { registerUser, loginUser, logoutUser, onAuthChange, getUserProfile } fro
         if (signupForm) signupForm.reset();
         clearErrors();
         hideRoleSpecificFields();
+        signupPhase = 1; // Reset phase on modal close
 
         setTimeout(() => {
             authModal.classList.add("hidden");
@@ -334,23 +366,34 @@ import { registerUser, loginUser, logoutUser, onAuthChange, getUserProfile } fro
 
     /**
      * Validates the signup form data. 
-     * NOTE: This only checks the visible fields, as hidden fields are pre-filled.
+     * Checks all fields in Phase 2.
      */
     function validateSignupForm(formData) {
         const password = formData.get("signup-password");
         const confirmPassword = formData.get("signup-confirm-password");
         const email = formData.get("signup-email");
         const username = formData.get("signup-username");
-        const role = formData.get("user-role"); // Will be 'student'
+        const role = formData.get("user-role");
 
         // --- Core Validation (Required for all users) ---
         if (!username || username.length < 3) return "Username must be at least 3 characters long";
         if (!email || !email.includes("@")) return "Please enter a valid email address";
         if (!password || password.length < 6) return "Password must be at least 6 characters long";
         if (password !== confirmPassword) return "Passwords do not match";
-        if (!role) return "Role is required (Student selected by default)";
+        if (!role) return "Role is required.";
         
-        // Role-specific field validation has been removed/bypassed.
+        // --- Phase 2: Detailed Role Validation ---
+        if (signupPhase === 2) {
+             if (role === "student") {
+                if (!formData.get("student-id") || !formData.get("student-university") || !formData.get("student-year-of-study")) {
+                    return "Please fill in all student details (ID, University, Year).";
+                }
+            } else if (role === "lawyer") {
+                if (!formData.get("lawyer-years-experience") || !formData.get("lawyer-number")) {
+                    return "Please fill in all lawyer details (Years of Experience, ID).";
+                }
+            }
+        }
 
         return null;
     }
@@ -406,57 +449,87 @@ import { registerUser, loginUser, logoutUser, onAuthChange, getUserProfile } fro
     }
 
     /**
-     * Handles the signup form submission.
-     * CRITICAL CHANGE: Calls prefillRoleFields() before validation.
+     * Handles the signup form submission (Two-Phase).
      */
     async function handleSignup(e) {
         e.preventDefault();
         clearErrors();
 
         const submitBtn = signupForm.querySelector('button[type="submit"]');
-        const originalText = submitBtn.textContent;
+        const originalText = "Sign Up";
+        
+        // Get form data immediately to check basic validation
+        const formData = new FormData(signupForm);
+        const coreValidationError = validateSignupForm(formData);
+        
+        const email = formData.get("signup-email");
+        const password = formData.get("signup-password");
+        const username = formData.get("signup-username");
+        const role = formData.get("user-role");
 
-        // ⭐ STEP 1: PRE-FILL THE HIDDEN FIELDS (CRITICAL) ⭐
-        prefillRoleFields();
+        if (coreValidationError) {
+            showError(signupError, coreValidationError);
+            return;
+        }
 
+        if (signupPhase === 1) {
+            // ⭐ PHASE 1: VALIDATE CORE, REVEAL FIELDS, AND STOP SUBMISSION ⭐
+            
+            // Set the default role to student if none selected (as required)
+            if (!role) {
+                userRoleSelect.value = "student";
+                role = "student"; // Re-set role variable
+            }
+            
+            // Change UI for Phase 2
+            revealRoleFields(role);
+            submitBtn.textContent = "Complete Sign Up"; 
+            submitBtn.disabled = false; // Ensure button is enabled for the next step
+            signupPhase = 2; // Move to the final submission phase
+            
+            // Stop the submission and prompt the user
+            showError(signupError, "Please complete your role details below, then click 'Complete Sign Up'.");
+            return;
+        }
+
+        // ⭐ PHASE 2: FINAL SUBMISSION ⭐
+        
+        // Fill any *empty* required role fields with defaults (UZ, RXXXXXXK, 5 yrs exp)
+        prefillRoleFields(); 
+
+        // Re-validate now that all fields should be filled (either by user or defaults)
+        const finalValidationError = validateSignupForm(new FormData(signupForm));
+
+        if (finalValidationError) {
+            showError(signupError, finalValidationError);
+            submitBtn.disabled = false;
+            submitBtn.textContent = "Complete Sign Up";
+            return;
+        }
+        
+        // Proceed to Firebase registration
         try {
             submitBtn.disabled = true;
             submitBtn.textContent = "Creating account...";
 
-            // Get form data AFTER pre-filling
-            const formData = new FormData(signupForm);
-            const validationError = validateSignupForm(formData);
-
-            if (validationError) {
-                showError(signupError, validationError);
-                return;
-            }
-
-            const email = formData.get("signup-email");
-            const password = formData.get("signup-password");
-            const username = formData.get("signup-username");
-            const role = formData.get("user-role");
-
-            // Prepare user data
+            // Collect final data
+            const finalFormData = new FormData(signupForm);
+            
             const userData = {
                 username,
                 role,
                 profileData: {}
             };
 
-            // ⭐ STEP 2: COLLECT PRE-FILLED DATA ⭐
             if (role === "student") {
                 userData.idType = "student_id";
-                // Uses the automatically generated ID
-                userData.plainTextSensitiveId = formData.get("student-id"); 
-                // Uses the automatically selected defaults
-                userData.profileData.university = formData.get("student-university"); 
-                userData.profileData.yearOfStudy = formData.get("student-year-of-study");
+                userData.plainTextSensitiveId = finalFormData.get("student-id"); 
+                userData.profileData.university = finalFormData.get("student-university"); 
+                userData.profileData.yearOfStudy = finalFormData.get("student-year-of-study");
             } else if (role === "lawyer") {
-                 // Collects lawyer data if the role somehow changes, though it's hardcoded to 'student'
                 userData.idType = "lawyer_number";
-                userData.plainTextSensitiveId = formData.get("lawyer-number");
-                userData.profileData.yearsExperience = parseInt(formData.get("lawyer-years-experience"));
+                userData.plainTextSensitiveId = finalFormData.get("lawyer-number");
+                userData.profileData.yearsExperience = parseInt(finalFormData.get("lawyer-years-experience"));
             }
 
             await registerUser(email, password, userData);
@@ -480,6 +553,7 @@ import { registerUser, loginUser, logoutUser, onAuthChange, getUserProfile } fro
         } finally {
             submitBtn.disabled = false;
             submitBtn.textContent = originalText;
+            signupPhase = 1; // Reset phase for the next time the modal is opened
         }
     }
 
@@ -574,6 +648,7 @@ import { registerUser, loginUser, logoutUser, onAuthChange, getUserProfile } fro
                 switchToLoginBtn?.classList.remove("active");
                 switchToSignupBtn.classList.add("active");
                 clearErrors();
+                signupPhase = 1; // Reset phase on switch
             });
         }
 
@@ -591,6 +666,7 @@ import { registerUser, loginUser, logoutUser, onAuthChange, getUserProfile } fro
                 switchToSignupBtn?.classList.remove("active");
                 switchToLoginBtn.classList.add("active");
                 clearErrors();
+                signupPhase = 1; // Reset phase on switch
             });
         }
 
@@ -604,16 +680,19 @@ import { registerUser, loginUser, logoutUser, onAuthChange, getUserProfile } fro
             if (e.target === authModal) hideModal();
         });
 
-        // ⭐ IMPORTANT: The manual role selection listener is REMOVED/commented out
-        // as the role is now set automatically on form submit.
-        /*
+        // Add the role change listener back, for Phase 2 updates
         if (userRoleSelect) {
             userRoleSelect.addEventListener("change", (e) => {
-                console.log("Role selected:", e.target.value);
-                showRoleSpecificFields(e.target.value);
+                const role = e.target.value;
+                if (role && signupPhase === 2) {
+                    // Switch fields if in Phase 2
+                    revealRoleFields(role);
+                } else if (role && signupPhase === 1) {
+                    // Just hide/clear if the user manually selects a role in Phase 1 (before submission)
+                    hideRoleSpecificFields();
+                }
             });
         }
-        */
 
         // Form submissions
         if (loginForm) {
