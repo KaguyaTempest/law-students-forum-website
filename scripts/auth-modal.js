@@ -462,10 +462,10 @@ import { registerUser, loginUser, logoutUser, onAuthChange, getUserProfile } fro
         const formData = new FormData(signupForm);
         const coreValidationError = validateSignupForm(formData);
         
-        const email = formData.get("signup-email");
-        const password = formData.get("signup-password");
-        const username = formData.get("signup-username");
-        const role = formData.get("user-role");
+        let email = formData.get("signup-email");
+        let password = formData.get("signup-password");
+        let username = formData.get("signup-username");
+        let role = formData.get("user-role");
 
         if (coreValidationError) {
             showError(signupError, coreValidationError);
@@ -473,31 +473,31 @@ import { registerUser, loginUser, logoutUser, onAuthChange, getUserProfile } fro
         }
 
         if (signupPhase === 1) {
-            // ⭐ PHASE 1: VALIDATE CORE, REVEAL FIELDS, AND STOP SUBMISSION ⭐
+            // PHASE 1: VALIDATE CORE, REVEAL FIELDS, AND STOP SUBMISSION
             
-            // Set the default role to student if none selected (as required)
+            // Set the default role to student if none selected
             if (!role) {
                 userRoleSelect.value = "student";
-                role = "student"; // Re-set role variable
+                role = "student"; 
             }
             
             // Change UI for Phase 2
             revealRoleFields(role);
             submitBtn.textContent = "Complete Sign Up"; 
-            submitBtn.disabled = false; // Ensure button is enabled for the next step
-            signupPhase = 2; // Move to the final submission phase
+            submitBtn.disabled = false; 
+            signupPhase = 2; 
             
             // Stop the submission and prompt the user
             showError(signupError, "Please complete your role details below, then click 'Complete Sign Up'.");
             return;
         }
 
-        // ⭐ PHASE 2: FINAL SUBMISSION ⭐
+        // PHASE 2: FINAL SUBMISSION
         
-        // Fill any *empty* required role fields with defaults (UZ, RXXXXXXK, 5 yrs exp)
+        // Fill any *empty* required role fields with defaults
         prefillRoleFields(); 
 
-        // Re-validate now that all fields should be filled (either by user or defaults)
+        // Re-validate now that all fields should be filled
         const finalValidationError = validateSignupForm(new FormData(signupForm));
 
         if (finalValidationError) {
@@ -544,8 +544,17 @@ import { registerUser, loginUser, logoutUser, onAuthChange, getUserProfile } fro
                 case 'auth/email-already-in-use':
                     errorMessage = "An account with this email already exists.";
                     break;
+                case 'auth/invalid-email':
+                    errorMessage = "Please enter a valid email address.";
+                    break;
                 case 'auth/weak-password':
-                    errorMessage = "Password must be at least 6 characters long.";
+                    errorMessage = "Password is too weak. Please use a stronger password (at least 6 characters).";
+                    break;
+                case 'auth/operation-not-allowed':
+                    errorMessage = "Email/password accounts are not enabled. Please contact support.";
+                    break;
+                default:
+                    errorMessage = `Registration failed. Please check your details and try again. Error: ${error.message}`;
                     break;
             }
 
