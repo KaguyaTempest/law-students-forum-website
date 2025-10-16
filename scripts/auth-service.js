@@ -36,18 +36,28 @@ function normalizeEmail(email) {
 
 /**
  * Validate password strength
- * - Minimum 8 characters
- * - At least 1 uppercase, 1 lowercase, 1 digit, 1 special character
+ * FIX: Reduced strictness to improve sign-up rates.
+ * - Minimum 6 characters (Firebase minimum)
+ * - Requires a mix of at least 2 character types (e.g., lowercase + number)
  * @param {string} password
  * @returns {boolean}
  */
 function validatePasswordStrength(password) {
-  const minLength = 8;
+  const minLength = 6; // Reduced from 8 to 6 (Firebase minimum)
+  
+  if (!password || password.length < minLength) {
+      return false;
+  }
+  
   const hasUpper = /[A-Z]/.test(password);
   const hasLower = /[a-z]/.test(password);
   const hasNumber = /\d/.test(password);
   const hasSpecial = /[!@#$%^&*(),.?":{}|<>]/.test(password);
-  return password && password.length >= minLength && hasUpper && hasLower && hasNumber && hasSpecial;
+
+  // Check for at least 2 different character types for moderate strength
+  const characterTypesCount = [hasUpper, hasLower, hasNumber, hasSpecial].filter(Boolean).length;
+  
+  return characterTypesCount >= 2;
 }
 
 /**
@@ -69,7 +79,7 @@ function sanitizeProfileData(profileData = {}) {
 /**
  * Registers a new user (secure).
  * - Normalizes email
- * - Validates password strength
+ * - Validates password strength (now less strict)
  * - Creates Firebase Auth user
  * - Stores safe profile fields in Firestore
  * - Calls cloud function to hash sensitive ID if provided
@@ -82,9 +92,10 @@ export async function registerUser(email, password, userData = {}) {
   try {
     const normalizedEmail = normalizeEmail(email);
 
-    // Password strength check
+    // Password strength check (uses the less strict validation)
     if (!validatePasswordStrength(password)) {
-      const err = new Error('Password does not meet strength requirements.');
+      // The error message remains descriptive and now aligns with the new minimum of 6 characters
+      const err = new Error('Password must be at least 6 characters long and include a mix of at least two character types (e.g., letters and numbers).');
       err.code = 'auth/weak-password-client';
       throw err;
     }
