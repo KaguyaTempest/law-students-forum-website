@@ -5,6 +5,7 @@ import {
   collection, 
   addDoc, 
   query, 
+  where,
   orderBy, 
   onSnapshot, 
   serverTimestamp, 
@@ -90,28 +91,35 @@ class ArticleComments {
     }
 
     // Load comments
+    
     this.loadComments();
   }
 
   getArticleId() {
-    // Extract article ID from URL path
-    const path = window.location.pathname;
-    
-    // Pattern: /articles/article-name.html
-    const match = path.match(/\/articles\/([^\/]+)\.html$/);
-    
-    if (match && match[1]) {
-      return match[1];
-    }
-    
-    // Fallback: try data attribute
-    const main = document.querySelector('main[data-article-id]');
-    if (main) {
-      return main.getAttribute('data-article-id');
-    }
-    
-    return null;
-  }
+    // Check for article ID in the URL query parameters first, as used by dynamic loader
+    const params = new URLSearchParams(window.location.search);
+    const articleId = params.get('id');
+
+    if (articleId) {
+      return articleId;
+    }
+    
+    // Original Fallback: Extract article ID from URL path (for potential clean URLs)
+    const path = window.location.pathname;
+    const match = path.match(/\/articles\/([^\/]+)\.html$/);
+    
+    if (match && match[1]) {
+      return match[1];
+    }
+    
+    // Original Fallback: try data attribute
+    const main = document.querySelector('main[data-article-id]');
+    if (main) {
+      return main.getAttribute('data-article-id');
+    }
+    
+    return null;
+  }
 
   updateCommentForm() {
     if (!this.commentAuthMessage || !this.commentForm) return;
@@ -186,36 +194,34 @@ class ArticleComments {
   }
 
   loadComments() {
-    if (!this.articleId) return;
+    if (!this.articleId) return;
 
-    console.log('Loading comments for article:', this.articleId); // Debug log
+    console.log('Loading comments for article:', this.articleId); // Debug log
 
-    // Create query for all comments
-    const commentsQuery = query(
-      collection(db, 'comments'),
-      orderBy('timestamp', 'desc')
-    );
+    // **FIXED QUERY:** Filter by articleId directly in Firestore for efficiency
+    const commentsQuery = query(
+      collection(db, 'comments'),
+      where('articleId', '==', this.articleId), // <-- Key change: Filter by ID
+      orderBy('timestamp', 'desc')
+    );
 
-    // Listen for real-time updates
-    this.unsubscribeComments = onSnapshot(commentsQuery, (snapshot) => {
-      const comments = [];
-      snapshot.forEach((doc) => {
-        const data = doc.data();
-        if (data.articleId === this.articleId) {
-          comments.push({
-            id: doc.id,
-            ...data
-          });
-        }
-      });
+    // Listen for real-time updates
+    this.unsubscribeComments = onSnapshot(commentsQuery, (snapshot) => {
+      const comments = [];
+      snapshot.forEach((doc) => {
+        // No need for the client-side 'if (data.articleId === this.articleId)' check anymore
+        comments.push({
+          id: doc.id,
+          ...doc.data() // data() is called once here for cleanliness
+        });
+      });
 
-      console.log('Loaded comments:', comments.length); // Debug log
-      this.renderComments(comments);
-    }, (error) => {
-      console.error('Error loading comments:', error);
-    });
-  }
-
+      console.log('Loaded comments:', comments.length); // Debug log
+      this.renderComments(comments);
+    }, (error) => {
+      console.error('Error loading comments:', error);
+    });
+  }
   renderComments(comments) {
     if (!this.commentsContainer) return;
 
