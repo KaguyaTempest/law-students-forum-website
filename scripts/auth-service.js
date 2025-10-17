@@ -36,18 +36,23 @@ function normalizeEmail(email) {
 
 /**
  * Validate password strength
- * - Minimum 8 characters
- * - At least 1 uppercase, 1 lowercase, 1 digit, 1 special character
+ * - Minimum 6 characters
+ * - At least 2 different character types (letters, numbers, or symbols)
  * @param {string} password
  * @returns {boolean}
  */
 function validatePasswordStrength(password) {
-  const minLength = 8;
-  const hasUpper = /[A-Z]/.test(password);
-  const hasLower = /[a-z]/.test(password);
+  const minLength = 6;
+  if (!password || password.length < minLength) return false;
+  
+  const hasLetters = /[a-zA-Z]/.test(password);
   const hasNumber = /\d/.test(password);
   const hasSpecial = /[!@#$%^&*(),.?":{}|<>]/.test(password);
-  return password && password.length >= minLength && hasUpper && hasLower && hasNumber && hasSpecial;
+  
+  // Count how many character types are present
+  const typeCount = [hasLetters, hasNumber, hasSpecial].filter(Boolean).length;
+  
+  return typeCount >= 2;
 }
 
 /**
@@ -84,7 +89,7 @@ export async function registerUser(email, password, userData = {}) {
 
     // Password strength check
     if (!validatePasswordStrength(password)) {
-      const err = new Error('Password does not meet strength requirements.');
+      const err = new Error('Password must be at least 6 characters with 2 different character types (letters, numbers, or symbols).');
       err.code = 'auth/weak-password-client';
       throw err;
     }
