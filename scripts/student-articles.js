@@ -3,7 +3,7 @@ import { db } from './firebase-config.js'; // Assuming db is exported here
 import { 
     collection, 
     query, 
-    where, 
+    where, // <-- Included for completeness and consistency
     getDocs, 
     orderBy
 } from 'https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js';
@@ -40,8 +40,9 @@ function createArticleCard(article) {
     card.setAttribute('data-topics', article.topics.join(' ').toLowerCase());
 
     // Determine the correct link based on the article source
+    // FIX: Using 'article.html' as the viewer page, accessible from the current context
     const articleLink = article.isDynamic 
-        ? `articles/view-article.html?id=${article.id}` // Dynamic link
+        ? `article.html?id=${article.id}` // Corrected dynamic link path
         : article.link; // Static link from HTML parsing
 
     // Default banner image if none is provided
@@ -49,12 +50,16 @@ function createArticleCard(article) {
     const thumbnailSrc = article.bannerImage || article.thumbnail || defaultImage;
 
     card.innerHTML = `
-        <img src="${thumbnailSrc}"
-            alt="${article.title}"
-            class="article-thumbnail w-full h-48 object-cover rounded mb-3" />
+        <a href="${articleLink}" class="article-link-wrapper">
+            <img src="${thumbnailSrc}"
+                alt="${article.title}"
+                class="article-thumbnail w-full h-48 object-cover rounded mb-3" />
+        </a>
 
         <h3 class="text-xl font-semibold mb-1">
-            ${article.title}
+             <a href="${articleLink}">
+                ${article.title}
+            </a>
         </h3>
         <p class="article-excerpt mb-3">
             ${article.excerpt || article.introLead || 'Click to read more...'}
