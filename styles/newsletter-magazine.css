@@ -1,6 +1,7 @@
+
 /* Newsletter Magazine Styles */
 
-.newsletter-main {
+.magazine-main {
     max-width: 1200px;
     margin: 0 auto;
     padding: 2rem;
@@ -9,51 +10,43 @@
     color: var(--text-color-dark);
 }
 
-/* Newsletter Header */
-.newsletter-header {
+/* Magazine Header */
+.magazine-header {
     text-align: center;
-    /* Removed large bottom padding and border from original header */
-    padding-bottom: 0.5rem;
+    border-bottom: 3px double var(--border-color-light);
+    padding-bottom: 2rem;
     margin-bottom: 2rem;
 }
 
-.newsletter-masthead {
-    /* REMOVED: background gradient and color to make it blend with the page */
-    background: none;
-    color: var(--heading-color); /* Use standard text color */
-    padding: 1rem 0; /* Reduced padding */
-    border-radius: 0; /* Removed border-radius */
-    /* Added subtle top and bottom borders for separation */
-    border-top: 1px solid var(--border-color-light);
-    border-bottom: 1px solid var(--border-color-light);
-    margin: 0 0 1rem 0;
+.magazine-masthead {
+    background: linear-gradient(135deg, #8a0026, #b8002e);
+    color: white;
+    padding: 2rem;
+    border-radius: 8px;
+    position: relative;
 }
 
-.newsletter-title {
+.magazine-title {
     font-size: 3rem;
     font-weight: bold;
     letter-spacing: 4px;
     margin: 0;
-    /* Changed text shadow for a cleaner look */
-    text-shadow: none;
-    color: #8a0026; /* Kept the accent color for the main title */
+    text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
 }
 
-.newsletter-date {
+.magazine-date {
     font-size: 1.2rem;
     margin: 0.5rem 0;
     opacity: 0.9;
-    color: var(--text-color-medium);
 }
 
-.newsletter-theme {
+.magazine-theme {
     font-style: italic;
     font-size: 1rem;
     opacity: 0.8;
-    color: var(--text-color-light);
 }
 
-/* Featured Banner (kept largely the same as it is a nice visual element) */
+/* Featured Banner */
 .featured-banner {
     background: linear-gradient(45deg, #f8f9fa, #e9ecef);
     border: 2px solid var(--card-border-color);
@@ -98,15 +91,15 @@
     margin: 0;
 }
 
-/* Newsletter Grid Layout (renamed class) */
-.newsletter-grid {
+/* Magazine Grid Layout */
+.magazine-grid {
     display: grid;
     grid-template-columns: 2fr 1fr;
     gap: 3rem;
     margin-bottom: 3rem;
 }
 
-/* Left Column Styles (no change) */
+/* Left Column Styles */
 .left-column {
     display: flex;
     flex-direction: column;
@@ -195,7 +188,7 @@
     color: var(--text-color-medium);
 }
 
-/* Right Column Styles (no change) */
+/* Right Column Styles */
 .right-column {
     display: flex;
     flex-direction: column;
@@ -275,7 +268,7 @@
     text-decoration: underline;
 }
 
-/* Sidebar Boxes (no change) */
+/* Sidebar Boxes */
 .legal-literacy-box,
 .student-voice-box,
 .whats-new-box {
@@ -351,8 +344,8 @@
     transform: translateY(-1px);
 }
 
-/* Newsletter Footer (renamed class) */
-.newsletter-footer {
+/* Magazine Footer */
+.magazine-footer {
     background: var(--card-bg-color);
     border-top: 3px double var(--border-color-light);
     padding: 2rem;
@@ -372,28 +365,28 @@
     color: var(--heading-color);
 }
 
-.newsletter-info {
+.magazine-info {
     text-align: right;
     color: var(--text-color-light);
     font-size: 0.9rem;
 }
 
-.newsletter-info p {
+.magazine-info p {
     margin: 0.25rem 0;
 }
 
 /* Responsive Design */
 @media (max-width: 768px) {
-    .newsletter-main {
+    .magazine-main {
         padding: 1rem;
     }
     
-    .newsletter-title {
+    .magazine-title {
         font-size: 2rem;
         letter-spacing: 2px;
     }
     
-    .newsletter-grid {
+    .magazine-grid {
         grid-template-columns: 1fr;
         gap: 2rem;
     }
@@ -404,23 +397,13 @@
         text-align: center;
     }
     
-    .newsletter-info {
+    .magazine-info {
         text-align: center;
     }
 }
 
 /* Dark Mode Adjustments */
 @media (prefers-color-scheme: dark) {
-    /* Updated Dark Mode for the new, smoother masthead */
-    .newsletter-masthead {
-        border-top: 1px solid var(--border-color-dark);
-        border-bottom: 1px solid var(--border-color-dark);
-    }
-    
-    .newsletter-title {
-        color: var(--accent-color-light); /* Use a lighter accent color for contrast */
-    }
-    
     .featured-banner {
         background: linear-gradient(45deg, #2c2c4d, #404060);
     }
