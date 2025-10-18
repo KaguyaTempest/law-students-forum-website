@@ -8,86 +8,109 @@
     <link rel="stylesheet" href="../styles/style.css">
     <link rel="stylesheet" href="../styles/student-articles.css">
     <link rel="stylesheet" href="../styles/auth.css">
-    </head>
+</head>
 
 <body>
     <div id="header-placeholder"></div>
 
-    <main class="container mx-auto px-4 articles-main">
-        <section class="articles-hero text-center py-10">
-            <h2 class="hero-title">Explore Student Articles</h2>
-            <p class="hero-subtitle max-w-2xl mx-auto mb-6">
+    <main class="articles-container">
+        <!-- Hero Section -->
+        <section class="articles-hero">
+            <h1 class="hero-title">Explore Student Articles</h1>
+            <p class="hero-subtitle">
                 Dive into insightful articles written by law students, covering a wide range of legal topics and analyses.
             </p>
             
-            <button id="open-submit-article-modal" class="btn btn-primary large-btn shadow-lg hover:shadow-xl transition duration-200">
-                Submit Your Article for Review →
+            <button id="open-submit-article-modal" class="btn btn-primary btn-large">
+                ✏️ Submit Your Article for Review
             </button>
         </section>
         
-        <section class="article-filters mb-8">
-            <ul class="flex flex-wrap gap-4 justify-center">
-                <li><a href="#" class="filter-link active" data-filter="all">All</a></li>
-                <li><a href="#" class="filter-link" data-filter="human-rights-law">Human Rights&nbsp;Law</a></li>
-                <li><a href="#" class="filter-link" data-filter="commercial-law">Commercial&nbsp;Law</a></li>
-                <li><a href="#" class="filter-link" data-filter="intellectual-property-law">Intellectual&nbsp;Property</a></li>
-                <li><a href="#" class="filter-link" data-filter="international-law">International&nbsp;Law</a></li>
-                <li><a href="#" class="filter-link" data-filter="constitutional-law">Constitutional&nbsp;Law</a></li>
+        <!-- Filter Section -->
+        <section class="article-filters-section">
+            <ul class="article-filters">
+                <li><a href="#" class="filter-link active" data-filter="all">All Articles</a></li>
+                <li><a href="#" class="filter-link" data-filter="human-rights-law">Human Rights Law</a></li>
+                <li><a href="#" class="filter-link" data-filter="commercial-law">Commercial Law</a></li>
+                <li><a href="#" class="filter-link" data-filter="intellectual-property-law">Intellectual Property</a></li>
+                <li><a href="#" class="filter-link" data-filter="international-law">International Law</a></li>
+                <li><a href="#" class="filter-link" data-filter="constitutional-law">Constitutional Law</a></li>
             </ul>
         </section>
 
-        <section id="articles-list" class="articles-list grid gap-6 md:grid-cols-2 lg:grid-cols-3">
-            </section>
+        <!-- Articles Grid -->
+        <section id="articles-list" class="articles-grid">
+            <!-- Articles dynamically loaded here -->
+        </section>
         
-        <section class="pagination mt-12 flex justify-center items-center gap-4 hidden" id="pagination">
-            <button class="page-btn prev-page">Previous</button>
-            <span class="page-number">Page <span id="current-page">1</span> of <span id="total-pages">1</span></span>
-            <button class="page-btn next-page">Next</button>
+        <!-- Pagination -->
+        <section class="pagination-section hidden" id="pagination">
+            <button class="pagination-btn prev-page">← Previous</button>
+            <span class="page-info">Page <span id="current-page">1</span> of <span id="total-pages">1</span></span>
+            <button class="pagination-btn next-page">Next →</button>
         </section>
     </main>
 
-    <footer class="text-center py-8 text-sm opacity-70">
-        &copy; 2025 Law Students Intellectual Forum
-    </footer>
-
-    <div id="article-submission-modal" class="modal-overlay hidden">
+    <!-- Article Submission Modal -->
+    <div id="article-submission-modal" class="modal-overlay">
         <div class="modal-content">
-            <span class="close-btn">&times;</span>
-            <h2 class="hero-title mb-4">Submit Your Article</h2>
+            <button class="close-btn" type="button" aria-label="Close modal">&times;</button>
+            <h2 class="modal-title">📝 Submit Your Article</h2>
             
             <form id="article-submission-form">
-                <div class="mb-4">
-                    <label for="submit-title" class="block text-sm font-medium text-gray-700">Article Title</label>
-                    <input type="text" id="submit-title" name="title" required class="mt-1 w-full p-2 border border-gray-300 rounded-md">
+                <div class="form-group">
+                    <label for="submit-title">Article Title *</label>
+                    <input 
+                        type="text" 
+                        id="submit-title" 
+                        name="title" 
+                        required 
+                        placeholder="Enter a compelling title for your article"
+                        maxlength="150"
+                    >
+                    <small>Maximum 150 characters</small>
                 </div>
                 
-                <div class="mb-4">
-                    <label for="submit-category" class="block text-sm font-medium text-gray-700">Category</label>
-                    <select id="submit-category" name="category" required class="mt-1 w-full p-2 border border-gray-300 rounded-md">
-                        <option value="">-- Select Category --</option>
+                <div class="form-group">
+                    <label for="submit-category">Category *</label>
+                    <select id="submit-category" name="category" required>
+                        <option value="">-- Select a Category --</option>
                         <option value="human-rights-law">Human Rights Law</option>
                         <option value="commercial-law">Commercial Law</option>
                         <option value="intellectual-property-law">Intellectual Property</option>
                         <option value="international-law">International Law</option>
                         <option value="constitutional-law">Constitutional Law</option>
-                        </select>
+                    </select>
                 </div>
 
-                <div class="mb-4">
-                    <label for="submit-content" class="block text-sm font-medium text-gray-700">Article Content (Markdown/HTML recommended)</label>
-                    <textarea id="submit-content" name="content" rows="15" required class="mt-1 w-full p-2 border border-gray-300 rounded-md"></textarea>
+                <div class="form-group">
+                    <label for="submit-content">Article Content *</label>
+                    <textarea 
+                        id="submit-content" 
+                        name="content" 
+                        required 
+                        placeholder="Write your article content here. Minimum 500 characters recommended."
+                        minlength="500"
+                    ></textarea>
+                    <small>Minimum 500 characters recommended for quality submissions</small>
                 </div>
                 
-                <button type="submit" id="submit-article-btn" class="btn btn-primary w-full large-btn">
+                <button type="submit" id="submit-article-btn" class="submit-btn">
                     Submit Article for Review
                 </button>
-                <p id="submission-message" class="text-sm mt-3 hidden"></p>
+                <p id="submission-message" class="submission-message hidden"></p>
             </form>
         </div>
     </div>
+
+    <footer class="site-footer">
+        &copy; 2025 Law Students Intellectual Forum
+    </footer>
+
+    <div id="auth-modal-placeholder"></div>
+
     <script type="module" src="/law-students-forum-website/scripts/load-header.js"></script>
     <script type="module" src="/law-students-forum-website/scripts/auth-modal.js"></script>
     <script type="module" src="../scripts/student-articles.js"></script>
-    <script type="module" src="../scripts/article-submission.js"></script> 
 </body>
 </html>
