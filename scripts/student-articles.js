@@ -39,8 +39,8 @@ function createArticleCard(article) {
     const card = document.createElement('article');
     // We can use the category for filtering data attribute
     card.className = 'article-card';
-    card.setAttribute('data-category', article.category.toLowerCase());
-
+    // NEW: Safely uses 'general' if the category field is missing
+    card.setAttribute('data-category', (article.category || 'general').toLowerCase());
     // FIX: All articles are now dynamic and point to article.html
     // The ID ensures the dynamic-article-loader.js can fetch the content.
     const articleLink = `article.html?id=${article.id}`; 
