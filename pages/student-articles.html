@@ -1,101 +1,93 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Student Articles | Law Students Intellectual Forum</title>
-  <link rel="icon" href="../assets/favicon.ico" type="image/x-icon">
-  <link rel="stylesheet" href="../styles/style.css">
-  <link rel="stylesheet" href="../styles/student-articles.css">
-  <link rel="stylesheet" href="../styles/auth.css">
-</head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Student Articles | Law Students Intellectual Forum</title>
+    <link rel="icon" href="../assets/favicon.ico" type="image/x-icon">
+    <link rel="stylesheet" href="../styles/style.css">
+    <link rel="stylesheet" href="../styles/student-articles.css">
+    <link rel="stylesheet" href="../styles/auth.css">
+    </head>
 
 <body>
-  <div id="header-placeholder"></div>
+    <div id="header-placeholder"></div>
 
-  <main class="container mx-auto px-4 articles-main">
-    <!-- ── HERO ─────────────────────────────────────────── -->
-    <section class="articles-hero text-center py-10">
-      <h2 class="hero-title">Explore Student Articles</h2>
-      <p class="hero-subtitle max-w-2xl mx-auto mb-6">
-        Dive into insightful articles written by law students, covering a wide range of legal topics and analyses.
-      </p>
-      
-      <a href="./submit-article.html" class="btn btn-primary large-btn shadow-lg hover:shadow-xl transition duration-200">
-        Submit Your Article for Review →
-      </a>
-    </section>
-    <!-- ── CATEGORIES / FILTERS ─────────────────────────── -->
-    <section class="article-filters mb-8">
-      <ul class="flex flex-wrap gap-4 justify-center">
-        <li><a href="#" class="filter-link active" data-filter="all">All</a></li>
-        <li><a href="#" class="filter-link" data-filter="human-rights-law">Human Rights&nbsp;Law</a></li>
-        <li><a href="#" class="filter-link" data-filter="commercial-law">Commercial&nbsp;Law</a></li>
-        <li><a href="#" class="filter-link" data-filter="intellectual-property-law">Intellectual&nbsp;Property</a></li>
-        <li><a href="#" class="filter-link" data-filter="international-law">International&nbsp;Law</a></li>
-        <li><a href="#" class="filter-link" data-filter="constitutional-law">Constitutional&nbsp;Law</a></li>
-      </ul>
-    </section>
+    <main class="container mx-auto px-4 articles-main">
+        <section class="articles-hero text-center py-10">
+            <h2 class="hero-title">Explore Student Articles</h2>
+            <p class="hero-subtitle max-w-2xl mx-auto mb-6">
+                Dive into insightful articles written by law students, covering a wide range of legal topics and analyses.
+            </p>
+            
+            <button id="open-submit-article-modal" class="btn btn-primary large-btn shadow-lg hover:shadow-xl transition duration-200">
+                Submit Your Article for Review →
+            </button>
+        </section>
+        
+        <section class="article-filters mb-8">
+            <ul class="flex flex-wrap gap-4 justify-center">
+                <li><a href="#" class="filter-link active" data-filter="all">All</a></li>
+                <li><a href="#" class="filter-link" data-filter="human-rights-law">Human Rights&nbsp;Law</a></li>
+                <li><a href="#" class="filter-link" data-filter="commercial-law">Commercial&nbsp;Law</a></li>
+                <li><a href="#" class="filter-link" data-filter="intellectual-property-law">Intellectual&nbsp;Property</a></li>
+                <li><a href="#" class="filter-link" data-filter="international-law">International&nbsp;Law</a></li>
+                <li><a href="#" class="filter-link" data-filter="constitutional-law">Constitutional&nbsp;Law</a></li>
+            </ul>
+        </section>
 
-    <!-- ── ARTICLES LIST ───────────────────────────────── -->
-    <section id="articles-list" class="articles-list grid gap-6 md:grid-cols-2 lg:grid-cols-3">
-      <!-- Cards are injected by scripts/student-articles.js -->
-      <!-- ——— Article #1 ——— -->
-<article class="article-card" data-topics="ai technology philosophy">
-  <img src="../assets/ai-oracle.png"
-       alt="AI replacing religion"
-       class="article-thumbnail w-full h-48 object-cover rounded mb-3" />
+        <section id="articles-list" class="articles-list grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+            </section>
+        
+        <section class="pagination mt-12 flex justify-center items-center gap-4 hidden" id="pagination">
+            <button class="page-btn prev-page">Previous</button>
+            <span class="page-number">Page <span id="current-page">1</span> of <span id="total-pages">1</span></span>
+            <button class="page-btn next-page">Next</button>
+        </section>
+    </main>
 
-  <h3 class="text-xl font-semibold mb-1">
-    The New Oracle: How AI Is Replacing Thought
-  </h3>
-  <p class="article-excerpt mb-3">
-    AI is quietly taking over the role religion once played as the unquestioned source of truth. Is critical thinking at risk?
-  </p>
+    <footer class="text-center py-8 text-sm opacity-70">
+        &copy; 2025 Law Students Intellectual Forum
+    </footer>
 
-  <a href="articles/ai-the-new-oracle.html"
-     class="read-more-btn text-indigo-600 hover:underline font-semibold">
-    Read More →
-  </a>
-</article>
+    <div id="article-submission-modal" class="modal-overlay hidden">
+        <div class="modal-content">
+            <span class="close-btn">&times;</span>
+            <h2 class="hero-title mb-4">Submit Your Article</h2>
+            
+            <form id="article-submission-form">
+                <div class="mb-4">
+                    <label for="submit-title" class="block text-sm font-medium text-gray-700">Article Title</label>
+                    <input type="text" id="submit-title" name="title" required class="mt-1 w-full p-2 border border-gray-300 rounded-md">
+                </div>
+                
+                <div class="mb-4">
+                    <label for="submit-category" class="block text-sm font-medium text-gray-700">Category</label>
+                    <select id="submit-category" name="category" required class="mt-1 w-full p-2 border border-gray-300 rounded-md">
+                        <option value="">-- Select Category --</option>
+                        <option value="human-rights-law">Human Rights Law</option>
+                        <option value="commercial-law">Commercial Law</option>
+                        <option value="intellectual-property-law">Intellectual Property</option>
+                        <option value="international-law">International Law</option>
+                        <option value="constitutional-law">Constitutional Law</option>
+                        </select>
+                </div>
 
-<!-- ——— Article #2 ——— -->
-<article class="article-card" data-topics="ai intellectual-property-law technology">
-  <img src="../assets/law-ai.png"
-       alt="AI and Copyright"
-       class="article-thumbnail w-full h-48 object-cover rounded mb-3" />
-
-  <h3 class="text-xl font-semibold mb-1">
-    The Evolving Landscape of AI and Copyright
-  </h3>
-  <p class="article-excerpt mb-3">
-    A legal analysis of authorship, fair use, and cultural heritage in the age of generative AI.
-  </p>
-
-  <a href="articles/artificial-intelligence-and-copyright.html"
-     class="read-more-btn text-indigo-600 hover:underline font-semibold">
-    Read More →
-  </a>
-</article>
-    </section>
-
-    <!-- ✨ Optional pagination section -->
-    
-    <section class="pagination mt-12 flex justify-center items-center gap-4 hidden" id="pagination">
-      <button class="page-btn prev-page">Previous</button>
-      <span class="page-number">Page <span id="current-page">1</span> of <span id="total-pages">1</span></span>
-      <button class="page-btn next-page">Next</button>
-    </section>
-  </main>
-
-  <footer class="text-center py-8 text-sm opacity-70">
-    &copy; 2025 Law Students Intellectual Forum
-  </footer>
-
-  <!-- ── MODULE SCRIPTS ────────────────────────────────── -->
-  <script type="module" src="/law-students-forum-website/scripts/load-header.js"></script>
-  <script type="module" src="/law-students-forum-website/scripts/auth-modal.js"></script>
-  <script type="module" src="../scripts/student-articles.js"></script>
-
+                <div class="mb-4">
+                    <label for="submit-content" class="block text-sm font-medium text-gray-700">Article Content (Markdown/HTML recommended)</label>
+                    <textarea id="submit-content" name="content" rows="15" required class="mt-1 w-full p-2 border border-gray-300 rounded-md"></textarea>
+                </div>
+                
+                <button type="submit" id="submit-article-btn" class="btn btn-primary w-full large-btn">
+                    Submit Article for Review
+                </button>
+                <p id="submission-message" class="text-sm mt-3 hidden"></p>
+            </form>
+        </div>
+    </div>
+    <script type="module" src="/law-students-forum-website/scripts/load-header.js"></script>
+    <script type="module" src="/law-students-forum-website/scripts/auth-modal.js"></script>
+    <script type="module" src="../scripts/student-articles.js"></script>
+    <script type="module" src="../scripts/article-submission.js"></script> 
 </body>
 </html>
