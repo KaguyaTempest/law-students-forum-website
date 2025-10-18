@@ -1,127 +1,340 @@
 // scripts/student-articles.js
-import { db } from './firebase-config.js'; 
-import { 
-    collection, 
-    query, 
-    where, 
-    getDocs, 
-    orderBy
-} from 'https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js';
+// Handles article loading, filtering, pagination, and modal submission
 
-// -----------------------------------------------------------------
-// 1. GLOBAL STATE & PAGINATION CONFIG
-// -----------------------------------------------------------------
-const ARTICLES_PER_PAGE = 9; // Display 9 articles per page
+import { auth, db } from './firebase-config.js';
+import {
+    collection,
+    query,
+    where,
+    getDocs,
+    orderBy,
+    addDoc,
+    serverTimestamp
+} from 'https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js';
+import { onAuthStateChanged } from 'https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js';
+
+// ============================================================
+// GLOBAL STATE & CONFIGURATION
+// ============================================================
+
+const ARTICLES_PER_PAGE = 9;
 let currentPage = 1;
-let allArticles = []; // Stores all published articles from Firebase
-let filteredArticles = []; // Articles currently displayed after filter
+let allArticles = [];
+let filteredArticles = [];
 let currentFilter = 'all';
+let currentUser = null;
 
 // DOM Elements
-const articlesListEl = document.getElementById('articles-list');
+const articlesGrid = document.getElementById('articles-list');
 const paginationEl = document.getElementById('pagination');
 const currentPageEl = document.getElementById('current-page');
 const totalPagesEl = document.getElementById('total-pages');
 const prevPageBtn = document.querySelector('.prev-page');
 const nextPageBtn = document.querySelector('.next-page');
 
+// Modal Elements
+const modal = document.getElementById('article-submission-modal');
+const openModalBtn = document.getElementById('open-submit-article-modal');
+const closeModalBtn = document.querySelector('.close-btn');
+const submissionForm = document.getElementById('article-submission-form');
+const submitBtn = document.getElementById('submit-article-btn');
+const submissionMessage = document.getElementById('submission-message');
 
-// -----------------------------------------------------------------
-// 2. ARTICLE CARD CREATION (FIXED LINKING)
-// -----------------------------------------------------------------
+// ============================================================
+// AUTHENTICATION STATE
+// ============================================================
+
+onAuthStateChanged(auth, (user) => {
+    currentUser = user;
+    console.log('Auth state changed:', user ? user.email : 'No user');
+});
+
+// ============================================================
+// MODAL FUNCTIONALITY
+// ============================================================
 
 /**
- * Creates the HTML element for an article card.
- * @param {Object} article - The article data object from Firebase.
- * @returns {HTMLElement} The article card element.
+ * Opens the article submission modal
+ */
+function openModal() {
+    if (!currentUser) {
+        alert('You must be logged in to submit an article');
+        // Trigger auth modal if you have one
+        const event = new CustomEvent('show-auth-modal', { detail: { showLogin: true } });
+        document.dispatchEvent(event);
+        return;
+    }
+    modal.classList.add('show');
+    submissionForm.reset();
+    clearMessage();
+}
+
+/**
+ * Closes the article submission modal
+ */
+function closeModal() {
+    modal.classList.remove('show');
+    submissionForm.reset();
+    clearMessage();
+}
+
+/**
+ * Shows a message in the modal
+ */
+function showMessage(text, type) {
+    submissionMessage.textContent = text;
+    submissionMessage.className = `submission-message ${type}`;
+}
+
+/**
+ * Clears the message from the modal
+ */
+function clearMessage() {
+    submissionMessage.className = 'submission-message hidden';
+    submissionMessage.textContent = '';
+}
+
+// Modal event listeners
+if (openModalBtn) {
+    openModalBtn.addEventListener('click', openModal);
+}
+
+if (closeModalBtn) {
+    closeModalBtn.addEventListener('click', closeModal);
+}
+
+// Close modal when clicking outside
+modal.addEventListener('click', (e) => {
+    if (e.target === modal) {
+        closeModal();
+    }
+});
+
+// Close modal on Escape key
+document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' && modal.classList.contains('show')) {
+        closeModal();
+    }
+});
+
+// ============================================================
+// FORM SUBMISSION
+// ============================================================
+
+/**
+ * Handles article submission form
+ */
+async function handleFormSubmit(e) {
+    e.preventDefault();
+
+    // Validate user is logged in
+    if (!currentUser) {
+        showMessage('You must be logged in to submit an article', 'error');
+        return;
+    }
+
+    // Get form values
+    const title = document.getElementById('submit-title').value.trim();
+    const category = document.getElementById('submit-category').value.trim();
+    const content = document.getElementById('submit-content').value.trim();
+
+    // Validate form
+    if (!title || !category || !content) {
+        showMessage('❌ Please fill in all required fields', 'error');
+        return;
+    }
+
+    if (content.length < 500) {
+        showMessage('❌ Article content must be at least 500 characters', 'error');
+        return;
+    }
+
+    // Disable submit button
+    submitBtn.disabled = true;
+    const originalText = submitBtn.textContent;
+    submitBtn.textContent = 'Submitting...';
+
+    try {
+        // Calculate read time
+        const wordCount = content.split(/\s+/).length;
+        const readTime = Math.ceil(wordCount / 200);
+
+        // Generate excerpt
+        const excerpt = content.substring(0, 150) + '...';
+
+        // Create article data object
+        const articleData = {
+            title,
+            category,
+            content,
+            excerpt,
+            author: currentUser.email,
+            authorName: currentUser.displayName || currentUser.email.split('@')[0],
+            submittedBy: currentUser.uid,
+            submittedAt: serverTimestamp(),
+            status: 'pending', // Requires admin approval
+            views: 0,
+            readTime: `${readTime} min read`,
+            timestamp: new Date().getTime() // For sorting
+        };
+
+        console.log('Submitting article:', articleData);
+
+        // Add to Firestore
+        const docRef = await addDoc(collection(db, 'article-submissions'), articleData);
+
+        console.log('Article submitted with ID:', docRef.id);
+
+        // Show success message
+        showMessage('✅ Article submitted successfully! It will be reviewed and published soon.', 'success');
+
+        // Reset form
+        submissionForm.reset();
+
+        // Close modal after 2 seconds
+        setTimeout(() => {
+            closeModal();
+        }, 2000);
+
+    } catch (error) {
+        console.error('Error submitting article:', error);
+        showMessage(`❌ Failed to submit article: ${error.message}`, 'error');
+    } finally {
+        // Re-enable submit button
+        submitBtn.disabled = false;
+        submitBtn.textContent = originalText;
+    }
+}
+
+// Attach form submission handler
+if (submissionForm) {
+    submissionForm.addEventListener('submit', handleFormSubmit);
+}
+
+// ============================================================
+// ARTICLE LOADING & FILTERING
+// ============================================================
+
+/**
+ * Creates an article card HTML element
  */
 function createArticleCard(article) {
-    const card = document.createElement('article');
-    // We can use the category for filtering data attribute
+    const card = document.createElement('div');
     card.className = 'article-card';
-    // NEW: Safely uses 'general' if the category field is missing
     card.setAttribute('data-category', (article.category || 'general').toLowerCase());
-    // FIX: All articles are now dynamic and point to article.html
-    // The ID ensures the dynamic-article-loader.js can fetch the content.
-    const articleLink = `article.html?id=${article.id}`; 
 
-    // Default banner image if none is provided
-    const defaultImage = '../assets/default-article-banner.png'; 
+    // Article link
+    const articleLink = `article.html?id=${article.id}`;
+    
+    // Default image
+    const defaultImage = '../assets/default-article-banner.png';
     const thumbnailSrc = article.bannerImage || article.thumbnail || defaultImage;
 
+    // Build card HTML
     card.innerHTML = `
         <a href="${articleLink}" class="article-link-wrapper">
-            <img src="${thumbnailSrc}"
+            <img 
+                src="${thumbnailSrc}"
                 alt="${article.title}"
-                class="article-thumbnail w-full h-48 object-cover rounded mb-3" />
+                class="article-thumbnail"
+                loading="lazy"
+            />
         </a>
 
-        <h3 class="text-xl font-semibold mb-1">
-             <a href="${articleLink}">
-                ${article.title}
+        <div class="article-card-content">
+            <h3>
+                <a href="${articleLink}">
+                    ${escapeHtml(article.title)}
+                </a>
+            </h3>
+            
+            <p class="article-excerpt">
+                ${escapeHtml(article.excerpt || article.content?.substring(0, 150) + '...' || 'Click to read more...')}
+            </p>
+
+            <p class="article-meta">
+                By ${escapeHtml(article.authorName || 'Student Author')} 
+                ${article.category ? `| ${escapeHtml(article.category.replace('-', ' '))}` : ''}
+            </p>
+
+            <a href="${articleLink}" class="read-more-btn">
+                Read More →
             </a>
-        </h3>
-        <p class="article-excerpt mb-3">
-            ${article.excerpt || article.introLead || (article.content ? article.content.substring(0, 150) + '...' : 'Click to read more...')}
-        </p>
-
-        <p class="article-meta">By ${article.authorName || 'Student Author'} | ${article.category || 'General'}</p>
-
-        <a href="${articleLink}"
-            class="read-more-btn text-indigo-600 hover:underline font-semibold">
-            Read More →
-        </a>
+        </div>
     `;
 
     return card;
 }
 
+/**
+ * Escapes HTML special characters
+ */
+function escapeHtml(text) {
+    const div = document.createElement('div');
+    div.textContent = text;
+    return div.innerHTML;
+}
 
-// -----------------------------------------------------------------
-// 3. CORE LOADING FUNCTION (Simplified)
-// -----------------------------------------------------------------
-
+/**
+ * Loads all published articles from Firebase
+ */
 async function loadArticles() {
-    console.log('Fetching published articles from Firebase...');
-    articlesListEl.innerHTML = '<p class="text-center col-span-full">Loading articles...</p>';
-    
     try {
-        // Fetch Dynamic Articles (Published only)
-        // Assuming your published articles are in 'article-submissions' and have status: 'published'
+        if (!articlesGrid) {
+            console.warn('Articles grid not found');
+            return;
+        }
+
+        articlesGrid.innerHTML = '<div style="grid-column: 1/-1; text-align: center; padding: 2rem; color: #6b7280;">Loading articles...</div>';
+
+        console.log('Fetching published articles...');
+
+        // Query for published articles
         const q = query(
-            collection(db, 'article-submissions'), 
+            collection(db, 'article-submissions'),
             where('status', '==', 'published'),
-            orderBy('submittedAt', 'desc') // Sort by most recent
+            orderBy('submittedAt', 'desc')
         );
+
         const snapshot = await getDocs(q);
-        
-        const dynamicArticles = snapshot.docs.map(doc => ({ 
-            id: doc.id, // CRUCIAL for dynamic linking
-            ...doc.data(),
+
+        const articles = snapshot.docs.map(doc => ({
+            id: doc.id,
+            ...doc.data()
         }));
 
-        allArticles = dynamicArticles;
+        console.log(`Loaded ${articles.length} published articles`);
+
+        allArticles = articles;
         filteredArticles = allArticles;
 
-        console.log(`Loaded ${allArticles.length} published articles.`);
-
-        // Initialize View
+        // Initialize pagination and display
         setupPagination();
-        displayPage(currentPage);
+        displayPage(1);
+
+        // If no articles, show empty state
+        if (articles.length === 0) {
+            articlesGrid.innerHTML = '<div style="grid-column: 1/-1; text-align: center; padding: 3rem; color: #6b7280;"><p style="font-size: 1.1rem;">No articles published yet. Be the first to submit one!</p></div>';
+        }
 
     } catch (error) {
         console.error('Error loading articles:', error);
-        articlesListEl.innerHTML = '<p class="text-center col-span-full text-red-600">Failed to load articles. Please ensure Firebase is configured and running.</p>';
+        articlesGrid.innerHTML = `<div style="grid-column: 1/-1; text-align: center; padding: 2rem; color: #dc2626;">
+            <p>Failed to load articles. Please try again later.</p>
+            <p style="font-size: 0.9rem; color: #6b7280;">${error.message}</p>
+        </div>`;
     }
 }
 
-// -----------------------------------------------------------------
-// 4. PAGINATION AND DISPLAY LOGIC
-// -----------------------------------------------------------------
+// ============================================================
+// PAGINATION
+// ============================================================
 
+/**
+ * Sets up pagination controls
+ */
 function setupPagination() {
     const totalPages = Math.ceil(filteredArticles.length / ARTICLES_PER_PAGE);
-    
     totalPagesEl.textContent = totalPages;
 
     if (totalPages > 1) {
@@ -131,46 +344,56 @@ function setupPagination() {
     }
 }
 
+/**
+ * Displays a specific page of articles
+ */
 function displayPage(page) {
     const totalPages = Math.ceil(filteredArticles.length / ARTICLES_PER_PAGE);
 
     // Clamp page number
     currentPage = Math.max(1, Math.min(page, totalPages || 1));
-    
+
     const startIndex = (currentPage - 1) * ARTICLES_PER_PAGE;
     const endIndex = startIndex + ARTICLES_PER_PAGE;
-    
+
     const articlesToDisplay = filteredArticles.slice(startIndex, endIndex);
 
-    // Clear and display
-    articlesListEl.innerHTML = '';
-    
+    // Clear grid
+    articlesGrid.innerHTML = '';
+
+    // Display articles or empty state
     if (articlesToDisplay.length === 0) {
-        articlesListEl.innerHTML = `<p class="text-center col-span-full">No articles found for the filter "${currentFilter}".</p>`;
+        articlesGrid.innerHTML = `<div style="grid-column: 1/-1; text-align: center; padding: 3rem; color: #6b7280;">
+            <p style="font-size: 1.1rem;">No articles found for this filter.</p>
+            <p style="font-size: 0.9rem;">Try selecting a different category or browse all articles.</p>
+        </div>`;
         return;
     }
 
+    // Add article cards to grid
     articlesToDisplay.forEach(article => {
         const card = createArticleCard(article);
-        articlesListEl.appendChild(card);
+        articlesGrid.appendChild(card);
     });
 
-    // Update pagination controls
+    // Update pagination
     currentPageEl.textContent = currentPage;
-    prevPageBtn.disabled = (currentPage === 1);
-    nextPageBtn.disabled = (currentPage === totalPages);
+    if (prevPageBtn) prevPageBtn.disabled = currentPage === 1;
+    if (nextPageBtn) nextPageBtn.disabled = currentPage === totalPages;
+
+    // Scroll to top of articles
+    window.scrollTo({ top: articlesGrid.offsetTop - 100, behavior: 'smooth' });
 }
 
-// -----------------------------------------------------------------
-// 5. EVENT LISTENERS (Filters and Pagination Buttons)
-// -----------------------------------------------------------------
+// ============================================================
+// FILTERING
+// ============================================================
 
 /**
- * Handles filtering the articles when a category link is clicked.
- * @param {string} filterValue - The data-filter value (e.g., 'human-rights-law').
+ * Filters articles by category
  */
-function handleFilter(filterValue) {
-    // Update active class
+function filterArticles(filterValue) {
+    // Update active filter link
     document.querySelectorAll('.filter-link').forEach(link => {
         link.classList.remove('active');
         if (link.getAttribute('data-filter') === filterValue) {
@@ -179,48 +402,52 @@ function handleFilter(filterValue) {
     });
 
     currentFilter = filterValue;
-    
+
+    // Apply filter
     if (filterValue === 'all') {
         filteredArticles = allArticles;
     } else {
-        // FILTER FIX: Filter based on the 'category' property
-        filteredArticles = allArticles.filter(article => 
-            article.category && article.category.toLowerCase() === filterValue
+        filteredArticles = allArticles.filter(article =>
+            article.category && article.category.toLowerCase() === filterValue.toLowerCase()
         );
     }
-    
-    // Reset to the first page and re-display
+
+    // Reset to page 1 and redisplay
     currentPage = 1;
     setupPagination();
-    displayPage(currentPage);
+    displayPage(1);
 }
 
-// Attach listeners to filter links
+// Attach filter listeners
 document.querySelectorAll('.filter-link').forEach(link => {
     link.addEventListener('click', (e) => {
         e.preventDefault();
         const filter = e.target.getAttribute('data-filter');
-        handleFilter(filter);
+        filterArticles(filter);
     });
 });
 
-// Attach listeners to pagination buttons
+// ============================================================
+// PAGINATION EVENT LISTENERS
+// ============================================================
+
 if (prevPageBtn) {
     prevPageBtn.addEventListener('click', () => {
         displayPage(currentPage - 1);
     });
 }
+
 if (nextPageBtn) {
     nextPageBtn.addEventListener('click', () => {
         displayPage(currentPage + 1);
     });
 }
 
-
-// -----------------------------------------------------------------
-// 6. INITIALIZATION
-// -----------------------------------------------------------------
+// ============================================================
+// INITIALIZATION
+// ============================================================
 
 document.addEventListener('DOMContentLoaded', () => {
+    console.log('Initializing student articles page...');
     loadArticles();
 });
