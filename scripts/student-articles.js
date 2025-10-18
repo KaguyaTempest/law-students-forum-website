@@ -1,9 +1,9 @@
 // scripts/student-articles.js
-import { db } from './firebase-config.js'; // Assuming db is exported here
+import { db } from './firebase-config.js'; 
 import { 
     collection, 
     query, 
-    where, // <-- Included for completeness and consistency
+    where, 
     getDocs, 
     orderBy
 } from 'https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js';
@@ -13,7 +13,7 @@ import {
 // -----------------------------------------------------------------
 const ARTICLES_PER_PAGE = 9; // Display 9 articles per page
 let currentPage = 1;
-let allArticles = []; // Stores all articles (static + dynamic)
+let allArticles = []; // Stores all published articles from Firebase
 let filteredArticles = []; // Articles currently displayed after filter
 let currentFilter = 'all';
 
@@ -25,25 +25,25 @@ const totalPagesEl = document.getElementById('total-pages');
 const prevPageBtn = document.querySelector('.prev-page');
 const nextPageBtn = document.querySelector('.next-page');
 
+
 // -----------------------------------------------------------------
-// 2. ARTICLE CARD CREATION (Handling Static vs. Dynamic Routing)
+// 2. ARTICLE CARD CREATION (FIXED LINKING)
 // -----------------------------------------------------------------
 
 /**
  * Creates the HTML element for an article card.
- * @param {Object} article - The article data object.
+ * @param {Object} article - The article data object from Firebase.
  * @returns {HTMLElement} The article card element.
  */
 function createArticleCard(article) {
     const card = document.createElement('article');
+    // We can use the category for filtering data attribute
     card.className = 'article-card';
-    card.setAttribute('data-topics', article.topics.join(' ').toLowerCase());
+    card.setAttribute('data-category', article.category.toLowerCase());
 
-    // Determine the correct link based on the article source
-    // FIX: Using 'article.html' as the viewer page, accessible from the current context
-    const articleLink = article.isDynamic 
-        ? `article.html?id=${article.id}` // Corrected dynamic link path
-        : article.link; // Static link from HTML parsing
+    // FIX: All articles are now dynamic and point to article.html
+    // The ID ensures the dynamic-article-loader.js can fetch the content.
+    const articleLink = `article.html?id=${article.id}`; 
 
     // Default banner image if none is provided
     const defaultImage = '../assets/default-article-banner.png'; 
@@ -62,8 +62,10 @@ function createArticleCard(article) {
             </a>
         </h3>
         <p class="article-excerpt mb-3">
-            ${article.excerpt || article.introLead || 'Click to read more...'}
+            ${article.excerpt || article.introLead || (article.content ? article.content.substring(0, 150) + '...' : 'Click to read more...')}
         </p>
+
+        <p class="article-meta">By ${article.authorName || 'Student Author'} | ${article.category || 'General'}</p>
 
         <a href="${articleLink}"
             class="read-more-btn text-indigo-600 hover:underline font-semibold">
@@ -74,55 +76,18 @@ function createArticleCard(article) {
     return card;
 }
 
-// -----------------------------------------------------------------
-// 3. STATIC ARTICLE PARSING
-// -----------------------------------------------------------------
-
-/**
- * Extracts hardcoded articles from the initial HTML structure.
- * This function runs only once during initialization.
- * @returns {Array} List of static article objects.
- */
-function getStaticArticles() {
-    const staticCards = Array.from(articlesListEl.querySelectorAll('.article-card'));
-    const articles = staticCards.map(card => {
-        // Extract data directly from the HTML elements
-        const title = card.querySelector('h3')?.textContent.trim() || 'Untitled Static Article';
-        const excerpt = card.querySelector('.article-excerpt')?.textContent.trim() || '';
-        const link = card.querySelector('.read-more-btn')?.getAttribute('href') || '#';
-        const thumbnail = card.querySelector('.article-thumbnail')?.getAttribute('src') || '';
-        const topics = card.getAttribute('data-topics')?.split(/\s+/) || [];
-
-        return {
-            title,
-            excerpt,
-            link,
-            thumbnail,
-            topics,
-            isDynamic: false, // Flag this as a static/local article
-            submittedAt: { seconds: Date.now() / 1000 } // Give it a synthetic timestamp for sorting
-        };
-    });
-
-    // Remove static cards from the DOM before dynamic loading
-    staticCards.forEach(card => card.remove());
-    return articles;
-}
-
 
 // -----------------------------------------------------------------
-// 4. CORE LOADING FUNCTION
+// 3. CORE LOADING FUNCTION (Simplified)
 // -----------------------------------------------------------------
 
 async function loadArticles() {
-    console.log('Fetching articles: Combining static and dynamic sources...');
+    console.log('Fetching published articles from Firebase...');
     articlesListEl.innerHTML = '<p class="text-center col-span-full">Loading articles...</p>';
     
     try {
-        // A. Get Static Articles
-        const staticArticles = getStaticArticles();
-
-        // B. Get Dynamic Articles (Published only)
+        // Fetch Dynamic Articles (Published only)
+        // Assuming your published articles are in 'article-submissions' and have status: 'published'
         const q = query(
             collection(db, 'article-submissions'), 
             where('status', '==', 'published'),
@@ -131,33 +96,27 @@ async function loadArticles() {
         const snapshot = await getDocs(q);
         
         const dynamicArticles = snapshot.docs.map(doc => ({ 
-            id: doc.id, 
+            id: doc.id, // CRUCIAL for dynamic linking
             ...doc.data(),
-            isDynamic: true 
         }));
 
-        // C. Combine All Articles
-        allArticles = [...dynamicArticles, ...staticArticles]
-            // Final sort (Dynamic articles with real timestamps will naturally appear first)
-            .sort((a, b) => (b.submittedAt?.seconds || 0) - (a.submittedAt?.seconds || 0));
-
-        // Initialize filtered list with all data
+        allArticles = dynamicArticles;
         filteredArticles = allArticles;
 
-        console.log(`Loaded ${allArticles.length} total articles (${staticArticles.length} static, ${dynamicArticles.length} dynamic).`);
+        console.log(`Loaded ${allArticles.length} published articles.`);
 
-        // D. Initialize View
+        // Initialize View
         setupPagination();
         displayPage(currentPage);
 
     } catch (error) {
         console.error('Error loading articles:', error);
-        articlesListEl.innerHTML = '<p class="text-center col-span-full text-red-600">Failed to load articles. Please check console for errors.</p>';
+        articlesListEl.innerHTML = '<p class="text-center col-span-full text-red-600">Failed to load articles. Please ensure Firebase is configured and running.</p>';
     }
 }
 
 // -----------------------------------------------------------------
-// 5. PAGINATION AND DISPLAY LOGIC
+// 4. PAGINATION AND DISPLAY LOGIC
 // -----------------------------------------------------------------
 
 function setupPagination() {
@@ -181,7 +140,6 @@ function displayPage(page) {
     const startIndex = (currentPage - 1) * ARTICLES_PER_PAGE;
     const endIndex = startIndex + ARTICLES_PER_PAGE;
     
-    // Get the slice of articles for the current page
     const articlesToDisplay = filteredArticles.slice(startIndex, endIndex);
 
     // Clear and display
@@ -204,12 +162,12 @@ function displayPage(page) {
 }
 
 // -----------------------------------------------------------------
-// 6. EVENT LISTENERS (Filters and Pagination Buttons)
+// 5. EVENT LISTENERS (Filters and Pagination Buttons)
 // -----------------------------------------------------------------
 
 /**
  * Handles filtering the articles when a category link is clicked.
- * @param {string} filterValue - The data-filter value.
+ * @param {string} filterValue - The data-filter value (e.g., 'human-rights-law').
  */
 function handleFilter(filterValue) {
     // Update active class
@@ -225,8 +183,9 @@ function handleFilter(filterValue) {
     if (filterValue === 'all') {
         filteredArticles = allArticles;
     } else {
+        // FILTER FIX: Filter based on the 'category' property
         filteredArticles = allArticles.filter(article => 
-            article.topics.map(t => t.toLowerCase()).includes(filterValue)
+            article.category && article.category.toLowerCase() === filterValue
         );
     }
     
@@ -259,7 +218,7 @@ if (nextPageBtn) {
 
 
 // -----------------------------------------------------------------
-// 7. INITIALIZATION
+// 6. INITIALIZATION
 // -----------------------------------------------------------------
 
 document.addEventListener('DOMContentLoaded', () => {
