@@ -506,3 +506,85 @@ footer {
         color: #adb5bd; /* A lighter gray for dark mode */
     }
 }
+/* Goal B & C: Header Layout and Dropdown */
+.header-right-actions {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.profile-trigger {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    cursor: pointer;
+    padding: 5px 10px;
+    border-radius: 20px;
+    transition: background 0.3s;
+}
+
+.profile-trigger:hover {
+    background: rgba(255, 255, 255, 0.1);
+}
+
+/* Goal D: Avatar with Initial */
+.user-avatar {
+    width: 35px;
+    height: 35px;
+    background-color: var(--auth-primary);
+    color: white;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: bold;
+    font-size: 1.1rem;
+    text-transform: uppercase;
+    border: 2px solid #fff;
+}
+
+/* Goal C: Accessible Dropdown */
+#user-info {
+    position: relative;
+}
+
+.user-dropdown {
+    position: absolute;
+    top: 110%;
+    right: 0;
+    background-color: var(--card-bg-color);
+    min-width: 180px;
+    border-radius: 8px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+    z-index: 1000;
+    border: 1px solid var(--card-border-color);
+    overflow: hidden;
+}
+
+.user-dropdown ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.user-dropdown li a, .logout-link {
+    display: block;
+    padding: 12px 20px;
+    color: var(--text-color-dark);
+    font-size: 0.9rem;
+    width: 100%;
+    text-align: left;
+    background: none;
+    border: none;
+    cursor: pointer;
+}
+
+.user-dropdown li a:hover, .logout-link:hover {
+    background-color: var(--auth-bg);
+    color: var(--auth-primary);
+    text-decoration: none;
+}
+
+.dropdown-divider {
+    border-top: 1px solid var(--card-border-color);
+}
